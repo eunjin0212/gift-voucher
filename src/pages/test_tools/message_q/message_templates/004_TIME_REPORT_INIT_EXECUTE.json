@@ -1,0 +1,117 @@
+{
+  "fieldsSummary": "batchType : BATCH_COMMAND executeCommand : EXECUTION ",
+  "messageTypeDesc": "TIME REPORT INIT DESC",
+  "messageTypeId": "004_TIME_REPORT_INIT_EXECUTE",
+  "queueName": "HRIS.local.BATCH_TIME_REPORT_INIT_SCHEDULE",
+  "fields": [
+    {
+      "enabled": true,
+      "name": "batchType",
+      "fieldType": "STRING",
+      "fieldTypes": [
+        {
+          "text": "String",
+          "value": "STRING"
+        }
+      ],
+      "messageValue": "BATCH_REQUEST",
+      "description": "Batch 스케쥴러 명령",
+      "suggestionValueList": [
+        {
+          "text": "Batch 스케쥴러에게 내리는 특정 명령",
+          "value": "BATCH_COMMAND"
+        },
+        {
+          "text": "Batch 작업 시작 이벤트",
+          "value": "BATCH_REQUEST"
+        },
+        {
+          "text": "Batch 작업 결과 보고 이벤트",
+          "value": "BATCH_RESPONSE"
+        }
+      ],
+      "__field__id__": "46550852-fa8b-4050-99d6-10336023f3e4"
+    },
+    {
+      "enabled": true,
+      "name": "executeCommand",
+      "fieldType": "STRING",
+      "fieldTypes": [
+        {
+          "text": "String",
+          "value": "STRING"
+        }
+      ],
+      "messageValue": "EXECUTION",
+      "description": "fixed command string",
+      "__field__id__": "f1cdd6de-9983-48ce-94af-1dc39e7c78c7"
+    },
+    {
+      "enabled": true,
+      "name": "executeDatetime",
+      "fieldType": "STRING",
+      "fieldTypes": [
+        {
+          "text": "String",
+          "value": "STRING"
+        }
+      ],
+      "messageValue": "2022-10-27T02:00:00+08:00",
+      "description": "스캐쥴러 시작 시간",
+      "suggestionValueList": "ISO8601_DATETIME_EX:-3:10",
+      "__field__id__": "82777e23-9053-4d6c-8384-f80ac08e086c"
+    },
+    {
+      "enabled": true,
+      "name": "scheduleEventId",
+      "fieldType": "STRING",
+      "fieldTypes": [
+        {
+          "text": "String",
+          "value": "STRING"
+        }
+      ],
+      "messageValue": "SCHEDULE_TIME_REPORT_INIT",
+      "description": "고정값",
+      "__field__id__": "6aef843c-dc34-417a-a9fe-8491de101a58"
+    },
+    {
+      "enabled": true,
+      "name": "intervalCategory",
+      "fieldType": "STRING",
+      "fieldTypes": [
+        {
+          "text": "String",
+          "value": "STRING"
+        }
+      ],
+      "messageValue": "EVERY",
+      "description": "고정값",
+      "suggestionValueList": [
+        {
+          "text": "",
+          "value": "EVERY"
+        },
+        {
+          "text": "",
+          "value": "ONCE"
+        }
+      ],
+      "__field__id__": "81e9c247-2983-4b87-8aba-5242b9e609d3"
+    },
+    {
+      "enabled": false,
+      "name": "scheduleEventContent",
+      "fieldType": "STRING",
+      "fieldTypes": [
+        {
+          "text": "String",
+          "value": "STRING"
+        }
+      ],
+      "messageValue": "{\"INIT_DATE\":\"20221027\", \"EMPLOYEE_SEQ\":\"\"}",
+      "description": "값이 없으면 당일로 취급",
+      "__field__id__": "c863e0a3-0bdb-4b85-a123-6a7aa71b1abb"
+    }
+  ]
+}

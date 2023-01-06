@@ -1,0 +1,37 @@
+HTTP/1.1 200 OK
+Content-type: application/json;charset=utf-8
+Access-Control-Allow-Origin: http://localhost:8080
+Access-Control-Allow-Credentials: true
+
+{
+    "code": "HR_COMPANY_REQ_SUCCESS",
+    "message": "[API:COMPANY] Company request succeeded",
+    "status": "0",
+    "data": {
+        "limit": 10,
+        "offset": 0,
+        "total": 2,
+        "list": [
+            {"companySeq": "00000000000000000001",
+                "companyName": "Jin's Company"},
+            {"companySeq": "00000000000000000002",
+                "companyName": "Jin2's Company"},
+            {"companySeq": "00000000000000000003",
+                "companyName": "Jin3's Company"},
+            {"companySeq": "00000000000000000004",
+                "companyName": "Jin4's Company"},
+            {"companySeq": "00000000000000000005",
+                "companyName": "Jin5's Company"},
+            {"companySeq": "00000000000000000006",
+                "companyName": "Jin6's Company"},
+            {"companySeq": "00000000000000000007",
+                "companyName": "Jin7's Company"},
+            {"companySeq": "00000000000000000008",
+                "companyName": "Jin8's Company"},
+            {"companySeq": "00000000000000000009",
+                "companyName": "Jin9's Company"},
+            {"companySeq": "00000000000000000010",
+                "companyName": "Jin10's Company"}
+            ]
+    }
+}

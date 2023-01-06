@@ -1,0 +1,13 @@
+#import './loginHeader.js';
+Content-type: application/json;charset=utf-8
+Cache-Control: public, max-age=300
+Access-Control-Allow-Origin: http://localhost:8080
+Access-Control-Allow-Credentials: true
+
+{
+    "data": {
+        "hrAdminSeq": "00000000000000000001",
+        "loginId": "share",
+        "hrAdminName": "share"
+    }
+}

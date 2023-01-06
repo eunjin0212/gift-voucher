@@ -1,0 +1,213 @@
+{
+    "queueName": "HRIS.local.NOTIFICATION_TO_COMPANY_DASHBOARD",
+    "messageTypeId": "001_MESSAGE_NOTIFICATION_CREATE",
+    "messageTypeDesc": "001. Notification sending to employe(personal) or company",
+    "fields": [{
+            "enabled": true,
+            "name": "__msg_type__",
+            "fieldType": "STRING",
+            "fieldTypes": [{
+                    "text": "String",
+                    "value": "STRING"
+                }, {
+                    "text": "Long",
+                    "value": "LONG"
+                }, {
+                    "text": "Boolean(true,false)",
+                    "value": "BOOLEAN"
+                }
+            ],
+            "messageValue": "DASHBOARD_NOTIFICATION",
+            "description": "message type to distinguish in queue",
+            "suggestionValueList": [{
+                    "text": "DASHBOARD_NOTIFICATION",
+                    "value": "DASHBOARD_NOTIFICATION"
+                }
+            ],
+            "__field__id__": "941b4e12-90ce-4efe-a294-217ee158506d"
+        }, {
+            "enabled": true,
+            "name": "nid",
+            "fieldType": "STRING",
+            "fieldTypes": [{
+                    "text": "String",
+                    "value": "STRING"
+                }, {
+                    "text": "Long",
+                    "value": "LONG"
+                }, {
+                    "text": "Boolean(true,false)",
+                    "value": "BOOLEAN"
+                }
+            ],
+            "messageValue": "",
+            "description": "12(yyMMddHHmmss) digits + 3 digits(SSS, mili) + 5 digits(random-table) = 20 digits",
+            "suggestionValueList": "GEN_SEQ_20_DIGIT:20",
+            "__field__id__": "456801c8-4d7b-4ce4-b980-b493e3f84a34"
+        }, {
+            "enabled": true,
+            "name": "subject",
+            "fieldType": "STRING",
+            "fieldTypes": [{
+                    "text": "String",
+                    "value": "STRING"
+                }, {
+                    "text": "Long",
+                    "value": "LONG"
+                }, {
+                    "text": "Boolean(true,false)",
+                    "value": "BOOLEAN"
+                }
+            ],
+            "messageValue": "",
+            "description": "Subject of notification",
+            "suggestionValueList": [{
+                    "text": "Subject 1",
+                    "value": "Subject 1"
+                }, {
+                    "text": "Excel download",
+                    "value": "You can EXCEL download now!"
+                }
+            ],
+            "__field__id__": "970b7c58-57f5-4ffd-8c0f-058a94cc7310"
+        }, {
+            "enabled": true,
+            "name": "description",
+            "fieldType": "STRING",
+            "fieldTypes": [{
+                    "text": "String",
+                    "value": "STRING"
+                }, {
+                    "text": "Long",
+                    "value": "LONG"
+                }, {
+                    "text": "Boolean(true,false)",
+                    "value": "BOOLEAN"
+                }
+            ],
+            "messageValue": "",
+            "description": "Description of notification, It can include html tag download here",
+            "suggestionValueList": [{
+                    "text": "Normal message",
+                    "value": "hello this is description."
+                }, {
+                    "text": "Excel link",
+                    "value": "excel download link <a target=_blank href=\"https://www.naver.com\">download link</a> end of this"
+                }
+            ],
+            "__field__id__": "c8f7fc6d-6825-47aa-b4ab-4a335e2c6141"
+        }, {
+            "enabled": true,
+            "name": "create",
+            "fieldType": "STRING",
+            "fieldTypes": [{
+                    "text": "String",
+                    "value": "STRING"
+                }, {
+                    "text": "Long",
+                    "value": "LONG"
+                }, {
+                    "text": "Boolean(true,false)",
+                    "value": "BOOLEAN"
+                }
+            ],
+            "messageValue": "",
+            "description": "ISO 8601 created time, e.g. 2022-09-14T12:26:19+00:00",
+            "suggestionValueList": "ISO8601_DATETIME:-3:10",
+            "__field__id__": "be77b58d-ca7a-4cee-91db-c5c6fa04d85d"
+        }, {
+            "enabled": true,
+            "name": "expire",
+            "fieldType": "STRING",
+            "fieldTypes": [{
+                    "text": "String",
+                    "value": "STRING"
+                }, {
+                    "text": "Long",
+                    "value": "LONG"
+                }, {
+                    "text": "Boolean(true,false)",
+                    "value": "BOOLEAN"
+                }
+            ],
+            "messageValue": "",
+            "description": "ISO 8601 expire time, e.g. 2022-09-14T12:26:19+00:00",
+            "suggestionValueList": "ISO8601_DATETIME:-3:10",
+            "__field__id__": "4e7e0416-4ebe-4081-9e6f-3b2e98ac6007"
+        }, {
+            "enabled": true,
+            "name": "companySeq",
+            "fieldType": "STRING",
+            "fieldTypes": [{
+                    "text": "String",
+                    "value": "STRING"
+                }, {
+                    "text": "Long",
+                    "value": "LONG"
+                }, {
+                    "text": "Boolean(true,false)",
+                    "value": "BOOLEAN"
+                }
+            ],
+            "messageValue": "",
+            "description": "Delivery companySeq, Mandatory",
+            "suggestionValueList": "COMPANY_SEQ",
+            "__field__id__": "928587fd-bccc-41ef-852a-81e02cb812cf"
+        }, {
+            "enabled": true,
+            "name": "employeeSeq",
+            "fieldType": "STRING",
+            "fieldTypes": [{
+                    "text": "String",
+                    "value": "STRING"
+                }, {
+                    "text": "Long",
+                    "value": "LONG"
+                }, {
+                    "text": "Boolean(true,false)",
+                    "value": "BOOLEAN"
+                }
+            ],
+            "messageValue": "",
+            "description": "Delivery employee (personal), Option",
+            "suggestionValueList": "EMPLOYEE_SEQ",
+            "__field__id__": "1ae7e612-53af-40f0-a4fc-b8650056e6f7"
+        }, {
+            "enabled": true,
+            "name": "toDeliveryCompany",
+            "fieldType": "BOOLEAN",
+            "fieldTypes": [{
+                    "text": "String",
+                    "value": "STRING"
+                }, {
+                    "text": "Long",
+                    "value": "LONG"
+                }, {
+                    "text": "Boolean(true,false)",
+                    "value": "BOOLEAN"
+                }
+            ],
+            "messageValue": "true",
+            "description": "Delivery enable to Company level, employeeSeq need",
+            "__field__id__": "c9038044-103d-4358-bc4e-52d071690446"
+        }, {
+            "enabled": true,
+            "name": "toDeliveryEmployee",
+            "fieldType": "BOOLEAN",
+            "fieldTypes": [{
+                    "text": "String",
+                    "value": "STRING"
+                }, {
+                    "text": "Long",
+                    "value": "LONG"
+                }, {
+                    "text": "Boolean(true,false)",
+                    "value": "BOOLEAN"
+                }
+            ],
+            "messageValue": "true",
+            "description": "Delivery enable to Employee (personal) level, employeeSeq need",
+            "__field__id__": "7bd2f4a9-9dc2-4c8c-ad17-1a605c3c2750"
+        }
+    ]
+}

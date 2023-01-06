@@ -1,0 +1,8 @@
+{
+    "meta" : {
+        "api-baseurl" : "https://stg-company.hrnflex.ph",
+        "cdn-baseurl" : "https://stg-company.hrnflex.ph"
+    },
+    "uris" : {
+    }
+}

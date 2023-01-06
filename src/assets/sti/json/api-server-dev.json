@@ -1,0 +1,8 @@
+{
+    "meta" : {
+        "api-baseurl" : "http://localhost:65333",
+        "cdn-baseurl" : "/"
+    },
+    "uris" : {
+    }
+}

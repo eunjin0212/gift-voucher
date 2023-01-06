@@ -1,0 +1,135 @@
+{
+    "queueName": "HRIS.local.FLEXBEN_CAMPAIGN_SCHEDULE",
+    "messageTypeId": "002_SCHEDULER_EXECUTE",
+    "messageTypeDesc": "TABLE : SCHEDULE_QUEUE_WAIT, ScheduleTriggerMQ > registerSchedule, unRegisterSchedule, executeScheduleBySpecificTime",
+    "fields": [{
+            "enabled": true,
+            "name": "batchType",
+            "fieldType": "STRING",
+            "fieldTypes": [{
+                    "text": "String",
+                    "value": "STRING"
+                }
+            ],
+            "messageValue": "BATCH_REQUEST",
+            "description": "Batch 스케쥴러 명령",
+            "suggestionValueList":  [
+                {
+                    "text": "Batch 스케쥴러에게 내리는 특정 명령",
+                    "value": "BATCH_COMMAND"
+                },
+                {
+                    "text": "Batch 작업 시작 이벤트",
+                    "value": "BATCH_REQUEST"
+                },
+                {
+                    "text": "Batch 작업 결과 보고 이벤트",
+                    "value": "BATCH_RESPONSE"
+                }
+            ]
+        }, {
+            "enabled": true,
+            "name": "executeCommand",
+            "fieldType": "STRING",
+            "fieldTypes": [{
+                    "text": "String",
+                    "value": "STRING"
+                }
+            ],
+            "messageValue": "EXECUTION",
+            "description": "fixed command string"
+        }, {
+            "enabled": false,
+            "name": "executeTimeWant",
+            "fieldType": "STRING",
+            "fieldTypes": [{
+                    "text": "String",
+                    "value": "STRING"
+                }
+            ],
+            "messageValue": "2022-09-16T14:58:12+08:00",
+            "description": "BatchCommand mediator 실행할때 필요함",
+            "suggestionValueList": "ISO8601_DATETIME:-25:10"
+        }, {
+            "enabled": false,
+            "name": "untilExecuteTime",
+            "fieldType": "STRING",
+            "fieldTypes": [{
+                    "text": "String",
+                    "value": "STRING"
+                }
+            ],
+            "messageValue": "2022-09-16T02:00:00+08:00",
+            "description": "BatchCommand mediator 기간, 스케쥴 실행하고 싶은 날짜와 시간대 기준은 1시간단위",
+            "suggestionValueList": "ISO8601_DATETIME_EX:-3:10"
+        }, {
+            "enabled": false,
+            "name": "executeDatetime",
+            "fieldType": "STRING",
+            "fieldTypes": [{
+                    "text": "String",
+                    "value": "STRING"
+                }
+            ],
+            "messageValue": "2022-09-16T02:00:00+08:00",
+            "description": "FLEXBEN_CAMPAIGN_SCHEDULE실행할때 필요한 값",
+            "suggestionValueList": "ISO8601_DATETIME_EX:-3:10"
+        }, {
+            "enabled": true,
+            "name": "scheduleEventId",
+            "fieldType": "STRING",
+            "fieldTypes": [{
+                    "text": "String",
+                    "value": "STRING"
+                }
+            ],
+            "messageValue": "SCHEDULE_TRANSFER",
+            "description": "ㄱㅈ"
+        }, {
+            "enabled": true,
+            "name": "intervalCategory",
+            "fieldType": "STRING",
+            "fieldTypes": [{
+                    "text": "String",
+                    "value": "STRING"
+                }
+            ],
+            "messageValue": "EVERY",
+            "description": "",
+            "suggestionValueList":  [
+                {
+                    "text": "",
+                    "value": "EVERY"
+                },
+                {
+                    "text": "",
+                    "value": "ONCE"
+                }
+            ]
+        }, {
+            "enabled": false,
+            "name": "scheduleReferenceSeq",
+            "fieldType": "STRING",
+            "fieldTypes": [{
+                    "text": "String",
+                    "value": "STRING"
+                }
+            ],
+            "messageValue": "",
+            "description": "FLEXBEN_CAMPAIGN_SCHEDULE실행할때 필요한 값, schedule_queue_wait - schedule_reference_seq"
+        }, {
+            "enabled": false,
+            "name": "scheduleEventContent",
+            "fieldType": "STRING",
+            "fieldTypes": [{
+                    "text": "String",
+                    "value": "STRING"
+                }
+            ],
+            "messageValue": "",
+            "description": "FLEXBEN_CAMPAIGN_SCHEDULE실행할때 필요한 값, schedule_queue_wait - schedule_event_content"
+        }
+    ],
+    "requestTime": "3:02:39 PM",
+    "fieldsSummary": "batchType : BATCH_COMMAND executeCommand : EXECUTION executeTimeWant : 2022-09-16T14:01:36+0800 "
+}
