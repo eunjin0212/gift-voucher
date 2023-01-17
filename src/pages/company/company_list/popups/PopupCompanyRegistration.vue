@@ -1,11 +1,15 @@
 <script>
 // eslint-disable-next-line no-unused-vars
 import { ValidateUtil } from "@/plugins/app-util.js";
+import ElementsNotification from "@/components/elements/ElementsNotification.vue";
 
 export default {
     props: { 
         modelValue : Boolean,
         name : String,
+    },
+    components :{
+        ElementsNotification
     },
     emits: ["closePopup", "successInvite", 'update:modelValue'],
     data() {
@@ -14,22 +18,22 @@ export default {
             isEdit : false,
             notificationErrMSG: null,
             requestErrorMsg: {
-              companyName: "Company Name can't be blank",
-              employeeName: "Employee Name can't be blank",
-              loginId: "Login Id can't be blank",
-              loginPwd: "Login Password can't be blank",
+                companyName: "Company Name can't be blank",
+                employeeName: "Employee Name can't be blank",
+                loginId: "Login Id can't be blank",
+                loginPwd: "Login Password can't be blank",
             },
             requestError: {
-              companyName: null,
-              employeeName: null,
-              loginId: null,
-              loginPwd: null,
+                companyName: null,
+                employeeName: null,
+                loginId: null,
+                loginPwd: null,
             },
             request: {
-              companyName: null,
-              employeeName: null,
-              loginId: null,
-              loginPwd: null,
+                companyName: null,
+                employeeName: null,
+                loginId: null,
+                loginPwd: null,
             },
         }; //return
     }, //data
@@ -64,11 +68,11 @@ export default {
         resetErrorMsg() {
             const self = this;
             self.requestError = {
-              companyName: null,
-              employeeName: null,
-              loginId: null,
-              loginPwd: null,
-            };
+                companyName: null,
+                employeeName: null,
+                loginId: null,
+                loginPwd: null,
+                };
         },
         cancelInvite() {
             const self = this;
@@ -77,10 +81,10 @@ export default {
         resetReqeustData() {
             const self = this;
             self.request = {
-              companyName: null,
-              employeeName: null,
-              loginId: null,
-              loginPwd: null,
+                companyName: null,
+                employeeName: null,
+                loginId: null,
+                loginPwd: null,
             };
         },
         getInitData() {
@@ -153,7 +157,7 @@ export default {
                 <div class="pr-4 pb-8 pl-4">
                     <div class="flex justify-between items-center gap-2 mt-6">
                         <div class="w-32 text-sm font-semibold text-slate-800">
-                          Company Name<span>*</span>
+                            Company Name*
                         </div>
                         <ElementsInput
                             v-model="request.companyName"
@@ -166,7 +170,7 @@ export default {
                     </div>
                     <div class="flex justify-between items-center gap-2 mt-6">
                         <div class="w-32 text-sm font-semibold text-slate-800">
-                          Employee Name<span>*</span>
+                            Admin Name*
                         </div>
                         <ElementsInput
                             v-model="request.employeeName"
@@ -179,7 +183,46 @@ export default {
                     </div>
                     <div class="flex justify-between items-center gap-2 mt-6">
                         <div class="w-32 text-sm font-semibold text-slate-800">
-                          Login Id<span>*</span>
+                            Admin department
+                        </div>
+                        <ElementsInput
+                            v-model="request.employeeName"
+                            placeholder="Enter Employee Name"
+                            class="flex-1"
+                            :full="true"
+                            :error="requestError.employeeName"
+                            :maxlength="60"
+                        />
+                    </div>
+                    <div class="flex justify-between items-center gap-2 mt-6">
+                        <div class="w-32 text-sm font-semibold text-slate-800">
+                            Admin Email
+                        </div>
+                        <ElementsInput
+                            v-model="request.employeeName"
+                            placeholder="Enter Employee Name"
+                            class="flex-1"
+                            :full="true"
+                            :error="requestError.employeeName"
+                            :maxlength="60"
+                        />
+                    </div>
+                    <div class="flex justify-between items-center gap-2 mt-6">
+                        <div class="w-32 text-sm font-semibold text-slate-800">
+                            Admin Phone number
+                        </div>
+                        <ElementsInput
+                            v-model="request.employeeName"
+                            placeholder="Enter Employee Name"
+                            class="flex-1"
+                            :full="true"
+                            :error="requestError.employeeName"
+                            :maxlength="60"
+                        />
+                    </div>
+                    <div class="flex justify-between items-center gap-2 mt-6">
+                        <div class="w-32 text-sm font-semibold text-slate-800">
+                            Login Id*
                         </div>
                         <ElementsInput
                             v-model="request.loginId"
@@ -193,7 +236,7 @@ export default {
 
                     <div class="flex justify-between items-center gap-2 mt-6">
                         <div class="w-32 text-sm font-semibold text-slate-800">
-                          Login Pwd<span>*</span>
+                            Login Pwd*
                         </div>
                         <ElementsInput
                             v-model="request.loginPwd"

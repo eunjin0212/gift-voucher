@@ -12,7 +12,10 @@
         "post-sign-out" : "/api/sign/sign-out",
 
         "get-company" : "/api/company",
-        "post-company" : "/api/company"
+        "post-company" : "/api/company",
+
+        "get-flexben-campaign-List" : "/api/flexben/campaign"
+
 
     }
 }

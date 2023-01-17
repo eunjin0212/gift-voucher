@@ -11,6 +11,10 @@ module.exports = {
         template: 'public/default.html',
         title: 'Login'
     },
+    'company/company_list': {
+        template: 'public/default.html',
+        title: 'Company'
+    },
     'company/company_registration': {
         template: 'public/default.html',
         title: 'Company'

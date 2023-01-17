@@ -158,9 +158,6 @@ export default {
             >
           </template>
         </div>
-        <div v-show="tabs[0].current" class="overflow-auto h-[42vh] pb-2">
-          <TabJobInfo @afterSave="getCompanyData" />
-        </div>
       </div>
     </div>
     <div

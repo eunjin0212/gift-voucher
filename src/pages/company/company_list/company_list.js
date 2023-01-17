@@ -1,7 +1,7 @@
 import { createApp } from "vue";
-import App from "@/pages/company/company_registration/company_registration.vue";
+import App from "@/pages/company/company_list/company_list.vue";
 import "@/index.css";
-import ElementsSelect from "@/components/elements/ElementsSelectRef.vue";
+import ElementsSelect from "@/components/elements/ElementsSelect.vue";
 import ElementsInput from "@/components/elements/ElementsInput.vue";
 import ElementsButton from "@/components/elements/ElementsButton.vue";
 import ElementsFile from "@/components/elements/ElementsFile.vue";

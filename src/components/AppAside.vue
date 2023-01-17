@@ -17,7 +17,7 @@ let items = reactive([
   {
     parent: "app-side-2",
     show: false,
-    href: "/company/company_registration",
+    href: "/company/company_list",
     text: "Company List",
   },
   {
