@@ -32,7 +32,8 @@
     "tiny-emitter": "^2.1.0",
     "vue": "^3.2.13",
     "vue-ctk-date-time-picker": "^3.0.0-alpha.0",
-    "vue3-cookies": "^1.0.6"
+    "vue3-cookies": "^1.0.6",
+    "vue3-datepicker": "^0.3.4"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
