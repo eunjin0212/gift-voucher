@@ -31,6 +31,18 @@ let items = reactive([
     href: "/admin_settings/admin_settings",
     text: "Admin Settings",
   },
+  {
+    children: true,
+    img: "app-side-6",
+    text: "flexben",
+  },
+  {
+    parent: "app-side-6",
+    show: false,
+    href: "/flexben/top_up",
+    text: "topup",
+  },
+
 ]);
 onMounted(() => {
   const splitPathPure = window.location.pathname;

@@ -18,5 +18,13 @@ module.exports = {
     'company/company_registration': {
         template: 'public/default.html',
         title: 'Company'
+    },
+    'flexben/top_up' : {
+        template: 'public/default.html',
+        title: 'Topup'
+    },
+    'flexben/top_up/registering' : {
+        template: 'public/default.html',
+        title: 'Topup'
     }
 }
