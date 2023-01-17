@@ -26,6 +26,10 @@ export default {
                 current: true,
                 },
             ],
+            searchOptions : [
+                { text : "Company Name" , value : "COMPANY" },
+                { text : "Admin Name" , value : "ADMIN" },
+            ],
             companyList: [],
             showCompanyRegistration: false,
             showCompanyPop: false,
@@ -37,6 +41,7 @@ export default {
             selectCompany: null,
             currentPage : null,
             searchRequest : {
+                searchType : "COMPANY",
                 companyName : null
             },
         };
@@ -102,11 +107,18 @@ export default {
                     @click="companyRegistrationPop">
                     + Registration Company
                 </button>
-                <div class="flex justify-between items-center gap-5">
+                <div class="flex justify-between items-center gap-3">
+                    <ElementsSelect 
+                        :width60="true"
+                        :options="searchOptions"
+                        v-model="searchRequest.searchType"
+                        :readonly="true"
+                    />
                     <ElementsInput
                         v-model="searchRequest.companyName"
                         placeholder="Search Company"
                         :width72="true"
+                        :height11="true"
                     />
                     <ElementsButton
                         text="Search"
