@@ -267,7 +267,7 @@ function reloadNotificationForce(){
 }
 
 onMounted(() => {
-    loadLatestNews(MIN_DATE, callAfterFn);
+    // loadLatestNews(MIN_DATE, callAfterFn);
 });
 
 // ------------------------------------------------------------
