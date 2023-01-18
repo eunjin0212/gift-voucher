@@ -121,7 +121,7 @@ defineProps({
     </button>
     <button
       v-else-if="borderRed"
-      class="border rounded border-rose-400 w-24 h-10 border-gray-300 text-sm font-semibold text-rose-400 hover:bg-red-100 transition-all duration-500 text-center"
+      class="border rounded border-rose-400 w-24 h-10 text-sm font-semibold text-rose-400 hover:bg-red-100 transition-all duration-500 text-center"
       :class="{
         'px-5': fitContent,
         'w-96':
@@ -152,7 +152,7 @@ defineProps({
     </button>
     <button
       v-else-if="bgWhiteAndtextIndigo"
-      class="rounded bg-white text-sm font-semibold text-indigo-700 transition-all duration-500 text-center"
+      class="border rounded bg-white text-sm font-semibold border-indigo-600 text-indigo-700 transition-all duration-500 text-center whitespace-pre-wrap"
       :class="{
         'px-5': fitContent,
         'w-96':

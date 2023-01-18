@@ -9,7 +9,7 @@ export default{
 		modelValue: Date,
 		name: String,
 		error: String,
-        disabled : Boolean
+        disabled : Boolean,
 	},
 	emits : ['update:modelValue', "changeDate"],
 	methods : {

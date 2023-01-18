@@ -10,6 +10,11 @@ let items = reactive([
     text: "Dashboard",
   },
   {
+    href: "/inquiry",
+    img: "app-side-3",
+    text: "Inquiry",
+  },
+  {
     children: true,
     img: "app-side-2",
     text: "Company",

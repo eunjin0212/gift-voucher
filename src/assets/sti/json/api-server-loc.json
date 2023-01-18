@@ -14,8 +14,16 @@
         "get-company" : "/api/company",
         "post-company" : "/api/company",
 
-        "get-flexben-campaign-List" : "/api/flexben/campaign"
+        "get-flexben-campaign-List" : "/api/flexben/campaign",
+        
+        
+        "get-join-inquiry-list" :  "/api/inquiry",
+        "put-join-inquiry" : "/api/inquiry",
 
 
+
+
+        "ENDSTRING" : "END"
     }
 }
+

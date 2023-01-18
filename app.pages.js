@@ -26,5 +26,9 @@ module.exports = {
     'flexben/top_up/registering' : {
         template: 'public/default.html',
         title: 'Topup'
+    },
+    'inquiry' : {
+        template: 'public/default.html',
+        title: 'Inquiry'
     }
 }

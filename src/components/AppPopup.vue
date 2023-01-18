@@ -8,6 +8,7 @@ defineProps({
   height12: Boolean,
   backgroundWhite: Boolean,
   disabled: Boolean,
+  useCancel: { type : Boolean, default : true } ,
   noneOverflowAuto:  { type : Boolean, default : false }
 })
 
@@ -50,6 +51,7 @@ function buttonEvent() {
           v-if="buttonText"
       >
         <ElementsButton
+            v-if="useCancel"
             text="Cancel"
             :width28="true"
             :height12="true"
