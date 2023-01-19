@@ -1,18 +1,16 @@
 <script>
 import AppAside from "@/components/AppAside.vue";
 import AppMain from "@/components/main/AppMain.vue";
-import PopupCompanyRegistration from "@/pages/company/company_list/popups/PopupCompanyRegistration.vue";
-import PopupCompanyInformation from "@/pages/company/company_list/popups/PopupCompanyInformation.vue";
 import ElementsPagination from "@/components/elements/ElementsPagination.vue"
+import PopupInviteMasterAdmin from "@/pages/company/company_list/popups/popupInviteMsterAdmin.vue"
 import { ValidateUtil } from "@/plugins/app-util.js";
 
 export default {
     components: {
         AppAside,
         AppMain,
-        PopupCompanyRegistration,
-        PopupCompanyInformation,
         ElementsPagination,
+        PopupInviteMasterAdmin
     },
     data() {
         return {
@@ -44,6 +42,9 @@ export default {
                 searchType : "COMPANY",
                 companyName : null
             },
+            passwordSending : {
+                isOpen : true, 
+            }
         };
     }, //data
     mounted() {
@@ -94,6 +95,14 @@ export default {
             self.getCompanyListData();
             self.currentPage = 1;
         },
+        clickPasswordSending( company ){
+            const self = this;
+            self.passwordSending.isOpen = true;
+
+        },
+        sendingInviteEmail(){
+            alert("email sending")
+        }
     },
 }; // export default
 </script>
@@ -128,90 +137,71 @@ export default {
                     />
                 </div>
             </div>
-            <div class="flex-1 mt-2">
-                <div id="employees" class="mt-2 w-full max-w-7xl">
-                    <div class="mt-5 rounded-lg w-full max-w-7xl bg-white shadow-md shadow-gray-200">
-                        <div class="flex flex-col">
-                            <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                                <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                                    <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                                        <table class="min-w-full divide-y divide-gray-300">
-                                            <thead class="">
-                                                <tr>
-                                                    <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900 sm:pl-6">Company Name</th>
-                                                    <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">Admin Name</th>
-                                                    <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">Admin Email</th>
-                                                    <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">Admin Phone number</th>
-                                                    <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">Reg Date</th>
-                                                    <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">Start Date</th>
-                                                    <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">End Date</th>
-                                                    <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">Number of Employees</th>
-                                                    <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">FlexBen type</th>
-                                                    <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                                                        <span class="sr-only">Edit</span>
-                                                    </th>
-                                                    <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                                                        <span class="sr-only"> Password Sending </span>
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody class="divide-y divide-gray-200 bg-white">
-                                                <tr v-for="(company, index) in companyList" v-bind:key="index" @click="clickCompany(company)">
-                                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900 sm:pl-6">{{ company.companyName }}</td>
-                                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> henry </td>
-                                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> henry@sharetreats.com </td>
-                                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> 090000000000 </td>
-                                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> 07/04/2022 00:00:00 </td>
-                                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> 08/01/2023 00:00:00 </td>
-                                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> 08/01/2023 00:00:00 </td>
-                                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> 50 </td>
-                                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> A </td>
-                                                    <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                                        <a href="#" class="text-indigo-600 hover:text-indigo-900">
-                                                            Edit
-                                                        </a>
-                                                    </td>
-                                                    <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                                        <a href="#" class="text-rose-600 hover:text-indigo-900 whitespace-normal">
-                                                            Password Sending
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w-full h-28 flex justify-center items-center">
-                        <ElementsPagination
-                            v-model="currentPage"
-                            :totalContent="companyCount"
-                            :contentsPerPage="json_query.limit"
-                            @clickPage="afterClickPage"
-                        />
-                    </div>
-                </div>
+            <div class=" mt-6 overflow-x-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                <table class="relative min-w-full divide-y divide-gray-300  ">
+                    <thead class="sticky bg-gray-50 top-0 left-0 right-0 border-b border-gray-50" style="z-index: 1;">
+                        <tr>
+                            <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900 sm:pl-6">Company Name</th>
+                            <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">PIC Name</th>
+                            <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">Admin Email</th>
+                            <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">Admin Phone number</th>
+                            <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">Reg Date</th>
+                            <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">Start Date</th>
+                            <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">End Date</th>
+                            <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">Number of Employees</th>
+                            <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">FlexBen type</th>
+                            <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                                <span class="sr-only">Edit</span>
+                            </th>
+                            <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                                <span class="sr-only"> Password Sending </span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200 bg-white">
+                        <tr v-for="(company, index) in companyList" v-bind:key="index" >
+                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900 sm:pl-6">{{ company.companyName }}</td>
+                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> henry </td>
+                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> henry@sharetreats.com </td>
+                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> 090000000000 </td>
+                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> 07/04/2022 00:00:00 </td>
+                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> 08/01/2023 00:00:00 </td>
+                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> 08/01/2023 00:00:00 </td>
+                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> 50 </td>
+                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> A </td>
+                            <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                                <a href="#" class=" text-indigo-600 hover:text-indigo-900">
+                                    Edit
+                                </a>
+                            </td>
+                            <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                                <a 
+                                    href="#" class="text-rose-600 hover:text-indigo-900 whitespace-normal"
+                                    @click="clickPasswordSending( company )"
+                                >
+                                    Password Sending
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="w-full h-28 flex mt-4 justify-center items-center">
+                <ElementsPagination
+                    v-model="currentPage"
+                    :totalContent="companyCount"
+                    :contentsPerPage="json_query.limit"
+                    @clickPage="afterClickPage"
+                />
             </div>
         </AppMain>
         <Teleport to="body">
-        <PopupCompanyRegistration
-            name="Company Registration"
-            v-model="showCompanyRegistration"
-            ref="invitePopup"
-            @close-popup="showCompanyRegistration=flase"
-        />
-        <AppPopup
-            v-model="showCompanyPop"
-            name="Employees Information"
-            @afterClose="getCompanyListData(false, json_query.offset)"
-        >
-            <PopupCompanyInformation
-                ref="companyPop"
-                v-model="selectCompany" 
-            />
-        </AppPopup>
+            <AppPopup
+                v-model="passwordSending.isOpen"
+                name="Password Sending"
+            >  
+                <PopupInviteMasterAdmin />
+            </AppPopup>
         </Teleport>
     </div>
 

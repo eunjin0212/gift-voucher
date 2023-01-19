@@ -30,7 +30,7 @@
             </div>
             <div class=" mt-6 overflow-x-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                 <table class="relative min-w-full divide-y divide-gray-300">
-                    <thead class="sticky bg-gray-50 top-0 left-0 right-0 " style="z-index: 1;">
+                    <thead class="sticky bg-gray-50 top-0 left-0 right-0 backdrop-blur-sm" >
                         <tr>
                             <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900 sm:pl-6">
                                 <div class="flex h-5 items-center">
@@ -46,8 +46,8 @@
                             <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">Phone Number</th>
                             <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">Consultation Employees</th>
                             <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">Consultation Date</th>
-                            <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                                <span class="sr-only"> Registration </span>
+                            <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">
+                                Registration 
                             </th>
                         </tr>
                     </thead>
@@ -55,7 +55,7 @@
                         <tr v-for="(inquiry, index) in join_inquiry.list" v-bind:key="index" >
                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900 sm:pl-6"> 
                                 <div class="flex h-5 items-center">
-                                    <input id="" name="comments" type="checkbox" class="h-4 w-4 rounded border-gray-300  focus:ring-indigo-500" />
+                                    <input id="" name="delete" type="checkbox" class="h-4 w-4 rounded border-gray-300  focus:ring-indigo-500" />
                                 </div>
                             </td>
                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ dateFormatChage(inquiry.inquiryRequestDatetime, "MM/DD/yyyy hh:mm")}} </td>
@@ -67,11 +67,12 @@
                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ inquiry.picPhoneNumber }} </td>
                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ inquiry.consultantEmpName }} </td>
                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ dateFormatChage(inquiry.consultationDatetime) }} </td>
-                            <td class="relative whitespace-nowrap py-4 pr-4 text-right text-sm font-medium sm:pr-6">
+                            <td class="whitespace-nowrap py-4 pr-4 text-right text-sm font-medium sm:pr-6">
                                 <ElementsButton 
                                     :text="'Registration'"
                                     :width28="true"
                                     :borderRed="true"
+                                    @clickEvent="goToRegistrationPage( inquiry.joinInquirySeq )" 
                                 />
                             </td>
                         </tr>
@@ -117,7 +118,6 @@ export default {
                 isOpen : false,
                 inquiryData : {},
             },
-            inquiryList : [ {}, {} ], 
             join_inquiry : {
                 list : [],
                 total : 0,
@@ -167,6 +167,9 @@ export default {
             const self = this;
             self.getJoinInquiry( self.json_query.offset, true )
             self.editConsultaion.isOpen = false; 
+        },
+        goToRegistrationPage( inquirySeq ){
+            location.href = `/company/company_registration?inquirySeq=${ inquirySeq }`
         }
     },
     mounted(){

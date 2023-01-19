@@ -23,6 +23,7 @@ defineProps({
   maxNumber: Number,
   minNumber: Number,
   maxlength: Number,
+  required : Boolean,
 });
 
 defineEmits(["update:modelValue"]);
@@ -59,6 +60,7 @@ defineEmits(["update:modelValue"]);
         @input="$emit('update:modelValue', $event.target.value)"
         :name="inputName"
         :maxlength="maxlength ? maxlength : 100"
+        :required="required"
       />
     </div>
     <p class="mt-1.5 text-xs font-normal text-red-500" v-show="error">

@@ -53,7 +53,7 @@ defineProps({
       }"
       @click="$emit('clickEvent')"
       :disabled="disabled"
-      :type="inputtype"
+      :inputtype="inputtype"
     >
       {{ text }}
     </button>
@@ -84,7 +84,7 @@ defineProps({
       }"
       @click="$emit('clickEvent')"
       :disabled="disabled"
-      :type="inputtype"
+      :inputtype="inputtype"
     >
       {{ text }}
     </button>
@@ -115,7 +115,7 @@ defineProps({
       }"
       @click="$emit('clickEvent')"
       :disabled="disabled"
-      :type="inputtype"
+      :inputtype="inputtype"
     >
       {{ text }}
     </button>
@@ -146,7 +146,7 @@ defineProps({
       }"
       @click="$emit('clickEvent')"
       :disabled="disabled"
-      :type="inputtype"
+      :inputtype="inputtype"
     >
       {{ text }}
     </button>
@@ -177,7 +177,7 @@ defineProps({
       }"
       @click="$emit('clickEvent')"
       :disabled="disabled"
-      :type="inputtype"
+      :inputtype="inputtype"
     >
       {{ text }}
     </button>
@@ -208,7 +208,7 @@ defineProps({
       }"
       @click="$emit('clickEvent')"
       :disabled="disabled"
-      :type="inputtype"
+      :inputtype="inputtype"
     >
       {{ text }}
     </button>
