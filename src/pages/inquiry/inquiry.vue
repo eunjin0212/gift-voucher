@@ -8,6 +8,7 @@
                         :backgroundWhite="true"
                         :text="'Delete'"
                         :width28="true" :fitHeight="true"
+                        @click="deleteInquiry"
                     />
                     <div class="flex gap-2">
                         <ElementsSelect 
@@ -30,11 +31,14 @@
             </div>
             <div class=" mt-6 overflow-x-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                 <table class="relative min-w-full divide-y divide-gray-300">
-                    <thead class="sticky bg-gray-50 top-0 left-0 right-0 backdrop-blur-sm" >
+                    <thead class="sticky bg-gray-50 top-0 left-0 right-0 " style="z-index: 1;">
                         <tr>
                             <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900 sm:pl-6">
                                 <div class="flex h-5 items-center">
-                                    <input id="all" name="all" type="checkbox" class="h-4 w-4 rounded border-gray-300  focus:ring-indigo-500" />
+                                    <input
+                                        v-model="deleteAllInquiry"
+                                        id="all" name="all" type="checkbox" class="h-4 w-4 rounded border-gray-300  focus:ring-indigo-500" 
+                                    />
                                 </div>
                             </th>
                             <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">Reg Date</th>
@@ -46,8 +50,8 @@
                             <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">Phone Number</th>
                             <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">Consultation Employees</th>
                             <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">Consultation Date</th>
-                            <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">
-                                Registration 
+                            <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                                <span class="sr-only"> Registration </span>
                             </th>
                         </tr>
                     </thead>
@@ -55,7 +59,10 @@
                         <tr v-for="(inquiry, index) in join_inquiry.list" v-bind:key="index" >
                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900 sm:pl-6"> 
                                 <div class="flex h-5 items-center">
-                                    <input id="" name="delete" type="checkbox" class="h-4 w-4 rounded border-gray-300  focus:ring-indigo-500" />
+                                    <input
+                                        :value="inquiry" v-model="deleteInquiryArray" 
+                                        id="" name="delete" type="checkbox" class="h-4 w-4 rounded border-gray-300  focus:ring-indigo-500" 
+                                    />
                                 </div>
                             </td>
                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ dateFormatChage(inquiry.inquiryRequestDatetime, "MM/DD/yyyy hh:mm")}} </td>
@@ -67,7 +74,7 @@
                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ inquiry.picPhoneNumber }} </td>
                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ inquiry.consultantEmpName }} </td>
                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ dateFormatChage(inquiry.consultationDatetime) }} </td>
-                            <td class="whitespace-nowrap py-4 pr-4 text-right text-sm font-medium sm:pr-6">
+                            <td class="relative whitespace-nowrap py-4 pr-4 text-right text-sm font-medium sm:pr-6">
                                 <ElementsButton 
                                     :text="'Registration'"
                                     :width28="true"
@@ -94,7 +101,7 @@
                 :name="'Edit Consultation'"
             >
                 <EditConsultation 
-                    :inquiryData="editConsultaion.inquiryData"
+                    :inquiryData="inquiryData"
                     @update="updateInquiry"    
                 />
             </AppPopup>
@@ -116,8 +123,8 @@ export default {
         return{
             editConsultaion : {
                 isOpen : false,
-                inquiryData : {},
             },
+            inquiryData : {},
             join_inquiry : {
                 list : [],
                 total : 0,
@@ -131,13 +138,32 @@ export default {
             paginationData : {
                 total : 0,
                 offset : 1,
-            }
+            },
+            deleteInquiryArray : [],
         }
     },
     methods : {
+        deleteInquiry(){
+            const self = this;
+
+            const deleteInquiryList = self.deleteInquiryArray.map( inquiry => inquiry.inquiryCompanyName ).join(", ");
+            const isConfirmed = window.confirm( `are you sure to delet inquiry of [ ${ deleteInquiryList } ]` );
+
+            if( ! isConfirmed ){
+                return;
+            }
+
+            const url = self.$api( "uri", "not-display-join-inquiry" );
+            self.$axios.delete( url , { data : self.deleteInquiryArray } )
+                .then( () => {
+                    alert( " sccess to delete ");
+                    self.getJoinInquiry();
+                })
+                .catch( alert )
+        },
         getJoinInquiry( offset = 0, afterClickPage = false  ){
             const self = this;
-            const url = self.$api( "uri", "get-join-inquiry-list" );
+            const url = self.$api( "uri", "get-join-inquiry" );
             self.json_query = { ...self.json_query, offset }
             
             self.$axios.get( url, { params : { json_query : JSON.stringify( self.json_query ) } } )
@@ -160,7 +186,7 @@ export default {
         editInquiryConsultationData( item ){
             const self = this;
             self.editConsultaion.isOpen = true;
-            self.editConsultaion.inquiryData = item;
+            self.inquiryData = item;
             console.log( { item } )
         },
         updateInquiry(){
@@ -170,6 +196,18 @@ export default {
         },
         goToRegistrationPage( inquirySeq ){
             location.href = `/company/company_registration?inquirySeq=${ inquirySeq }`
+        }
+    },
+    computed : {
+        deleteAllInquiry : {
+            get(){
+                const self = this;
+                return self.deleteInquiryArray.length === self.join_inquiry.list.length
+            },
+            set( isSelected ){
+                const self = this;
+                self.deleteInquiryArray = isSelected ? self.join_inquiry.list  : []
+            }
         }
     },
     mounted(){

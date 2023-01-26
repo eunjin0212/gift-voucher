@@ -28,6 +28,11 @@ export default {
                 { text : "Company Name" , value : "COMPANY" },
                 { text : "Admin Name" , value : "ADMIN" },
             ],
+            billingStatusOptions : [
+                { text : "All" , value : null },
+                { text : "Trial" , value : "TRIAL" },
+                { text : "Billing" , value : "BILLING" },
+            ],
             companyList: [],
             showCompanyRegistration: false,
             showCompanyPop: false,
@@ -35,15 +40,21 @@ export default {
                 limit : 10,
                 offset : null,
                 companyName : null,
+                billingStatus : null
             },
             selectCompany: null,
             currentPage : null,
             searchRequest : {
                 searchType : "COMPANY",
-                companyName : null
+                companyName : "",
+                billingStatus : ""
             },
             passwordSending : {
-                isOpen : true, 
+                isOpen : false, 
+                companyName : "",
+                inviteEmail : "",
+                companySeq : "",
+                invitedList : []
             }
         };
     }, //data
@@ -55,16 +66,6 @@ export default {
         over15CharFromFullName : ValidateUtil.over15CharFromFullName,
         over15Charaters : ValidateUtil.over15Charaters,
         convertPhoneGlobalToLocal : ValidateUtil.convertPhoneGlobalToLocal,
-
-        clickCompany(item) {
-            const self = this;
-            self.showCompanyPop = true;
-            self.selectCompany = item.companySeq;
-            self.$nextTick( () => {
-                self.$refs.companyPop.getEmployeeData();
-                self.$refs.companyPop.clickTab('companyInfo', item.companySeq);
-            })
-        },
         companyRegistrationPop(){
             location.href="/company/company_registration"
         },
@@ -90,18 +91,31 @@ export default {
             self.json_query = {
                 limit : self.json_query.limit,
                 companyName : self.searchRequest.companyName,
+                billingStatus : self.searchRequest.billingStatus ?? null
             };
 
             self.getCompanyListData();
             self.currentPage = 1;
         },
         clickPasswordSending( company ){
+            console.log({company})
             const self = this;
             self.passwordSending.isOpen = true;
-
+            const { companyName, companySeq } = company;
+            self.passwordSending = { ...self.passwordSending, companyName, companySeq, inviteEmail : "" };
+            self.getInvitedAdminList( companySeq );
         },
-        sendingInviteEmail(){
-            alert("email sending")
+        getInvitedAdminList( companySeq ){
+            if( ! companySeq ) return;
+            const self = this;
+            const url = self.$api("uri", "get-invite-admin")
+            const params = new URLSearchParams();
+            params.append( "json_query", JSON.stringify({ companySeq }) )
+            self.$axios.get( url, { params } ).then( (res ) => {
+                self.passwordSending.invitedList = res.data.data.list;
+                console.log( res.data.data.list )
+            })
+            .catch( alert )
         }
     },
 }; // export default
@@ -117,6 +131,11 @@ export default {
                     + Registration Company
                 </button>
                 <div class="flex justify-between items-center gap-3">
+                    <ElementsSelect
+                        :width60="true"
+                        :options="billingStatusOptions"
+                        v-model="searchRequest.billingStatus"
+                    />
                     <ElementsSelect 
                         :width60="true"
                         :options="searchOptions"
@@ -161,17 +180,17 @@ export default {
                     <tbody class="divide-y divide-gray-200 bg-white">
                         <tr v-for="(company, index) in companyList" v-bind:key="index" >
                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900 sm:pl-6">{{ company.companyName }}</td>
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> henry </td>
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> henry@sharetreats.com </td>
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> 090000000000 </td>
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> 07/04/2022 00:00:00 </td>
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> 08/01/2023 00:00:00 </td>
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> 08/01/2023 00:00:00 </td>
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> 50 </td>
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> A </td>
+                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">  {{ company.subscriptionPicName }} </td>
+                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ company.subscriptionPicEmail }} </td>
+                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ company.subscriptionPicPhoneNumber }} </td>
+                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ company.subscribeStartDate}}  </td>
+                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ company.subscribeEndDate }} </td>
+                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ company.useFeeDepositDate }} </td>
+                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ company.employeeCount }} </td>
+                            <td class="whitespace-pre-wrap px-3 py-4 text-sm text-gray-900"> {{ company.flexbenType }} </td>
                             <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                <a href="#" class=" text-indigo-600 hover:text-indigo-900">
-                                    Edit
+                                <a :href="`/company/company_information?subscriptionCompanySeq=${company.subscriptionCompanySeq}`" class=" text-indigo-600 hover:text-indigo-900">
+                                    Info
                                 </a>
                             </td>
                             <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
@@ -200,7 +219,10 @@ export default {
                 v-model="passwordSending.isOpen"
                 name="Password Sending"
             >  
-                <PopupInviteMasterAdmin />
+                <PopupInviteMasterAdmin 
+                    v-model="passwordSending"
+                    @closePopup="passwordSending.isOpen=false"
+                />
             </AppPopup>
         </Teleport>
     </div>

@@ -4,6 +4,8 @@ import { defineProps } from "vue";
 defineProps({
   tabs: Array,
 });
+
+// emit 이벤트에서 tab.name을 전달 => tab 자체 전달로 변경 
 </script>
 
 <template>
@@ -18,7 +20,7 @@ defineProps({
         :class="{ 'ml-14': index > 0, 'border-transparent': !tab.current, 'border-indigo-600': tab.current, 'text-black': tab.current }"
 
         href="javascript:void(0)"
-        @click="$emit('clickEvent', tab.name)"
+        @click="$emit( 'clickEvent', tab )"
     >{{ tab.text }} <span v-if="tab.count"> ({{tab.count}}) </span> </a>
   </template>
   </div>

@@ -19,6 +19,10 @@ module.exports = {
         template: 'public/default.html',
         title: 'Company'
     },
+    'company/company_information': {
+        template: 'public/default.html',
+        title: 'Company information'
+    },
     'flexben/top_up' : {
         template: 'public/default.html',
         title: 'Topup'
