@@ -7,34 +7,22 @@ let items = reactive([
    {
     href: "/hrDashboard",
     img: "app-side-1",
-    text: "Dashboard",
+    text: "Summary",
   },
   {
     href: "/inquiry",
     img: "app-side-3",
-    text: "Inquiry",
+    text: "Activate Process",
   },
   {
-    children: true,
+    href: "/company/company_list",
     img: "app-side-2",
     text: "Company",
   },
   {
-    parent: "app-side-2",
-    show: false,
-    href: "/company/company_list",
-    text: "Company List",
-  },
-  {
-    children: true,
-    img: "app-side-7",
-    text: "Settings",
-  },
-  {
-    parent: "app-side-7",
-    show: false,
-    href: "/admin_settings/admin_settings",
-    text: "Admin Settings",
+    href: "/report",
+    img: "app-side-4",
+    text: "Report",
   },
   {
     children: true,

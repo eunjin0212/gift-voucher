@@ -15,7 +15,6 @@ export default {
     data() {
         return {
             companyCount : null,
-            items: ["Company"],
             tabs: [
                 {
                 name: "company",
@@ -124,7 +123,7 @@ export default {
 <template>
     <div id="app" class="min-w-[1024px] min-h-[100vh] flex">
         <AppAside />
-        <AppMain :items="items">
+        <AppMain :headerName="'Company'">
             <div class="flex flex-col items-end gap-5 flex-wrap p-5">
                 <button class="h-12 w-fit px-5 py-3 border rounded border-indigo-600 bg-indigo-600 text-sm font-semibold text-white hover:bg-indigo-800 transition-all duration-500 text-center"
                     @click="companyRegistrationPop">

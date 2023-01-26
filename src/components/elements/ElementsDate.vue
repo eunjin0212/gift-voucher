@@ -11,6 +11,10 @@ export default{
 		name: String,
 		error: String,
         disabled : Boolean,
+        isNotBgWhite : Boolean,
+        lowerLimit : String,
+        upperLimit : String,
+
 	},
 	emits : ['update:modelValue', "changeDate"],
 	methods : {
@@ -19,6 +23,12 @@ export default{
                 return null; 
             }
             return moment( dateStr ).format("yyyy-MM-DD HH:mm:ss");
+        },
+        stringToDate( dateStr ){
+            if( ! dateStr ) {
+                return null;
+            }
+            return moment(dateStr, "yyyy-MM-DD HH:mm:ss").toDate();
         }
 	},
     computed : {
@@ -26,14 +36,13 @@ export default{
             get(){
                 const self = this;
                 if( ! self.modelValue ) return null;
-                console.log( 'get : ', self.modelValue )
                 self.$emit("update:modelValue",  moment( self.modelValue ).format("yyyy-MM-DD HH:mm:ss") );
-                return moment(self.modelValue, "yyyy-MM-DD HH:mm:ss").toDate();
+                return self.stringToDate(self.modelValue);
             },  
             set( newDate ){
                 const self = this;
-                console.log( {newDate} )
                 self.$emit("update:modelValue",  moment( newDate ).format("yyyy-MM-DD HH:mm:ss") );
+                self.$emit("changeDate", self.modelValue );
             }
         }
     }
@@ -45,13 +54,17 @@ export default{
 	<div>
 		<h1 v-if="name" class="mb-3 text-sm font-semibold text-slate-800">{{ name }}</h1>
 		<div
-			class="max-w-6xl h-12 bg-white flex transition-all duration-500"
+			class="max-w-6xl h-12  flex transition-all duration-500"
+            :class="[ isNotBgWhite ? '' : 'bg-white']"
 		>
 			<Datepicker
                 inputFormat="MM/dd/yyyy" 
                 class="shadow-sm block w-full sm:text-sm border-gray-300 rounded-md text-md border pr-3 text-right h-8" 
+                :class="{'bg-slate-50 border-none' : disabled }"
 				v-model="dateValue"
                 :disabled="disabled"
+                :lowerLimit="stringToDate(lowerLimit)"
+                :upperLimit="stringToDate(upperLimit)"
 			/>
 		</div>
 		<p class="mt-3.5 text-xs font-normal text-red-500" v-show="error">*{{ error }}</p>

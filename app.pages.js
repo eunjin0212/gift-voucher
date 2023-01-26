@@ -34,5 +34,9 @@ module.exports = {
     'inquiry' : {
         template: 'public/default.html',
         title: 'Inquiry'
+    },
+    report : {
+        template: 'public/default.html',
+        title: 'Report'
     }
 }
