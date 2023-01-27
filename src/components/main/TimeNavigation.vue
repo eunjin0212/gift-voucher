@@ -61,9 +61,12 @@
 import moment from 'moment';
 
 export default {
+    props : {
+        outputFormat : String 
+    },
     data(){
         return {
-            currentFocus : "",
+            currentFocus : "THIS_MONTH",
             startDate : "",
             endDate : "",
             dateFormat : "yyyy-MM-DD HH:mm:ss"
@@ -101,7 +104,7 @@ export default {
         dateFormatChange( dateStr ){
             const self = this;
             if( !dateStr ) return null;
-            return moment( dateStr, self.dateFormat ).format("YYYYMMDD")
+            return moment( dateStr, self.dateFormat ).format(self.outputFormat)
         }
     },
     

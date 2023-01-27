@@ -18,6 +18,7 @@
 
         "get-flexben-campaign-List" : "/api/flexben/campaign",
         "get-flexben-report-List" : "/api/flexben/report",
+        "get-flexben-history-List" : "/api/flexben/history",
 
         "get-join-inquiry" :  "/api/inquiry",
         "put-join-inquiry" : "/api/inquiry",

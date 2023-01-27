@@ -23,13 +23,13 @@ module.exports = {
         template: 'public/default.html',
         title: 'Company information'
     },
-    'flexben/top_up' : {
+    'flexben/topup_deduct' : {
         template: 'public/default.html',
-        title: 'Topup'
+        title: 'Topup/Deduct History'
     },
-    'flexben/top_up/registering' : {
+    'flexben/topup_deduct/registering' : {
         template: 'public/default.html',
-        title: 'Topup'
+        title: 'Register Topup/Deduct'
     },
     'inquiry' : {
         template: 'public/default.html',

@@ -1,5 +1,5 @@
 import { createApp } from "vue";
-import App from "@/pages/flexben/top_up/top_up.vue";
+import App from "@/pages/flexben/topup_deduct/topup_deduct.vue";
 import "@/index.css";
 import ElementsSelect from "@/components/elements/ElementsSelectRef.vue";
 import ElementsInput from "@/components/elements/ElementsInput.vue";

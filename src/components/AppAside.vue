@@ -32,8 +32,8 @@ let items = reactive([
   {
     parent: "app-side-6",
     show: false,
-    href: "/flexben/top_up",
-    text: "topup",
+    href: "/flexben/topup_deduct",
+    text: "Topup/Deduct",
   },
 
 ]);
