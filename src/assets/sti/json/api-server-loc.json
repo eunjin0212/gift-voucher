@@ -18,7 +18,7 @@
 
         "get-flexben-campaign-List" : "/api/flexben/campaign",
         "get-flexben-report-List" : "/api/flexben/report",
-        "get-flexben-history-List" : "/api/flexben/history",
+        "get-flexben-history" : "/api/flexben/history",
 
         "get-join-inquiry" :  "/api/inquiry",
         "put-join-inquiry" : "/api/inquiry",
@@ -28,8 +28,9 @@
         "post-invite-admin" : "/api/invite/admin",
         "put-invite-admin" : "/api/invite/admin",
 
-
-
+        "post-file-direct-upload" : "/api/util/file-direct/upload",
+        "post-flexben-file-upload" : "/api/flexben/history/file",
+        "post-topup-to-company" :"/api/flexben/history/topup",
 
         "ENDSTRING" : "END"
     }

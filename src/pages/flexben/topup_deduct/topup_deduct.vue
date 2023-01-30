@@ -38,6 +38,7 @@
                                 <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">PO Doc No</th>
                                 <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">Invoice Doc No</th>
                                 <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">OR Doc No</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900"> <span class="sr-only"> Edit </span> </th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200 bg-white">
@@ -45,11 +46,14 @@
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900 sm:pl-6"> {{ history.regDate }} </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ history.companyName }} </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ history.transactionNote }} </td>
-                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> Add </td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ mainTabs.find(tab => tab.current).text }} </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ history.mileageVolume }} </td>
-                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> 파일이름1 </td>
-                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> 파일이름2 </td>
-                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> 파일이름3 </td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm underline text-blue-600 cursor-pointer" @click="downLoadFile(history.poDocumentFilePath)"> {{ showTheFileName( history.poDocumentFilePath) }} </td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm underline text-blue-600 cursor-pointer" @click="downLoadFile(history.invoiceFilePath)"> {{ showTheFileName( history.invoiceFilePath) }} </td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm underline text-blue-600 cursor-pointer" @click="downLoadFile(history.orDocumentFilePath)"> {{ showTheFileName( history.orDocumentFilePath) }} </td>
+                                <td class="whitespace-nowrap  text-sm text-gray-900 pr-3"> 
+                                    <div class="cursor-pointer border border-blue-300 px-5 py-2 rounded-md" @click="clickEditHistoryFile(history.mileageCompanyHistorySeq)"> Edit </div> 
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -96,18 +100,15 @@ export default {
         },
         getFlexbenHistoryList( offset=0, afterClickPage = false ){
             const self = this;
-            const url = self.$api("uri", "get-flexben-history-List");
+            const url = self.$api("uri", "get-flexben-history");
             const { limit } = self.flexbenHistory; 
             self.flexbenHistory.offset = offset;
             const json_query = { ...self.searchOptions, offset, limit };
-            console.log( { json_query } )
             self.$axios.get( url , { params : { json_query : JSON.stringify(json_query) } })
                 .then((res) => {
                     self.flexbenHistory.total = res.data.data.count;
                     self.flexbenHistory.list = res.data.data.list.map(report =>{
-                        // report.transactionType = self.transactionTypeOptions
-                        //                         .find( type => type.value == report.transactionType )
-                        //                         .text
+
                         return report;
                     });
                     if( ! afterClickPage ){
@@ -127,6 +128,24 @@ export default {
             const self = this;
             self.getFlexbenHistoryList( item, true )
         },
+        clickEditHistoryFile( historySeq ){
+            location.href = `/flexben/topup_deduct/registering?mileageSeq=${ historySeq } `;
+        },
+        showTheFileName( filePath ){
+            let fileName = "";
+            if( ! filePath ) {
+                return fileName;
+            }
+            const params = new URLSearchParams( filePath )
+            return params.get("downloadFileName");
+        },
+        downLoadFile( filePath ){
+            console.log( " hihi hoho")
+            if( ! filePath ) return;
+            const link = document.createElement('a');
+            link.href= filePath
+            link.click();    
+        }
     },
     data(){
         return{

@@ -7,6 +7,7 @@ defineProps({
   width28: Boolean,
   width24: Boolean,
   width32: Boolean,
+  width60 : Boolean,
   widthFull: Boolean,
   backgroundWhite: Boolean,
   backgroundIndigo2: Boolean,
@@ -35,12 +36,14 @@ defineProps({
           !width24 &&
           !width28 &&
           !width32 &&
+          !width60 &&
           !widthFull,
         'w-fit': fitContent,
         'w-20': width20,
         'w-24': width24,
         'w-28': width28,
         'w-32': width32,
+        'w-60' : width60,
         'w-full': widthFull,
         'border-dashed': borderDashed,
         'border-gray-400': borderDashed,
@@ -68,12 +71,14 @@ defineProps({
           !width24 &&
           !width28 &&
           !width32 &&
+          !width60 &&
           !widthFull,
         'w-fit': fitContent,
         'w-20': width20,
         'w-24': width24,
         'w-28': width28,
         'w-32': width32,
+        'w-60' : width60,
         'w-full': widthFull,
         'border-dashed': borderDashed,
         'border-gray-400': borderDashed,
@@ -99,12 +104,14 @@ defineProps({
           !width24 &&
           !width28 &&
           !width32 &&
+          !width60 &&
           !widthFull,
         'w-fit': fitContent,
         'w-20': width20,
         'w-24': width24,
         'w-28': width28,
         'w-32': width32,
+        'w-60' : width60,
         'w-full': widthFull,
         'border-dashed': borderDashed,
         'border-gray-400': borderDashed,
@@ -130,12 +137,14 @@ defineProps({
           !width24 &&
           !width28 &&
           !width32 &&
+          !width60 &&
           !widthFull,
         'w-fit': fitContent,
         'w-20': width20,
         'w-24': width24,
         'w-28': width28,
         'w-32': width32,
+        'w-60' : width60,
         'w-full': widthFull,
         'border-dashed': borderDashed,
         'border-gray-400': borderDashed,
@@ -161,12 +170,14 @@ defineProps({
           !width24 &&
           !width28 &&
           !width32 &&
+          !width60 &&
           !widthFull,
         'w-fit': fitContent,
         'w-20': width20,
         'w-24': width24,
         'w-28': width28,
         'w-32': width32,
+        'w-60' : width60,
         'w-full': widthFull,
         'border-dashed': borderDashed,
         'border-gray-400': borderDashed,
@@ -192,12 +203,14 @@ defineProps({
           !width24 &&
           !width28 &&
           !width32 &&
+          !width60 &&
           !widthFull,
         'w-fit': fitContent,
         'w-20': width20,
         'w-24': width24,
         'w-28': width28,
         'w-32': width32,
+        'w-60' : width60,
         'w-full': widthFull,
         'border-dashed': borderDashed,
         'border-gray-400': borderDashed,

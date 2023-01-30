@@ -7,7 +7,10 @@ export default {
         Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions, CheckIcon, SelectorIcon
     },
     props: {
-        modelValue: [String, Object, Number],
+        modelValue: {
+            type : [String, Object, Number, Boolean],
+            default : true
+        },
         name: String,
         error: String,
         readonly: Boolean,
@@ -15,7 +18,7 @@ export default {
             type : Array,
             // eslint-disable-next-line vue/require-valid-default-prop
             default : [
-                { text : null, value: null, explanation:null }
+                { text : null, value: null }
             ],
         minSize : {
                 type : String,
@@ -41,7 +44,6 @@ export default {
         return {
             showOptions: false,
             selectText: null,
-            explanation : null,
         };
     },
     computed:{
@@ -80,12 +82,6 @@ export default {
         } 
     },
     methods: {
-        updateExplantion(value){
-            if(!value) return;
-            const self = this;
-            const option = self.selectOption.find(e => e.value == value)         
-            self.explanation = option.explanation;
-        }
     },
     mounted() {
     },
@@ -94,6 +90,15 @@ export default {
 
 <template>
 <div class="relative">
+
+<!-- <select name="pets" v-model="selected.value">
+    <option :value="modelValue"> {{ modelValue }}</option>
+    <template  v-for="item in options" :key="item.value" >
+        <option :value="item.value">{{item.text}}</option>
+    </template>
+</select> -->
+
+
     <Listbox as="div" v-model="selected" :disabled="readonly">
         <ListboxLabel class="text-sm font-light text-zinc-500" v-show="name"> {{ name }} </ListboxLabel>
         <div class="mt-1 relative" @click="click">
@@ -106,7 +111,7 @@ export default {
                 class="block truncate text-base font-light "
                 :class="{ 'text-gray-400': ! modelValue }"
                 >  
-                    {{ selected? selected.text : defaultMsg }}  
+                    {{ selected ? selected.text : defaultMsg }}  
             </span>
             <span class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
             <SelectorIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
@@ -126,7 +131,7 @@ export default {
                     >
                     {{ item.text }}
                 </span>
-                <span v-if="selected" :class="[active ? 'text-white' : 'text-indigo-600', 'absolute inset-y-0 right-0 flex items-center pr-4']">
+                <span v-if="selected && modelValue" :class="[active ? 'text-white' : 'text-indigo-600', 'absolute inset-y-0 right-0 flex items-center pr-4']">
                     <CheckIcon class="h-5 w-5" aria-hidden="true" />
                 </span>
                 </li>
@@ -135,7 +140,6 @@ export default {
         </transition>
         </div>
     </Listbox>
-    <p class="mt-3.5 text-xs font-normal text-grey-500" v-if="explanation"> *{{ explanation }}</p>
     <p class="mt-3.5 text-xs font-normal text-red-500" v-show="error">{{ error }}</p>
 </div>
 </template>
