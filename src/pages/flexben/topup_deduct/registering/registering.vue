@@ -9,9 +9,7 @@
                             <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
                                 <dt class="text-sm font-medium text-gray-500">company</dt>
                                 <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                                    <div v-if="isNotEditable"> {{ registerData.companyName }} </div>
                                     <ElementsSelect
-                                        v-else
                                         :options="companyList"
                                         v-model="registerData.companySeq"
                                     />
@@ -26,17 +24,16 @@
                                 <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                                     <div>
                                         <div class="space-y-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-10">
-                                            <div v-for="notificationMethod in notificationMethods" :key="notificationMethod.id" class="flex items-center">
+                                            <div v-for="pointMethod in pointExcutionMethods" :key="pointMethod.id" class="flex items-center">
                                                 <input 
                                                     v-model="registerData.transactionType"
-                                                    :id="notificationMethod.id"
-                                                    :value="notificationMethod.id" 
-                                                    name="notification-method" type="radio" 
-                                                    :checked="notificationMethod.id===registerData.transactionType" 
+                                                    :id="pointMethod.id"
+                                                    :value="pointMethod.id" 
+                                                    name="point-excution-method" type="radio" 
+                                                    :checked="pointMethod.id===registerData.transactionType" 
                                                     class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                                                    :disabled="isNotEditable"
                                                 />
-                                                <label :for="notificationMethod.id" class="ml-3 block text-sm font-medium text-gray-700">{{ notificationMethod.title }}</label>
+                                                <label :for="pointMethod.id" class="ml-3 block text-sm font-medium text-gray-700">{{ pointMethod.title }}</label>
                                             </div>
                                         </div>
                                     </div>
@@ -49,20 +46,19 @@
                                         class="w-full mt-1 shadow-sm block sm:text-sm border-gray-300 rounded-md"    
                                         :min="0"
                                         v-model="registerData.mileageVolume"
-                                        :disabled="isNotEditable"
                                     />
                                 </dd>
                             </div>
                             <div>
-                                <div v-if="registerData.poDocumentFilePath" class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                                <div v-if="documentFiles.poDocumentFile" class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
                                     <dt class="text-sm font-medium text-gray-500">PO softcopy</dt>
                                     <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 flex justify-between">
-                                        <a class="text-blue-600 underline cursor-pointer" :href="registerData.poDocumentFilePath"> 
-                                            {{ showTheFileName( registerData.poDocumentFilePath )}}
-                                        </a>
+                                        <div class="text-blue-600" > 
+                                            {{ documentFiles.poDocumentFileName }}
+                                        </div>
                                         <div 
                                             class="border border-red-600 p-2 bg-white rounded-md font-semibold text-red-600 cursor-pointer"
-                                            name="poDocumentFilePath"
+                                            name="poDocumentFile"
                                             @click="deleteSelectedFile"
                                         >
                                             delete
@@ -80,26 +76,18 @@
                                             name="poDocumentFile"
                                         />
                                     </dd>
-                                    <dt class="text-sm font-medium text-gray-500">PO Document No.</dt>
-                                    <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                                        <ElementsInput
-                                            :full="true"
-                                            v-model="documentFiles.poDocumentFileName"
-                                            :disabled="true"
-                                        />
-                                    </dd>
                                 </div>
                             </div>
                             <div>
-                                <div v-if="registerData.invoiceFilePath" class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                                <div v-if="documentFiles.invoiceFileName" class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
                                     <dt class="text-sm font-medium text-gray-500">PO softcopy</dt>
                                     <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 flex justify-between">
-                                        <a class="text-blue-600 underline cursor-pointer" :href="registerData.invoiceFilePath"> 
-                                            {{ showTheFileName( registerData.invoiceFilePath )}}
-                                        </a>
+                                        <div class="text-blue-600" > 
+                                            {{ documentFiles.invoiceFileName }}
+                                        </div>
                                         <div 
                                             class="border border-red-600 p-2 bg-white rounded-md font-semibold text-red-600 cursor-pointer"
-                                            name="invoiceFilePath"
+                                            name="invoiceFile"
                                             @click="deleteSelectedFile"
                                         >
                                             delete
@@ -117,26 +105,18 @@
                                             :min="0"
                                         />
                                     </dd>
-                                    <dt class="text-sm font-medium text-gray-500">Invoice Document No.</dt>
-                                    <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                                        <ElementsInput
-                                            :full="true"
-                                            v-model="documentFiles.invoiceFileName"
-                                            :disabled="true"
-                                        />
-                                    </dd>
                                 </div>
                             </div>
                             <div>
-                                <div v-if="registerData.orDocumentFilePath" class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                                <div v-if="documentFiles.orDocumentFileName" class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
                                     <dt class="text-sm font-medium text-gray-500">PO softcopy</dt>
                                     <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 flex justify-between">
-                                        <a class="text-blue-600 underline cursor-pointer" :href="registerData.orDocumentFilePath"> 
-                                            {{ showTheFileName( registerData.orDocumentFilePath )}}
-                                        </a>
+                                        <div class="text-blue-600" > 
+                                            {{ documentFiles.orDocumentFileName }}
+                                        </div>
                                         <div 
                                             class="border border-red-600 p-2 bg-white rounded-md font-semibold text-red-600 cursor-pointer"
-                                            name="orDocumentFilePath"
+                                            name="orDocumentFile"
                                             @click="deleteSelectedFile"
                                         >
                                             delete
@@ -154,27 +134,12 @@
                                             name="orDocumentFile"
                                         />
                                     </dd>
-                                    <dt class="text-sm font-medium text-gray-500">Or Document No.</dt>
-                                    <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                                        <ElementsInput
-                                            :full="true"
-                                            v-model="documentFiles.orDocumentFileName"
-                                            :disabled="true"
-                                        />
-                                    </dd>
                                 </div>
                             </div>
                         </dl>
                     </div>
                 </div>
-                <div v-if="isNotEditable" class="flex justify-end gap-4">
-                    <ElementsButton 
-                        :backgroundWhite="true"
-                        :text="'Back To List'"
-                        @clickEvent="backToLilstPage"
-                    />
-                </div>
-                <div v-else class="flex justify-end gap-4">
+                <div class="flex justify-end gap-4">
                     <ElementsButton
                         :backgroundWhite="true"
                         :width32="true"
@@ -208,7 +173,7 @@ export default {
         return{
             isNotEditable : true,
             companyList : [],
-            notificationMethods : [
+            pointExcutionMethods : [
                 { id: 'TOPUP_FROM_HRFLEX', title: 'Topup' },
                 { id: 'DEDUCT_TO_HRFLEX', title: 'Deduct' },
             ],
@@ -248,7 +213,6 @@ export default {
                     text : companyName, value : companySeq
                 }));
             });
-            
         },
         submitDocumentFiles(){
             const self = this;
@@ -264,21 +228,6 @@ export default {
             form.append( `uploadFileName3` , orDocumentFileName );
 
             return self.$axios.post( url, form, { headers : {'Content-Type' : 'multipart/form-data;'} })
-        },
-        getMileageHistory(){
-            const self = this;
-            const params = new URLSearchParams( window.location.search );
-            if( ! params.has("mileageSeq") ){
-                self.isNotEditable = false;
-                return;
-            }
-
-            const url = self.$api( "uri", "get-flexben-history" );
-            self.$axios.get( `${url}/${params.get("mileageSeq")}`)
-                .then( res => {
-                    self.registerData = { ...res.data.data };
-                })
-                .catch(alert);
         },
         afterFileSelect( e ){
             const self = this;
@@ -307,41 +256,18 @@ export default {
                     return self.$axios.post( url, registerData )
                 } )
                 .then( () => {
-                    // alert( "hihi ")
-                    // location.href = "/flexben/topup_deduct"
-                    self.backToLilstPage();
+                    location.href = "/flexben/topup_deduct"
                 })
                 .catch( err => {
                     let errMsg = err.response.data.code || err;
                     alert( errMsg );
                 })
-
-        },
-        backToLilstPage(){
-            location.href = "/flexben/topup_deduct"
-        },
-        showTheFileName( filePath ){
-            let fileName = "";
-            if( ! filePath ) {
-                return fileName;
-            }
-            const params = new URLSearchParams( filePath )
-            return params.get("downloadFileName");
         },
         deleteSelectedFile( e ){
             const self = this;
-            console.log( e )
             const elementName = e.target.getAttribute('name');
-            // const filePath = self.registerData[ elementName ];
-            // self.$axios
-            //     .delete( filePath )
-            //     .then( () => {
-                    // self.registerData[elementName] = null;
-                // })
-                // .catch( alert );
-
-            self.registerData[elementName] = null;
-            
+            self.documentFiles[elementName] = null;
+            self.documentFiles[`${elementName}Name`] = null;
         },
     }
     
