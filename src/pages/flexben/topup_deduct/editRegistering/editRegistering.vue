@@ -9,10 +9,7 @@
                             <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
                                 <dt class="text-sm font-medium text-gray-500">company</dt>
                                 <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                                    <ElementsSelect
-                                        :options="companyList"
-                                        v-model="registerData.companySeq"
-                                    />
+                                    <div> {{ registerData.companyName }} </div>
                                 </dd>
                             </div>
                             <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
@@ -24,16 +21,15 @@
                                 <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                                     <div>
                                         <div class="space-y-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-10">
-                                            <div v-for="pointMethod in pointExcutionMethods" :key="pointMethod.id" class="flex items-center">
+                                            <div class="flex items-center">
                                                 <input 
-                                                    v-model="registerData.transactionType"
-                                                    :id="pointMethod.id"
-                                                    :value="pointMethod.id" 
                                                     name="point-excution-method" type="radio" 
-                                                    :checked="pointMethod.id===registerData.transactionType" 
+                                                    :checked="true" 
                                                     class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                                 />
-                                                <label :for="pointMethod.id" class="ml-3 block text-sm font-medium text-gray-700">{{ pointMethod.title }}</label>
+                                                <label class="ml-3 block text-sm font-medium text-gray-700"> 
+                                                    {{ pointExcutionMethods.find(type => type.id === registerData.transactionType ).title }} 
+                                                </label>
                                             </div>
                                         </div>
                                     </div>
@@ -42,25 +38,19 @@
                             <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
                                 <dt class="text-sm font-medium text-gray-500">Points</dt>
                                 <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                                    <input type="number"
-                                        class="w-full mt-1 shadow-sm block sm:text-sm border-gray-300 rounded-md"    
-                                        :min="0"
-                                        v-model="registerData.mileageVolume"
-                                    />
+                                    <div> {{ registerData.mileageVolume }} </div>
                                 </dd>
                             </div>
-
                             <div>
-                                
-                                <div v-if="documentFiles.poDocumentFile" class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                                <div v-if="registerData.poDocumentFilePath" class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
                                     <dt class="text-sm font-medium text-gray-500">PO softcopy</dt>
                                     <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 flex justify-between">
-                                        <div class="text-blue-600" > 
-                                            {{ documentFiles.poDocumentFileName }}
-                                        </div>
+                                        <a class="text-blue-600 underline cursor-pointer" :href="registerData.poDocumentFilePath"> 
+                                            {{ showTheFileName( registerData.poDocumentFilePath )}}
+                                        </a>
                                         <div 
                                             class="border border-red-600 p-2 bg-white rounded-md font-semibold text-red-600 cursor-pointer"
-                                            name="poDocumentFile"
+                                            name="poDocumentFilePath"
                                             @click="deleteSelectedFile"
                                         >
                                             delete
@@ -75,23 +65,21 @@
                                             :min="0"
                                             multiple 
                                             @input="afterFileSelect"
-                                            name="poDocumentFile"
+                                            name="poDocumentFilePath"
                                         />
                                     </dd>
                                 </div>
-
                             </div>
                             <div>
-
-                                <div v-if="documentFiles.invoiceFileName" class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                                <div v-if="registerData.invoiceFilePath" class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
                                     <dt class="text-sm font-medium text-gray-500">PO softcopy</dt>
                                     <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 flex justify-between">
-                                        <div class="text-blue-600" > 
-                                            {{ documentFiles.invoiceFileName }}
-                                        </div>
+                                        <a class="text-blue-600 underline cursor-pointer" :href="registerData.invoiceFilePath"> 
+                                            {{ showTheFileName( registerData.invoiceFilePath )}}
+                                        </a>
                                         <div 
                                             class="border border-red-600 p-2 bg-white rounded-md font-semibold text-red-600 cursor-pointer"
-                                            name="invoiceFile"
+                                            name="invoiceFilePath"
                                             @click="deleteSelectedFile"
                                         >
                                             delete
@@ -104,25 +92,23 @@
                                         <input type="file"
                                             multiple 
                                             @input="afterFileSelect"
-                                            name="invoiceFile"
+                                            name="invoiceFilePath"
                                             class="w-full mt-1 shadow-sm block sm:text-sm bg-white border-gray-300 rounded-md"    
                                             :min="0"
                                         />
                                     </dd>
                                 </div>
-
                             </div>
                             <div>
-
-                                <div v-if="documentFiles.orDocumentFileName" class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                                <div v-if="registerData.orDocumentFilePath" class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
                                     <dt class="text-sm font-medium text-gray-500">PO softcopy</dt>
                                     <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 flex justify-between">
-                                        <div class="text-blue-600" > 
-                                            {{ documentFiles.orDocumentFileName }}
-                                        </div>
+                                        <a class="text-blue-600 underline cursor-pointer" :href="registerData.orDocumentFilePath"> 
+                                            {{ showTheFileName( registerData.orDocumentFilePath )}}
+                                        </a>
                                         <div 
                                             class="border border-red-600 p-2 bg-white rounded-md font-semibold text-red-600 cursor-pointer"
-                                            name="orDocumentFile"
+                                            name="orDocumentFilePath"
                                             @click="deleteSelectedFile"
                                         >
                                             delete
@@ -137,25 +123,19 @@
                                             :min="0"
                                             multiple 
                                             @input="afterFileSelect"
-                                            name="orDocumentFile"
+                                            name="orDocumentFilePath"
                                         />
                                     </dd>
                                 </div>
-
                             </div>
                         </dl>
                     </div>
                 </div>
                 <div class="flex justify-end gap-4">
-                    <ElementsButton
+                    <ElementsButton 
                         :backgroundWhite="true"
-                        :width32="true"
-                        :text="'Cancel'"
-                    />
-                    <ElementsButton
-                        :width32="true"
-                        :text="'Submit'"
-                        @clickEvent="submitFlexbenAction"
+                        :text="'Back To List'"
+                        @clickEvent="backToLilstPage"
                     />
                 </div>
             </div>
@@ -170,7 +150,6 @@ import AppMain from "@/components/main/AppMain.vue";
 export default {
     mounted(){
         const self = this;
-        self.getCompanyList();
         self.getMileageHistory();
     },
     components:{
@@ -203,79 +182,87 @@ export default {
                 orDocumentFile : null,
                 poDocumentFileName : null
             },
-            deleteFileUrls : []
         }
     },
     methods:{
-        getCompanyList(){
+        getMileageHistory(){
             const self = this;
-            const json_query = {
-                limit : 10,
-                offset : null,
-                companyName : null,
+            const params = new URLSearchParams( window.location.search );
+            if( ! params.has("mileageSeq") ){
+                self.backToLilstPage();
             }
-            const url = self.$api( "uri", "get-company" );
-            self.$axios.get(url, { params : { json_query } }).then(res => {
-                self.companyList = res.data.data.list.map( ({ companyName, companySeq }) => ({
-                    text : companyName, value : companySeq
-                }));
-            });
-        },
-        submitDocumentFiles(){
-            const self = this;
-            
-            const url = self.$api("uri", "post-file-direct-upload" );
-            const { poDocumentFile, orDocumentFileName, invoiceFile,  invoiceFileName, orDocumentFile, poDocumentFileName } = self.documentFiles;
-            let form = new FormData();
-            form.append( `uploadFile1` , poDocumentFile );
-            form.append( `uploadFile2` , invoiceFile );
-            form.append( `uploadFile3` , orDocumentFile );
-            form.append( `uploadFileName1` , poDocumentFileName );
-            form.append( `uploadFileName2` , invoiceFileName );
-            form.append( `uploadFileName3` , orDocumentFileName );
 
-            return self.$axios.post( url, form, { headers : {'Content-Type' : 'multipart/form-data;'} })
+            const url = self.$api( "uri", "get-flexben-history" );
+            self.$axios.get( `${url}/${params.get("mileageSeq")}`)
+                .then( res => {
+                    self.registerData = { ...res.data.data };
+                })
+                .catch(alert);
+        },
+        updateRegisterDocs( updateData ){
+            const self = this;
+            const url = self.$api("uri", "post-flexben-file");
+            return self.$axios.put(url, updateData );
         },
         afterFileSelect( e ){
             const self = this;
-            const { files, name } = e.target
+            const { files, name } = e.target;
             if( files.size < 0 ){
                 return ; 
             }
+            const mileageCompanyHistorySeq = new URLSearchParams( window.location.search ).get("mileageSeq");
+            const url = self.$api("uri", "post-file-direct-upload" );
+            let form = new FormData();
 
-            self.documentFiles[ name ] = files[0];
-            self.documentFiles[ `${name}Name`] = files[0].name
-        },
-        submitFlexbenAction(){
-            const self = this;
-            const url = self.$api( "uri", "post-topup-to-company" );
+            form.append( `uploadFile1` , files[0] );
+            form.append( `uploadFileName1` , files[0].name );
 
-            self.submitDocumentFiles()
-                .then( res => {
-                    return res.data.data;
-                })
-                .then( ({uploadFile1, uploadFile2, uploadFile3}) =>{
-                    const registerData = { 
-                                            ...self.registerData, 
-                                            poDocumentFilePath : uploadFile1 , 
-                                            invoiceFilePath :  uploadFile2, 
-                                            orDocumentFilePath : uploadFile3 }
-                    return self.$axios.post( url, registerData )
+            self.$axios.post( url, form, { headers : {'Content-Type' : 'multipart/form-data;'} })
+                .then( res => res.data.data.uploadFile1  )
+                .then( filepath => {
+                    self.registerData[name] = filepath;
+                    return { [name] : filepath, mileageCompanyHistorySeq }
                 } )
-                .then( () => {
-                    location.href = "/flexben/topup_deduct"
-                })
-                .catch( err => {
-                    let errMsg = err.response.data.code || err;
-                    alert( errMsg );
-                })
+                .then( self.updateRegisterDocs )
+                .catch( alert )
+        },
+
+        backToLilstPage(){
+            location.href = "/flexben/topup_deduct"
+        },
+        showTheFileName( filePath ){
+            let fileName = "";
+            if( ! filePath ) {
+                return fileName;
+            }
+            const params = new URLSearchParams( filePath )
+            return params.get("downloadFileName");
         },
         deleteSelectedFile( e ){
             const self = this;
             const elementName = e.target.getAttribute('name');
-            self.documentFiles[elementName] = null;
-            self.documentFiles[`${elementName}Name`] = null;
+            const mileageCompanyHistorySeq = new URLSearchParams( window.location.search ).get("mileageSeq");
+            
+            const deleteData = {
+                [elementName] :  self.registerData[elementName] 
+                , mileageCompanyHistorySeq
+            };
+
+            const url = self.$api("uri", "delete-flexben-file");
+            self.$axios.delete( url, { data : deleteData } )
+                .then( () => self.registerData[elementName] )
+                .then(( filePath ) => self.deleteUtilFileDirectDownload(filePath) )
+                .then( () => {
+                    self.registerData[elementName] = null;
+                })
+                .catch( alert )
+            
         },
+        deleteUtilFileDirectDownload( filePath ){
+            const self = this;
+            return self.$axios.delete( filePath )
+        },
+
     }
     
 }

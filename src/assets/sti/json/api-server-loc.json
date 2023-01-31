@@ -29,7 +29,8 @@
         "put-invite-admin" : "/api/invite/admin",
 
         "post-file-direct-upload" : "/api/util/file-direct/upload",
-        "post-flexben-file-upload" : "/api/flexben/history/file",
+        "post-flexben-file" : "/api/flexben/history/file",
+        "delete-flexben-file" : "/api/flexben/history/file",
         "post-topup-to-company" :"/api/flexben/history/topup",
 
         "ENDSTRING" : "END"

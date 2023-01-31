@@ -129,7 +129,7 @@ export default {
             self.getFlexbenHistoryList( item, true )
         },
         clickEditHistoryFile( historySeq ){
-            location.href = `/flexben/topup_deduct/registering?mileageSeq=${ historySeq } `;
+            location.href = `/flexben/topup_deduct/editRegistering?mileageSeq=${ historySeq } `;
         },
         showTheFileName( filePath ){
             let fileName = "";
