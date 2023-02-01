@@ -18,7 +18,7 @@
                                 </div>
                                 <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
                                     <dt class="text-sm font-medium text-gray-500">Admin</dt>
-                                    <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"> henryc / hr / henry@sharetreats.com </dd>
+                                    <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"> {{ logonProfile.name }} / {{ logonProfile.id }} </dd>
                                 </div>
                                 <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
                                     <dt class="text-sm font-medium text-gray-500">Points type </dt>
@@ -174,12 +174,20 @@ export default {
     mounted(){
         const self = this;
         self.getCompanyList();
+        const { hrAdminName , loginId } = window.logOnProfile.data;
+        self.logonProfile.name = hrAdminName;
+        self.logonProfile.id = loginId;
+
     },
     components:{
         AppMain, AppAside
     },
     data(){
         return{
+            logonProfile : {
+                name : "",
+                id : "" ,
+            },
             isNotEditable : true,
             companyList : [],
             pointExcutionMethods : [
