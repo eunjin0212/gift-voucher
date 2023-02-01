@@ -2,163 +2,166 @@
     <div id="app" class="min-w-[1024px] min-h-[100vh] flex">
         <AppAside />
         <AppMain :headerName="'Registering'">
-            <div class="flex flex-col p-3 w-full max-w-7xl mt-4 gap-3">
-                <div class="overflow-hidden mt-3">
-                    <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
-                        <dl class="sm:divide-y sm:divide-gray-200">
-                            <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-                                <dt class="text-sm font-medium text-gray-500">company</dt>
-                                <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                                    <ElementsSelect
-                                        :options="companyList"
-                                        v-model="registerData.companySeq"
-                                    />
-                                </dd>
-                            </div>
-                            <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-                                <dt class="text-sm font-medium text-gray-500">Admin</dt>
-                                <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"> henryc / hr / henry@sharetreats.com </dd>
-                            </div>
-                            <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-                                <dt class="text-sm font-medium text-gray-500">Points type </dt>
-                                <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                                    <div>
-                                        <div class="space-y-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-10">
-                                            <div v-for="pointMethod in pointExcutionMethods" :key="pointMethod.id" class="flex items-center">
-                                                <input 
-                                                    v-model="registerData.transactionType"
-                                                    :id="pointMethod.id"
-                                                    :value="pointMethod.id" 
-                                                    name="point-excution-method" type="radio" 
-                                                    :checked="pointMethod.id===registerData.transactionType" 
-                                                    class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                                                />
-                                                <label :for="pointMethod.id" class="ml-3 block text-sm font-medium text-gray-700">{{ pointMethod.title }}</label>
+            <form @submit.prevent="submitFlexbenAction">
+                <div class="flex flex-col p-3 w-full max-w-7xl mt-4 gap-3">
+                    <div class="overflow-hidden mt-3">
+                        <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
+                            <dl class="sm:divide-y sm:divide-gray-200">
+                                <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                                    <dt class="text-sm font-medium text-gray-500">company</dt>
+                                    <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                                        <ElementsSelect
+                                            :options="companyList"
+                                            v-model="registerData.companySeq"
+                                        />
+                                    </dd>
+                                </div>
+                                <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                                    <dt class="text-sm font-medium text-gray-500">Admin</dt>
+                                    <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"> henryc / hr / henry@sharetreats.com </dd>
+                                </div>
+                                <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                                    <dt class="text-sm font-medium text-gray-500">Points type </dt>
+                                    <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                                        <div>
+                                            <div class="space-y-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-10">
+                                                <div v-for="pointMethod in pointExcutionMethods" :key="pointMethod.id" class="flex items-center">
+                                                    <input 
+                                                        @change="changePointTypeSetToMinMax($event.target.id)"
+                                                        v-model="registerData.transactionType"
+                                                        :id="pointMethod.id"
+                                                        :value="pointMethod.id" 
+                                                        name="point-excution-method" type="radio" 
+                                                        :checked="pointMethod.id===registerData.transactionType" 
+                                                        class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                                    />
+                                                    <label :for="pointMethod.id" class="ml-3 block text-sm font-medium text-gray-700">{{ pointMethod.title }}</label>
+                                                </div>
                                             </div>
                                         </div>
+                                    </dd>
+                                </div>
+                                <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                                    <dt class="text-sm font-medium text-gray-500">Points</dt>
+                                    <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                                        <input 
+                                            type="number"
+                                            class="w-full mt-1 shadow-sm block sm:text-sm border-gray-300 rounded-md"    
+                                            :min="registerData.transactionType === 'TOPUP_FROM_HRFLEX' ? 1 : null"
+                                            :max="registerData.transactionType === 'DEDUCT_TO_HRFLEX' ? -1 : null"
+                                            v-model="registerData.mileageVolume"
+                                        />
+                                    </dd>
+                                </div>
+
+                                <div>
+                                    
+                                    <div v-if="documentFiles.poDocumentFile" class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                                        <dt class="text-sm font-medium text-gray-500">PO softcopy</dt>
+                                        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 flex justify-between">
+                                            <div class="text-blue-600" > 
+                                                {{ documentFiles.poDocumentFileName }}
+                                            </div>
+                                            <div 
+                                                class="border border-red-600 p-2 bg-white rounded-md font-semibold text-red-600 cursor-pointer"
+                                                name="poDocumentFile"
+                                                @click="deleteSelectedFile"
+                                            >
+                                                delete
+                                            </div>
+                                        </dd>
                                     </div>
-                                </dd>
-                            </div>
-                            <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-                                <dt class="text-sm font-medium text-gray-500">Points</dt>
-                                <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                                    <input type="number"
-                                        class="w-full mt-1 shadow-sm block sm:text-sm border-gray-300 rounded-md"    
-                                        :min="0"
-                                        v-model="registerData.mileageVolume"
-                                    />
-                                </dd>
-                            </div>
+                                    <div v-else class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                                        <dt class="text-sm font-medium text-gray-500">PO softcopy</dt>
+                                        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                                            <input type="file"
+                                                class="w-full mt-1 shadow-sm block sm:text-sm bg-white border-gray-300 rounded-md"    
+                                                multiple 
+                                                @input="afterFileSelect"
+                                                name="poDocumentFile"
+                                            />
+                                        </dd>
+                                    </div>
 
-                            <div>
-                                
-                                <div v-if="documentFiles.poDocumentFile" class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-                                    <dt class="text-sm font-medium text-gray-500">PO softcopy</dt>
-                                    <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 flex justify-between">
-                                        <div class="text-blue-600" > 
-                                            {{ documentFiles.poDocumentFileName }}
-                                        </div>
-                                        <div 
-                                            class="border border-red-600 p-2 bg-white rounded-md font-semibold text-red-600 cursor-pointer"
-                                            name="poDocumentFile"
-                                            @click="deleteSelectedFile"
-                                        >
-                                            delete
-                                        </div>
-                                    </dd>
                                 </div>
-                                <div v-else class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-                                    <dt class="text-sm font-medium text-gray-500">PO softcopy</dt>
-                                    <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                                        <input type="file"
-                                            class="w-full mt-1 shadow-sm block sm:text-sm bg-white border-gray-300 rounded-md"    
-                                            :min="0"
-                                            multiple 
-                                            @input="afterFileSelect"
-                                            name="poDocumentFile"
-                                        />
-                                    </dd>
-                                </div>
+                                <div>
 
-                            </div>
-                            <div>
+                                    <div v-if="documentFiles.invoiceFileName" class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                                        <dt class="text-sm font-medium text-gray-500">PO softcopy</dt>
+                                        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 flex justify-between">
+                                            <div class="text-blue-600" > 
+                                                {{ documentFiles.invoiceFileName }}
+                                            </div>
+                                            <div 
+                                                class="border border-red-600 p-2 bg-white rounded-md font-semibold text-red-600 cursor-pointer"
+                                                name="invoiceFile"
+                                                @click="deleteSelectedFile"
+                                            >
+                                                delete
+                                            </div>
+                                        </dd>
+                                    </div>
+                                    <div v-else class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                                        <dt class="text-sm font-medium text-gray-500">Invoice softcopy</dt>
+                                        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                                            <input type="file"
+                                                multiple 
+                                                @input="afterFileSelect"
+                                                name="invoiceFile"
+                                                class="w-full mt-1 shadow-sm block sm:text-sm bg-white border-gray-300 rounded-md"    
+                                            />
+                                        </dd>
+                                    </div>
 
-                                <div v-if="documentFiles.invoiceFileName" class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-                                    <dt class="text-sm font-medium text-gray-500">PO softcopy</dt>
-                                    <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 flex justify-between">
-                                        <div class="text-blue-600" > 
-                                            {{ documentFiles.invoiceFileName }}
-                                        </div>
-                                        <div 
-                                            class="border border-red-600 p-2 bg-white rounded-md font-semibold text-red-600 cursor-pointer"
-                                            name="invoiceFile"
-                                            @click="deleteSelectedFile"
-                                        >
-                                            delete
-                                        </div>
-                                    </dd>
                                 </div>
-                                <div v-else class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-                                    <dt class="text-sm font-medium text-gray-500">Invoice softcopy</dt>
-                                    <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                                        <input type="file"
-                                            multiple 
-                                            @input="afterFileSelect"
-                                            name="invoiceFile"
-                                            class="w-full mt-1 shadow-sm block sm:text-sm bg-white border-gray-300 rounded-md"    
-                                            :min="0"
-                                        />
-                                    </dd>
-                                </div>
+                                <div>
 
-                            </div>
-                            <div>
+                                    <div v-if="documentFiles.orDocumentFileName" class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                                        <dt class="text-sm font-medium text-gray-500">PO softcopy</dt>
+                                        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 flex justify-between">
+                                            <div class="text-blue-600" > 
+                                                {{ documentFiles.orDocumentFileName }}
+                                            </div>
+                                            <div 
+                                                class="border border-red-600 p-2 bg-white rounded-md font-semibold text-red-600 cursor-pointer"
+                                                name="orDocumentFile"
+                                                @click="deleteSelectedFile"
+                                            >
+                                                delete
+                                            </div>
+                                        </dd>
+                                    </div>
+                                    <div v-else class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                                        <dt class="text-sm font-medium text-gray-500">OR softcopy</dt>
+                                        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                                            <input type="file"
+                                                class="w-full mt-1 shadow-sm block sm:text-sm bg-white border-gray-300 rounded-md"    
+                                                multiple 
+                                                @input="afterFileSelect"
+                                                name="orDocumentFile"
+                                            />
+                                        </dd>
+                                    </div>
 
-                                <div v-if="documentFiles.orDocumentFileName" class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-                                    <dt class="text-sm font-medium text-gray-500">PO softcopy</dt>
-                                    <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 flex justify-between">
-                                        <div class="text-blue-600" > 
-                                            {{ documentFiles.orDocumentFileName }}
-                                        </div>
-                                        <div 
-                                            class="border border-red-600 p-2 bg-white rounded-md font-semibold text-red-600 cursor-pointer"
-                                            name="orDocumentFile"
-                                            @click="deleteSelectedFile"
-                                        >
-                                            delete
-                                        </div>
-                                    </dd>
                                 </div>
-                                <div v-else class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-                                    <dt class="text-sm font-medium text-gray-500">OR softcopy</dt>
-                                    <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                                        <input type="file"
-                                            class="w-full mt-1 shadow-sm block sm:text-sm bg-white border-gray-300 rounded-md"    
-                                            :min="0"
-                                            multiple 
-                                            @input="afterFileSelect"
-                                            name="orDocumentFile"
-                                        />
-                                    </dd>
-                                </div>
-
-                            </div>
-                        </dl>
+                            </dl>
+                        </div>
+                    </div>
+                    <div class="flex justify-end gap-4">
+                        <ElementsButton
+                            :backgroundWhite="true"
+                            :width32="true"
+                            :text="'Cancel'"
+                            @clickEvent="locationToList"
+                        />
+                        <ElementsButton
+                            :inputtype="'submit'"
+                            :width32="true"
+                            :text="'Submit'"
+                        />
                     </div>
                 </div>
-                <div class="flex justify-end gap-4">
-                    <ElementsButton
-                        :backgroundWhite="true"
-                        :width32="true"
-                        :text="'Cancel'"
-                    />
-                    <ElementsButton
-                        :width32="true"
-                        :text="'Submit'"
-                        @clickEvent="submitFlexbenAction"
-                    />
-                </div>
-            </div>
+            </form>
         </AppMain>
     </div>
 </template>
@@ -171,7 +174,6 @@ export default {
     mounted(){
         const self = this;
         self.getCompanyList();
-        self.getMileageHistory();
     },
     components:{
         AppMain, AppAside
@@ -190,7 +192,7 @@ export default {
                 companyName : "",
                 executerId : "",
                 transactionNote : "",
-                mileageVolume : 0,
+                mileageVolume : 1,
                 poDocumentFilePath : null,
                 invoiceFilePath : null,
                 orDocumentFilePath : null
@@ -207,10 +209,18 @@ export default {
         }
     },
     methods:{
+        changePointTypeSetToMinMax( type ){
+            const self = this;
+            let finalMileageVolume = Math.abs( self.registerData.mileageVolume );
+            if( type === 'DEDUCT_TO_HRFLEX' ){
+                finalMileageVolume *= -1;
+            }
+            self.registerData.mileageVolume = finalMileageVolume;
+        },
         getCompanyList(){
             const self = this;
             const json_query = {
-                limit : 10,
+                limit : -1,
                 offset : null,
                 companyName : null,
             }
@@ -250,6 +260,11 @@ export default {
             const self = this;
             const url = self.$api( "uri", "post-topup-to-company" );
 
+            if( ! self.registerData.companySeq ){
+                alert( "company must be selected ");
+                return;
+            }
+
             self.submitDocumentFiles()
                 .then( res => {
                     return res.data.data;
@@ -263,10 +278,11 @@ export default {
                     return self.$axios.post( url, registerData )
                 } )
                 .then( () => {
-                    location.href = "/flexben/topup_deduct"
+                    self.locationToList();
                 })
                 .catch( err => {
-                    let errMsg = err.response.data.code || err;
+                    const { code, message } = err.response.data; 
+                    let errMsg = code ? code + "\n" + message : err;
                     alert( errMsg );
                 })
         },
@@ -276,6 +292,9 @@ export default {
             self.documentFiles[elementName] = null;
             self.documentFiles[`${elementName}Name`] = null;
         },
+        locationToList(){
+            location.href = "/flexben/topup_deduct"
+        }
     }
     
 }

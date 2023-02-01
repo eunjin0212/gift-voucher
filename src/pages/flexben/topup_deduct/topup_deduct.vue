@@ -26,7 +26,7 @@
                         :text="'Search'"    
                     />
                 </div>
-                <div class="mt-6 overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                <div class="mt-6 overflow-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                     <table class="min-w-full divide-y divide-gray-300">
                         <thead>
                             <tr>
@@ -82,6 +82,8 @@ export default {
     mounted(){
         const self = this;
         self.getFlexbenHistoryList();
+        const res =  this.mainTabs.find( tab => tab.current ).name;
+        console.log(res )
     },
     components : {
         AppAside, AppMain, TimeNavigation, MainTabs
@@ -92,7 +94,7 @@ export default {
             self.mainTabs.map( tab => {
                 tab.current = tabItem.name === tab.name;
             })
-            self.searchOptions.transactionType = self.mainTabs.map( tab => tab.current ).name;
+            self.searchOptions.transactionType = self.mainTabs.find( tab => tab.current ).name;
             self.getFlexbenHistoryList();
         },
         goToRegistering(){
