@@ -18,6 +18,7 @@
                 />
                 <div class="flex mt-5 gap-2">
                     <ElementsInput
+                        v-model="searchOptions.companyName"
                         :width60="true" 
                         :height11="true"
                     />

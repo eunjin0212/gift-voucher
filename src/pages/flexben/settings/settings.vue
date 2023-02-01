@@ -17,7 +17,6 @@ import AppMain from "@/components/main/AppMain.vue";
 import MainTabs from "@/components/main/sections/MainTabs.vue"
 import FlexbenType from "@/pages/flexben/settings/flexben_type/flexben_type.vue"
 import BrandOnOff from "@/pages/flexben/settings/brand_on_off/brand_on_off.vue"
-import moment from "moment";
 
 export default {
     mounted(){
@@ -37,8 +36,8 @@ export default {
     data(){
         return{
             mainTabs : [
-                { text : "Flexben Type", name : "FLEXBEN_TYPE", current : true },
-                { text : "Brand on/off" , name : "BRAND_ON_OFF", current : false },
+                { text : "Flexben Type", name : "FLEXBEN_TYPE", current : false },
+                { text : "Brand on/off" , name : "BRAND_ON_OFF", current : true },
             ],
         }
     }
