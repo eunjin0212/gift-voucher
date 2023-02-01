@@ -35,6 +35,12 @@ let items = reactive([
     href: "/flexben/topup_deduct",
     text: "Topup/Deduct",
   },
+  {
+    parent: "app-side-6",
+    show: false,
+    href: "/flexben/settings",
+    text: "Flexben Settings",
+  },
 
 ]);
 onMounted(() => {

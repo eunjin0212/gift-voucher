@@ -1,7 +1,7 @@
 <template>
     <div id="app" class="min-w-[1024px] min-h-[100vh] flex">
         <AppAside />
-            <AppMain :headerName="'name of company'">
+            <AppMain :headerName="registerData.companyName">
                 <div class="flex justify-between">
                     <MainTabs :tabs="mainTabs" class="mt-9" @clickEvent="clickTabs" />
                     <ElementsButton 
@@ -218,7 +218,7 @@ export default {
             registerData : {
                 subscriptionCompanySeq: null,
                 companySeq: null,
-                companyName: null,
+                companyName: "",
                 flexbenType: null,
                 flexbenCampaignSeq: "",
                 subscriptionPicEmail: null,

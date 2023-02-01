@@ -35,6 +35,10 @@ module.exports = {
         template: 'public/default.html',
         title: 'Register Topup/Deduct'
     },
+    'flexben/settings' : {
+        template: 'public/default.html',
+        title: 'Register Topup/Deduct'
+    },
     'inquiry' : {
         template: 'public/default.html',
         title: 'Inquiry'
