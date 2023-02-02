@@ -36,8 +36,8 @@ export default {
     data(){
         return{
             mainTabs : [
-                { text : "Flexben Type", name : "FLEXBEN_TYPE", current : false },
-                { text : "Brand on/off" , name : "BRAND_ON_OFF", current : true },
+                { text : "Flexben Type", name : "FLEXBEN_TYPE", current : true },
+                { text : "Brand on/off" , name : "BRAND_ON_OFF", current : false },
             ],
         }
     }

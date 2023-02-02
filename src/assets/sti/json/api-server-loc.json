@@ -33,6 +33,10 @@
         "delete-flexben-file" : "/api/flexben/history/file",
         "post-topup-to-company" :"/api/flexben/history/topup",
 
+        "get-flexben-campaign-with-count" : "/api/flexben/setting",
+        "get-company-flexben-campaign" : "/api/flexben/setting/company",
+        "get-company-brand-on-off" : "/api/flexben/brand-on-off",
+
         "ENDSTRING" : "END"
     }
 }
