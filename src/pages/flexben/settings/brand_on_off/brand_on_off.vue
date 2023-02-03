@@ -16,7 +16,7 @@
         </form>
         <div class="mt-6 overflow-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
             <table class="min-w-full divide-y divide-gray-300">
-                <thead>
+                <thead class="bg-gray-50">
                     <tr>
                         <th scope="col" class="whitespace-no-wrap px-3 py-3.5 text-center text-sm text-gray-900 sm:pl-6">Company</th>
                         <th scope="col" class="whitespace-pre-wrap px-3 py-3.5 text-center text-sm text-gray-900">Number of Activate brands</th>
@@ -31,7 +31,11 @@
                         <td class="whitespace-nowrap px-3 py-4 text-center text-sm text-gray-900"> {{ countOffBrandAll - company.countOff }} </td>
                         <td class="whitespace-nowrap px-3 py-4 text-center text-sm text-gray-900"> {{ company.countOff }} </td>
                         <td class="whitespace-nowrap text-sm text-gray-900 pr-3"> 
-                            <div class="cursor-pointer text-red-600 border text-center border-red-300 px-5 py-2 rounded-md"> Brand on/off </div> 
+                            <div class="cursor-pointer text-red-600 border text-center border-red-300 px-5 py-2 rounded-md"
+                                @click="clickBrandOnOffBtn( company )"
+                            > 
+                                Brand on/off 
+                            </div> 
                         </td>
                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">  </td>
                     </tr>
@@ -46,13 +50,38 @@
                 @clickPage="clickPageButton"
             />
         </div>
+        <Teleport to="body">
+            <AppPopup 
+                v-model="editBrandpopup.isOpen" 
+                :buttonText="'Change'"
+                @buttonEvent="editBrandOffList"
+            >
+                <BrandOnOffEdit
+                    :brandList="editBrandpopup.brandList"
+                    ref="blockList"
+                />
+            </AppPopup>
+        </Teleport>
     </div>
 </template>
 
 <script>
+import BrandOnOffEdit from '@/pages/flexben/settings/popup/brand_on_off_edit.vue'
+import AppPopup from "@/components/AppPopup.vue"
+
 export default {
+    components :{
+        BrandOnOffEdit, AppPopup
+    },
     data(){
         return {
+            editBrandpopup : {
+                isOpen : true,
+                brandList : [],
+                brandOffList : [],
+                companySeq : "",
+                flexbenWalletCompanySeq : ""
+            },
             companyWithBrand : {
                 list : [],
                 total : 0,
@@ -67,6 +96,39 @@ export default {
         }
     },
     methods : {
+        editBrandOffList(){
+            const self = this;
+            self.editBrandpopup.brandOffList = self.$refs.blockList.brand_off_list;
+            
+            const {brandOffList, companySeq, flexbenWalletCompanySeq } = self.editBrandpopup;
+            
+            const url = self.$api("uri", "put-company-brand-on-off");
+            self.$axios.put( url , { brandOffList, companySeq, flexbenWalletCompanySeq } )
+                .then( () => {
+                    self.editBrandpopup.isOpen = false;
+                    self.getCompanyListWithBrandOff();
+                    // alert(' successs ');
+                })
+                .catch( err => {
+                    const { code, message } = err.response.data; 
+                    const errMsg = code ? code + "\n" + message : err;
+                    alert( errMsg )
+                })
+        },
+        clickBrandOnOffBtn( { companySeq, flexbenWalletCompanySeq } ){
+            const self = this;
+            self.editBrandpopup = { ...self.editBrandpopup, companySeq, flexbenWalletCompanySeq }
+            const url = self.$api("uri", "get-company-company-brand-off");
+            const params = new URLSearchParams();
+            params.append( "json_query", JSON.stringify( { companySeq, flexbenWalletCompanySeq } ) );
+
+            self.$axios.get( url , { params } )
+                .then(res => {
+                    self.$refs.blockList.brand_off_list = res.data.data.list;
+                    self.editBrandpopup.isOpen = true;
+                })
+                .catch( alert );
+        },
         getCompanyListWithBrandOff( offset=0, afterClickPage = false ){
             const self = this;
             self.companyWithBrand.offset = offset;
@@ -78,10 +140,11 @@ export default {
             const url = self.$api("uri", "get-company-brand-on-off" );
             self.$axios.get( url, { params } )
                 .then( res => {
-                    const { list, total, totalBrands } = res.data.data;
+                    const { list, total, brandList, totalBrands } = res.data.data;
                     self.companyWithBrand.list = list;
                     self.companyWithBrand.total = total;
                     self.countOffBrandAll = totalBrands;
+                    self.editBrandpopup.brandList = brandList;
 
                     if( ! afterClickPage ){
                         self.companyWithBrand.page = 1;

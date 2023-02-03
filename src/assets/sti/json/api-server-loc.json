@@ -36,6 +36,9 @@
         "get-flexben-campaign-with-count" : "/api/flexben/setting",
         "get-company-flexben-campaign" : "/api/flexben/setting/company",
         "get-company-brand-on-off" : "/api/flexben/brand-on-off",
+        "get-company-company-brand-off" : "/api/flexben/brand-on-off/company",
+        
+        "put-company-brand-on-off" : "/api/flexben/brand-on-off/company",
 
         "ENDSTRING" : "END"
     }
