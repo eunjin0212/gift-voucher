@@ -76,7 +76,7 @@ export default {
     data(){
         return {
             editBrandpopup : {
-                isOpen : true,
+                isOpen : false,
                 brandList : [],
                 brandOffList : [],
                 companySeq : "",
