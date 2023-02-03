@@ -20,7 +20,7 @@
                     <tr>
                         <th scope="col" class="whitespace-no-wrap px-3 py-3.5 text-center text-sm text-gray-900 sm:pl-6">Company</th>
                         <th scope="col" class="whitespace-pre-wrap px-3 py-3.5 text-center text-sm text-gray-900">Number of Activate brands</th>
-                        <th scope="col" class="whitespace-pre-wrap px-3 py-3.5 text-center text-sm text-gray-900">Sumber of Deactivated brands</th>
+                        <th scope="col" class="whitespace-pre-wrap px-3 py-3.5 text-center text-sm text-gray-900">Number of Deactivated brands</th>
                         <th scope="col" class="whitespace-pre-wrap px-3 py-3.5 text-center text-sm text-gray-900 ">  Brand Setting </th>
                         <th scope="col" class="whitespace-pre-wrap px-3 py-3.5 text-center text-sm text-gray-900 w-4/12">   </th>
                     </tr>

@@ -20,7 +20,6 @@ import BrandOnOff from "@/pages/flexben/settings/brand_on_off/brand_on_off.vue"
 
 export default {
     mounted(){
-        const self = this;
     },
     components : {
         AppAside, AppMain, MainTabs, FlexbenType, BrandOnOff
@@ -36,8 +35,8 @@ export default {
     data(){
         return{
             mainTabs : [
-                { text : "Flexben Type", name : "FLEXBEN_TYPE", current : false },
-                { text : "Brand on/off" , name : "BRAND_ON_OFF", current : true },
+                { text : "Flexben Type", name : "FLEXBEN_TYPE", current : true },
+                { text : "Brand on/off" , name : "BRAND_ON_OFF", current : false },
             ],
         }
     }

@@ -124,14 +124,13 @@ export default {
             // const registerDatesData = self.dateFormatChangeForSave( self.registerData );
             const registerData = { ...self.registerData }
 
-console.log({registerData});
-            // const url = self.$api("uri", "post-company" );
-            // self.$axios.post( url , registerData )
-            //     .then( () => { 
-            //         alert("success to regiter company" )
-            //         location.href = "/company/company_list";
-            //     })
-            //     .catch( alert )
+            const url = self.$api("uri", "post-company" );
+            self.$axios.post( url , registerData )
+                .then( () => { 
+                    alert("success to regiter company" )
+                    location.href = "/company/company_list";
+                })
+                .catch( alert )
         },
         validationCheck(){
             const self = this;
