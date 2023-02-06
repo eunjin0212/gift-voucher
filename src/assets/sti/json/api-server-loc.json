@@ -31,7 +31,7 @@
         "post-file-direct-upload" : "/api/util/file-direct/upload",
         "post-flexben-file" : "/api/flexben/history/file",
         "delete-flexben-file" : "/api/flexben/history/file",
-        "post-topup-to-company" :"/api/flexben/history/topup",
+        "post-topup-to-company" :"/api/flexben/history/execute",
 
         "get-flexben-campaign-with-count" : "/api/flexben/setting/type",
         "get-company-flexben-campaign" : "/api/flexben/setting/type/company",

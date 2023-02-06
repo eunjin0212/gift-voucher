@@ -46,7 +46,7 @@
                             <tr v-for="(history, index) in flexbenHistory.list" v-bind:key="index" >
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900 sm:pl-6"> {{ history.regDate }} </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ history.companyName }} </td>
-                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ history.transactionNote }} </td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ history.executerId }} </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ mainTabs.find(tab => tab.current).text }} </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ history.mileageVolume }} </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm underline text-blue-600 cursor-pointer" @click="downLoadFile(history.poDocumentFilePath)"> {{ showTheFileName( history.poDocumentFilePath) }} </td>
