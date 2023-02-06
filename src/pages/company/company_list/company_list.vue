@@ -124,93 +124,96 @@ export default {
     <div id="app" class="min-w-[1024px] min-h-[100vh] flex">
         <AppAside />
         <AppMain :headerName="'Company'">
-            <div class="flex flex-col items-end gap-5 flex-wrap p-5">
-                <button class="h-12 w-fit px-5 py-3 border rounded border-indigo-600 bg-indigo-600 text-sm font-semibold text-white hover:bg-indigo-800 transition-all duration-500 text-center"
-                    @click="companyRegistrationPop">
-                    + Registration Company
-                </button>
-                <div class="flex justify-between items-center gap-3">
-                    <ElementsSelect
-                        :width60="true"
-                        :options="billingStatusOptions"
-                        v-model="searchRequest.billingStatus"
-                    />
-                    <ElementsSelect 
-                        :width60="true"
-                        :options="searchOptions"
-                        v-model="searchRequest.searchType"
-                        :readonly="true"
-                    />
-                    <ElementsInput
-                        v-model="searchRequest.companyName"
-                        placeholder="Search Company"
-                        :width72="true"
-                        :height11="true"
-                    />
-                    <ElementsButton
-                        text="Search"
-                        :fitContent="true"
-                        :height12="true"
-                        @click-event="searchCompanyData"
+            <div class="mt-8 p-3 rounded-lg w-full max-w-7xl bg-white shadow-md shadow-gray-200 flex flex-col">
+                <div class="flex flex-col items-end gap-5 flex-wrap p-5">
+                    <button class="h-12 w-fit px-5 py-3 border rounded border-indigo-600 bg-indigo-600 text-sm font-semibold text-white hover:bg-indigo-800 transition-all duration-500 text-center"
+                        @click="companyRegistrationPop">
+                        + Registration Company
+                    </button>
+                    <div class="flex justify-between items-center gap-3">
+                        <ElementsSelect
+                            :width60="true"
+                            :options="billingStatusOptions"
+                            v-model="searchRequest.billingStatus"
+                        />
+                        <ElementsSelect 
+                            :width60="true"
+                            :options="searchOptions"
+                            v-model="searchRequest.searchType"
+                            :readonly="true"
+                        />
+                        <ElementsInput
+                            v-model="searchRequest.companyName"
+                            placeholder="Search Company"
+                            :width72="true"
+                            :height11="true"
+                        />
+                        <ElementsButton
+                            text="Search"
+                            :fitContent="true"
+                            :height12="true"
+                            @click-event="searchCompanyData"
+                        />
+                    </div>
+                </div>
+            
+                <div class=" mt-6 overflow-x-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                    <table class="relative min-w-full divide-y divide-gray-300  ">
+                        <thead class="sticky bg-gray-50 top-0 left-0 right-0 border-b border-gray-50" style="z-index: 1;">
+                            <tr>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900 sm:pl-6">Company Name</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">PIC Name</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">Admin Email</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">Admin Phone number</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">Reg Date</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">Start Date</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">End Date</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">Number of Employees</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">FlexBen type</th>
+                                <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                                    <span class="sr-only">Edit</span>
+                                </th>
+                                <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                                    <span class="sr-only"> Password Sending </span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200 bg-white">
+                            <tr v-for="(company, index) in companyList" v-bind:key="index" >
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900 sm:pl-6">{{ company.companyName }}</td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">  {{ company.subscriptionPicName }} </td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ company.subscriptionPicEmail }} </td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ company.subscriptionPicPhoneNumber }} </td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ company.subscribeStartDate}}  </td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ company.subscribeEndDate }} </td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ company.useFeeDepositDate }} </td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ company.employeeCount }} </td>
+                                <td class="whitespace-pre-wrap px-3 py-4 text-sm text-gray-900"> {{ company.flexbenType }} </td>
+                                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                                    <a :href="`/company/company_information?subscriptionCompanySeq=${company.subscriptionCompanySeq}`" class=" text-indigo-600 hover:text-indigo-900">
+                                        Info
+                                    </a>
+                                </td>
+                                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                                    <a 
+                                        href="#" class="text-rose-600 hover:text-indigo-900 whitespace-normal"
+                                        @click="clickPasswordSending( company )"
+                                    >
+                                        Password Sending
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="w-full h-28 flex mt-4 justify-center items-center">
+                    <ElementsPagination
+                        v-model="currentPage"
+                        :totalContent="companyCount"
+                        :contentsPerPage="json_query.limit"
+                        @clickPage="afterClickPage"
                     />
                 </div>
-            </div>
-            <div class=" mt-6 overflow-x-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                <table class="relative min-w-full divide-y divide-gray-300  ">
-                    <thead class="sticky bg-gray-50 top-0 left-0 right-0 border-b border-gray-50" style="z-index: 1;">
-                        <tr>
-                            <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900 sm:pl-6">Company Name</th>
-                            <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">PIC Name</th>
-                            <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">Admin Email</th>
-                            <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">Admin Phone number</th>
-                            <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">Reg Date</th>
-                            <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">Start Date</th>
-                            <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">End Date</th>
-                            <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">Number of Employees</th>
-                            <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">FlexBen type</th>
-                            <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                                <span class="sr-only">Edit</span>
-                            </th>
-                            <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                                <span class="sr-only"> Password Sending </span>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-200 bg-white">
-                        <tr v-for="(company, index) in companyList" v-bind:key="index" >
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900 sm:pl-6">{{ company.companyName }}</td>
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">  {{ company.subscriptionPicName }} </td>
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ company.subscriptionPicEmail }} </td>
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ company.subscriptionPicPhoneNumber }} </td>
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ company.subscribeStartDate}}  </td>
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ company.subscribeEndDate }} </td>
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ company.useFeeDepositDate }} </td>
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ company.employeeCount }} </td>
-                            <td class="whitespace-pre-wrap px-3 py-4 text-sm text-gray-900"> {{ company.flexbenType }} </td>
-                            <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                <a :href="`/company/company_information?subscriptionCompanySeq=${company.subscriptionCompanySeq}`" class=" text-indigo-600 hover:text-indigo-900">
-                                    Info
-                                </a>
-                            </td>
-                            <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                <a 
-                                    href="#" class="text-rose-600 hover:text-indigo-900 whitespace-normal"
-                                    @click="clickPasswordSending( company )"
-                                >
-                                    Password Sending
-                                </a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="w-full h-28 flex mt-4 justify-center items-center">
-                <ElementsPagination
-                    v-model="currentPage"
-                    :totalContent="companyCount"
-                    :contentsPerPage="json_query.limit"
-                    @clickPage="afterClickPage"
-                />
             </div>
         </AppMain>
         <Teleport to="body">
