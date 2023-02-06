@@ -39,6 +39,7 @@
         "get-company-company-brand-off" : "/api/flexben/setting/brand-on-off/company",
         
         "put-company-brand-on-off" : "/api/flexben/setting/brand-on-off/company",
+        "put-company-flexben-campaign" :"/api/flexben/setting/type",
 
         "ENDSTRING" : "END"
     }

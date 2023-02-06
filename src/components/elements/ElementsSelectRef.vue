@@ -11,6 +11,7 @@ export default {
             type : [String, Object, Number, Boolean],
             default : true
         },
+        isError : Boolean,
         name: String,
         error: String,
         readonly: Boolean,
@@ -105,7 +106,7 @@ export default {
         <ListboxButton class="bg-white relative border border-gray-300 rounded-md shadow-sm pl-3 
                 pr-10 py-2 text-left cursor-default max-w-6xl
                 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" 
-                :class="{ 'w-96': (!full && !width60 && !width40), 'w-full': full, 'w-60': width60, 'w-40': width40, 'w-20': width20, 'bg-gray-100': readonly }"
+                :class="{ 'w-96': (!full && !width60 && !width40), 'w-full': full, 'w-60': width60, 'w-40': width40, 'w-20': width20, 'bg-gray-100': readonly , 'border-red-600 border-2' : isError}"
                 >
             <span 
                 class="block truncate text-base font-light "
