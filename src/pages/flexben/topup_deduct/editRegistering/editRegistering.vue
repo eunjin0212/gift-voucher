@@ -23,12 +23,12 @@
                                         <div class="space-y-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-10">
                                             <div class="flex items-center">
                                                 <input 
-                                                    name="point-excution-method" type="radio" 
+                                                    name="point-execution-method" type="radio" 
                                                     :checked="true" 
                                                     class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                                 />
                                                 <label class="ml-3 block text-sm font-medium text-gray-700"> 
-                                                    {{ pointExcutionMethods.find(type => type.id === registerData.transactionType ).title }} 
+                                                    {{ pointExecutionMethods.find(type => type.id === registerData.transactionType ).title }} 
                                                 </label>
                                             </div>
                                         </div>
@@ -135,7 +135,7 @@
                     <ElementsButton 
                         :backgroundWhite="true"
                         :text="'Back To List'"
-                        @clickEvent="backToLilstPage"
+                        @clickEvent="backToListPage"
                     />
                 </div>
             </div>
@@ -159,7 +159,7 @@ export default {
         return{
             isNotEditable : true,
             companyList : [],
-            pointExcutionMethods : [
+            pointExecutionMethods : [
                 { id: 'TOPUP_FROM_HRFLEX', title: 'Topup' },
                 { id: 'DEDUCT_TO_HRFLEX', title: 'Deduct' },
             ],
@@ -189,7 +189,7 @@ export default {
             const self = this;
             const params = new URLSearchParams( window.location.search );
             if( ! params.has("mileageSeq") ){
-                self.backToLilstPage();
+                self.backToListPage();
             }
 
             const url = self.$api( "uri", "get-flexben-history" );
@@ -227,7 +227,7 @@ export default {
                 .catch( alert )
         },
 
-        backToLilstPage(){
+        backToListPage(){
             location.href = "/flexben/topup_deduct"
         },
         showTheFileName( filePath ){
