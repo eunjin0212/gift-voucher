@@ -40,10 +40,10 @@
                                     </dd>
                                 </div>
                                 <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-                                    <dt class="text-sm font-medium text-gray-500">Mster Admin </dt>
+                                    <dt class="text-sm font-medium text-gray-500">Master Admin </dt>
                                     <dd 
                                         class="mt-1 text-sm  sm:col-span-2 sm:mt-0 justify-self-end text-blue-600 cursor-pointer"
-                                        @click="OpenmasterAdminList()"
+                                        @click="OpenMasterAdminList()"
                                     >
                                         List 
                                     </dd>
@@ -56,7 +56,7 @@
                     <Teleport to="body">
                         <AppPopup v-model="masterAdmin.isOpen" name="Master Admin List" > 
                             
-                            <div class="flex flex-col">
+                            <div class="flex flex-col min-w-[40vw]">
                                 <div class="-my-2 -mx-4 sm:-mx-6 lg:-mx-8">
                                     <div class="inline-block min-w-full py-2 align-middle">
                                         <div class="shadow-sm ring-1 ring-black ring-opacity-5">
@@ -70,7 +70,7 @@
                                                         <th scope="col" class="sticky top-0 z-10 hidden border-b border-gray-300 bg-gray-50 bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter lg:table-cell">Email</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody class="bg-white">
+                                                <tbody class="bg-white" v-if="masterAdmin.list.length > 0">
                                                     <tr v-for="(admin, personIdx) in masterAdmin.list" :key="admin.email">
                                                         <td :class="[personIdx !== masterAdmin.list.length - 1 ? 'border-b border-gray-200' : '', 'whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8']">
                                                             {{ admin.employeeName }}
@@ -83,6 +83,9 @@
                                                         </td>
                                                     </tr>
                                                 </tbody>
+                                                <div v-else class="w-full min-h-[10vh] flex items-center justify-center">
+                                                    No Admin
+                                                </div>
                                             </table>
                                         </div>
                                     </div>
@@ -92,7 +95,7 @@
                     </Teleport>   
                 </div> <!-- SERVICE_USAGE_INFO -->
 
-                <div id="compay-info"  v-show="mainTabs.find( tab=> tab.name === 'COMPANY_INFO' ).current === true" class="bg-white shadow-md shadow-gray-200 p-4 mt-6">
+                <div id="company-info"  v-show="mainTabs.find( tab=> tab.name === 'COMPANY_INFO' ).current === true" class="bg-white shadow-md shadow-gray-200 p-4 mt-6">
                     <form @submit.prevent="clickSubmitCompanyData">
                         <div class="my-2 flex flex-col gap-4" >
                             <ElementsInput 
@@ -324,7 +327,7 @@ export default {
                 .catch( alert );
 
         },
-        OpenmasterAdminList(){
+        OpenMasterAdminList(){
             const self = this;
             self.json_query = { ...self.json_query };
             
@@ -341,7 +344,7 @@ export default {
         },
         afterClickPage( item ){
             const self = this;
-            self.OpenmasterAdminList( item, false );
+            self.OpenMasterAdminList( item, false );
         }
     }
 }

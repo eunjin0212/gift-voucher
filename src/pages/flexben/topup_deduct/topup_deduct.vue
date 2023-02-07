@@ -24,7 +24,8 @@
                     />
                     <ElementsButton
                         :width32="true"
-                        :text="'Search'"    
+                        :text="'Search'"
+                        @clickEvent="getFlexbenHistoryList()"
                     />
                 </div>
                 <div class="mt-6 overflow-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
@@ -110,10 +111,7 @@ export default {
             self.$axios.get( url , { params : { json_query : JSON.stringify(json_query) } })
                 .then((res) => {
                     self.flexbenHistory.total = res.data.data.count;
-                    self.flexbenHistory.list = res.data.data.list.map(report =>{
-// TODO: data convert 
-                        return report;
-                    });
+                    self.flexbenHistory.list = res.data.data.list;
                     if( ! afterClickPage ){
                         self.flexbenHistory.page = 1;
                     }

@@ -4,11 +4,11 @@ import { ref, reactive, onMounted } from "vue";
 const show = ref(true);
 
 let items = reactive([
-   {
-    href: "/hrDashboard",
-    img: "app-side-1",
-    text: "Summary",
-  },
+//    {
+//     href: "/hrDashboard",
+//     img: "app-side-1",
+//     text: "Summary",
+//   },
   {
     href: "/inquiry",
     img: "app-side-3",
