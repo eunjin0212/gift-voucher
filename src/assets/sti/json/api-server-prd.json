@@ -1,7 +1,7 @@
 {
     "meta" : {
-        "api-baseurl" : "https://company.hrnflex.ph",
-        "cdn-baseurl" : "https://company.hrnflex.ph"
+        "api-baseurl" : "https://admin.hrnflex.ph",
+        "cdn-baseurl" : "https://admin.hrnflex.ph"
     },
     "uris" : {
     }
