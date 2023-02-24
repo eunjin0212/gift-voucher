@@ -15,7 +15,7 @@
                 </div>
                 <div>
                     <div class="flex divide-x divide-gray-200 items-center justify-center ">
-                        <div 
+                        <div
                             class="cursor-pointer rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-500 hover:text-gray-800"
                             @click="clickEditFlexbenType(type.flexbenCampaignSeq)"
                         >
@@ -26,10 +26,11 @@
             </li>
         </ul>
         <Teleport to="body">
-            <CampaginEdit 
+            <CampaginEdit
                 v-model="editFlexbenPopup.isOpen"
                 :campaignSeq="editFlexbenPopup.campaignSeq"
                 :flexbenTypeSelectOptions="flexbenTypeSelectOptions"
+                :flexBenTypeObject="flexBenTypeObject"
                 @afterClose="getFlexbenListWithCnt()"
             />
         </Teleport>
@@ -50,7 +51,8 @@ export default {
             editFlexbenPopup : {
                 isOpen : false,
                 campaignSeq : "",
-            }
+            },
+            flexBenTypeObject : {}
         }
     },
     methods : {
@@ -64,6 +66,10 @@ export default {
                         text : `${type.flexbenTypeName} / ${type.flexbenCampaignTitle}` ,
                         value : type.flexbenCampaignSeq
                     }))
+                    self.flexBenTypeObject = self.flexbenTypeSelectOptions.reduce( ( list, type ) => {
+                        return {...list, [ type.value ] : type.text }
+                    }, {} )
+
                 })
                 .catch( alert )
         },

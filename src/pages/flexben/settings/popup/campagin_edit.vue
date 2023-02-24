@@ -18,55 +18,54 @@
 
             <div v-if="editSteps.find( step => step.id ==='VIEW_COMPANY_LIST').current === true" id="VIEW_COMPANY_LIST" >
                 <div class="max-h-[60vh] overflow-auto">
-                        <form @submit.prevent="getCompanyListByType()" class="py-2 px-1 flex gap-2 w-[40vw]">
-                            <ElementsInput
-                                :width72="true"
-                                :height11="true"
-                                :placeholder="'Search Company'"
-                                :required="true"
-                                v-model="searchCompanyName"
-                            />
-                            <ElementsButton
-                                :height12="true"
-                                :width32="true"
-                                :text="'Search'"
-                                :inputtype="'submit'"
-                            />
-                        </form>
+                    <form @submit.prevent="getCompanyListByType()" class="py-2 px-1 flex gap-2 w-[40vw]">
+                        <ElementsInput
+                            :width72="true"
+                            :height11="true"
+                            :placeholder="'Search Company'"
+                            v-model="searchCompanyName"
+                        />
+                        <ElementsButton
+                            :height12="true"
+                            :width32="true"
+                            :text="'Search'"
+                            :inputtype="'submit'"
+                        />
+                    </form>
 
-                        <table class="min-w-full max-w-[50vh] min-h-[20vh]">
-                            <thead class="bg-gray-100">
-                                <tr>
-                                    <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900 sm:pl-6">
-                                        <div class="flex h-5 items-center">
-                                            <input
-                                                v-model="checkAllEdit"
-                                                id="all" name="all" type="checkbox" class="h-4 w-4 rounded border-gray-300  focus:ring-indigo-500"
-                                            />
-                                        </div>
-                                    </th>
-                                    <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"> Company Name</th>
-                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Flexben Type</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-gray-200 bg-white  align-top">
-                                <tr v-for="( company, idx ) in companyListBySearch" :key="idx">
-                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900 sm:pl-6">
-                                        <div class="flex h-5 items-center">
-                                            <input
-                                                :value="company" v-model="wantToEditList"
-                                                id="" type="checkbox" class="h-4 w-4 rounded border-gray-300  focus:ring-indigo-500"
-                                            />
-                                        </div>
-                                    </td>
-                                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"> {{ company.companyName }} </td>
-                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                        {{ company.flexbenTypeName }} / {{ company.flexbenCampaignTitle }}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    <table class="min-w-full max-w-[50vh] min-h-[20vh]">
+                        <thead class="bg-gray-100">
+                            <tr>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900 sm:pl-6">
+                                    <div class="flex h-5 items-center">
+                                        <input
+                                            v-model="checkAllEdit"
+                                            id="all" name="all" type="checkbox" class="h-4 w-4 rounded border-gray-300  focus:ring-indigo-500"
+                                        />
+                                    </div>
+                                </th>
+                                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"> Company Name</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Flexben Type</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200 bg-white  align-top">
+                            <tr v-for="( company, idx ) in companyListBySearch" :key="idx">
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900 sm:pl-6">
+                                    <div class="flex h-5 items-center">
+                                        <input
+                                            :value="company" v-model="wantToEditList"
+                                            id="" type="checkbox" class="h-4 w-4 rounded border-gray-300  focus:ring-indigo-500"
+                                        />
+                                    </div>
+                                </td>
+                                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"> {{ company.companyName }} </td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                    {{ company.flexbenTypeName }} / {{ company.flexbenCampaignTitle }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
                 <div
                     class="px-4 py-6 flex justify-end"
                 >
@@ -135,7 +134,7 @@
                                     <label class="select-none font-medium text-gray-700">{{ company.companyName }}</label>
                                 </div>
                                 <div class="mr-3 flex h-5 items-center text-gray-500 font-medium">
-                                    {{ company.flexbenTypeName }} / {{ company.flexbenCampaignTitle }}
+                                    {{ flexBenTypeObject[company.flexbenCampaignSeq] }}
                                 </div>
                             </div>
                         </div>
@@ -172,7 +171,8 @@ export default {
     props : {
         modelValue: Boolean,
         campaignSeq : String,
-        flexbenTypeSelectOptions : Array
+        flexbenTypeSelectOptions : Array,
+        flexBenTypeObject : Object
     },
     watch : {
         modelValue( isOpen ){
@@ -233,6 +233,7 @@ export default {
             self.$axios.get( url , { params } )
                 .then( res => {
                     self.companyListBySearch = res.data.data.list;
+                    self.wantToEditList = [];
                 })
                 .catch( alert )
         },
@@ -266,7 +267,7 @@ export default {
                     alert( errMsg );
                 })
 
-        }
+        },
     }
 
 }
