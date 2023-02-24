@@ -12,12 +12,12 @@
                             @click="deleteInquiry"
                         />
                         <div class="flex gap-2">
-                            <ElementsSelect 
-                                :options="serachSelectOptions"
+                            <ElementsSelect
+                                :options="searchSelectOptions"
                                 :width60="true"
                                 v-model="json_query.searchOption"
                             />
-                            <ElementsInput 
+                            <ElementsInput
                                 :width60="true"
                                 v-model="json_query.searchText"
                             />
@@ -38,7 +38,7 @@
                                     <div class="flex h-5 items-center">
                                         <input
                                             v-model="deleteAllInquiry"
-                                            id="all" name="all" type="checkbox" class="h-4 w-4 rounded border-gray-300  focus:ring-indigo-500" 
+                                            id="all" name="all" type="checkbox" class="h-4 w-4 rounded border-gray-300  focus:ring-indigo-500"
                                         />
                                     </div>
                                 </th>
@@ -58,11 +58,11 @@
                         </thead>
                         <tbody class="divide-y divide-gray-200 bg-white">
                             <tr v-for="(inquiry, index) in join_inquiry.list" v-bind:key="index" >
-                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900 sm:pl-6"> 
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900 sm:pl-6">
                                     <div class="flex h-5 items-center">
                                         <input
-                                            :value="inquiry" v-model="deleteInquiryArray" 
-                                            id="" name="delete" type="checkbox" class="h-4 w-4 rounded border-gray-300  focus:ring-indigo-500" 
+                                            :value="inquiry" v-model="deleteInquiryArray"
+                                            id="" name="delete" type="checkbox" class="h-4 w-4 rounded border-gray-300  focus:ring-indigo-500"
                                         />
                                     </div>
                                 </td>
@@ -76,11 +76,11 @@
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ inquiry.consultantEmpName }} </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ dateFormatChage(inquiry.consultationDatetime) }} </td>
                                 <td class="relative whitespace-nowrap py-4 pr-4 text-right text-sm font-medium sm:pr-6">
-                                    <ElementsButton 
+                                    <ElementsButton
                                         :text="'Registration'"
                                         :width28="true"
                                         :borderRed="true"
-                                        @clickEvent="goToRegistrationPage( inquiry.joinInquirySeq )" 
+                                        @clickEvent="goToRegistrationPage( inquiry.joinInquirySeq )"
                                     />
                                 </td>
                             </tr>
@@ -98,18 +98,18 @@
             </div>
         </AppMain>
         <Teleport to="body">
-            <AppPopup 
+            <AppPopup
                 v-model="editConsultaion.isOpen"
                 :name="'Edit Consultation'"
             >
-                <EditConsultation 
+                <EditConsultation
                     :inquiryData="inquiryData"
-                    @update="updateInquiry"    
+                    @update="updateInquiry"
                 />
             </AppPopup>
         </Teleport>
     </div>
-    
+
 </template>
 
 <script>
@@ -128,14 +128,14 @@ export default {
                 isOpen : false,
             },
             inquiryData : {},
-            serachSelectOptions : [
+            searchSelectOptions : [
                 { text : 'Company name' , value : 'COMPANY_NAME'},
                 { text : 'Pic Name' , value : 'PIC_NAME'}
             ],
             join_inquiry : {
                 list : [],
                 total : 0,
-                page : 1, 
+                page : 1,
             },
             json_query : {
                 limit : 10,
@@ -164,7 +164,7 @@ export default {
             const url = self.$api( "uri", "not-display-join-inquiry" );
             self.$axios.delete( url , { data : self.deleteInquiryArray } )
                 .then( () => {
-                    alert( " sccess to delete ");
+                    alert( " success to delete ");
                     self.getJoinInquiry();
                 })
                 .catch( alert )
@@ -201,7 +201,7 @@ export default {
         updateInquiry(){
             const self = this;
             self.getJoinInquiry( self.json_query.offset, true )
-            self.editConsultaion.isOpen = false; 
+            self.editConsultaion.isOpen = false;
         },
         goToRegistrationPage( inquirySeq ){
             location.href = `/company/company_registration?inquirySeq=${ inquirySeq }`

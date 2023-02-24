@@ -24,8 +24,8 @@ export default {
                 },
             ],
             searchOptions : [
-                { text : "Company Name" , value : "COMPANY" },
-                { text : "Admin Name" , value : "ADMIN" },
+                { text : "Company Name" , value : "COMPANY_NAME" },
+                { text : 'Pic Name' , value : 'PIC_NAME'}
             ],
             billingStatusOptions : [
                 { text : "All" , value : null },
@@ -38,16 +38,12 @@ export default {
             json_query:{
                 limit : 10,
                 offset : null,
-                companyName : null,
-                billingStatus : null
+                billingStatus : null,
+                searchOption : "COMPANY_NAME",
+                searchText : null
             },
             selectCompany: null,
             currentPage : null,
-            searchRequest : {
-                searchType : "COMPANY",
-                companyName : "",
-                billingStatus : ""
-            },
             passwordSending : {
                 isOpen : false,
                 companyName : "",
@@ -59,7 +55,7 @@ export default {
     }, //data
     mounted() {
         const self = this;
-        self.getCompanyListData(true);
+        self.getCompanyListData();
     },
     methods: {
         over15CharFromFullName : ValidateUtil.over15CharFromFullName,
@@ -68,33 +64,24 @@ export default {
         companyRegistrationPop(){
             location.href="/company/company_registration"
         },
-        getCompanyListData( isInit=false, offset=0 ){
+        getCompanyListData( offset=0, afterClickPage = false ){
             const self = this;
             self.json_query.offset = offset;
-            let json_query = { ...self.json_query};
+            let json_query = { ...self.json_query };
 
             const url = self.$api("uri", "get-company");
             json_query = JSON.stringify(json_query);
             self.$axios.get(url, { params : { json_query } }).then(res => {
                 self.companyList = res.data.data.list;
                 self.companyCount = res.data.data.total;
-                if(isInit) self.tabs[0].count = res.data.data.total;
+                if( ! afterClickPage ){
+                    self.currentPage = 1;
+                }
             });
         },
         afterClickPage( item ){
             const self = this;
-            self.getCompanyListData( false, item);
-        },
-        searchCompanyData(){
-            const self = this;
-            self.json_query = {
-                limit : self.json_query.limit,
-                companyName : self.searchRequest.companyName,
-                billingStatus : self.searchRequest.billingStatus ?? null
-            };
-
-            self.getCompanyListData();
-            self.currentPage = 1;
+            self.getCompanyListData( item , true );
         },
         clickPasswordSending( company ){
             console.log({company})
@@ -134,15 +121,15 @@ export default {
                         <ElementsSelect
                             :width60="true"
                             :options="billingStatusOptions"
-                            v-model="searchRequest.billingStatus"
+                            v-model="json_query.billingStatus"
                         />
                         <ElementsSelect
                             :width60="true"
                             :options="searchOptions"
-                            v-model="searchRequest.searchType"
+                            v-model="json_query.searchOption"
                         />
                         <ElementsInput
-                            v-model="searchRequest.companyName"
+                            v-model="json_query.searchText"
                             placeholder="Search Company"
                             :width72="true"
                             :height11="true"
@@ -151,7 +138,7 @@ export default {
                             text="Search"
                             :fitContent="true"
                             :height12="true"
-                            @click-event="searchCompanyData"
+                            @click-event="getCompanyListData()"
                         />
                     </div>
                 </div>
