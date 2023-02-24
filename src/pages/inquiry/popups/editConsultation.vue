@@ -15,7 +15,7 @@
                                             v-model="inquiry.consultantEmpName"
                                             :required="true"
                                         />
-                                    </div>4
+                                    </div>
 
                                     <div class="col-span-6 border-b border-b-slate-300">
                                         <label class="block text-sm font-medium text-gray-700">Consultaion date</label>
