@@ -6,7 +6,7 @@
                 <form @submit.prevent="clickSubmit">
                     <div class="my-2 flex flex-col gap-4" >
                         <div class="text-2xl font-bold"> company Information </div>
-                        <ElementsInput 
+                        <ElementsInput
                             :name="'Company Name'"
                             :width72="true"
                             :maxlength="60"
@@ -20,14 +20,14 @@
                             :maxlength="60"
                             :required="true"
                         />
-                        <ElementsInput 
+                        <ElementsInput
                             v-model="registerData.subscriptionPicDepartment"
                             :name="'PIC Department'"
                             :full="true"
                             :maxlength="60"
                             :required="true"
                         />
-                        <ElementsInput 
+                        <ElementsInput
                             v-model="registerData.subscriptionPicEmail"
                             :name="'PIC Email'"
                             :full="true"
@@ -35,7 +35,7 @@
                             :maxlength="100"
                             :required="true"
                         />
-                        <ElementsInput 
+                        <ElementsInput
                             v-model="registerData.subscriptionPicPhoneNumber"
                             :name="'PIC Phone number'"
                             :full="true"
@@ -57,7 +57,7 @@
                         <div>
                             <h1 class="text-sm font-semibold text-slate-800"> Number of Employee </h1>
                             <input type="number"
-                                class="w-44 mt-1 shadow-sm block sm:text-sm border-gray-300 rounded-md"    
+                                class="w-44 mt-1 shadow-sm block sm:text-sm border-gray-300 rounded-md"
                                 :min="1"
                                 v-model="registerData.employmentCount"
                                 :required="true"
@@ -75,14 +75,16 @@
                         />
                     </div>
                     <div class="flex justify-end gap-4 my-3">
-                        <ElementsButton 
+                        <ElementsButton
                             :backgroundWhite="true" :width32="true"
                             :text="'Cancel'"
+                            :inputtype="'button'"
+                            @click="backToList"
                         />
-                        <ElementsButton 
+                        <ElementsButton
                             :width32="true"
                             :text="'submit'"
-                            :inputtype="'submit'"    
+                            :inputtype="'submit'"
                         />
                     </div>
                 </form>
@@ -101,6 +103,9 @@ export default {
         AppAside, AppMain
     },
     methods:{
+        backToList(){
+            location.href="/company/company_list";
+        },
         getFlexbenType(){
             const self = this;
             const url = self.$api("uri", "get-flexben-campaign-List");
@@ -126,7 +131,7 @@ export default {
 
             const url = self.$api("uri", "post-company" );
             self.$axios.post( url , registerData )
-                .then( () => { 
+                .then( () => {
                     alert("success to regiter company" )
                     location.href = "/company/company_list";
                 })
@@ -141,11 +146,11 @@ export default {
 
             Object.values({ subscribeStartDate, subscribeEndDate, useFeeDepositDate, flexbenCampaignSeq }).map( (  value ) => {
                 if( ! value ){
-                    isValid = false; 
+                    isValid = false;
                     return;
                 }
             });
-            
+
             return isValid;
         },
         getInquiryData(){
@@ -178,7 +183,7 @@ export default {
         },
         // dateFormatChangeForSave( { subscribeStartDate, subscribeEndDate, useFeeDepositDate } ){
         //     const self = this;
-            
+
         //     const dateObject = Object.entries({ subscribeStartDate, subscribeEndDate, useFeeDepositDate })
         //                             .reduce( ( obj, [key, date] ) => {
         //                                 const formattedDate = self.dateFormatter( date )
@@ -189,7 +194,7 @@ export default {
         // },
         dateFormatter( dateStr ){
             if( ! dateStr ){
-                return null; 
+                return null;
             }
             return moment( dateStr ).format("yyyy-MM-DD HH:mm:ss");
         },
@@ -205,7 +210,7 @@ export default {
                 subscriptionPicEmail : null,
                 subscriptionPicName : null,
                 subscriptionPicPhoneNumber : null,
-                companyName : null,                     
+                companyName : null,
                 subscribeStartDate : null,
                 subscribeEndDate : null,
                 useFeeDepositDate : null,

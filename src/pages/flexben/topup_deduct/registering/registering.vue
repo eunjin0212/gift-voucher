@@ -26,13 +26,13 @@
                                         <div>
                                             <div class="space-y-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-10">
                                                 <div v-for="pointMethod in pointExcutionMethods" :key="pointMethod.id" class="flex items-center">
-                                                    <input 
+                                                    <input
                                                         @change="changePointTypeSetToMinMax($event.target.id)"
                                                         v-model="registerData.transactionType"
                                                         :id="pointMethod.id"
-                                                        :value="pointMethod.id" 
-                                                        name="point-excution-method" type="radio" 
-                                                        :checked="pointMethod.id===registerData.transactionType" 
+                                                        :value="pointMethod.id"
+                                                        name="point-excution-method" type="radio"
+                                                        :checked="pointMethod.id===registerData.transactionType"
                                                         class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                                     />
                                                     <label :for="pointMethod.id" class="ml-3 block text-sm font-medium text-gray-700">{{ pointMethod.title }}</label>
@@ -44,9 +44,9 @@
                                 <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
                                     <dt class="text-sm font-medium text-gray-500">Points</dt>
                                     <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                                        <input 
+                                        <input
                                             type="number"
-                                            class="w-full mt-1 shadow-sm block sm:text-sm border-gray-300 rounded-md"    
+                                            class="w-full mt-1 shadow-sm block sm:text-sm border-gray-300 rounded-md"
                                             :min="registerData.transactionType === 'TOPUP_FROM_HRFLEX' ? 1 : null"
                                             :max="registerData.transactionType === 'DEDUCT_TO_HRFLEX' ? -1 : null"
                                             v-model="registerData.mileageVolume"
@@ -55,14 +55,14 @@
                                 </div>
 
                                 <div>
-                                    
+
                                     <div v-if="documentFiles.poDocumentFile" class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
                                         <dt class="text-sm font-medium text-gray-500">PO softcopy</dt>
                                         <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 flex justify-between">
-                                            <div class="text-blue-600" > 
+                                            <div class="text-blue-600" >
                                                 {{ documentFiles.poDocumentFileName }}
                                             </div>
-                                            <div 
+                                            <div
                                                 class="border border-red-600 p-2 bg-white rounded-md font-semibold text-red-600 cursor-pointer"
                                                 name="poDocumentFile"
                                                 @click="deleteSelectedFile"
@@ -75,8 +75,8 @@
                                         <dt class="text-sm font-medium text-gray-500">PO softcopy</dt>
                                         <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                                             <input type="file"
-                                                class="w-full mt-1 shadow-sm block sm:text-sm bg-white border-gray-300 rounded-md"    
-                                                multiple 
+                                                class="w-full mt-1 shadow-sm block sm:text-sm bg-white border-gray-300 rounded-md"
+                                                multiple
                                                 @input="afterFileSelect"
                                                 name="poDocumentFile"
                                             />
@@ -89,10 +89,10 @@
                                     <div v-if="documentFiles.invoiceFileName" class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
                                         <dt class="text-sm font-medium text-gray-500">PO softcopy</dt>
                                         <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 flex justify-between">
-                                            <div class="text-blue-600" > 
+                                            <div class="text-blue-600" >
                                                 {{ documentFiles.invoiceFileName }}
                                             </div>
-                                            <div 
+                                            <div
                                                 class="border border-red-600 p-2 bg-white rounded-md font-semibold text-red-600 cursor-pointer"
                                                 name="invoiceFile"
                                                 @click="deleteSelectedFile"
@@ -105,10 +105,10 @@
                                         <dt class="text-sm font-medium text-gray-500">Invoice softcopy</dt>
                                         <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                                             <input type="file"
-                                                multiple 
+                                                multiple
                                                 @input="afterFileSelect"
                                                 name="invoiceFile"
-                                                class="w-full mt-1 shadow-sm block sm:text-sm bg-white border-gray-300 rounded-md"    
+                                                class="w-full mt-1 shadow-sm block sm:text-sm bg-white border-gray-300 rounded-md"
                                             />
                                         </dd>
                                     </div>
@@ -119,10 +119,10 @@
                                     <div v-if="documentFiles.orDocumentFileName" class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
                                         <dt class="text-sm font-medium text-gray-500">PO softcopy</dt>
                                         <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 flex justify-between">
-                                            <div class="text-blue-600" > 
+                                            <div class="text-blue-600" >
                                                 {{ documentFiles.orDocumentFileName }}
                                             </div>
-                                            <div 
+                                            <div
                                                 class="border border-red-600 p-2 bg-white rounded-md font-semibold text-red-600 cursor-pointer"
                                                 name="orDocumentFile"
                                                 @click="deleteSelectedFile"
@@ -135,8 +135,8 @@
                                         <dt class="text-sm font-medium text-gray-500">OR softcopy</dt>
                                         <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                                             <input type="file"
-                                                class="w-full mt-1 shadow-sm block sm:text-sm bg-white border-gray-300 rounded-md"    
-                                                multiple 
+                                                class="w-full mt-1 shadow-sm block sm:text-sm bg-white border-gray-300 rounded-md"
+                                                multiple
                                                 @input="afterFileSelect"
                                                 name="orDocumentFile"
                                             />
@@ -150,6 +150,7 @@
                     <div class="flex justify-end gap-4">
                         <ElementsButton
                             :backgroundWhite="true"
+                            :inputtype="'button'"
                             :width32="true"
                             :text="'Cancel'"
                             @clickEvent="locationToList"
@@ -241,7 +242,7 @@ export default {
         },
         submitDocumentFiles(){
             const self = this;
-            
+
             const url = self.$api("uri", "post-file-direct-upload" );
             const { poDocumentFile, orDocumentFileName, invoiceFile,  invoiceFileName, orDocumentFile, poDocumentFileName } = self.documentFiles;
             let form = new FormData();
@@ -258,7 +259,7 @@ export default {
             const self = this;
             const { files, name } = e.target
             if( files.size < 0 ){
-                return ; 
+                return ;
             }
 
             self.documentFiles[ name ] = files[0];
@@ -278,10 +279,10 @@ export default {
                     return res.data.data;
                 })
                 .then( ({uploadFile1, uploadFile2, uploadFile3}) =>{
-                    const registerData = { 
-                                            ...self.registerData, 
-                                            poDocumentFilePath : uploadFile1 , 
-                                            invoiceFilePath :  uploadFile2, 
+                    const registerData = {
+                                            ...self.registerData,
+                                            poDocumentFilePath : uploadFile1 ,
+                                            invoiceFilePath :  uploadFile2,
                                             orDocumentFilePath : uploadFile3 }
                     return self.$axios.post( url, registerData )
                 } )
@@ -289,7 +290,7 @@ export default {
                     self.locationToList();
                 })
                 .catch( err => {
-                    const { code, message } = err.response.data; 
+                    const { code, message } = err.response.data;
                     let errMsg = code ? code + "\n" + message : err;
                     alert( errMsg );
                 })
@@ -304,7 +305,7 @@ export default {
             location.href = "/flexben/topup_deduct"
         }
     }
-    
+
 }
 </script>
 

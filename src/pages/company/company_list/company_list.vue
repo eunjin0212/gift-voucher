@@ -49,7 +49,7 @@ export default {
                 billingStatus : ""
             },
             passwordSending : {
-                isOpen : false, 
+                isOpen : false,
                 companyName : "",
                 inviteEmail : "",
                 companySeq : "",
@@ -136,11 +136,10 @@ export default {
                             :options="billingStatusOptions"
                             v-model="searchRequest.billingStatus"
                         />
-                        <ElementsSelect 
+                        <ElementsSelect
                             :width60="true"
                             :options="searchOptions"
                             v-model="searchRequest.searchType"
-                            :readonly="true"
                         />
                         <ElementsInput
                             v-model="searchRequest.companyName"
@@ -156,7 +155,7 @@ export default {
                         />
                     </div>
                 </div>
-            
+
                 <div class=" mt-6 overflow-x-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                     <table class="relative min-w-full divide-y divide-gray-300  ">
                         <thead class="sticky bg-gray-50 top-0 left-0 right-0 border-b border-gray-50" style="z-index: 1;">
@@ -195,7 +194,7 @@ export default {
                                     </a>
                                 </td>
                                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                    <a 
+                                    <a
                                         href="#" class="text-rose-600 hover:text-indigo-900 whitespace-normal"
                                         @click="clickPasswordSending( company )"
                                     >
@@ -220,8 +219,8 @@ export default {
             <AppPopup
                 v-model="passwordSending.isOpen"
                 name="Password Sending"
-            >  
-                <PopupInviteMasterAdmin 
+            >
+                <PopupInviteMasterAdmin
                     v-model="passwordSending"
                     @closePopup="passwordSending.isOpen=false"
                 />

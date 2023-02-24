@@ -25,11 +25,11 @@ export default {
                 companyName : ""
             },
             transactionTypeOptions : [
-                { text : "Type", value : null }, 
-                { text : "Topup From Hr", value : "TOPUP_FROM_HRFLEX"}, 
-                { text : "Deduct to Hr", value : "DEDUCT_TO_HRFLEX"}, 
-                { text : "Transfer to Employee", value : "TRANSFER_TO_EMPLOYEE"}, 
-                { text : "Deduct from Employee", value : "DEDUCT_FROM_EMPLOYEE"}, 
+                { text : "Type", value : null },
+                { text : "Topup From Hr", value : "TOPUP_FROM_HRFLEX"},
+                { text : "Deduct to Hr", value : "DEDUCT_TO_HRFLEX"},
+                { text : "Transfer to Employee", value : "TRANSFER_TO_EMPLOYEE"},
+                { text : "Deduct from Employee", value : "DEDUCT_FROM_EMPLOYEE"},
                 { text : "Cancel", value : "VOID_FROM_EMPLOYEE"}
             ],
         }
@@ -38,7 +38,7 @@ export default {
         getFlexbenReportList( offset=0, afterClickPage = false ){
             const self = this;
             const url = self.$api("uri", "get-flexben-report-List");
-            const { limit } = self.flexbenReport; 
+            const { limit } = self.flexbenReport;
             self.flexbenReport.offset = offset;
             const json_query = { ...self.searchOptions, offset, limit };
             self.$axios.get( url , { params : { json_query : JSON.stringify(json_query) } })
@@ -53,10 +53,10 @@ export default {
                     if( ! afterClickPage ){
                         self.flexbenReport.page = 1;
                     }
-                
+
                 })
                 .catch( alert )
-            
+
         },
         clickDateButton( startDate, endDate ){
             const self = this;
@@ -72,7 +72,7 @@ export default {
     mounted(){
         const self = this;
         self.getFlexbenReportList();
-    }   
+    }
 }
 </script>
 
@@ -81,25 +81,25 @@ export default {
         <AppAside />
         <AppMain :headerName="'Flexben Report'">
             <div class="mt-8 p-3 rounded-lg w-full max-w-7xl bg-white shadow-md shadow-gray-200 flex flex-col">
-                <TimeNavigation 
+                <TimeNavigation
                     :outputFormat="'YYYYMMDD'"
                     @updateDate="clickDateButton"
                 />
                 <div class="flex mt-5 gap-2">
-                    <ElementsSelect 
+                    <ElementsSelect
                         :width60="true"
                         :options="transactionTypeOptions"
                         v-model="searchOptions.transactionType"
                     />
                     <ElementsInput
-                        :width60="true" 
+                        :width60="true"
                         :height11="true"
                         v-model="searchOptions.companyName"
                     />
                     <ElementsButton
                         :width32="true"
                         :text="'Search'"
-                        @clickEvent="getFlexbenReportList()"    
+                        @clickEvent="getFlexbenReportList()"
                     />
                 </div>
                 <div class=" mt-6 overflow-x-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">

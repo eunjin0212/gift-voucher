@@ -4,7 +4,7 @@
             <AppMain :headerName="registerData.companyName">
                 <div class="flex justify-between">
                     <MainTabs :tabs="mainTabs" class="mt-9" @clickEvent="clickTabs" />
-                    <ElementsButton 
+                    <ElementsButton
                         text="Back To list"
                         :bgWhiteAndtextIndigo="true"
                         :fitContent="true"
@@ -41,21 +41,21 @@
                                 </div>
                                 <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
                                     <dt class="text-sm font-medium text-gray-500">Master Admin </dt>
-                                    <dd 
+                                    <dd
                                         class="mt-1 text-sm  sm:col-span-2 sm:mt-0 justify-self-end text-blue-600 cursor-pointer"
                                         @click="OpenMasterAdminList()"
                                     >
-                                        List 
+                                        List
                                     </dd>
                                 </div>
-                                
+
                             </dl>
                         </div>
                     </div>
 
                     <Teleport to="body">
-                        <AppPopup v-model="masterAdmin.isOpen" name="Master Admin List" > 
-                            
+                        <AppPopup v-model="masterAdmin.isOpen" name="Master Admin List" >
+
                             <div class="flex flex-col min-w-[40vw]">
                                 <div class="-my-2 -mx-4 sm:-mx-6 lg:-mx-8">
                                     <div class="inline-block min-w-full py-2 align-middle">
@@ -65,7 +65,7 @@
                                                     <tr>
                                                         <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 bg-opacity-75 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:pl-6 lg:pl-8">Name</th>
                                                         <th scope="col" class="sticky top-0 z-10 hidden border-b border-gray-300 bg-gray-50 bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:table-cell">
-                                                            Department Name / Job title Name 
+                                                            Department Name / Job title Name
                                                         </th>
                                                         <th scope="col" class="sticky top-0 z-10 hidden border-b border-gray-300 bg-gray-50 bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter lg:table-cell">Email</th>
                                                     </tr>
@@ -75,11 +75,11 @@
                                                         <td :class="[personIdx !== masterAdmin.list.length - 1 ? 'border-b border-gray-200' : '', 'whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8']">
                                                             {{ admin.employeeName }}
                                                         </td>
-                                                        <td :class="[personIdx !== masterAdmin.list.length - 1 ? 'border-b border-gray-200' : '', 'whitespace-nowrap px-3 py-4 text-sm text-gray-500 hidden sm:table-cell']"> 
-                                                            {{ `${admin.departmentName} / ${ admin.jobTitleName }` }}  
+                                                        <td :class="[personIdx !== masterAdmin.list.length - 1 ? 'border-b border-gray-200' : '', 'whitespace-nowrap px-3 py-4 text-sm text-gray-500 hidden sm:table-cell']">
+                                                            {{ `${admin.departmentName} / ${ admin.jobTitleName }` }}
                                                         </td>
-                                                        <td :class="[personIdx !== masterAdmin.list.length - 1 ? 'border-b border-gray-200' : '', 'whitespace-nowrap px-3 py-4 text-sm text-gray-500 hidden lg:table-cell']"> 
-                                                            {{ admin.email }} 
+                                                        <td :class="[personIdx !== masterAdmin.list.length - 1 ? 'border-b border-gray-200' : '', 'whitespace-nowrap px-3 py-4 text-sm text-gray-500 hidden lg:table-cell']">
+                                                            {{ admin.email }}
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -92,34 +92,34 @@
                                 </div>
                             </div>
                         </AppPopup>
-                    </Teleport>   
+                    </Teleport>
                 </div> <!-- SERVICE_USAGE_INFO -->
 
                 <div id="company-info"  v-show="mainTabs.find( tab=> tab.name === 'COMPANY_INFO' ).current === true" class="bg-white shadow-md shadow-gray-200 p-4 mt-6">
                     <form @submit.prevent="clickSubmitCompanyData">
                         <div class="my-2 flex flex-col gap-4" >
-                            <ElementsInput 
+                            <ElementsInput
                                 :name="'Company Name'"
                                 :width72="true"
                                 :maxlength="60"
                                 v-model="editCompanyData.companyName"
                                 :required="true"
                             />
-                            <ElementsInput 
+                            <ElementsInput
                                 :name="'PIC Name'"
                                 :full="true"
                                 :maxlength="60"
                                 v-model="editCompanyData.subscriptionPicName"
                                 :required="true"
                             />
-                            <ElementsInput 
+                            <ElementsInput
                                 :name="'PIC Department'"
                                 :full="true"
                                 :maxlength="60"
                                 :required="true"
                                 v-model="editCompanyData.subscriptionPicDepartment"
                             />
-                            <ElementsInput 
+                            <ElementsInput
                                 :name="'PIC Email'"
                                 :full="true"
                                 :inputtype="'email'"
@@ -127,7 +127,7 @@
                                 :required="true"
                                 v-model="editCompanyData.subscriptionPicEmail"
                             />
-                            <ElementsInput 
+                            <ElementsInput
                                 :name="'PIC Phone number'"
                                 :full="true"
                                 :maxlength="60"
@@ -149,7 +149,7 @@
                             <div>
                                 <h1 class="text-sm font-semibold text-slate-800"> Number of Employee </h1>
                                 <input type="number"
-                                    class="w-44 mt-1 shadow-sm block sm:text-sm border-gray-300 rounded-md"    
+                                    class="w-44 mt-1 shadow-sm block sm:text-sm border-gray-300 rounded-md"
                                     :min="1"
                                     v-model="editCompanyData.employeeCount"
                                     :required="true"
@@ -173,21 +173,23 @@
                             />
                         </div>
                         <div class="flex justify-end gap-4 my-3">
-                            <ElementsButton 
+                            <ElementsButton
                                 :backgroundWhite="true" :width32="true"
                                 :text="'Cancel'"
+                                :inputtype="'button'"
+                                @click="returnToServiceUsage"
                             />
-                            <ElementsButton 
+                            <ElementsButton
                                 :width32="true"
                                 :text="'submit'"
-                                :inputtype="'submit'"    
+                                :inputtype="'submit'"
                             />
                         </div>
                     </form>
 
                 </div>
             </AppMain>
-    </div> 
+    </div>
 </template>
 
 <script>
@@ -214,10 +216,10 @@ export default {
                 list : [],
             },
             flexbenTypeOptions : [],
-            billingStatusOptions : [ 
+            billingStatusOptions : [
                 { text : "Testing", value : "TRIAL" },
                 { text : "Billing", value : "BILLING" }
-            ], 
+            ],
             registerData : {
                 subscriptionCompanySeq: null,
                 companySeq: null,
@@ -255,9 +257,13 @@ export default {
             },
         }
 
-        
+
     },
     methods :{
+        returnToServiceUsage(){
+            const self = this;
+            self.clickTabs( self.mainTabs[0] );
+        },
         backToCompanyList(){
             location.href='/company/company_list';
         },
@@ -303,7 +309,7 @@ export default {
             let isValid = true;
             Object.entries( validValues ).map( ([key, value] )=> {
                 if( ! value ){
-                    isValid = false; 
+                    isValid = false;
                     console.log( key )
                     return;
                 }
@@ -330,10 +336,10 @@ export default {
         OpenMasterAdminList(){
             const self = this;
             self.json_query = { ...self.json_query };
-            
+
             const params = new URLSearchParams();
             params.append( "json_query", JSON.stringify( self.json_query ) );
-            
+
             const url = self.$api("uri", "get-company-admin");
             self.$axios.get( url, { params } )
                 .then((res) =>{

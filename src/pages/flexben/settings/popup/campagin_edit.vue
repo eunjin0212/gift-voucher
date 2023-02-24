@@ -20,7 +20,7 @@
                 <div class="max-h-[60vh] overflow-auto">
                         <form @submit.prevent="getCompanyListByType()" class="py-2 px-1 flex gap-2 w-[40vw]">
                             <ElementsInput
-                                :width72="true" 
+                                :width72="true"
                                 :height11="true"
                                 :placeholder="'Search Company'"
                                 :required="true"
@@ -41,7 +41,7 @@
                                         <div class="flex h-5 items-center">
                                             <input
                                                 v-model="checkAllEdit"
-                                                id="all" name="all" type="checkbox" class="h-4 w-4 rounded border-gray-300  focus:ring-indigo-500" 
+                                                id="all" name="all" type="checkbox" class="h-4 w-4 rounded border-gray-300  focus:ring-indigo-500"
                                             />
                                         </div>
                                     </th>
@@ -51,28 +51,28 @@
                             </thead>
                             <tbody class="divide-y divide-gray-200 bg-white  align-top">
                                 <tr v-for="( company, idx ) in companyListBySearch" :key="idx">
-                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900 sm:pl-6"> 
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900 sm:pl-6">
                                         <div class="flex h-5 items-center">
                                             <input
-                                                :value="company" v-model="wantToEditList" 
-                                                id="" type="checkbox" class="h-4 w-4 rounded border-gray-300  focus:ring-indigo-500" 
+                                                :value="company" v-model="wantToEditList"
+                                                id="" type="checkbox" class="h-4 w-4 rounded border-gray-300  focus:ring-indigo-500"
                                             />
                                         </div>
                                     </td>
                                     <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"> {{ company.companyName }} </td>
-                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"> 
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                         {{ company.flexbenTypeName }} / {{ company.flexbenCampaignTitle }}
                                     </td>
                                 </tr>
                             </tbody>
-                        </table> 
+                        </table>
                     </div>
                 <div
                     class="px-4 py-6 flex justify-end"
                 >
                     <ElementsButton
                         class="ml-2"
-                        :text="'Select Camaign > '"
+                        :text="'Select Campaign > '"
                         :height12="true"
                         :fitContent="true"
                         :backgroundWhite="wantToEditList.length==0"
@@ -94,7 +94,7 @@
                         <tbody class="divide-y divide-gray-200 bg-white  align-top">
                             <tr v-for="( company, idx ) in wantToEditList" :key="idx">
                                 <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"> {{ company.companyName }} </td>
-                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"> 
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                     <ElementsSelect
                                         :options="flexbenTypeSelectOptions"
                                         v-model="company.flexbenCampaignSeq"
@@ -103,7 +103,7 @@
                                 </td>
                             </tr>
                         </tbody>
-                    </table> 
+                    </table>
                 </div>
                 <div
                     class="px-4 py-6 flex justify-end"
@@ -229,7 +229,7 @@ export default {
             const params = new URLSearchParams();
             params.append( "json_query", JSON.stringify( json_query ) );
             const url = self.$api("uri", "get-company-flexben-campaign" )
-            
+
             self.$axios.get( url , { params } )
                 .then( res => {
                     self.companyListBySearch = res.data.data.list;
@@ -261,13 +261,13 @@ export default {
                     self.$emit("afterClose");
                 })
                 .catch( err =>{
-                    const { code, message } = err.response.data; 
+                    const { code, message } = err.response.data;
                     let errMsg = code ? code + "\n" + message : err;
                     alert( errMsg );
                 })
-            
+
         }
     }
-    
+
 }
 </script>
