@@ -5,7 +5,7 @@
             <div class="mt-8 p-3 w-full max-w-7xl flex flex-col">
                 <MainTabs :tabs ="mainTabs" class="my-2" @clickEvent="clickTabs" />
                 <ElementsButton
-                    :text="'+ Topup / Deduct'"
+                    :text="'+ Top-up / Deduct'"
                     :fitContent="true"
                     class="self-end "
                     @clickEvent="goToRegistering"
@@ -19,7 +19,7 @@
                 <div class="flex mt-5 gap-2">
                     <ElementsInput
                         v-model="searchOptions.companyName"
-                        :width60="true" 
+                        :width60="true"
                         :height11="true"
                     />
                     <ElementsButton
@@ -53,8 +53,8 @@
                                 <td class="whitespace-nowrap px-3 py-4 text-sm underline text-blue-600 cursor-pointer" @click="downLoadFile(history.poDocumentFilePath)"> {{ showTheFileName( history.poDocumentFilePath) }} </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm underline text-blue-600 cursor-pointer" @click="downLoadFile(history.invoiceFilePath)"> {{ showTheFileName( history.invoiceFilePath) }} </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm underline text-blue-600 cursor-pointer" @click="downLoadFile(history.orDocumentFilePath)"> {{ showTheFileName( history.orDocumentFilePath) }} </td>
-                                <td class="whitespace-nowrap  text-sm text-gray-900 pr-3"> 
-                                    <div class="cursor-pointer border border-blue-300 px-5 py-2 rounded-md" @click="clickEditHistoryFile(history.mileageCompanyHistorySeq)"> Edit </div> 
+                                <td class="whitespace-nowrap  text-sm text-gray-900 pr-3">
+                                    <div class="cursor-pointer border border-blue-300 px-5 py-2 rounded-md" @click="clickEditHistoryFile(history.mileageCompanyHistorySeq)"> Edit </div>
                                 </td>
                             </tr>
                         </tbody>
@@ -105,7 +105,7 @@ export default {
         getFlexbenHistoryList( offset=0, afterClickPage = false ){
             const self = this;
             const url = self.$api("uri", "get-flexben-history");
-            const { limit } = self.flexbenHistory; 
+            const { limit } = self.flexbenHistory;
             self.flexbenHistory.offset = offset;
             const json_query = { ...self.searchOptions, offset, limit };
             self.$axios.get( url , { params : { json_query : JSON.stringify(json_query) } })
@@ -115,7 +115,7 @@ export default {
                     if( ! afterClickPage ){
                         self.flexbenHistory.page = 1;
                     }
-                
+
                 })
                 .catch( alert )
         },
@@ -145,13 +145,13 @@ export default {
             if( ! filePath ) return;
             const link = document.createElement('a');
             link.href= filePath
-            link.click();    
+            link.click();
         }
     },
     data(){
         return{
             mainTabs : [
-                { text : "Topup", name : "TOPUP_FROM_HRFLEX", current : true },
+                { text : "Top-up", name : "TOPUP_FROM_HRFLEX", current : true },
                 { text : "Deduct" , name : "DEDUCT_TO_HRFLEX", current : false },
             ],
             flexbenHistory : {

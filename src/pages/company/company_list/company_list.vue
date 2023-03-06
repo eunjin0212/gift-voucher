@@ -112,35 +112,35 @@ export default {
         <AppAside />
         <AppMain :headerName="'Company'">
             <div class="mt-8 p-3 rounded-lg w-full max-w-7xl bg-white shadow-md shadow-gray-200 flex flex-col">
-                <div class="flex flex-col items-end gap-5 flex-wrap p-5">
+                <div class="flex py-5 justify-end">
                     <button class="h-12 w-fit px-5 py-3 border rounded border-indigo-600 bg-indigo-600 text-sm font-semibold text-white hover:bg-indigo-800 transition-all duration-500 text-center"
                         @click="companyRegistrationPop">
                         + Registration Company
                     </button>
-                    <div class="flex justify-between items-center gap-3">
-                        <ElementsSelect
-                            :width60="true"
-                            :options="billingStatusOptions"
-                            v-model="json_query.billingStatus"
-                        />
-                        <ElementsSelect
-                            :width60="true"
-                            :options="searchOptions"
-                            v-model="json_query.searchOption"
-                        />
-                        <ElementsInput
-                            v-model="json_query.searchText"
-                            placeholder="Search Company"
-                            :width72="true"
-                            :height11="true"
-                        />
-                        <ElementsButton
-                            text="Search"
-                            :fitContent="true"
-                            :height12="true"
-                            @click-event="getCompanyListData()"
-                        />
-                    </div>
+                </div>
+                <div class="flex items-start gap-3">
+                    <ElementsSelect
+                        :width60="true"
+                        :options="billingStatusOptions"
+                        v-model="json_query.billingStatus"
+                    />
+                    <ElementsSelect
+                        :width60="true"
+                        :options="searchOptions"
+                        v-model="json_query.searchOption"
+                    />
+                    <ElementsInput
+                        v-model="json_query.searchText"
+                        placeholder="Search Company"
+                        :width72="true"
+                        :height11="true"
+                    />
+                    <ElementsButton
+                        text="Search"
+                        :fitContent="true"
+                        :height12="true"
+                        @click-event="getCompanyListData()"
+                    />
                 </div>
 
                 <div class=" mt-6 overflow-x-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
@@ -176,17 +176,22 @@ export default {
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ company.employeeCount }} </td>
                                 <td class="whitespace-pre-wrap px-3 py-4 text-sm text-gray-900"> {{ company.flexbenType }} </td>
                                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                    <a :href="`/company/company_information?subscriptionCompanySeq=${company.subscriptionCompanySeq}`" class=" text-indigo-600 hover:text-indigo-900">
-                                        Info
-                                    </a>
+                                    <ElementsButton
+                                        :text="'Info'"
+                                        :fitContent="true"
+                                        :bgWhiteAndtextIndigo="true"
+                                        :height12="true"
+                                    />
                                 </td>
                                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                    <a
-                                        href="#" class="text-rose-600 hover:text-indigo-900 whitespace-normal"
-                                        @click="clickPasswordSending( company )"
-                                    >
-                                        Password Sending
-                                    </a>
+                                    <div class="cursor-pointer border rounded border-rose-400 w-24 py-1 transition-all duration-500 text-center">
+                                        <a
+                                            href="#" class="text-rose-600  hover:bg-red-100 whitespace-normal"
+                                            @click="clickPasswordSending( company )"
+                                        >
+                                            Password Sending
+                                        </a>
+                                    </div>
                                 </td>
                             </tr>
                         </tbody>
