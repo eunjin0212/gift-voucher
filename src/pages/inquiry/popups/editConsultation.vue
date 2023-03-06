@@ -11,14 +11,14 @@
                                     <div class="col-span-6 sm:col-span-4">
                                         <label for="company-name" class="block text-sm font-medium text-gray-700">Consultation Employee</label>
                                         <input
-                                            type="text" name="consultaion-emp" id="consultaion-emp" autocomplete="consultaion-emp" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                            type="text" name="consultation-emp" id="consultation-emp" autocomplete="consultation-emp" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                             v-model="inquiry.consultantEmpName"
                                             :required="true"
                                         />
                                     </div>
 
                                     <div class="col-span-6 border-b border-b-slate-300">
-                                        <label class="block text-sm font-medium text-gray-700">Consultaion date</label>
+                                        <label class="block text-sm font-medium text-gray-700">Consultation date</label>
                                         <ElementsDate
                                             v-model="inquiry.consultationDatetime"
                                         />
@@ -62,7 +62,7 @@
                                     </div>
 
                                     <div class="col-span-6 sm:col-span-4">
-                                        <label for="email-address" class="block text-sm font-medium text-gray-700">PIC email</label>
+                                        <label for="email-address" class="block text-sm font-medium text-gray-700">PIC Email</label>
                                         <input
                                             type="email" name="email-address" id="email-address" autocomplete="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                             v-model="inquiry.picEmail"
@@ -71,7 +71,7 @@
                                     </div>
 
                                     <div class="col-span-6 sm:col-span-4">
-                                        <label for="pic-phone-number" class="block text-sm font-medium text-gray-700">PIC Phone number</label>
+                                        <label for="pic-phone-number" class="block text-sm font-medium text-gray-700">PIC Phone Number</label>
                                         <div class="flex gap-2">
                                             <input
                                                 type="text" name="pic-phone-number" id="pic-phone-number" autocomplete="pic-phone-number"

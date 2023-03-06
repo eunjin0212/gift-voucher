@@ -540,7 +540,7 @@ export default {
                 class="border-b items-center h-94 text-xs font-medium p-[12px] rounded-[10px]"
               >
                 <div class="flex">
-                  <div class="w-[20%] text-left">Flexben</div>
+                  <div class="w-[20%] text-left">FlexBen</div>
                   <div class="w-[80%] flex flex-wrap">
                     <div class="w-[50%] text-left">
                       <label>
@@ -570,7 +570,7 @@ export default {
                             class="mr-1 relative top-1 w-[18px] h-[18px]"
                           />
                           <span class="text-[#7B7E81] text-[13px]"
-                            >Flexben 설정</span
+                            >FlexBen 설정</span
                           >
                         </label>
                       </div>

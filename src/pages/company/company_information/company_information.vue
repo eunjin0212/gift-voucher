@@ -5,7 +5,7 @@
                 <div class="flex justify-between">
                     <MainTabs :tabs="mainTabs" class="mt-9" @clickEvent="clickTabs" />
                     <ElementsButton
-                        text="Back To list"
+                        text="Back To List"
                         :bgWhiteAndtextIndigo="true"
                         :fitContent="true"
                         @click="backToCompanyList"
@@ -34,7 +34,7 @@
                                     </dd>
                                 </div>
                                 <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-                                    <dt class="text-sm font-medium text-gray-500">Flexben Type</dt>
+                                    <dt class="text-sm font-medium text-gray-500">FlexBen Type</dt>
                                     <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 justify-self-end">
                                         {{ registerData.flexbenType }}
                                     </dd>

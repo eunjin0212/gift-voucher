@@ -192,7 +192,7 @@ export default {
             isNotEditable : true,
             companyList : [],
             pointExcutionMethods : [
-                { id: 'TOPUP_FROM_HRFLEX', title: 'Topup' },
+                { id: 'TOPUP_FROM_HRFLEX', title: 'Top-up' },
                 { id: 'DEDUCT_TO_HRFLEX', title: 'Deduct' },
             ],
             registerData : {

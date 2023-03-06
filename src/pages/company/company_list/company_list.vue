@@ -149,8 +149,8 @@ export default {
                             <tr>
                                 <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900 sm:pl-6">Company Name</th>
                                 <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">PIC Name</th>
-                                <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">Admin Email</th>
-                                <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">Admin Phone number</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">PIC Email</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">PIC Phone Number</th>
                                 <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">Reg Date</th>
                                 <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">Start Date</th>
                                 <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">End Date</th>

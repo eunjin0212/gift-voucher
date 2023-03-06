@@ -27,19 +27,19 @@ let items = reactive([
   {
     children: true,
     img: "app-side-6",
-    text: "flexben",
+    text: "FlexBen",
   },
   {
     parent: "app-side-6",
     show: false,
     href: "/flexben/topup_deduct",
-    text: "Topup/Deduct",
+    text: "Top-up/Deduct",
   },
   {
     parent: "app-side-6",
     show: false,
     href: "/flexben/settings",
-    text: "Flexben Settings",
+    text: "FlexBen Settings",
   },
 
 ]);
@@ -133,7 +133,7 @@ function clickShowButton() {
             class="mr-5"
             :src="require(`@/assets/img/app-side-8.svg`)"
             alt="app-side-8"
-          />            
+          />
           <img
             v-if="item.children && items.find((item2) => item2.parent === item.img && !item2.show)"
             class="mr-5"

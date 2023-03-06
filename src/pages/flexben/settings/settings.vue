@@ -1,7 +1,7 @@
 <template>
     <div id="app" class="min-w-[1024px] min-h-[100vh] flex">
         <AppAside />
-        <AppMain :headerName="'Flexben Settings'">
+        <AppMain :headerName="'FlexBen Settings'">
             <div class="mt-8 p-3 w-full max-w-7xl flex flex-col">
                 <MainTabs :tabs ="mainTabs" class="my-2" @clickEvent="clickTabs" />
                 <FlexbenType v-show="mainTabs.find( tab=> tab.current ).name === 'FLEXBEN_TYPE'"/>
@@ -35,7 +35,7 @@ export default {
     data(){
         return{
             mainTabs : [
-                { text : "Flexben Type", name : "FLEXBEN_TYPE", current : true },
+                { text : "FlexBen Type", name : "FLEXBEN_TYPE", current : true },
                 { text : "Brand on/off" , name : "BRAND_ON_OFF", current : false },
             ],
         }

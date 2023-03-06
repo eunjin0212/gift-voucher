@@ -45,7 +45,7 @@
                                     </div>
                                 </th>
                                 <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"> Company Name</th>
-                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Flexben Type</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">FlexBen Type</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200 bg-white  align-top">
@@ -87,7 +87,7 @@
                         <thead class="bg-gray-100">
                             <tr>
                                 <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"> Company Name</th>
-                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Flexben Type</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">FlexBen Type</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200 bg-white  align-top">
@@ -108,7 +108,7 @@
                     class="px-4 py-6 flex justify-end"
                 >
                     <ElementsButton
-                        text="Go back to list"
+                        text="Back to List"
                         :width28="true"
                         :height12="true"
                         :background-white="true"
@@ -144,7 +144,7 @@
                     class="px-4 py-6 flex justify-end"
                 >
                     <ElementsButton
-                        text="Go back to change"
+                        text="Back to Change"
                         :width28="true"
                         :height12="true"
                         :background-white="true"

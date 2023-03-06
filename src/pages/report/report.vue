@@ -26,11 +26,11 @@ export default {
             },
             transactionTypeOptions : [
                 { text : "Type", value : null },
-                { text : "Topup From Hr", value : "TOPUP_FROM_HRFLEX"},
-                { text : "Deduct to Hr", value : "DEDUCT_TO_HRFLEX"},
-                { text : "Transfer to Employee", value : "TRANSFER_TO_EMPLOYEE"},
-                { text : "Deduct from Employee", value : "DEDUCT_FROM_EMPLOYEE"},
-                { text : "Cancel", value : "VOID_FROM_EMPLOYEE"}
+                { text : "Top-up", value : "TOPUP_FROM_HRFLEX"},
+                { text : "Deduct", value : "DEDUCT_TO_HRFLEX"},
+                { text : "Transfer", value : "TRANSFER_TO_EMPLOYEE"},
+                { text : "Withdraw", value : "DEDUCT_FROM_EMPLOYEE"},
+                // { text : "Cancel", value : "VOID_FROM_EMPLOYEE"}
             ],
         }
     },
@@ -124,7 +124,7 @@ export default {
                         </tbody>
                         <tbody v-else >
                             <tr>
-                                <td colspan="5" class="flex h-[20vh] w-full items-center justify-center"> No Flexben Report Data </td>
+                                <td colspan="5" class="flex h-[20vh] w-full items-center justify-center"> No FlexBen Report Data </td>
                             </tr>
                         </tbody>
                     </table>
