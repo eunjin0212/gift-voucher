@@ -5,7 +5,7 @@
     >
         <div class="border rounded-lg shadow shadow-gray-100 bg-white">
             <div class="px-7 py-6 flex justify-between items-center">
-                <h2 class="text-xl font-bold"> Edit company's campagin </h2>
+                <h2 class="text-xl font-bold"> Edit Company's Campaign </h2>
                 <a
                     href="javascript:void(0)"
                     class="ml-20"
@@ -92,8 +92,8 @@
                         </thead>
                         <tbody class="divide-y divide-gray-200 bg-white  align-top">
                             <tr v-for="( company, idx ) in wantToEditList" :key="idx">
-                                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"> {{ company.companyName }} </td>
-                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 align-baseline"> {{ company.companyName }} </td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 align-baseline">
                                     <ElementsSelect
                                         :options="flexbenTypeSelectOptions"
                                         v-model="company.flexbenCampaignSeq"
@@ -117,7 +117,7 @@
                     <ElementsButton
                         class="ml-2"
                         :backgroundWhite="false"
-                        :text="'Confrim >'"
+                        :text="'Confirm'"
                         :width28="true"
                         :height12="true"
                         @click-event="goToConfirmChanges"
@@ -126,14 +126,14 @@
             </div>
 
             <div v-if="editSteps.find(step => step.id === 'CONFIRM_CHANGE' ).current === true" id="CONFIRM_CHANGE" >
-                <div class="max-h-[60vh] overflow-auto">
+                <div class="max-h-[60vh] overflow-auto  min-w-[40vw]">
                     <fieldset>
-                        <div class="mt-4 divide-y divide-gray-200 border-t border-b border-gray-200">
+                        <div class="divide-y divide-gray-200 border-b border-gray-200">
                             <div v-for="(company, idx) in confirmList" :key="idx" class="relative flex items-start py-4">
-                                <div class="mx-2 min-w-0 flex-1 text-sm">
+                                <div class="ml-16 min-w-0 flex-1 text-sm">
                                     <label class="select-none font-medium text-gray-700">{{ company.companyName }}</label>
                                 </div>
-                                <div class="mr-3 flex h-5 items-center text-gray-500 font-medium">
+                                <div class="mr-16 h-5 items-center text-gray-500 font-medium">
                                     {{ flexBenTypeObject[company.flexbenCampaignSeq] }}
                                 </div>
                             </div>
@@ -145,7 +145,7 @@
                 >
                     <ElementsButton
                         text="Back to Change"
-                        :width28="true"
+                        :fitContent="true"
                         :height12="true"
                         :background-white="true"
                         @click-event="clickSteps( 'CHANGE_CAMPAIGN' )"
@@ -153,8 +153,8 @@
                     <ElementsButton
                         class="ml-2"
                         :backgroundWhite="false"
-                        :text="'Confrim all changes'"
-                        :width28="true"
+                        :text="'Confirm all changes'"
+                        :fitContent="true"
                         :height12="true"
                         @click-event="confirmAllChanges"
                     />
@@ -208,7 +208,7 @@ export default {
             editSteps : [
                 { id : "VIEW_COMPANY_LIST", current : false },
                 { id : "CHANGE_CAMPAIGN", current : false },
-                { id : "CONFIRM_CHANGE", current : true }
+                { id : "CONFIRM_CHANGE", current : false }
             ],
             flexbenEditOptions : []
         }
