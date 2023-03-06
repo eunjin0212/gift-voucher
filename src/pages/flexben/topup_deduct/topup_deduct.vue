@@ -84,8 +84,6 @@ export default {
     mounted(){
         const self = this;
         self.getFlexbenHistoryList();
-        const res =  this.mainTabs.find( tab => tab.current ).name;
-        console.log(res )
     },
     components : {
         AppAside, AppMain, TimeNavigation, MainTabs

@@ -124,7 +124,6 @@ export default {
         },
         searchBrandListByName(){
             const self = this;
-            console.log( self.brandList )
             self.searched_brand_list = self.brandList.filter( brand => {
                 return brand.bizBrandName.toUpperCase().includes(self.searchText.toUpperCase());
             })
