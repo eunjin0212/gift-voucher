@@ -26,7 +26,7 @@
             </li>
         </ul>
         <Teleport to="body">
-            <CampaginEdit
+            <CampaignEdit
                 v-model="editFlexbenPopup.isOpen"
                 :campaignSeq="editFlexbenPopup.campaignSeq"
                 :flexbenTypeSelectOptions="flexbenTypeSelectOptions"
@@ -38,11 +38,11 @@
 </template>
 
 <script>
-import CampaginEdit from "@/pages/flexben/settings/popup/campagin_edit.vue"
+import CampaignEdit from "@/pages/flexben/settings/popup/campaign_edit.vue"
 
 export default {
     components : {
-        CampaginEdit
+        CampaignEdit
     },
     data(){
         return {

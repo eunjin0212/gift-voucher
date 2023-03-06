@@ -130,7 +130,7 @@ export default {
             inquiryData : {},
             searchSelectOptions : [
                 { text : 'Company name' , value : 'COMPANY_NAME'},
-                { text : 'Pic Name' , value : 'PIC_NAME'}
+                { text : 'PIC Name' , value : 'PIC_NAME'}
             ],
             join_inquiry : {
                 list : [],

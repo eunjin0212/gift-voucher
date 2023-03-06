@@ -25,7 +25,7 @@ export default {
             ],
             searchOptions : [
                 { text : "Company Name" , value : "COMPANY_NAME" },
-                { text : 'Pic Name' , value : 'PIC_NAME'}
+                { text : 'PIC Name' , value : 'PIC_NAME'}
             ],
             billingStatusOptions : [
                 { text : "All" , value : null },
