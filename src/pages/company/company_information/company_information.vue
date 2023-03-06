@@ -294,7 +294,7 @@ export default {
             const self = this;
             const { subscribeStartDate, subscribeEndDate,useFeeDepositDate, flexbenCampaignSeq, billingStatus } = self.editCompanyData;
             if( ! self.validationCheck( { subscribeStartDate, subscribeEndDate,useFeeDepositDate, flexbenCampaignSeq, billingStatus }) ) {
-                alert( "Can’t be blank");
+                alert( "Please enter the contents." );
                 return;
             }
             const url = self.$api("uri", "put-company");

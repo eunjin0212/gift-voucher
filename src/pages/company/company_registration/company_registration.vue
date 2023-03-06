@@ -122,7 +122,7 @@ export default {
         clickSubmit(){
             const self = this;
             if( ! self.validationCheck() ) {
-                alert( "Can’t be blank");
+                alert( "Please enter the contents." );
                 return;
             }
 
@@ -142,7 +142,6 @@ export default {
             let isValid = true;
 
             const { subscribeStartDate, subscribeEndDate, useFeeDepositDate, flexbenCampaignSeq } = self.registerData;
-            console.log( " .... ")
 
             Object.values({ subscribeStartDate, subscribeEndDate, useFeeDepositDate, flexbenCampaignSeq }).map( (  value ) => {
                 if( ! value ){

@@ -4,7 +4,7 @@ import { ValidateUtil } from "@/plugins/app-util.js";
 import ElementsNotification from "@/components/elements/ElementsNotification.vue";
 
 export default {
-    props: { 
+    props: {
         modelValue : Boolean,
         name : String,
     },
@@ -18,10 +18,10 @@ export default {
             isEdit : false,
             notificationErrMSG: null,
             requestErrorMsg: {
-                companyName: "Company Name can't be blank",
-                employeeName: "Employee Name can't be blank",
-                loginId: "Login Id can't be blank",
-                loginPwd: "Login Password can't be blank",
+                companyName: "Please enter the Company Name",
+                employeeName: "Please enter the Employee Name",
+                loginId: "Please enter the Login Id",
+                loginPwd: "Please enter the Login Password",
             },
             requestError: {
                 companyName: null,
@@ -92,7 +92,7 @@ export default {
         },
         getDataForSave(){
             const self = this;
-            
+
             let { companyName, employeeName, loginId, loginPwd } = self.request;
 
             const saveItem = { companyName, employeeName, loginId, loginPwd }
@@ -150,7 +150,7 @@ export default {
                 <img src="@/assets/img/app-popup-1.svg" alt="app-popup-1" />
                 </a>
             </div>
-            
+
             <div class="w-full h-px bg-gray-200"></div>
             <div class="max-h-[70vh] overflow-auto">
 
@@ -252,7 +252,7 @@ export default {
                 <div class="sticky bottom-0 ">
                     <div class="w-full h-px bg-gray-200"></div>
                     <div
-                        class=" px-4 py-6 flex justify-end w-full bg-white" 
+                        class=" px-4 py-6 flex justify-end w-full bg-white"
                     >
                         <ElementsButton
                             text="Cancel"
@@ -273,8 +273,8 @@ export default {
                 </div>
             </div>
         </div>
-        <ElementsNotification 
-            v-model="showNotiErr" 
+        <ElementsNotification
+            v-model="showNotiErr"
             :notificationMsg="notificationErrMSG"
             :warning="true"
         />
