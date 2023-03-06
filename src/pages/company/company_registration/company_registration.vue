@@ -40,7 +40,7 @@
                             :name="'PIC Phone number'"
                             :full="true"
                             :maxlength="60"
-                            :inputtype="'number'"
+                            :inputtype="'tel'"
                             :required="true"
                         />
                     </div>
@@ -126,8 +126,15 @@ export default {
                 return;
             }
 
-            // const registerDatesData = self.dateFormatChangeForSave( self.registerData );
-            const registerData = { ...self.registerData }
+            if( ! self.validatePhoneNumber() ){
+                alert( "Please enter a valid phone number. The number should start with either 09 or 08 and have more than 11 digits." );
+                return;
+            }
+
+            const registerData = {
+                                    ...self.registerData,
+                                    subscriptionPicPhoneNumber : self.registerData.subscriptionPicPhoneNumber.replace(/\D/g, '')
+                                };
 
             const url = self.$api("uri", "post-company" );
             self.$axios.post( url , registerData )
@@ -152,6 +159,14 @@ export default {
 
             return isValid;
         },
+        validatePhoneNumber() {
+            const self = this;
+            let { subscriptionPicPhoneNumber } = self.registerData;
+
+            subscriptionPicPhoneNumber = subscriptionPicPhoneNumber.replace(/\D/g, '');
+            const regex = /^(09|08)\d{9,}$/;
+            return regex.test( subscriptionPicPhoneNumber );
+        },
         getInquiryData(){
             const self = this;
             const params = new URLSearchParams( window.location.search );
@@ -173,24 +188,13 @@ export default {
                         subscriptionPicDepartment : picDepartmentName,
                         subscriptionPicEmail : picEmail,
                         subscriptionPicName : picName,
-                        subscriptionPicPhoneNumber : picPhoneNumber,
+                        subscriptionPicPhoneNumber : picPhoneNumber.replace(/\D/g, ''),
                         companyName : inquiryCompanyName,
                     };
 
                 } )
                 .catch( alert )
         },
-        // dateFormatChangeForSave( { subscribeStartDate, subscribeEndDate, useFeeDepositDate } ){
-        //     const self = this;
-
-        //     const dateObject = Object.entries({ subscribeStartDate, subscribeEndDate, useFeeDepositDate })
-        //                             .reduce( ( obj, [key, date] ) => {
-        //                                 const formattedDate = self.dateFormatter( date )
-        //                                 return { ...obj, [key] : formattedDate}
-        //                             }, {});
-
-        //     return dateObject;
-        // },
         dateFormatter( dateStr ){
             if( ! dateStr ){
                 return null;

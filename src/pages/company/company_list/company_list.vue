@@ -102,6 +102,23 @@ export default {
                 console.log( res.data.data.list )
             })
             .catch( alert )
+        },
+        changeCamelCase( value ){
+            switch (value) {
+                case 'BILLING':	return 'Billing';
+                case 'TRIAL': return 'Trial';
+                default : return "";
+            }
+        },
+        formatPhoneNumber(phoneNumber) {
+            const regex = /^(\d{4})(\d{3})(\d{1,})$/;
+            const match = regex.exec(phoneNumber);
+
+            if (match) {
+                const formattedNumber = `${match[1]}-${match[2]}-${match[3]}`;
+                return formattedNumber;
+            }
+            return phoneNumber;
         }
     },
 }; // export default
@@ -148,6 +165,7 @@ export default {
                         <thead class="sticky bg-gray-50 top-0 left-0 right-0 border-b border-gray-50" style="z-index: 1;">
                             <tr>
                                 <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900 sm:pl-6">Company Name</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">Billing Status</th>
                                 <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">PIC Name</th>
                                 <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">PIC Email</th>
                                 <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">PIC Phone Number</th>
@@ -167,9 +185,10 @@ export default {
                         <tbody class="divide-y divide-gray-200 bg-white">
                             <tr v-for="(company, index) in companyList" v-bind:key="index" >
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900 sm:pl-6">{{ company.companyName }}</td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">  {{ changeCamelCase(company.billingStatus) }} </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">  {{ company.subscriptionPicName }} </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ company.subscriptionPicEmail }} </td>
-                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ company.subscriptionPicPhoneNumber }} </td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ formatPhoneNumber(company.subscriptionPicPhoneNumber) }} </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ company.subscribeStartDate}}  </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ company.subscribeEndDate }} </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ company.useFeeDepositDate }} </td>

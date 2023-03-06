@@ -72,7 +72,7 @@
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ inquiry.picName }} </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ inquiry.picDepartmentName }}  </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ inquiry.picEmail }} </td>
-                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ inquiry.picPhoneNumber }} </td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ formatPhoneNumber( inquiry.picPhoneNumber ) }} </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ inquiry.consultantEmpName }} </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ dateFormatChage(inquiry.consultationDatetime) }} </td>
                                 <td class="relative whitespace-nowrap py-4 pr-4 text-right text-sm font-medium sm:pr-6">
@@ -151,6 +151,16 @@ export default {
         }
     },
     methods : {
+        formatPhoneNumber(phoneNumber) {
+            const regex = /^(\d{4})(\d{3})(\d{1,})$/;
+            const match = regex.exec(phoneNumber);
+
+            if (match) {
+                const formattedNumber = `${match[1]}-${match[2]}-${match[3]}`;
+                return formattedNumber;
+            }
+            return phoneNumber;
+        },
         deleteInquiry(){
             const self = this;
 

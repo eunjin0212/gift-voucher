@@ -80,7 +80,7 @@
                                                 value=" +63"
                                             />
                                             <input
-                                                type="number" name="pic-phone-number" id="pic-phone-number" autocomplete="pic-phone-number"
+                                                type="tel" name="pic-phone-number" id="pic-phone-number" autocomplete="pic-phone-number"
                                                 class="mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                                 v-model="inquiry.picPhoneNumber"
                                                 :required="true"
@@ -128,8 +128,14 @@ export default {
         saveThisPopup(){
             const self = this;
 
+            if( ! self.validatePhoneNumber() ){
+                alert("Please enter a valid phone number. The number should start with either 09 or 08 and have more than 11 digits.");
+                return;
+            }
+
             const updateData = {
                 ...self.inquiry,
+                picPhoneNumber : self.inquiry.picPhoneNumber.replace(/\D/g, '')
             }
 
             const url = self.$api("uri", "put-join-inquiry");
@@ -139,6 +145,15 @@ export default {
                     self.$emit('update');
                 })
                 .catch( alert )
+        },
+        validatePhoneNumber() {
+            const self = this;
+            let { picPhoneNumber } = self.inquiry;
+            if( ! picPhoneNumber ) return true;
+
+            picPhoneNumber = picPhoneNumber.replace(/\D/g, '');
+            const regex = /^(09|08)\d{9,}$/;
+            return regex.test( picPhoneNumber );
         },
         dateFormatter( dateStr ){
             if( ! dateStr ){
@@ -151,7 +166,8 @@ export default {
                 return new Date();
             }
             return new Date( dateStr )
-        }
+        },
+
     },
     computed : {
         inquiry (){
@@ -162,7 +178,3 @@ export default {
     }
 }
 </script>
-
-<style>
-
-</style>
