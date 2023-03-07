@@ -119,6 +119,9 @@ export default {
                 return formattedNumber;
             }
             return phoneNumber;
+        },
+        locationToInfoPage( companySeq ){
+            location.href=`/company/company_information?subscriptionCompanySeq=${companySeq}`;
         }
     },
 }; // export default
@@ -200,6 +203,7 @@ export default {
                                         :fitContent="true"
                                         :bgWhiteAndtextIndigo="true"
                                         :height12="true"
+                                        @click-event="locationToInfoPage(company.subscriptionCompanySeq)"
                                     />
                                 </td>
                                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
