@@ -22,13 +22,13 @@
                                     <div>
                                         <div class="space-y-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-10">
                                             <div class="flex items-center">
-                                                <input 
-                                                    name="point-execution-method" type="radio" 
-                                                    :checked="true" 
+                                                <input
+                                                    name="point-execution-method" type="radio"
+                                                    :checked="true"
                                                     class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                                 />
-                                                <label class="ml-3 block text-sm font-medium text-gray-700"> 
-                                                    {{ pointExecutionMethods.find(type => type.id === registerData.transactionType ).title }} 
+                                                <label class="ml-3 block text-sm font-medium text-gray-700">
+                                                    Top-up
                                                 </label>
                                             </div>
                                         </div>
@@ -45,10 +45,10 @@
                                 <div v-if="registerData.poDocumentFilePath" class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
                                     <dt class="text-sm font-medium text-gray-500">PO softcopy</dt>
                                     <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 flex justify-between">
-                                        <a class="text-blue-600 underline cursor-pointer" :href="registerData.poDocumentFilePath"> 
+                                        <a class="text-blue-600 underline cursor-pointer" :href="registerData.poDocumentFilePath">
                                             {{ showTheFileName( registerData.poDocumentFilePath )}}
                                         </a>
-                                        <div 
+                                        <div
                                             class="border border-red-600 p-2 bg-white rounded-md font-semibold text-red-600 cursor-pointer"
                                             name="poDocumentFilePath"
                                             @click="deleteSelectedFile"
@@ -61,9 +61,9 @@
                                     <dt class="text-sm font-medium text-gray-500">PO softcopy</dt>
                                     <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                                         <input type="file"
-                                            class="w-full mt-1 shadow-sm block sm:text-sm bg-white border-gray-300 rounded-md"    
+                                            class="w-full mt-1 shadow-sm block sm:text-sm bg-white border-gray-300 rounded-md"
                                             :min="0"
-                                            multiple 
+                                            multiple
                                             @input="afterFileSelect"
                                             name="poDocumentFilePath"
                                         />
@@ -74,10 +74,10 @@
                                 <div v-if="registerData.invoiceFilePath" class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
                                     <dt class="text-sm font-medium text-gray-500">PO softcopy</dt>
                                     <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 flex justify-between">
-                                        <a class="text-blue-600 underline cursor-pointer" :href="registerData.invoiceFilePath"> 
+                                        <a class="text-blue-600 underline cursor-pointer" :href="registerData.invoiceFilePath">
                                             {{ showTheFileName( registerData.invoiceFilePath )}}
                                         </a>
-                                        <div 
+                                        <div
                                             class="border border-red-600 p-2 bg-white rounded-md font-semibold text-red-600 cursor-pointer"
                                             name="invoiceFilePath"
                                             @click="deleteSelectedFile"
@@ -90,10 +90,10 @@
                                     <dt class="text-sm font-medium text-gray-500">Invoice softcopy</dt>
                                     <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                                         <input type="file"
-                                            multiple 
+                                            multiple
                                             @input="afterFileSelect"
                                             name="invoiceFilePath"
-                                            class="w-full mt-1 shadow-sm block sm:text-sm bg-white border-gray-300 rounded-md"    
+                                            class="w-full mt-1 shadow-sm block sm:text-sm bg-white border-gray-300 rounded-md"
                                             :min="0"
                                         />
                                     </dd>
@@ -103,10 +103,10 @@
                                 <div v-if="registerData.orDocumentFilePath" class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
                                     <dt class="text-sm font-medium text-gray-500">PO softcopy</dt>
                                     <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 flex justify-between">
-                                        <a class="text-blue-600 underline cursor-pointer" :href="registerData.orDocumentFilePath"> 
+                                        <a class="text-blue-600 underline cursor-pointer" :href="registerData.orDocumentFilePath">
                                             {{ showTheFileName( registerData.orDocumentFilePath )}}
                                         </a>
-                                        <div 
+                                        <div
                                             class="border border-red-600 p-2 bg-white rounded-md font-semibold text-red-600 cursor-pointer"
                                             name="orDocumentFilePath"
                                             @click="deleteSelectedFile"
@@ -119,9 +119,9 @@
                                     <dt class="text-sm font-medium text-gray-500">OR softcopy</dt>
                                     <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                                         <input type="file"
-                                            class="w-full mt-1 shadow-sm block sm:text-sm bg-white border-gray-300 rounded-md"    
+                                            class="w-full mt-1 shadow-sm block sm:text-sm bg-white border-gray-300 rounded-md"
                                             :min="0"
-                                            multiple 
+                                            multiple
                                             @input="afterFileSelect"
                                             name="orDocumentFilePath"
                                         />
@@ -132,7 +132,7 @@
                     </div>
                 </div>
                 <div class="flex justify-end gap-4">
-                    <ElementsButton 
+                    <ElementsButton
                         :backgroundWhite="true"
                         :text="'Back To List'"
                         @clickEvent="backToListPage"
@@ -208,7 +208,7 @@ export default {
             const self = this;
             const { files, name } = e.target;
             if( files.size < 0 ){
-                return ; 
+                return ;
             }
             const mileageCompanyHistorySeq = new URLSearchParams( window.location.search ).get("mileageSeq");
             const url = self.$api("uri", "post-file-direct-upload" );
@@ -242,9 +242,9 @@ export default {
             const self = this;
             const elementName = e.target.getAttribute('name');
             const mileageCompanyHistorySeq = new URLSearchParams( window.location.search ).get("mileageSeq");
-            
+
             const deleteData = {
-                [elementName] :  self.registerData[elementName] 
+                [elementName] :  self.registerData[elementName]
                 , mileageCompanyHistorySeq
             };
 
@@ -256,7 +256,7 @@ export default {
                     self.registerData[elementName] = null;
                 })
                 .catch( alert )
-            
+
         },
         deleteUtilFileDirectDownload( filePath ){
             const self = this;
@@ -264,7 +264,7 @@ export default {
         },
 
     }
-    
+
 }
 </script>
 
