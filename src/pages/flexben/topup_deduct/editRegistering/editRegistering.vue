@@ -41,89 +41,149 @@
                                     <div> {{ registerData.mileageVolume }} </div>
                                 </dd>
                             </div>
+
                             <div>
-                                <div v-if="registerData.poDocumentFilePath" class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-                                    <dt class="text-sm font-medium text-gray-500">PO softcopy</dt>
+                                <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                                    <dt class="grid text-sm font-medium text-gray-500 items-center">PO softcopy</dt>
+
+                                    <template v-if="registerData.poDocumentFilePath">
+                                        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 flex justify-between">
+                                            <a class="text-blue-600 underline cursor-pointer" :href="registerData.poDocumentFilePath">
+                                                {{ showTheFileName( registerData.poDocumentFilePath )}}
+                                            </a>
+                                            <ElementsButton
+                                                :width20="true"
+                                                :height12="true"
+                                                :borderRed="true"
+                                                :text="'Delete'"
+                                                @clickEvent="deleteSelectedFile('poDocumentFilePath')"
+                                            />
+                                        </dd>
+                                    </template>
+
+                                    <template v-else>
+                                        <dd class="text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                                            <input type="file"
+                                                class="w-full mt-1 shadow-sm block sm:text-sm bg-white border-gray-300 rounded-md"
+                                                multiple
+                                                @input="afterFileSelect"
+                                                name="poDocumentFilePath"
+                                            />
+                                        </dd>
+                                    </template>
+
+                                    <dt class="grid text-sm font-medium text-gray-500 items-center">PO Document No</dt>
                                     <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 flex justify-between">
-                                        <a class="text-blue-600 underline cursor-pointer" :href="registerData.poDocumentFilePath">
-                                            {{ showTheFileName( registerData.poDocumentFilePath )}}
-                                        </a>
-                                        <div
-                                            class="border border-red-600 p-2 bg-white rounded-md font-semibold text-red-600 cursor-pointer"
-                                            name="poDocumentFilePath"
-                                            @click="deleteSelectedFile"
-                                        >
-                                            delete
-                                        </div>
-                                    </dd>
-                                </div>
-                                <div v-else class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-                                    <dt class="text-sm font-medium text-gray-500">PO softcopy</dt>
-                                    <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                                        <input type="file"
-                                            class="w-full mt-1 shadow-sm block sm:text-sm bg-white border-gray-300 rounded-md"
-                                            :min="0"
-                                            multiple
-                                            @input="afterFileSelect"
-                                            name="poDocumentFilePath"
+                                        <ElementsInput
+                                            :full="true"
+                                            v-model="registerData.poDocNo"
+                                            :max="100"
+                                        />
+
+                                        <ElementsButton
+                                            :width20="true"
+                                            :height12="true"
+                                            :bgWhiteAndtextIndigo="true"
+                                            :text="'Change'"
+                                            @clickEvent="changeSelectedDocName('poDocNo')"
                                         />
                                     </dd>
                                 </div>
                             </div>
+
                             <div>
-                                <div v-if="registerData.invoiceFilePath" class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-                                    <dt class="text-sm font-medium text-gray-500">PO softcopy</dt>
+                                <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                                    <dt class="grid text-sm font-medium text-gray-500 items-center">Invoice softcopy</dt>
+
+                                    <template v-if="registerData.invoiceFilePath">
+                                        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 flex justify-between">
+                                            <a class="text-blue-600 underline cursor-pointer" :href="registerData.invoiceFilePath">
+                                                {{ showTheFileName( registerData.invoiceFilePath )}}
+                                            </a>
+                                            <ElementsButton
+                                                :width20="true"
+                                                :height12="true"
+                                                :borderRed="true"
+                                                :text="'Delete'"
+                                                @clickEvent="deleteSelectedFile('invoiceFilePath')"
+                                            />
+                                        </dd>
+                                    </template>
+
+                                    <template v-else >
+                                        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                                            <input type="file"
+                                                multiple
+                                                @input="afterFileSelect"
+                                                name="invoiceFilePath"
+                                                class="w-full mt-1 shadow-sm block sm:text-sm bg-white border-gray-300 rounded-md"
+                                            />
+                                        </dd>
+                                    </template>
+
+                                    <dt class="grid text-sm font-medium text-gray-500 items-center">Invoice Document No</dt>
                                     <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 flex justify-between">
-                                        <a class="text-blue-600 underline cursor-pointer" :href="registerData.invoiceFilePath">
-                                            {{ showTheFileName( registerData.invoiceFilePath )}}
-                                        </a>
-                                        <div
-                                            class="border border-red-600 p-2 bg-white rounded-md font-semibold text-red-600 cursor-pointer"
-                                            name="invoiceFilePath"
-                                            @click="deleteSelectedFile"
-                                        >
-                                            delete
-                                        </div>
-                                    </dd>
-                                </div>
-                                <div v-else class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-                                    <dt class="text-sm font-medium text-gray-500">Invoice softcopy</dt>
-                                    <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                                        <input type="file"
-                                            multiple
-                                            @input="afterFileSelect"
-                                            name="invoiceFilePath"
-                                            class="w-full mt-1 shadow-sm block sm:text-sm bg-white border-gray-300 rounded-md"
-                                            :min="0"
+                                        <ElementsInput
+                                            :full="true"
+                                            v-model="registerData.invoiceDocNo"
+                                            :max="100"
+                                        />
+
+                                        <ElementsButton
+                                            :width20="true"
+                                            :height12="true"
+                                            :bgWhiteAndtextIndigo="true"
+                                            :text="'Change'"
+                                            @clickEvent="changeSelectedDocName('invoiceDocNo')"
                                         />
                                     </dd>
                                 </div>
                             </div>
+
                             <div>
-                                <div v-if="registerData.orDocumentFilePath" class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-                                    <dt class="text-sm font-medium text-gray-500">PO softcopy</dt>
+                                <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                                    <dt class="grid text-sm font-medium text-gray-500 items-center">OR softcopy</dt>
+
+                                    <template v-if="registerData.orDocumentFilePath">
+                                        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 flex justify-between">
+                                            <a class="text-blue-600 underline cursor-pointer" :href="registerData.orDocumentFilePath">
+                                                {{ showTheFileName( registerData.orDocumentFilePath )}}
+                                            </a>
+                                            <ElementsButton
+                                                :width20="true"
+                                                :height12="true"
+                                                :borderRed="true"
+                                                :text="'Delete'"
+                                                @clickEvent="deleteSelectedFile('orDocumentFilePath')"
+                                            />
+                                        </dd>
+                                    </template>
+
+                                    <template v-else>
+                                        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                                            <input type="file"
+                                                class="w-full mt-1 shadow-sm block sm:text-sm bg-white border-gray-300 rounded-md"
+                                                multiple
+                                                @input="afterFileSelect"
+                                                name="orDocumentFilePath"
+                                            />
+                                        </dd>
+                                    </template>
+
+                                    <dt class="grid text-sm font-medium text-gray-500 items-center">OR Document No</dt>
                                     <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 flex justify-between">
-                                        <a class="text-blue-600 underline cursor-pointer" :href="registerData.orDocumentFilePath">
-                                            {{ showTheFileName( registerData.orDocumentFilePath )}}
-                                        </a>
-                                        <div
-                                            class="border border-red-600 p-2 bg-white rounded-md font-semibold text-red-600 cursor-pointer"
-                                            name="orDocumentFilePath"
-                                            @click="deleteSelectedFile"
-                                        >
-                                            delete
-                                        </div>
-                                    </dd>
-                                </div>
-                                <div v-else class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-                                    <dt class="text-sm font-medium text-gray-500">OR softcopy</dt>
-                                    <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                                        <input type="file"
-                                            class="w-full mt-1 shadow-sm block sm:text-sm bg-white border-gray-300 rounded-md"
-                                            :min="0"
-                                            multiple
-                                            @input="afterFileSelect"
-                                            name="orDocumentFilePath"
+                                        <ElementsInput
+                                            :full="true"
+                                            v-model="registerData.orDocNo"
+                                            :max="100"
+                                        />
+
+                                        <ElementsButton
+                                            :width20="true"
+                                            :height12="true"
+                                            :bgWhiteAndtextIndigo="true"
+                                            :text="'Change'"
+                                            @clickEvent="changeSelectedDocName('orDocNo')"
                                         />
                                     </dd>
                                 </div>
@@ -159,10 +219,6 @@ export default {
         return{
             isNotEditable : true,
             companyList : [],
-            pointExecutionMethods : [
-                { id: 'TOPUP_FROM_HRFLEX', title: 'Topup' },
-                { id: 'DEDUCT_TO_HRFLEX', title: 'Deduct' },
-            ],
             registerData : {
                 transactionType : "TOPUP_FROM_HRFLEX",
                 companySeq : "",
@@ -172,7 +228,10 @@ export default {
                 mileageVolume : 0,
                 poDocumentFilePath : null,
                 invoiceFilePath : null,
-                orDocumentFilePath : null
+                orDocumentFilePath : null,
+                poDocNo : null,
+                invoiceDocNo : null,
+                orDocNo : null
             },
             documentFiles : {
                 poDocumentFile : null,
@@ -196,6 +255,10 @@ export default {
             self.$axios.get( `${url}/${params.get("mileageSeq")}`)
                 .then( res => {
                     self.registerData = { ...res.data.data };
+                    if( self.registerData.transactionType !== 'TOPUP_FROM_HRFLEX'){
+                        alert("Only the 'Top-up' execution is able to be edited the documents");
+                        return;
+                    }
                 })
                 .catch(alert);
         },
@@ -238,9 +301,8 @@ export default {
             const params = new URLSearchParams( filePath )
             return params.get("downloadFileName");
         },
-        deleteSelectedFile( e ){
+        deleteSelectedFile( elementName ){
             const self = this;
-            const elementName = e.target.getAttribute('name');
             const mileageCompanyHistorySeq = new URLSearchParams( window.location.search ).get("mileageSeq");
 
             const deleteData = {
@@ -262,7 +324,20 @@ export default {
             const self = this;
             return self.$axios.delete( filePath )
         },
-
+        changeSelectedDocName( elementName ){
+            const self = this;
+            const mileageCompanyHistorySeq = new URLSearchParams( window.location.search ).get("mileageSeq");
+            const updateData = {
+                [elementName] :  self.registerData[elementName]
+                , mileageCompanyHistorySeq
+            };
+            self.updateRegisterDocs(updateData)
+                .then( ()=> alert('Success to update' ) )
+                .catch( err => {
+                    let { message } = err.response.data;
+                    alert( message );
+                })
+        },
     }
 
 }

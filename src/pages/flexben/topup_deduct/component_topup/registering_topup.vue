@@ -47,11 +47,12 @@
                         </div>
 
                         <div>
+                            <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                                <dt class="grid text-sm font-medium text-gray-500 items-center">PO softcopy</dt>
 
-                            <div v-if="documentFiles.poDocumentFile" class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-                                <dt class="text-sm font-medium text-gray-500">PO softcopy</dt>
-                                <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 flex justify-between">
-                                    <div class="text-blue-600" >
+                                <template v-if="documentFiles.poDocumentFile">
+                                    <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 flex justify-between">
+                                    <div class="text-blue-600 grid items-baseline" >
                                         {{ documentFiles.poDocumentFileName }}
                                     </div>
                                     <div
@@ -62,80 +63,112 @@
                                         delete
                                     </div>
                                 </dd>
-                            </div>
-                            <div v-else class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-                                <dt class="text-sm font-medium text-gray-500">PO softcopy</dt>
-                                <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                                    <input type="file"
-                                        class="w-full mt-1 shadow-sm block sm:text-sm bg-white border-gray-300 rounded-md"
-                                        multiple
-                                        @input="afterFileSelect"
-                                        name="poDocumentFile"
+                                </template>
+
+                                <template v-else>
+                                    <dd class="text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                                        <input type="file"
+                                            class="w-full mt-1 shadow-sm block sm:text-sm bg-white border-gray-300 rounded-md"
+                                            multiple
+                                            @input="afterFileSelect"
+                                            name="poDocumentFile"
+                                        />
+                                    </dd>
+                                </template>
+
+                                <dt class="grid text-sm font-medium text-gray-500 items-center">PO Document No</dt>
+                                <dd class="text-sm text-gray-900 sm:col-span-2">
+                                    <ElementsInput
+                                        :full="true"
+                                        v-model="registerData.poDocNo"
+                                        :max="100"
                                     />
                                 </dd>
                             </div>
-
                         </div>
+
                         <div>
+                            <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                                <dt class="grid text-sm font-medium text-gray-500 items-center">Invoice softcopy</dt>
 
-                            <div v-if="documentFiles.invoiceFileName" class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-                                <dt class="text-sm font-medium text-gray-500">PO softcopy</dt>
-                                <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 flex justify-between">
-                                    <div class="text-blue-600" >
-                                        {{ documentFiles.invoiceFileName }}
-                                    </div>
-                                    <div
-                                        class="border border-red-600 p-2 bg-white rounded-md font-semibold text-red-600 cursor-pointer"
-                                        name="invoiceFile"
-                                        @click="deleteSelectedFile"
-                                    >
-                                        delete
-                                    </div>
-                                </dd>
-                            </div>
-                            <div v-else class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-                                <dt class="text-sm font-medium text-gray-500">Invoice softcopy</dt>
-                                <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                                    <input type="file"
-                                        multiple
-                                        @input="afterFileSelect"
-                                        name="invoiceFile"
-                                        class="w-full mt-1 shadow-sm block sm:text-sm bg-white border-gray-300 rounded-md"
+                                <template v-if="documentFiles.invoiceFileName">
+                                    <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 flex justify-between">
+                                        <div class="text-blue-600 grid items-baseline" >
+                                            {{ documentFiles.invoiceFileName }}
+                                        </div>
+                                        <div
+                                            class="border border-red-600 p-2 bg-white rounded-md font-semibold text-red-600 cursor-pointer"
+                                            name="invoiceFile"
+                                            @click="deleteSelectedFile"
+                                        >
+                                            delete
+                                        </div>
+                                    </dd>
+                                </template>
+
+                                <template v-else >
+                                    <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                                        <input type="file"
+                                            multiple
+                                            @input="afterFileSelect"
+                                            name="invoiceFile"
+                                            class="w-full mt-1 shadow-sm block sm:text-sm bg-white border-gray-300 rounded-md"
+                                        />
+                                    </dd>
+                                </template>
+
+                                <dt class="grid text-sm font-medium text-gray-500 items-center">Invoice Document No</dt>
+                                <dd class="text-sm text-gray-900 sm:col-span-2">
+                                    <ElementsInput
+                                        :full="true"
+                                        v-model="registerData.invoiceDocNo"
+                                        :max="100"
                                     />
                                 </dd>
                             </div>
-
                         </div>
+
                         <div>
+                            <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                                <dt class="grid text-sm font-medium text-gray-500 items-center">OR softcopy</dt>
 
-                            <div v-if="documentFiles.orDocumentFileName" class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-                                <dt class="text-sm font-medium text-gray-500">PO softcopy</dt>
-                                <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 flex justify-between">
-                                    <div class="text-blue-600" >
-                                        {{ documentFiles.orDocumentFileName }}
-                                    </div>
-                                    <div
-                                        class="border border-red-600 p-2 bg-white rounded-md font-semibold text-red-600 cursor-pointer"
-                                        name="orDocumentFile"
-                                        @click="deleteSelectedFile"
-                                    >
-                                        delete
-                                    </div>
-                                </dd>
-                            </div>
-                            <div v-else class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-                                <dt class="text-sm font-medium text-gray-500">OR softcopy</dt>
-                                <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                                    <input type="file"
-                                        class="w-full mt-1 shadow-sm block sm:text-sm bg-white border-gray-300 rounded-md"
-                                        multiple
-                                        @input="afterFileSelect"
-                                        name="orDocumentFile"
+                                <template v-if="documentFiles.orDocumentFileName">
+                                    <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 flex justify-between">
+                                        <div class="text-blue-600 grid items-baseline" >
+                                            {{ documentFiles.orDocumentFileName }}
+                                        </div>
+                                        <div
+                                            class="border border-red-600 p-2 bg-white rounded-md font-semibold text-red-600 cursor-pointer"
+                                            name="orDocumentFile"
+                                            @click="deleteSelectedFile"
+                                        >
+                                            delete
+                                        </div>
+                                    </dd>
+                                </template>
+
+                                <template v-else>
+                                    <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                                        <input type="file"
+                                            class="w-full mt-1 shadow-sm block sm:text-sm bg-white border-gray-300 rounded-md"
+                                            multiple
+                                            @input="afterFileSelect"
+                                            name="orDocumentFile"
+                                        />
+                                    </dd>
+                                </template>
+
+                                <dt class="grid text-sm font-medium text-gray-500 items-center">OR Document No</dt>
+                                <dd class="text-sm text-gray-900 sm:col-span-2">
+                                    <ElementsInput
+                                        :full="true"
+                                        v-model="registerData.orDocNo"
+                                        :max="100"
                                     />
                                 </dd>
                             </div>
-
                         </div>
+
                     </dl>
                 </div>
             </div>
@@ -185,7 +218,10 @@ export default {
                 mileageVolume : 1,
                 poDocumentFilePath : null,
                 invoiceFilePath : null,
-                orDocumentFilePath : null
+                orDocumentFilePath : null,
+                poDocNo : null,
+                invoiceDocNo : null,
+                orDocNo : null
             },
             documentFiles : {
                 poDocumentFile : null,
