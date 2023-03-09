@@ -98,15 +98,11 @@
             </div>
         </AppMain>
         <Teleport to="body">
-            <AppPopup
-                v-model="editConsultaion.isOpen"
-                :name="'Edit Consultation'"
-            >
-                <EditConsultation
-                    :inquiryData="inquiryData"
-                    @update="updateInquiry"
-                />
-            </AppPopup>
+            <EditConsultation
+                v-model="editConsultation.isOpen"
+                :inquiryData="inquiryData"
+                @update="updateInquiry"
+            />
         </Teleport>
     </div>
 
@@ -124,7 +120,7 @@ export default {
     },
     data(){
         return{
-            editConsultaion : {
+            editConsultation : {
                 isOpen : false,
             },
             inquiryData : {},
@@ -204,14 +200,13 @@ export default {
         },
         editInquiryConsultationData( item ){
             const self = this;
-            self.editConsultaion.isOpen = true;
+            self.editConsultation.isOpen = true;
             self.inquiryData = item;
-            console.log( { item } )
         },
         updateInquiry(){
             const self = this;
             self.getJoinInquiry( self.json_query.offset, true )
-            self.editConsultaion.isOpen = false;
+            self.editConsultation.isOpen = false;
         },
         goToRegistrationPage( inquirySeq ){
             location.href = `/company/company_registration?inquirySeq=${ inquirySeq }`

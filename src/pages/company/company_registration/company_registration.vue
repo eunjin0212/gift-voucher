@@ -131,6 +131,11 @@ export default {
                 return;
             }
 
+            if( ! self.validationTimeCheck() ){
+                alert("The start date should be earlier than the end date.");
+                return;
+            }
+
             const registerData = {
                                     ...self.registerData,
                                     subscriptionPicPhoneNumber : self.registerData.subscriptionPicPhoneNumber.replace(/\D/g, '')
@@ -167,6 +172,14 @@ export default {
             const regex = /^(09|08)\d{9,}$/;
             return regex.test( subscriptionPicPhoneNumber );
         },
+        validationTimeCheck(){
+            const self = this;
+            const { subscribeStartDate, subscribeEndDate } = self.registerData;
+            const startDate = moment( subscribeStartDate );
+            const endDate = moment( subscribeEndDate );
+
+            return endDate.isAfter(startDate);
+        },
         getInquiryData(){
             const self = this;
             const params = new URLSearchParams( window.location.search );
@@ -194,12 +207,6 @@ export default {
 
                 } )
                 .catch( alert )
-        },
-        dateFormatter( dateStr ){
-            if( ! dateStr ){
-                return null;
-            }
-            return moment( dateStr ).format("yyyy-MM-DD HH:mm:ss");
         },
     },
     data() {

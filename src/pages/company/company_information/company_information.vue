@@ -128,12 +128,12 @@
                                 v-model="editCompanyData.subscriptionPicEmail"
                             />
                             <ElementsInput
+                                v-model="editCompanyData.subscriptionPicPhoneNumber"
                                 :name="'PIC Phone number'"
                                 :full="true"
                                 :maxlength="60"
-                                :inputtype="'number'"
+                                :inputtype="'tel'"
                                 :required="true"
-                                v-model="editCompanyData.subscriptionPicPhoneNumber"
                             />
                         </div>
                         <div class="my-7 flex flex-col gap-4">
@@ -196,6 +196,7 @@
 import AppAside from "@/components/AppAside.vue";
 import AppMain from "@/components/main/AppMain.vue";
 import MainTabs from "@/components/main/sections/MainTabs.vue"
+import moment from 'moment';
 
 export default {
     components : {
@@ -297,6 +298,18 @@ export default {
                 alert( "Please enter the contents." );
                 return;
             }
+
+            if( ! self.validatePhoneNumber() ){
+                alert( "Please enter a valid phone number. The number should start with either 09 or 08 and have more than 11 digits." );
+                return;
+            }
+
+            if( ! self.validationTimeCheck() ){
+                alert("The start date should be earlier than the end date.");
+                return;
+            }
+
+
             const url = self.$api("uri", "put-company");
             self.$axios.put( url, self.editCompanyData )
                 .then( ( ) => {
@@ -315,6 +328,24 @@ export default {
                 }
             });
             return isValid;
+        },
+        validatePhoneNumber() {
+            const self = this;
+            let { subscriptionPicPhoneNumber } = self.editCompanyData;
+
+            subscriptionPicPhoneNumber = subscriptionPicPhoneNumber.replace(/\D/g, '');
+            const regex = /^(09|08)\d{9,}$/;
+            return regex.test( subscriptionPicPhoneNumber );
+        },
+        validationTimeCheck(){
+            const self = this;
+            const { subscribeStartDate, subscribeEndDate } = self.editCompanyData;
+            const startDate = moment( subscribeStartDate );
+            const endDate = moment( subscribeEndDate );
+
+            console.log( startDate, endDate, endDate.isAfter(startDate) )
+
+            return endDate.isAfter(startDate);
         },
         getCompanyData(){
             const self = this;

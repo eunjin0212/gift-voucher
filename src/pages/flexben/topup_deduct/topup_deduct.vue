@@ -32,7 +32,6 @@ export default {
                 tab.current = tabItem.name === tab.name;
             })
             self.transactionType = self.mainTabs.find( tab => tab.current ).name;
-            self.getFlexbenHistoryList();
         },
     },
     data(){
