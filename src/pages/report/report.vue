@@ -68,6 +68,10 @@ export default {
             const self = this;
             self.getFlexbenReportList( item, true )
         },
+        dateFormatChange( date, format= "MM/DD/yyyy" ){
+            if( ! date ) return;
+            return moment(date).format(format);
+        },
     },
     mounted(){
         const self = this;
@@ -115,7 +119,7 @@ export default {
                         </thead>
                         <tbody v-if="flexbenReport.total != 0" class="divide-y divide-gray-200 bg-white" >
                             <tr v-for="(report, index) in flexbenReport.list" v-bind:key="index" >
-                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900 sm:pl-6"> {{ report.regDate}} </td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900 sm:pl-6"> {{ dateFormatChange(report.regDate, "MM/DD/yyyy hh:mm") }} </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">  {{ report.companyName }} </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">  {{ report.transactionType }} </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ report.mileageVolume }} </td>

@@ -37,7 +37,7 @@
                 </thead>
                 <tbody class="divide-y divide-gray-200 bg-white">
                     <tr v-for="(history, index) in flexbenHistory.list" v-bind:key="index" >
-                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900 sm:pl-6"> {{ history.regDate }} </td>
+                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900 sm:pl-6"> {{ dateFormatChange(history.regDate, "MM/DD/yyyy hh:mm") }} </td>
                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ history.companyName }} </td>
                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ history.executerId }} </td>
                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> Deduct </td>
@@ -70,6 +70,10 @@ export default {
         TimeNavigation
     },
     methods : {
+        dateFormatChange( date, format= "MM/DD/yyyy" ){
+            if( ! date ) return;
+            return moment(date).format(format);
+        },
         goToRegistering(){
             location.href="/flexben/topup_deduct/registering?transaction=DEDUCT";
         },

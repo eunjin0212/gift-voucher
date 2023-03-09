@@ -4,6 +4,7 @@ import AppMain from "@/components/main/AppMain.vue";
 import ElementsPagination from "@/components/elements/ElementsPagination.vue"
 import PopupInviteMasterAdmin from "@/pages/company/company_list/popups/popupInviteMsterAdmin.vue"
 import { ValidateUtil } from "@/plugins/app-util.js";
+import moment from 'moment';
 
 export default {
     components: {
@@ -122,7 +123,11 @@ export default {
         },
         locationToInfoPage( companySeq ){
             location.href=`/company/company_information?subscriptionCompanySeq=${companySeq}`;
-        }
+        },
+        dateFormatChange( date, format= "MM/DD/yyyy" ){
+            if( ! date ) return;
+            return moment(date).format(format);
+        },
     },
 }; // export default
 </script>
@@ -192,9 +197,9 @@ export default {
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">  {{ company.subscriptionPicName }} </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ company.subscriptionPicEmail }} </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ formatPhoneNumber(company.subscriptionPicPhoneNumber) }} </td>
-                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ company.subscribeStartDate}}  </td>
-                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ company.subscribeEndDate }} </td>
-                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ company.useFeeDepositDate }} </td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ dateFormatChange(company.subscribeStartDate) }}  </td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ dateFormatChange(company.subscribeEndDate) }} </td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ dateFormatChange(company.useFeeDepositDate) }} </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ company.employeeCount }} </td>
                                 <td class="whitespace-pre-wrap px-3 py-4 text-sm text-gray-900"> {{ company.flexbenType }} </td>
                                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">

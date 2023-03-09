@@ -18,13 +18,13 @@
                                 <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
                                     <dt class="text-sm font-medium text-gray-500">Start Date</dt>
                                     <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 justify-self-end">
-                                        {{ registerData.subscribeStartDate }}
+                                        {{ dateFormatChange(registerData.subscribeStartDate) }}
                                     </dd>
                                 </div>
                                 <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
                                     <dt class="text-sm font-medium text-gray-500">End Date</dt>
                                     <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 justify-self-end">
-                                        {{ registerData.subscribeEndDate }}
+                                        {{ dateFormatChange(registerData.subscribeEndDate) }}
                                     </dd>
                                 </div>
                                 <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
@@ -382,7 +382,11 @@ export default {
         afterClickPage( item ){
             const self = this;
             self.OpenMasterAdminList( item, false );
-        }
+        },
+        dateFormatChange( date, format= "MM/DD/yyyy" ){
+            if( ! date ) return;
+            return moment(date).format(format);
+        },
     }
 }
 </script>
