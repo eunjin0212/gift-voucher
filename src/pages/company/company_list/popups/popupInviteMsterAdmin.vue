@@ -46,6 +46,11 @@ export default {
             const self = this;
             const url = self.$api( "uri", "post-invite-admin" );
 
+            if( self.isAlreadySendCheck() ){
+                alert("This email has already been invited as an admin. Please click a 'Resend' button next to this email in the list below.")
+                return;
+            }
+
             const { companySeq, inviteEmail } = self.inviteInfo;
             const joinDate = moment().format("YYYYMMDD");
             const employeeName = inviteEmail.split("@")[0];
@@ -66,6 +71,12 @@ export default {
                     alert( message );
                 })
 
+        },
+        isAlreadySendCheck(){
+            const self = this;
+            const { inviteEmail } = self.inviteInfo;
+
+            return self.inviteInfo.invitedList.some( employee => inviteEmail === employee.inviteEmail );
         },
         resendInviteEmail( inviteEmail ){
             const self = this;

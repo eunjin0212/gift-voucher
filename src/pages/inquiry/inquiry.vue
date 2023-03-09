@@ -66,7 +66,7 @@
                                         />
                                     </div>
                                 </td>
-                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ dateFormatChage(inquiry.inquiryRequestDatetime, "MM/DD/yyyy hh:mm")}} </td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ dateFormatChange(inquiry.inquiryRequestDatetime, "MM/DD/yyyy hh:mm")}} </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-blue-400 underline cursor-pointer" @click="editInquiryConsultationData(inquiry)"> {{ inquiry.inquiryCompanyName }} </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ inquiry.employmentCount }} </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ inquiry.picName }} </td>
@@ -74,7 +74,7 @@
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ inquiry.picEmail }} </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ formatPhoneNumber( inquiry.picPhoneNumber ) }} </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ inquiry.consultantEmpName }} </td>
-                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ dateFormatChage(inquiry.consultationDatetime) }} </td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ dateFormatChange(inquiry.consultationDatetime) }} </td>
                                 <td class="relative whitespace-nowrap py-4 pr-4 text-right text-sm font-medium sm:pr-6">
                                     <ElementsButton
                                         :text="'Registration'"
@@ -194,7 +194,7 @@ export default {
             const self = this;
             self.getJoinInquiry( item, true );
         },
-        dateFormatChage( date, format= "MM/DD/yyyy" ){
+        dateFormatChange( date, format= "MM/DD/yyyy" ){
             if( ! date ) return;
             return moment(date).format(format);
         },
