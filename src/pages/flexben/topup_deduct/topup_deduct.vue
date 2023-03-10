@@ -4,10 +4,9 @@
         <AppMain :headerName="mainTabs.find(tab => tab.current).text">
             <div class="mt-8 p-3 w-full max-w-7xl flex flex-col">
                 <MainTabs :tabs ="mainTabs" class="my-2" @clickEvent="clickTabs" />
-                <div> </div>
+                <ReportDeduct v-if="transactionType == 'DEDUCT_TO_HRFLEX'"/>
+                <ReportTopup v-if="transactionType == 'TOPUP_FROM_HRFLEX'" />
             </div>
-            <ReportDeduct v-if="transactionType == 'DEDUCT_TO_HRFLEX'"/>
-            <ReportTopup v-if="transactionType == 'TOPUP_FROM_HRFLEX'" />
         </AppMain>
     </div>
 </template>

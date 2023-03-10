@@ -212,13 +212,13 @@ export default {
                                     />
                                 </td>
                                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                    <div class="cursor-pointer border rounded border-rose-400 w-24 py-1 transition-all duration-500 text-center">
-                                        <a
-                                            href="#" class="text-rose-600  hover:bg-red-100 whitespace-normal"
+                                    <div class="cursor-pointer border rounded hover:bg-red-100 border-rose-400 w-24 py-1 transition-all duration-500 text-center">
+                                        <div
+                                            href="#" class="text-rose-600   whitespace-normal"
                                             @click="clickPasswordSending( company )"
                                         >
                                             Password Sending
-                                        </a>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>
