@@ -59,7 +59,7 @@
                 <ElementsButton
                     :inputtype="'submit'"
                     :width32="true"
-                    :text="'Submit'"
+                    :text="'Deduct'"
                 />
             </div>
         </div>

@@ -183,7 +183,7 @@
                 <ElementsButton
                     :inputtype="'submit'"
                     :width32="true"
-                    :text="'Submit'"
+                    :text="'Top-up'"
                 />
             </div>
         </div>
