@@ -35,7 +35,7 @@
                                             </div>
 
                                             <div class="col-span-6 border-b border-b-slate-300">
-                                                <label class="block text-sm font-medium text-gray-700">Consultation date</label>
+                                                <label class="block text-sm font-medium text-gray-700">Consultation Date</label>
                                                 <ElementsDate
                                                     v-model="inquiry.consultationDatetime"
                                                 />
