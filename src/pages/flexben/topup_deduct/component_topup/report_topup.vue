@@ -34,8 +34,8 @@
                         <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900">Type</th>
                         <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900">Points</th>
                         <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900">PO Doc No</th>
-                        <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900">Invoice Doc No</th>
-                        <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900">OR Doc No</th>
+                        <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900">Invoice <br/>Doc No</th>
+                        <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900">Collection <br/> Doc No</th>
                         <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900"> <span class="sr-only"> Edit </span> </th>
                     </tr>
                 </thead>

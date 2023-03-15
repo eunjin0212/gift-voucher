@@ -30,7 +30,7 @@ export default {
             ],
             billingStatusOptions : [
                 { text : "All" , value : null },
-                { text : "Trial" , value : "TRIAL" },
+                { text : "Testing" , value : "TRIAL" },
                 { text : "Billing" , value : "BILLING" },
             ],
             companyList: [],
@@ -107,7 +107,7 @@ export default {
         changeCamelCase( value ){
             switch (value) {
                 case 'BILLING':	return 'Billing';
-                case 'TRIAL': return 'Trial';
+                case 'TRIAL': return 'Testing';
                 default : return "";
             }
         },
