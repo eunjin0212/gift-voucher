@@ -130,7 +130,7 @@
 
                         <div>
                             <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-                                <dt class="grid text-sm font-medium text-gray-500 items-center">OR softcopy</dt>
+                                <dt class="grid text-sm font-medium text-gray-500 items-center">Collection softcopy</dt>
 
                                 <template v-if="documentFiles.orDocumentFileName">
                                     <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 flex justify-between">
@@ -158,7 +158,7 @@
                                     </dd>
                                 </template>
 
-                                <dt class="grid text-sm font-medium text-gray-500 items-center">OR Document No</dt>
+                                <dt class="grid text-sm font-medium text-gray-500 items-center">Collection Document No</dt>
                                 <dd class="text-sm text-gray-900 sm:col-span-2">
                                     <ElementsInput
                                         :full="true"
