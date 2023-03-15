@@ -84,7 +84,7 @@
                                             :width20="true"
                                             :height12="true"
                                             :bgWhiteAndtextIndigo="true"
-                                            :text="'Change'"
+                                            :text="'Save'"
                                             @clickEvent="changeSelectedDocName('poDocNo')"
                                         />
                                     </dd>
@@ -133,7 +133,7 @@
                                             :width20="true"
                                             :height12="true"
                                             :bgWhiteAndtextIndigo="true"
-                                            :text="'Change'"
+                                            :text="'Save'"
                                             @clickEvent="changeSelectedDocName('invoiceDocNo')"
                                         />
                                     </dd>
@@ -182,7 +182,7 @@
                                             :width20="true"
                                             :height12="true"
                                             :bgWhiteAndtextIndigo="true"
-                                            :text="'Change'"
+                                            :text="'Save'"
                                             @clickEvent="changeSelectedDocName('orDocNo')"
                                         />
                                     </dd>
