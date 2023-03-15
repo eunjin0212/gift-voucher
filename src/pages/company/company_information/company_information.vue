@@ -181,7 +181,7 @@
                             />
                             <ElementsButton
                                 :width32="true"
-                                :text="'submit'"
+                                :text="'Save'"
                                 :inputtype="'submit'"
                             />
                         </div>
