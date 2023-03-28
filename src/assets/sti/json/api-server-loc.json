@@ -19,11 +19,12 @@
         "get-flexben-campaign-List" : "/api/flexben/campaign",
         "get-flexben-report-List" : "/api/flexben/report",
         "get-flexben-history" : "/api/flexben/history",
+        "put-flexben-history" : "/api/flexben/history",
 
         "get-join-inquiry" :  "/api/inquiry",
         "put-join-inquiry" : "/api/inquiry",
         "not-display-join-inquiry" : "/api/inquiry",
-        
+
         "get-invite-admin" : "/api/invite/admin",
         "post-invite-admin" : "/api/invite/admin",
         "put-invite-admin" : "/api/invite/admin",
@@ -37,7 +38,7 @@
         "get-company-flexben-campaign" : "/api/flexben/setting/type/company",
         "get-company-brand-on-off" : "/api/flexben/setting/brand-on-off",
         "get-company-company-brand-off" : "/api/flexben/setting/brand-on-off/company",
-        
+
         "put-company-brand-on-off" : "/api/flexben/setting/brand-on-off/company",
         "put-company-flexben-campaign" :"/api/flexben/setting/type",
 
