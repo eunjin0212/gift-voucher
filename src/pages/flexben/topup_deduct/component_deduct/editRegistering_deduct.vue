@@ -179,7 +179,7 @@ export default {
                 .catch( alert )
         },
         backToListPage(){
-            location.href = "/flexben/topup_deduct"
+            location.href = "/flexben/topup_deduct#deduct"
         },
         showTheFileName( filePath ){
             let fileName = "";
