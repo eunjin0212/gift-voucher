@@ -68,7 +68,7 @@
                             {{ history.orDocNo || showTheFileName( history.orDocumentFilePath ) }}
                         </td>
                         <td class="whitespace-nowrap  text-sm text-gray-900 pr-3">
-                            <div class="cursor-pointer border border-blue-300 px-5 py-2 rounded-md" @click="clickEditHistoryFile(history.mileageCompanyHistorySeq)"> Edit </div>
+                            <div class="cursor-pointer border border-blue-300 text-center px-2 py-2 rounded-md" @click="clickEditHistoryFile(history.mileageCompanyHistorySeq)"> Edit </div>
                         </td>
                     </tr>
                 </tbody>
@@ -129,7 +129,7 @@ export default {
             self.getFlexbenHistoryList( item, true )
         },
         clickEditHistoryFile( historySeq ){
-            location.href = `/flexben/topup_deduct/editRegistering?mileageSeq=${ historySeq } `;
+            location.href = `/flexben/topup_deduct/editRegistering?transaction=TOP-UP&mileageSeq=${ historySeq } `;
         },
         showTheFileName( filePath ){
             let fileName = "";

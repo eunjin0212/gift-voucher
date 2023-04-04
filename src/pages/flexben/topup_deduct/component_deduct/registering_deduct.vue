@@ -45,6 +45,52 @@
                                 />
                             </dd>
                         </div>
+
+                        <div>
+                            <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                                <dt class="grid text-sm font-medium text-gray-500 items-center">Refund slip</dt>
+
+                                <template v-if="documentFiles.refundSlipFileName">
+                                    <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 flex justify-between">
+                                    <div class="text-blue-600 grid items-baseline" >
+                                        {{ documentFiles.refundSlipFileName }}
+                                    </div>
+                                    <div
+                                        class="border border-red-600 p-2 bg-white rounded-md font-semibold text-red-600 cursor-pointer"
+                                        name="poDocumentFile"
+                                        @click="deleteSelectedFile"
+                                    >
+                                        delete
+                                    </div>
+                                </dd>
+                                </template>
+
+                                <template v-else>
+                                    <dd class="text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                                        <input type="file"
+                                            class="w-full mt-1 shadow-sm block sm:text-sm bg-white border-gray-300 rounded-md"
+                                            multiple
+                                            @input="afterFileSelect"
+                                            name="refundSlipFile"
+                                        />
+                                    </dd>
+                                </template>
+
+                            </div>
+                        </div>
+                        <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                            <dt class="text-sm font-medium text-gray-500">Notes</dt>
+                            <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                                <div class="overflow-hidden rounded-lg shadow-sm ring-1 ring-inset bg-white ring-gray-300 focus-within:ring-2 focus-within:ring-indigo-600">
+                                    <textarea
+                                        v-model="registerData.transactionNote"
+                                        rows="3"
+                                        class="block w-full resize-none border-0 bg-transparent text-gray-900  placeholder:text-gray-400 focus:ring-0 sm:py-1.5 sm:text-sm sm:leading-6"
+                                        :maxlength="200"
+                                    />
+                                </div>
+                            </dd>
+                        </div>
                     </dl>
                 </div>
             </div>
@@ -98,17 +144,40 @@ export default {
                 mileageVolume : -1,
             },
             documentFiles : {
-                poDocumentFile : null,
-                orDocumentFileName : null,
-                invoiceFile : null,
-                invoiceFileName : null,
-                orDocumentFile : null,
-                poDocumentFileName : null
+                refundSlipFile : null,
+                refundSlipFileName : null
             },
             deleteFileUrls : []
         }
     },
     methods:{
+        afterFileSelect( e ){
+            const self = this;
+            const { files, name } = e.target
+            if( files.size < 0 ){
+                return ;
+            }
+
+            self.documentFiles[ name ] = files[0];
+            self.documentFiles[ `${name}Name`] = files[0].name
+        },
+        deleteSelectedFile( e ){
+            const self = this;
+            const elementName = e.target.getAttribute('name');
+            self.documentFiles[elementName] = null;
+            self.documentFiles[`${elementName}Name`] = null;
+        },
+        submitDocumentFiles(){
+            const self = this;
+
+            const url = self.$api("uri", "post-file-direct-upload" );
+            const { refundSlipFile, refundSlipFileName } = self.documentFiles;
+            let form = new FormData();
+            form.append( `uploadFile1` , refundSlipFile );
+            form.append( `uploadFileName1` , refundSlipFileName );
+
+            return self.$axios.post( url, form, { headers : {'Content-Type' : 'multipart/form-data;'} })
+        },
         getCompanyList(){
             const self = this;
             const json_query = {
@@ -132,7 +201,16 @@ export default {
                 return;
             }
 
-            self.$axios.post( url, self.registerData )
+            self.submitDocumentFiles()
+                .then( res => {
+                    return res.data.data;
+                })
+                .then( ({uploadFile1}) =>{
+                    const registerData = {
+                                            ...self.registerData,
+                                            refundSlipFilePath : uploadFile1 }
+                    return self.$axios.post( url, registerData )
+                } )
                 .then( () => {
                     self.locationToList();
                 })

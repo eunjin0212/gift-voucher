@@ -20,6 +20,12 @@ import ReportTopup from "@/pages/flexben/topup_deduct/component_topup/report_top
 
 export default {
     mounted(){
+        const self = this;
+        if ( window.location.hash == '#deduct' ) {
+            self.clickTabs( self.mainTabs[1] );
+        }
+        console.log( window.location.hash )
+
     },
     components : {
         AppAside, AppMain, MainTabs, ReportTopup, ReportDeduct
@@ -31,6 +37,7 @@ export default {
                 tab.current = tabItem.name === tab.name;
             })
             self.transactionType = self.mainTabs.find( tab => tab.current ).name;
+            window.location.hash = "";
         },
     },
     data(){

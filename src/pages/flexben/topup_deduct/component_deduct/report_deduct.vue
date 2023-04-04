@@ -33,6 +33,8 @@
                         <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">Admin</th>
                         <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">Type</th>
                         <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">Points</th>
+                        <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900">Refund slip</th>
+                        <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900"> <span class="sr-only"> Edit </span> </th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 bg-white">
@@ -42,6 +44,19 @@
                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ history.executerId }} </td>
                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> Deduct </td>
                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ history.mileageVolume }} </td>
+                        <td
+                            class="px-3 py-4 text-sm text-center"
+                            :class="[history.refundSlipFilePath ? 'underline break-all  text-blue-600 cursor-pointer' : 'text-gray-900' ]"
+                            @click="downLoadFile(history.refundSlipFilePath)"
+                        >
+                            {{ showTheFileName( history.refundSlipFilePath )  }}
+                        </td>
+                        <td class="whitespace-nowrap text-sm text-gray-900 pr-3">
+                            <div
+                                class="cursor-pointer border text-center border-blue-300 px-2 py-2 rounded-md"
+                                @click="clickEditHistoryFile(history.mileageCompanyHistorySeq)"
+                            > Edit </div>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -76,6 +91,26 @@ export default {
         },
         goToRegistering(){
             location.href="/flexben/topup_deduct/registering?transaction=DEDUCT";
+        },
+        clickEditHistoryFile( historySeq ){
+            location.href = `/flexben/topup_deduct/editRegistering?transaction=DEDUCT&mileageSeq=${ historySeq } `;
+        },
+        showTheFileName( filePath ){
+            let fileName = "";
+            if( ! filePath ) {
+                return fileName;
+            }
+            const params = new URLSearchParams( filePath )
+            return params.get("downloadFileName");
+        },
+        downLoadFile( filePath ){
+            if( ! filePath ) return;
+
+            const link = document.createElement('a');
+            let downloadUrl = new URL( filePath );
+
+            link.href= downloadUrl.href;
+            link.click();
         },
         getFlexbenHistoryList( offset=0, afterClickPage = false ){
             const self = this;
