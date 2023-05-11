@@ -41,14 +41,14 @@
         <div class="flex gap-1 self-end mt-[35px]" v-if="currentFocus === 'DIRECT'" >
             <ElementsDate
                 :isNotBgWhite="true"
-                v-model="startDate"
+                v-model="startDateDirect"
                 :disabled="!(currentFocus === 'DIRECT')"
                 @changeDate="clickButton('DIRECT')"
             />
             <ElementsDate
                 :isNotBgWhite="true"
-                v-model="endDate"
-                :lowerLimit="startDate"
+                v-model="endDateDirect"
+                :lowerLimit="startDateDirect"
                 :disabled="!(currentFocus === 'DIRECT')"
                 @changeDate="clickButton('DIRECT')"
 
@@ -62,14 +62,16 @@ import moment from 'moment';
 
 export default {
     props : {
-        outputFormat : String 
+        outputFormat : String
     },
     data(){
         return {
             currentFocus : "THIS_MONTH",
             startDate : "",
             endDate : "",
-            dateFormat : "yyyy-MM-DD HH:mm:ss"
+            dateFormat : "yyyy-MM-DD HH:mm:ss",
+            startDateDirect : "",
+            endDateDirect : "",
         }
     },
     emits : [ 'updateDate' ],
@@ -78,7 +80,22 @@ export default {
     methods : {
         clickButton( nowFocus ){
             const self = this;
-            self.currentFocus = nowFocus;  
+            self.currentFocus = nowFocus;
+            if( nowFocus=="DIRECT" ){
+                if( ! self.startDateDirect || ! self.endDateDirect ){
+                    return;
+                }
+
+                if( self.startDateDirect > self.endDateDirect ){
+                    alert( "end date cannot be earlier than the Start date");
+                    return;
+                }
+                self.$emit('updateDate', self.dateFormatChange(self.startDateDirect), self.dateFormatChange(self.endDateDirect ) );
+                return;
+            }
+
+            self.startDateDirect = "";
+            self.endDateDirect = "";
 
             if ( nowFocus === "THIS_WEEK" ){
                 self.startDate = moment().startOf("isoWeek").format(self.dateFormat);
@@ -107,7 +124,7 @@ export default {
             return moment( dateStr, self.dateFormat ).format(self.outputFormat)
         }
     },
-    
+
 
 }
 </script>
