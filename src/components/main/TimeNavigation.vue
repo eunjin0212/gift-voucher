@@ -81,13 +81,14 @@ export default {
         clickButton( nowFocus ){
             const self = this;
             self.currentFocus = nowFocus;
+
             if( nowFocus=="DIRECT" ){
                 if( ! self.startDateDirect || ! self.endDateDirect ){
                     return;
                 }
 
                 if( self.startDateDirect > self.endDateDirect ){
-                    alert( "end date cannot be earlier than the Start date");
+                    alert( "End date cannot be earlier than the Start date");
                     return;
                 }
                 self.$emit('updateDate', self.dateFormatChange(self.startDateDirect), self.dateFormatChange(self.endDateDirect ) );
