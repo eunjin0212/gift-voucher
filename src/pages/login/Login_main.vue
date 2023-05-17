@@ -98,7 +98,7 @@ export default {
                 .post(url, formProps)
                 .then((res) => {
                     console.log(url + ":result", res);
-                    location.href = "/test_tools/message_q";
+                    location.href = "/inquiry";
                 })
                 .catch((err) => {
                     //억지로 포커스 해제
@@ -117,9 +117,11 @@ export default {
                     switch(true) {
                         case status == 400:
                             self.loginRequestError.message = "can't empty";
+                            break;
                         case status == 403:{
                             self.noticePopup = true;
                             self.loginRequestError.message = "not correct";
+                            break;
                         }
                     }
 

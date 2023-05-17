@@ -21,7 +21,7 @@
             <ElementsButton
                 :width32="true"
                 :text="'Search'"
-                @clickEvent="getFlexbenHistoryList('TOP-UP')"
+                @clickEvent="getFlexbenHistoryList()"
             />
         </div>
         <div class="mt-6 overflow-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">

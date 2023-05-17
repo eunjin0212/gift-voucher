@@ -5,7 +5,6 @@
                 :width60="true"
                 :height11="true"
                 :placeholder="'Search Company'"
-                :required="true"
                 v-model="searchOptions.companyName"
             />
             <ElementsButton

@@ -221,7 +221,7 @@ export default {
                 })
         },
         locationToList(){
-            location.href = "/flexben/topup_deduct"
+            location.href = "/flexben/topup_deduct#deduct"
         }
     }
 
