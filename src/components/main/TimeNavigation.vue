@@ -1,47 +1,52 @@
 <template>
-    <div class="flex gap-2 items-center ">
-        <div class="flex w-[525px] h-[40px] border-gray-300 border-[1px] rounded mt-[35px] mb-[15px]">
+    <div :class="{ 'flex gap-2 items-center' : viewCol }">
+        <div class="flex rounded mt-[35px] mb-[15px] w-[525px]">
             <button
-                class="w-[105px] h-[40px] border-gray-300 text-zinc-500 leading-[40px] border-r-[1px] text-center"
+                v-if="useWeek"
+                class="w-[105px] h-[40px] border-gray-300 text-zinc-500 leading-[40px] border-[1px] text-center"
                 :class="[ currentFocus === 'THIS_WEEK' ? 'font-semibold text-blue-600 bg-white border-b-[1px]' : 'text-zinc-500']"
                 @click="clickButton('THIS_WEEK')"
             >
                 This Week
             </button>
             <button
-                class="w-[105px] h-[40px] leading-[40px] border-gray-300 border-r-[1px] text-center"
+                v-if="useWeek"
+                class="w-[105px] h-[40px] leading-[40px] border-gray-300 border-[1px] text-center"
                 :class="[ currentFocus === 'LAST_WEEK' ? 'font-semibold text-blue-600 bg-white border-b-[1px]' : 'text-zinc-500']"
                 @click="clickButton('LAST_WEEK')"
             >
                 Last Week
             </button>
             <button
-                class="w-[105px] h-[40px] leading-[40px] border-gray-300 border-r-[1px] text-center"
+                v-if="useMonth"
+                class="w-[105px] h-[40px] leading-[40px] border-gray-300 border-[1px] text-center"
                 :class="[ currentFocus === 'THIS_MONTH' ? 'font-semibold text-blue-600 bg-white border-b-[1px]' : 'text-zinc-500']"
                 @click="clickButton('THIS_MONTH')"
             >
                 This Month
             </button>
             <button
-                class="w-[105px] h-[40px] leading-[40px] border-gray-300 border-r-[1px] text-center"
+                v-if="useMonth"
+                class="w-[105px] h-[40px] leading-[40px] border-gray-300 border-[1px] text-center"
                 :class="[ currentFocus === 'LAST_MONTH' ? 'font-semibold text-blue-600 bg-white border-b-[1px]' : 'text-zinc-500']"
                 @click="clickButton('LAST_MONTH')"
             >
                 Last Month
             </button>
             <button
-                class="w-[105px] h-[40px] leading-[40px] text-center"
+                v-if="useDirect"
+                class="w-[105px] h-[40px] leading-[40px] text-center  border-gray-300 border-[1px]"
                 :class="[ currentFocus === 'DIRECT' ? 'font-semibold text-blue-600 bg-white border-b-[1px]' : 'text-zinc-500']"
                 @click="clickButton('DIRECT')"
             >
                 Direct Input
             </button>
-
         </div>
-        <div class="flex gap-1 self-end mt-[35px]" v-if="currentFocus === 'DIRECT'" >
+        <div class="flex gap-2 py-2" :class="{ 'mt-[35px]' : viewCol }" v-if="currentFocus === 'DIRECT'" >
             <ElementsDate
                 :isNotBgWhite="true"
                 v-model="startDateDirect"
+                placeholder="Select Date"
                 :disabled="!(currentFocus === 'DIRECT')"
                 @changeDate="clickButton('DIRECT')"
             />
@@ -51,7 +56,7 @@
                 :lowerLimit="startDateDirect"
                 :disabled="!(currentFocus === 'DIRECT')"
                 @changeDate="clickButton('DIRECT')"
-
+                placeholder="Select Date"
             />
         </div>
     </div>
@@ -62,11 +67,33 @@ import moment from 'moment';
 
 export default {
     props : {
-        outputFormat : String
+        outputFormat : {
+            type : String,
+            default : "YYYYMMDD"
+        },
+        viewCol : {
+            type : Boolean,
+            default : true
+        },
+        useWeek : {
+            type : Boolean,
+            default : true
+        },
+        useMonth : {
+            type : Boolean,
+            default : true
+        },
+        useDirect : {
+            type : Boolean,
+            default : true
+        },
+        currentFocus : {
+            type : String ,
+            default : "THIS_MONTH",
+        }
     },
     data(){
         return {
-            currentFocus : "THIS_MONTH",
             startDate : "",
             endDate : "",
             dateFormat : "yyyy-MM-DD HH:mm:ss",
@@ -74,13 +101,13 @@ export default {
             endDateDirect : "",
         }
     },
-    emits : [ 'updateDate' ],
+    emits : [ 'updateDate', 'update:currentFocus'],
     computed : {
     },
     methods : {
         clickButton( nowFocus ){
             const self = this;
-            self.currentFocus = nowFocus;
+            self.$emit('update:currentFocus', nowFocus)
 
             if( nowFocus=="DIRECT" ){
                 if( ! self.startDateDirect || ! self.endDateDirect ){

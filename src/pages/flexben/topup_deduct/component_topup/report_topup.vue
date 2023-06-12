@@ -9,7 +9,7 @@
     </div>
     <div class="mt-8 p-3 rounded-lg w-full max-w-7xl bg-white shadow-md shadow-gray-200 flex flex-col">
         <TimeNavigation
-            :outputFormat="'YYYYMMDD'"
+            v-model:currentFocus="nowFocus"
             @updateDate="clickDateButton"
         />
         <div class="flex mt-5 gap-2">
@@ -162,6 +162,8 @@ export default {
     },
     data(){
         return{
+            nowFocus : "THIS_MONTH",
+
             flexbenHistory : {
                 list : [],
                 total : 0,

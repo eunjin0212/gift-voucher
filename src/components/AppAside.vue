@@ -32,6 +32,12 @@ let items = reactive([
     {
         parent: "app-side-6",
         show: false,
+        href: "/flexben/summary",
+        text: "Summary",
+    },
+    {
+        parent: "app-side-6",
+        show: false,
         href: "/flexben/topup_deduct",
         text: "Top-up/Deduct",
     },

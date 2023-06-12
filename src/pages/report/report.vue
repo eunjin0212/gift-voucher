@@ -11,6 +11,8 @@ export default {
     },
     data(){
         return {
+            nowFocus : "THIS_MONTH",
+
             flexbenReport : {
                 list : [],
                 total : 0,
@@ -108,8 +110,8 @@ export default {
         <AppMain :headerName="'Flexben Report'" :isExcelNeeded="true" @clickDownExcel="downExcelReport">
             <div class="mt-8 p-3 rounded-lg w-full max-w-7xl bg-white shadow-md shadow-gray-200 flex flex-col">
                 <TimeNavigation
-                    :outputFormat="'YYYYMMDD'"
                     @updateDate="clickDateButton"
+                    v-model:currentFocus="nowFocus"
                 />
                 <div class="flex mt-5 gap-2">
                     <ElementsSelect

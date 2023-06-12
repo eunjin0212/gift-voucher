@@ -44,6 +44,10 @@
         "put-company-brand-on-off" : "/api/flexben/setting/brand-on-off/company",
         "put-company-flexben-campaign" :"/api/flexben/setting/type",
 
+        "get-flexben-point-summary" : "/api/flexben/summary/point-summary",
+        "get-flexben-available-company" : "/api/flexben/summary/available-company",
+        "get-flexben-rank-top-up" : "/api/flexben/summary/rank-top-up",
+
         "ENDSTRING" : "END"
     }
 }

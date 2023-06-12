@@ -14,7 +14,7 @@ export default{
         isNotBgWhite : Boolean,
         lowerLimit : String,
         upperLimit : String,
-
+        placeholder : String
 	},
     mounted (){
         console.log( moment.tz.guess() )
@@ -83,6 +83,7 @@ export default{
                 :disabled="disabled"
                 :lowerLimit="stringToDate(lowerLimit)"
                 :upperLimit="stringToDate(upperLimit)"
+                :placeholder="placeholder"
 			/>
 		</div>
 		<p class="mt-3.5 text-xs font-normal text-red-500" v-show="error">*{{ error }}</p>
