@@ -21,6 +21,8 @@
         "get-flexben-history" : "/api/flexben/history",
         "put-flexben-history" : "/api/flexben/history",
 
+        "get-flexben-report-excel" : "/api/flexben/report/excel",
+
         "get-join-inquiry" :  "/api/inquiry",
         "put-join-inquiry" : "/api/inquiry",
         "not-display-join-inquiry" : "/api/inquiry",

@@ -72,6 +72,28 @@ export default {
             if( ! date ) return;
             return moment(date).format(format);
         },
+        downExcelReport(){
+            const self = this;
+            const url = self.$api("uri", "get-flexben-report-excel");
+
+            const json_query = JSON.stringify({
+                ...self.searchOptions, limit : -1
+            });
+
+            self.$axios.get(url, { params: {json_query} })
+                .then((res) => {
+                    const downloadLink = res.data.data.excelFilePath;
+                    {
+                        const aElem = document.createElement('a');
+                        aElem.href = downloadLink;
+                        aElem.click();
+                    }
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+
+        }
     },
     mounted(){
         const self = this;
@@ -83,7 +105,7 @@ export default {
 <template>
     <div id="app" class="min-w-[1024px] min-h-[100vh] flex">
         <AppAside />
-        <AppMain :headerName="'Flexben Report'">
+        <AppMain :headerName="'Flexben Report'" :isExcelNeeded="true" @clickDownExcel="downExcelReport">
             <div class="mt-8 p-3 rounded-lg w-full max-w-7xl bg-white shadow-md shadow-gray-200 flex flex-col">
                 <TimeNavigation
                     :outputFormat="'YYYYMMDD'"
