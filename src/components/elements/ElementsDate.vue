@@ -14,7 +14,10 @@ export default{
         isNotBgWhite : Boolean,
         lowerLimit : String,
         upperLimit : String,
-        placeholder : String
+        placeholder : {
+            type : String,
+            default : 'mm/dd/yyyy'
+        }
 	},
     mounted (){
         console.log( moment.tz.guess() )

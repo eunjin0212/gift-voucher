@@ -40,6 +40,24 @@
                             </dd>
                         </div>
 
+                        <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                            <dt class="text-sm font-medium text-gray-500">Status</dt>
+                            <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 flex justify-between">
+                                <ElementsSelect
+                                    :width60="true"
+                                    :options="contractStatusOptions"
+                                    v-model="registerData.topUpContractStatus"
+                                />
+                                <ElementsButton
+                                    :width20="true"
+                                    :height12="true"
+                                    :bgWhiteAndtextIndigo="true"
+                                    :text="'Save'"
+                                    @clickEvent="changeSelectedElem('topUpContractStatus')"
+                                />
+                            </dd>
+                        </div>
+
                         <div>
                             <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
                                 <dt class="grid text-sm font-medium text-gray-500 items-center">PO softcopy</dt>
@@ -83,7 +101,7 @@
                                         :height12="true"
                                         :bgWhiteAndtextIndigo="true"
                                         :text="'Save'"
-                                        @clickEvent="changeSelectedDocName('poDocNo')"
+                                        @clickEvent="changeSelectedElem('poDocNo')"
                                     />
                                 </dd>
                             </div>
@@ -132,7 +150,7 @@
                                         :height12="true"
                                         :bgWhiteAndtextIndigo="true"
                                         :text="'Save'"
-                                        @clickEvent="changeSelectedDocName('invoiceDocNo')"
+                                        @clickEvent="changeSelectedElem('invoiceDocNo')"
                                     />
                                 </dd>
                             </div>
@@ -181,7 +199,7 @@
                                         :height12="true"
                                         :bgWhiteAndtextIndigo="true"
                                         :text="'Save'"
-                                        @clickEvent="changeSelectedDocName('orDocNo')"
+                                        @clickEvent="changeSelectedElem('orDocNo')"
                                     />
                                 </dd>
                             </div>
@@ -235,6 +253,12 @@ export default {
                 orDocumentFile : null,
                 poDocumentFileName : null
             },
+            contractStatusOptions : [
+                { text : "Requested", value : "REQUESTED" },
+                { text : "PO received", value : "PO_RECEIVED" },
+                { text : "Invoice sent", value : "INVOICE_SENT" },
+                { text : "Receipt issued", value : "RECEIPT_ISSUED" },
+            ],
         }
     },
     methods:{
@@ -318,7 +342,7 @@ export default {
             const self = this;
             return self.$axios.delete( filePath )
         },
-        changeSelectedDocName( elementName ){
+        changeSelectedElem( elementName ){
             const self = this;
             const mileageCompanyHistorySeq = new URLSearchParams( window.location.search ).get("mileageSeq");
             const updateData = {

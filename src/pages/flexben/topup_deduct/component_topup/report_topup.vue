@@ -25,7 +25,7 @@
             />
         </div>
         <div class="mt-6 overflow-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-            <table class="min-w-full divide-y divide-gray-300">
+            <table class="divide-y divide-gray-300">
                 <thead>
                     <tr>
                         <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900 sm:pl-6">Date</th>
@@ -33,9 +33,14 @@
                         <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900">Admin</th>
                         <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900">Type</th>
                         <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900">Points</th>
+                        <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900">Extended <br/> Period </th>
+                        <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900">Extended <br/> Use Date </th>
+                        <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900">Num Of <br/> Usage <br/> Employees </th>
+                        <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900">PIC <br/> Name </th>
                         <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900">PO Doc No</th>
                         <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900">Invoice <br/>Doc No</th>
                         <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900">Collection <br/> Doc No</th>
+                        <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900">Status</th>
                         <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900"> <span class="sr-only"> Edit </span> </th>
                     </tr>
                 </thead>
@@ -44,8 +49,19 @@
                         <td class="whitespace-nowrap px-3 py-4 text-sm text-center text-gray-900 sm:pl-6"> {{ dateFormatChange(history.regDate, "MM/DD/yyyy hh:mm") }} </td>
                         <td class="whitespace-nowrap px-3 py-4 text-sm text-center text-gray-900"> {{ history.companyName }} </td>
                         <td class="whitespace-nowrap px-3 py-4 text-sm text-center text-gray-900"> {{ history.executerId }} </td>
-                        <td class="whitespace-nowrap px-3 py-4 text-sm text-center text-gray-900"> Top-up </td>
+                        <td class="whitespace-nowrap px-3 py-4 text-sm text-center text-gray-900"> Add </td>
                         <td class="whitespace-nowrap px-3 py-4 text-sm text-center text-gray-900"> {{ history.mileageVolume }} </td>
+                        <td class="whitespace-nowrap px-3 py-4 text-sm text-center text-gray-900">
+                            <span v-if="history.extendedPeriod == 'NONE' || !history.extendedPeriod"> None </span>
+                            <span v-else> {{ `${history.extendedPeriod} Month` }} </span>
+                        </td>
+                        <td class="whitespace-nowrap px-3 py-4 text-sm text-center text-gray-900">
+                            {{ dateFormatChange(history.extendedStartDate) }}
+                            <span v-if="history.extendedStartDate || history.extendedEndDate"> ~ </span>
+                            <br/> {{ dateFormatChange(history.extendedEndDate) }}
+                        </td>
+                        <td class="whitespace-nowrap px-3 py-4 text-sm text-center text-gray-900"> {{ history.numOfEmpCnt }}  </td>
+                        <td class="whitespace-nowrap px-3 py-4 text-sm text-center text-gray-900"> {{ history.picName }}   </td>
                         <td
                             class="whitespace-nowrap px-3 py-4 text-sm text-center"
                             :class="[history.poDocumentFilePath ? 'underline text-blue-600 cursor-pointer' : 'text-gray-900' ]"
@@ -67,8 +83,9 @@
                         >
                             {{ history.orDocNo || showTheFileName( history.orDocumentFilePath ) }}
                         </td>
+                        <td class="whitespace-nowrap px-3 py-4 text-sm text-center text-gray-900"> {{ contractStatusObj[history.topUpContractStatus] }}  </td>
                         <td class="whitespace-nowrap  text-sm text-gray-900 pr-3">
-                            <div class="cursor-pointer border border-blue-300 text-center px-2 py-2 rounded-md" @click="clickEditHistoryFile(history.mileageCompanyHistorySeq)"> Edit </div>
+                            <div class="cursor-pointer border border-blue-300 text-center px-4 py-2 rounded-md" @click="clickEditHistoryFile(history.mileageCompanyHistorySeq)"> Edit </div>
                         </td>
                     </tr>
                 </tbody>
@@ -163,6 +180,13 @@ export default {
     data(){
         return{
             nowFocus : "THIS_MONTH",
+
+            contractStatusObj : {
+                REQUESTED : "Requested",
+                PO_RECEIVED : "PO received",
+                INVOICE_SENT : "Invoice sent",
+                RECEIPT_ISSUED : "Receipt issued",
+            },
 
             flexbenHistory : {
                 list : [],
