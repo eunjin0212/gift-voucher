@@ -1,30 +1,6 @@
 <template>
-    <div class="p-3 max-w-7xl self-end">
-        <ElementsButton
-            :text="'+ Deduct'"
-            :fitContent="true"
-            class="self-end "
-            @clickEvent="goToRegistering()"
-        />
-    </div>
-    <div class="mt-8 p-3 rounded-lg w-full max-w-7xl bg-white shadow-md shadow-gray-200 flex flex-col">
-        <TimeNavigation
-            v-model:currentFocus="nowFocus"
-            @updateDate="clickDateButton"
-        />
-        <div class="flex mt-5 gap-2">
-            <ElementsInput
-                v-model="searchOptions.companyName"
-                :width60="true"
-                :height11="true"
-            />
-            <ElementsButton
-                :width32="true"
-                :text="'Search'"
-                @clickEvent="getFlexbenHistoryList()"
-            />
-        </div>
-        <div class="mt-6 overflow-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+    <div>
+        <div v-if="flexbenHistory.list.length > 0 "  class="mt-6 overflow-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
             <table class="min-w-full divide-y divide-gray-300">
                 <thead>
                     <tr>
@@ -61,36 +37,24 @@
                 </tbody>
             </table>
         </div>
-        <div class="w-full h-28 flex justify-center items-center">
-            <ElementsPagination
-                v-model="flexbenHistory.page"
-                :totalContent="flexbenHistory.total"
-                :contentsPerPage="flexbenHistory.limit"
-                @clickPage="clickPageButton"
-            />
+        <div v-else class="mt-10 flex flex-col items-center h-full justify-center gap-5">
+            <div class="text-gray-500">  No Deduct Data </div>
         </div>
     </div>
 </template>
 
 <script>
-import TimeNavigation from "@/components/main/TimeNavigation.vue"
 import moment from "moment";
 
 export default {
     mounted(){
-        const self = this;
-        self.getFlexbenHistoryList();
     },
     components : {
-        TimeNavigation
     },
     methods : {
         dateFormatChange( date, format= "MM/DD/yyyy" ){
             if( ! date ) return;
             return moment(date).format(format);
-        },
-        goToRegistering(){
-            location.href="/flexben/topup_deduct/registering?transaction=DEDUCT";
         },
         clickEditHistoryFile( historySeq ){
             location.href = `/flexben/topup_deduct/editRegistering?transaction=DEDUCT&mileageSeq=${ historySeq } `;
@@ -112,51 +76,13 @@ export default {
             link.href= downloadUrl.href;
             link.click();
         },
-        getFlexbenHistoryList( offset=0, afterClickPage = false ){
-            const self = this;
-            const url = self.$api("uri", "get-flexben-history");
-            const { limit } = self.flexbenHistory;
-            self.flexbenHistory.offset = offset;
-            const json_query = { ...self.searchOptions, offset, limit };
-            self.$axios.get( url , { params : { json_query : JSON.stringify(json_query) } })
-                .then((res) => {
-                    self.flexbenHistory.total = res.data.data.count;
-                    self.flexbenHistory.list = res.data.data.list;
-                    if( ! afterClickPage ){
-                        self.flexbenHistory.page = 1;
-                    }
-
-                })
-                .catch( alert )
-        },
-        clickDateButton( startDate, endDate ){
-            const self = this;
-            self.searchOptions.startDate = startDate;
-            self.searchOptions.endDate = endDate;
-            self.getFlexbenHistoryList();
-        },
-        clickPageButton( item ){
-            const self = this;
-            self.getFlexbenHistoryList( item, true )
-        },
     },
     data(){
         return{
-            nowFocus : "THIS_MONTH",
-            flexbenHistory : {
-                list : [],
-                total : 0,
-                limit : 10,
-                offset : null,
-                page : 1,
-            },
-            searchOptions : {
-                startDate : moment().startOf("month").format("YYYYMMDD"),
-                endDate : moment().endOf("month").format("YYYYMMDD"),
-                transactionType : "DEDUCT_TO_HRFLEX",
-                companyName : ""
-            },
         }
+    },
+    props :{
+        flexbenHistory : Object,
     }
 }
 </script>
