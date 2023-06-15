@@ -34,9 +34,45 @@
                             </dd>
                         </div>
                         <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                            <dt class="text-sm font-medium text-gray-500">Extension Period</dt>
+                            <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                                <div>
+                                    <span v-if="registerData.extendedPeriod == 'NONE' || !registerData.extendedPeriod"> None </span>
+                                    <span v-else> {{ `${registerData.extendedPeriod} Month` }} </span>
+                                </div>
+                            </dd>
+                        </div>
+
+                        <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                            <dt class="text-sm font-medium text-gray-500">Extended Use Date</dt>
+                            <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                                <span> {{ dateFormatChange(registerData.extendedStartDate) }} </span>
+                                <span v-if="registerData.extendedStartDate || registerData.extendedEndDate"> ~ </span>
+                                <span > {{ dateFormatChange(registerData.extendedEndDate) }} </span>
+                            </dd>
+                        </div>
+
+                        <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
                             <dt class="text-sm font-medium text-gray-500">Points</dt>
                             <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                                 <div> {{ registerData.mileageVolume }} </div>
+                            </dd>
+                        </div>
+
+                        <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                            <dt class="text-sm font-medium text-gray-500">Points</dt>
+                            <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 flex justify-between">
+                                <ElementsInput
+                                    v-model="registerData.picName"
+                                    :maxlength="100"
+                                />
+                                <ElementsButton
+                                    :width20="true"
+                                    :height12="true"
+                                    :bgWhiteAndtextIndigo="true"
+                                    :text="'Save'"
+                                    @clickEvent="changeSelectedElem('picName')"
+                                />
                             </dd>
                         </div>
 
@@ -219,6 +255,7 @@
 </template>
 
 <script>
+import moment from "moment";
 
 export default {
     mounted(){
@@ -243,7 +280,11 @@ export default {
                 orDocumentFilePath : null,
                 poDocNo : null,
                 invoiceDocNo : null,
-                orDocNo : null
+                orDocNo : null,
+                picName : "",
+                extendedPeriod : "",
+                extendedEndDate : "",
+                extendedStartDate : ""
             },
             documentFiles : {
                 poDocumentFile : null,
@@ -355,6 +396,10 @@ export default {
                     let { message } = err.response.data;
                     alert( message );
                 })
+        },
+        dateFormatChange( date, format= "MM/DD/yyyy" ){
+            if( ! date ) return;
+            return moment(date).format(format);
         },
     }
 
