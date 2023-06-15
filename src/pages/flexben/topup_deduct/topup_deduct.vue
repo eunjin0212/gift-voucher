@@ -100,7 +100,25 @@ export default {
                 .catch( alert )
         },
         downExcelReport(){
+            const self = this;
+            const url = self.$api("uri", "get-flexben-history-excel");
 
+            const json_query = JSON.stringify({
+                ...self.searchOptions, limit : -1
+            });
+
+            self.$axios.get(url, { params: {json_query} })
+                .then((res) => {
+                    const downloadLink = res.data.data.excelFilePath;
+                    {
+                        const aElem = document.createElement('a');
+                        aElem.href = downloadLink;
+                        aElem.click();
+                    }
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
         },
         goToRegistering(){
             const self = this;
