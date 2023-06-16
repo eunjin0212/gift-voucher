@@ -87,6 +87,7 @@ export default{
                 :lowerLimit="stringToDate(lowerLimit)"
                 :upperLimit="stringToDate(upperLimit)"
                 :placeholder="placeholder"
+                :weekStartsOn="0"
 			/>
 		</div>
 		<p class="mt-3.5 text-xs font-normal text-red-500" v-show="error">*{{ error }}</p>
