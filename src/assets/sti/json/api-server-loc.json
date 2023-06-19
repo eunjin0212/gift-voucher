@@ -21,6 +21,10 @@
         "get-flexben-history" : "/api/flexben/history",
         "put-flexben-history" : "/api/flexben/history",
 
+        "get-flexben-product-info-list" : "/api/flexben/setting/product-info",
+        "get-flexben-product-info" : "/api/flexben/setting/product-info/{flexbenGoodsPriceCampaignSeq}",
+        "put-flexben-product-info" : "/api/flexben/setting/product-info",
+
         "get-flexben-report-excel" : "/api/flexben/report/excel",
         "get-flexben-history-excel" : "/api/flexben/history/excel",
 

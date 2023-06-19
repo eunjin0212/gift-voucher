@@ -22,6 +22,11 @@ import ProductSetting from "@/pages/flexben/settings/product_setting/product_set
 
 export default {
     mounted(){
+        const self = this;
+        const url = new URL(window.location.href)
+        if( url.hash == "#PRODUCT_SETTING" ){
+            self.clickTabs( self.mainTabs[2] );
+        }
     },
     components : {
         AppAside, AppMain, MainTabs, FlexbenType, BrandOnOff, ProductSetting
@@ -32,6 +37,7 @@ export default {
             self.mainTabs.map( tab => {
                 tab.current = tabItem.name === tab.name;
             })
+            window.location.hash = "";
         },
     },
     data(){
