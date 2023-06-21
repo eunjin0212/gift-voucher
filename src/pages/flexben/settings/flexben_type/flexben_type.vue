@@ -1,5 +1,12 @@
 <template>
     <div class="mt-4">
+        <ElementsButton
+            class="my-3"
+            text="BizWallet Test"
+            :fit-content="true"
+            :height12="true"
+            @click-event="TestBizWallet()"
+        />
         <ul role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             <li v-for="(type, idx ) in flexbenTypeList" :key="idx" class="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow">
                 <div class="flex flex-1 flex-col p-8">
@@ -78,6 +85,11 @@ export default {
             self.editFlexbenPopup.isOpen = true;
             self.editFlexbenPopup.campaignSeq = typeSeq;
         },
+        TestBizWallet(){
+            const self = this;
+            const url = self.$api("uri", "test-api");
+            self.$axios.post( url ).then(res => res ).catch( console.error )
+        }
 
     },
     mounted(){

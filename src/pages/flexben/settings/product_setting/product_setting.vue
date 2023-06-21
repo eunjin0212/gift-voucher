@@ -1,5 +1,12 @@
 <template>
     <div class="mt-8 p-3 rounded-lg w-full max-w-7xl bg-white shadow-md shadow-gray-200 flex flex-col">
+        <ElementsButton
+            class="my-3"
+            text="BizWallet - Product Status Update Test - test용도"
+            :fit-content="true"
+            :height12="true"
+            @click-event="TestBizWallet()"
+        />
         <div class="flex gap-2 max-w-full my-4">
             <ElementsSelect
                 :width40="true"
@@ -112,6 +119,11 @@ export default {
         }
     },
     methods : {
+        TestBizWallet(){
+            const self = this;
+            const url = self.$api("uri", "test-api");
+            self.$axios.post( url ).then(res => res ).catch( console.error )
+        },
         getFlexbenType(){
             const self = this;
             const url = self.$api("uri", "get-flexben-campaign-List");

@@ -53,6 +53,7 @@
         "get-flexben-available-company" : "/api/flexben/summary/available-company",
         "get-flexben-rank-top-up" : "/api/flexben/summary/rank-top-up",
 
+        "test-api" : "/api/flexben/test",
         "ENDSTRING" : "END"
     }
 }

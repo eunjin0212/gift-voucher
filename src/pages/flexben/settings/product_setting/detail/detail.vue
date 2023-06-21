@@ -54,11 +54,12 @@
                                 <div class="flex gap-4 pt-5 ">
                                     <h2 class="text-sm leading-6 text-gray-600 font-semibold">FlexBen Display </h2>
                                     <div
-                                        :class="[productInfo.displayYn=='N'? 'bg-gray-200' : 'bg-indigo-600', 'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2']">
+                                        :class="[ productInfo.goodsSalesStatus ==='STOP' ? 'bg-gray-600' : productInfo.displayYn=='N'? 'bg-gray-200' : 'bg-indigo-600', 'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2']">
                                         <input
                                             v-model="productInfo.displayYn"
                                             true-value="Y"
                                             false-value="N"
+                                            :disabled="productInfo.goodsSalesStatus ==='STOP'"
                                             type="checkbox" class="cursor-pointer opacity-0 absolute w-full h-full peer appearance-none rounded-md"
                                         />
                                         <span :class="[productInfo.displayYn=='N' ? 'translate-x-5' : 'translate-x-0', 'pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out']">
@@ -76,7 +77,7 @@
                                     </div>
                                 </div>
 
-                                <div class="text-blue-600 text-sm flex gap-2">
+                                <div class="text-blue-600 text-sm flex gap-2 mt-2">
                                     <InformationCircleIcon class="w-10"/>
                                     <div>
                                         This option reflects all the same products regardless of campaign type.
