@@ -460,6 +460,7 @@ export default {
             // ========================== init
             self.registerData.extendedStartDate = "";
             self.registerData.extendedEndDate = "";
+            self.registerData.extendedPeriod = "";
 
         },
         calcExtendedDate(){

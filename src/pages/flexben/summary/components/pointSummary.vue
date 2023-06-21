@@ -2,7 +2,6 @@
     <div>
         <div class="flex gap-2 items-baseline">
             <h2 class="text-2xl font-semibold"> Point Summary</h2>
-            <span class="text-sm text-gray-500"> update Date 11/06/2023 23:55:43</span>
         </div>
 
         <dl class="mt-4 grid gap-3 grid-cols-3 max-w-3xl ">
