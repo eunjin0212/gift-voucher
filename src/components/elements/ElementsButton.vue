@@ -14,6 +14,7 @@ defineProps({
   backgroundRed: Boolean,
   borderDashed: Boolean,
   borderRed: Boolean,
+
   fitHeight: Boolean,
   disabled: Boolean,
   height12: Boolean,

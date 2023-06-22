@@ -1,56 +1,99 @@
 <template>
-    <div id="app" class="min-w-[1024px] min-h-[100vh] flex">
-        <AppAside />
-        <AppMain :headerName="'Add Company'">
-            <div class="grid grid-cols-4 mt-8 gap-1">
-                <div class="col-span-1">
-                    <div class="flex flex-col">
-                        <div class="flex flex-col gap-y-5 overflow-y-auto pr-6">
-                            <nav class="flex flex-1 flex-col">
-                                <ul role="list" class="flex flex-1 flex-col gap-y-7  ">
-                                    <li class="border-gray-300 rounded-sm border-[1px] bg-white">
-                                        <ul role="list" class="divide-y divide-gray-300">
-                                            <li v-for="team in registerTab" :key="team.name" class="divide-x-[1px]">
-                                                <a :href="team.href" :class="[team.current ? ' text-indigo-600' : 'text-gray-700 hover:text-indigo-600 hover:bg-gray-50', 'group flex gap-x-3 rounded-md py-4 px-4 text-sm leading-6 font-semibold']">
-                                                    <span v-if="team.current" class="bg-indigo-600 text-indigo-600 border-indigo-600 flex h-6 w-6 shrink-0 items-center justify-center rounded-2xl border text-[0.625rem] font-medium bg-white']"
-                                                    >
-                                                        <CheckIcon class="w-3 text-white"/>
-                                                    </span>
-                                                    <span v-else class="text-gray-400 border-gray-200 flex h-6 w-6 shrink-0 items-center justify-center rounded-2xl border text-[0.625rem] font-medium bg-white">
-                                                        {{ team.initial }}
-                                                    </span>
-                                                    <span class="truncate text-base">{{ team.name }}</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-span-3">
-                    <CompanyInformation
-                    />
-                    <UsageInformation
-                    />
-                </div>
+    <div class="p-3 rounded-lg w-full max-w-7xl bg-white shadow-md shadow-gray-200 flex flex-col">
+        <form @submit.prevent="clickSubmit">
+            <div class="my-2 flex flex-col gap-4" >
+                <div class="text-2xl font-bold"> company Information </div>
+                <ElementsInput
+                    :name="'Company Name'"
+                    :width72="true"
+                    :maxlength="60"
+                    v-model="registerData.companyName"
+                    :required="true"
+                />
+                <ElementsInput
+                    v-model="registerData.subscriptionPicName"
+                    :name="'PIC Name'"
+                    :full="true"
+                    :maxlength="60"
+                    :required="true"
+                />
+                <ElementsInput
+                    v-model="registerData.subscriptionPicDepartment"
+                    :name="'PIC Department'"
+                    :full="true"
+                    :maxlength="60"
+                    :required="true"
+                />
+                <ElementsInput
+                    v-model="registerData.subscriptionPicEmail"
+                    :name="'PIC Email'"
+                    :full="true"
+                    :inputtype="'email'"
+                    :maxlength="100"
+                    :required="true"
+                />
+                <ElementsInput
+                    v-model="registerData.subscriptionPicPhoneNumber"
+                    :name="'PIC Phone number'"
+                    :full="true"
+                    :maxlength="60"
+                    :inputtype="'tel'"
+                    :required="true"
+                />
             </div>
-        </AppMain>
+            <div class="my-7 flex flex-col gap-4">
+                <div class="text-2xl font-bold"> Service Usage Information </div>
+                <ElementsDate
+                    :name="'Start Date'"
+                    v-model="registerData.subscribeStartDate"
+                />
+                <ElementsDate
+                    :name="'End Date'"
+                    v-model="registerData.subscribeEndDate"
+                />
+                <div>
+                    <h1 class="text-sm font-semibold text-slate-800"> Number of Employee </h1>
+                    <input type="number"
+                        class="w-44 mt-1 shadow-sm block sm:text-sm border-gray-300 rounded-md"
+                        :min="1"
+                        v-model="registerData.employmentCount"
+                        :required="true"
+                    />
+                </div>
+                <ElementsDate
+                    :name="'Use Fee Deposit Date'"
+                    v-model="registerData.useFeeDepositDate"
+                />
+                <ElementsSelect
+                    :name="'FlexBen Type'"
+                    :full="true"
+                    :options="flexbenTypeOptions"
+                    v-model="registerData.flexbenCampaignSeq"
+                />
+            </div>
+            <div class="flex justify-end gap-4 my-3">
+                <ElementsButton
+                    :backgroundWhite="true" :width32="true"
+                    :text="'Cancel'"
+                    :inputtype="'button'"
+                    @click="backToList"
+                />
+                <ElementsButton
+                    :width32="true"
+                    :text="'Next'"
+                    :inputtype="'submit'"
+                />
+            </div>
+        </form>
     </div>
 </template>
 
 <script>
-import AppAside from "@/components/AppAside.vue";
-import AppMain from "@/components/main/AppMain.vue";
 import moment from "moment";
-import CompanyInformation from "@/pages/company/company_registration/register_step/company_information.vue"
-import UsageInformation from "@/pages/company/company_registration/register_step/usage_information.vue"
-import { CheckIcon } from "@heroicons/vue/solid"
 
-export default {
+export default{
     components : {
-        AppAside, AppMain, CheckIcon, CompanyInformation, UsageInformation
+
     },
     methods:{
         backToList(){
@@ -185,6 +228,11 @@ export default {
         }
     },
     mounted(){
+        const self = this;
+        self.getFlexbenType();
+        self.getInquiryData();
     }
 }
+
+
 </script>

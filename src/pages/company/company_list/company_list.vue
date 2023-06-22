@@ -182,6 +182,7 @@ export default {
                                 <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">End Date</th>
                                 <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">Number of Employees</th>
                                 <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">FlexBen type</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">Status</th>
                                 <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
                                     <span class="sr-only">Edit</span>
                                 </th>
@@ -198,10 +199,11 @@ export default {
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ company.subscriptionPicEmail }} </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ formatPhoneNumber(company.subscriptionPicPhoneNumber) }} </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ dateFormatChange(company.subscribeStartDate) }}  </td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ dateFormatChange(company.subscribeStartDate) }} </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ dateFormatChange(company.subscribeEndDate) }} </td>
-                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ dateFormatChange(company.useFeeDepositDate) }} </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ company.employeeCount }} </td>
                                 <td class="whitespace-pre-wrap px-3 py-4 text-sm text-gray-900"> {{ company.flexbenType }} </td>
+                                <td class="whitespace-pre-wrap px-3 py-4 text-sm text-gray-900">  Active/Expired/Drop Out </td>
                                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                                     <ElementsButton
                                         :text="'Info'"
