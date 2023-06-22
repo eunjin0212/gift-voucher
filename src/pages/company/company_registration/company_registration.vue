@@ -10,16 +10,19 @@
                                 <ul role="list" class="flex flex-1 flex-col gap-y-7  ">
                                     <li class="border-gray-300 rounded-sm border-[1px] bg-white">
                                         <ul role="list" class="divide-y divide-gray-300">
-                                            <li v-for="team in registerTab" :key="team.name" class="divide-x-[1px]">
-                                                <a :href="team.href" :class="[team.current ? ' text-indigo-600' : 'text-gray-700 hover:text-indigo-600 hover:bg-gray-50', 'group flex gap-x-3 rounded-md py-4 px-4 text-sm leading-6 font-semibold']">
-                                                    <span v-if="team.current" class="bg-indigo-600 text-indigo-600 border-indigo-600 flex h-6 w-6 shrink-0 items-center justify-center rounded-2xl border text-[0.625rem] font-medium bg-white']"
+                                            <li v-for="step in registerTab" :key="step.name" class="divide-x-[1px]">
+                                                <a
+                                                    :href="step.href"
+                                                    :class="[ currentStep == step.value ? ' text-indigo-600' : 'text-gray-700 hover:text-indigo-600 hover:bg-gray-50', 'group flex gap-x-3 rounded-md py-4 px-4 text-sm leading-6 font-semibold']"
+                                                >
+                                                    <span v-if="step.checked" class="bg-indigo-600 text-indigo-600 border-indigo-600 flex h-6 w-6 shrink-0 items-center justify-center rounded-2xl border text-[0.625rem] font-medium bg-white']"
                                                     >
                                                         <CheckIcon class="w-3 text-white"/>
                                                     </span>
                                                     <span v-else class="text-gray-400 border-gray-200 flex h-6 w-6 shrink-0 items-center justify-center rounded-2xl border text-[0.625rem] font-medium bg-white">
-                                                        {{ team.initial }}
+                                                        {{ step.initial }}
                                                     </span>
-                                                    <span class="truncate text-base">{{ team.name }}</span>
+                                                    <span class="truncate text-base">{{ step.text }}</span>
                                                 </a>
                                             </li>
                                         </ul>
@@ -31,8 +34,15 @@
                 </div>
                 <div class="col-span-3">
                     <CompanyInformation
+                        v-show="currentStep==registerTab[0].value"
+                        @next-step="goToUsageInformation"
+                        @back-to-list="backToList"
                     />
                     <UsageInformation
+                        v-show="currentStep==registerTab[1].value"
+                        @back-step="backToCompanyInformation"
+                        @submit-register="registerCompany"
+                        @back-to-list="backToList"
                     />
                 </div>
             </div>
@@ -43,7 +53,6 @@
 <script>
 import AppAside from "@/components/AppAside.vue";
 import AppMain from "@/components/main/AppMain.vue";
-import moment from "moment";
 import CompanyInformation from "@/pages/company/company_registration/register_step/company_information.vue"
 import UsageInformation from "@/pages/company/company_registration/register_step/usage_information.vue"
 import { CheckIcon } from "@heroicons/vue/solid"
@@ -53,38 +62,32 @@ export default {
         AppAside, AppMain, CheckIcon, CompanyInformation, UsageInformation
     },
     methods:{
+        clickTabs( tab ){
+            const self = this;
+            self.currentStep = tab.value;
+        },
+        goToUsageInformation( registerData ){
+            const self = this;
+            console.log( {registerData })
+
+            self.clickTabs( self.registerTab[1] );
+            self.registerTab[1].checked = true;
+        },
+        backToCompanyInformation(){
+            const self = this;
+            self.clickTabs( self.registerTab[0] );
+            self.registerTab[1].checked = false;
+        },
+        registerCompany(){
+            const self = this;
+            console.log( "submit" );
+        },
         backToList(){
             location.href="/company/company_list";
         },
-        getFlexbenType(){
-            const self = this;
-            const url = self.$api("uri", "get-flexben-campaign-List");
-            self.$axios.get( url )
-                .then( res => {
-                    self.flexbenTypeOptions= res.data.data.list.map(( { bizCampaignId, flexbenCampaignSeq, flexbenCampaignTitle}) =>({
-                            text : flexbenCampaignTitle,
-                            value : flexbenCampaignSeq,
-                            bizCampaignId
-                        })
-                    );
-                })
-        },
+
         clickSubmit(){
             const self = this;
-            if( ! self.validationCheck() ) {
-                alert( "Please enter the contents." );
-                return;
-            }
-
-            if( ! self.validatePhoneNumber() ){
-                alert( "Please enter a valid phone number. The number should start with either 09 or 08 and have more than 11 digits." );
-                return;
-            }
-
-            if( ! self.validationTimeCheck() ){
-                alert("The start date should be earlier than the end date.");
-                return;
-            }
 
             const registerData = {
                                     ...self.registerData,
@@ -99,89 +102,17 @@ export default {
                 })
                 .catch( alert )
         },
-        validationCheck(){
-            const self = this;
-            let isValid = true;
-
-            const { subscribeStartDate, subscribeEndDate, useFeeDepositDate, flexbenCampaignSeq } = self.registerData;
-
-            Object.values({ subscribeStartDate, subscribeEndDate, useFeeDepositDate, flexbenCampaignSeq }).map( (  value ) => {
-                if( ! value ){
-                    isValid = false;
-                    return;
-                }
-            });
-
-            return isValid;
-        },
-        validatePhoneNumber() {
-            const self = this;
-            let { subscriptionPicPhoneNumber } = self.registerData;
-
-            subscriptionPicPhoneNumber = subscriptionPicPhoneNumber.replace(/\D/g, '');
-            const regex = /^(09|08)\d{9,}$/;
-            return regex.test( subscriptionPicPhoneNumber );
-        },
-        validationTimeCheck(){
-            const self = this;
-            const { subscribeStartDate, subscribeEndDate } = self.registerData;
-            const startDate = moment( subscribeStartDate );
-            const endDate = moment( subscribeEndDate );
-
-            return endDate.isAfter(startDate);
-        },
-        getInquiryData(){
-            const self = this;
-            const params = new URLSearchParams( window.location.search );
-            if( ! params.has( "inquirySeq" ) ){
-                return;
-            }
-			let inquirySeq = params.get("inquirySeq");
-            const url = self.$api("uri", "get-join-inquiry");
-            console.log( url , inquirySeq )
-            self.$axios.get( `${url}/${ inquirySeq }`)
-                .then( (res) => {
-                    const { inquiryCompanyName, employmentCount, picDepartmentName
-                            , picEmail, picName, picPhoneNumber } = res.data.data.data;
-                    self.registerData = {
-                        ...self.registerData,
-                        joinInquirySeq : inquirySeq,
-                        employeeCount : employmentCount,
-                        inquiryCompanyName : null,
-                        subscriptionPicDepartment : picDepartmentName,
-                        subscriptionPicEmail : picEmail,
-                        subscriptionPicName : picName,
-                        subscriptionPicPhoneNumber : picPhoneNumber.replace(/\D/g, ''),
-                        companyName : inquiryCompanyName,
-                    };
-
-                } )
-                .catch( alert )
-        },
     },
     data() {
         return{
             registerTab :
-                    [
-                        {  name: 'Company Information', href: '#', initial: '01', current: true },
-                        {  name: 'Service Usage Information', href: '#', initial: '02', current: false },
-                    ],
-            flexbenTypeOptions : [],
-            registerData : {
-                companySeq : "",
-                employeeCount : 1,
-                inquiryCompanyName : null,
-                subscriptionPicDepartment : null,
-                subscriptionPicEmail : null,
-                subscriptionPicName : null,
-                subscriptionPicPhoneNumber : null,
-                companyName : null,
-                subscribeStartDate : null,
-                subscribeEndDate : null,
-                useFeeDepositDate : null,
-                flexbenCampaignSeq : "",
-                joinInquirySeq : ""
-            }
+                [
+                    {  text: 'Company Information', href: '#company_information'
+                        , initial: '01', value : "COMPANY_INFORMATION", checked : true },
+                    {  text: 'Service Usage Information', href: '#usage_information'
+                        , initial: '02', value : "USAGE_INFORMATION", checked : false },
+                ],
+            currentStep : "COMPANY_INFORMATION",
         }
     },
     mounted(){

@@ -73,7 +73,7 @@ export default {
             },
             set( value ){
                 const self = this;
-                self.$emit('update:modelValue', value);
+                self.$emit('update:modelValue', value );
                 self.$emit('change');
             }
         },
@@ -112,7 +112,7 @@ export default {
                 class="block truncate text-base font-light "
                 :class="{ 'text-gray-400': ! modelValue }"
                 >
-                    {{ selected ? selected.text : defaultMsg }}
+                    {{ selected?.text || defaultMsg }}
             </span>
             <span class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
             <SelectorIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
@@ -131,9 +131,6 @@ export default {
                     class="block truncate"
                     >
                     {{ item.text }}
-                </span>
-                <span v-if="selected && modelValue" :class="[active ? 'text-white' : 'text-indigo-600', 'absolute inset-y-0 right-0 flex items-center pr-4']">
-                    <CheckIcon class="h-5 w-5" aria-hidden="true" />
                 </span>
                 </li>
             </ListboxOption>

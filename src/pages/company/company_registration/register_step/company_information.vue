@@ -10,6 +10,9 @@
                     v-model="registerData.companyName"
                     :required="true"
                 />
+            </div>
+            <div class="my-7 flex flex-col gap-4">
+                <div class="text-2xl font-bold"> PIC Information </div>
                 <ElementsInput
                     v-model="registerData.subscriptionPicName"
                     :name="'PIC Name'"
@@ -34,7 +37,7 @@
                 />
                 <ElementsInput
                     v-model="registerData.subscriptionPicPhoneNumber"
-                    :name="'PIC Phone number'"
+                    :name="'PIC Contract(Tel)'"
                     :full="true"
                     :maxlength="60"
                     :inputtype="'tel'"
@@ -51,15 +54,6 @@
                     :name="'End Date'"
                     v-model="registerData.subscribeEndDate"
                 />
-                <div>
-                    <h1 class="text-sm font-semibold text-slate-800"> Number of Employee </h1>
-                    <input type="number"
-                        class="w-44 mt-1 shadow-sm block sm:text-sm border-gray-300 rounded-md"
-                        :min="1"
-                        v-model="registerData.employmentCount"
-                        :required="true"
-                    />
-                </div>
                 <ElementsDate
                     :name="'Use Fee Deposit Date'"
                     v-model="registerData.useFeeDepositDate"
@@ -76,7 +70,7 @@
                     :backgroundWhite="true" :width32="true"
                     :text="'Cancel'"
                     :inputtype="'button'"
-                    @click="backToList"
+                    @clickEvent="$emit('back-to-list')"
                 />
                 <ElementsButton
                     :width32="true"
@@ -95,6 +89,9 @@ export default{
     components : {
 
     },
+    props : {
+    },
+    emits : [ "next-step", "back-to-list"],
     methods:{
         backToList(){
             location.href="/company/company_list";
@@ -129,18 +126,7 @@ export default{
                 return;
             }
 
-            const registerData = {
-                                    ...self.registerData,
-                                    subscriptionPicPhoneNumber : self.registerData.subscriptionPicPhoneNumber.replace(/\D/g, '')
-                                };
-
-            const url = self.$api("uri", "post-company" );
-            self.$axios.post( url , registerData )
-                .then( () => {
-                    alert("success to regiter company" )
-                    location.href = "/company/company_list";
-                })
-                .catch( alert )
+            self.$emit("next-step", self.registerData );
         },
         validationCheck(){
             const self = this;
@@ -181,15 +167,13 @@ export default{
             }
 			let inquirySeq = params.get("inquirySeq");
             const url = self.$api("uri", "get-join-inquiry");
-            console.log( url , inquirySeq )
             self.$axios.get( `${url}/${ inquirySeq }`)
                 .then( (res) => {
-                    const { inquiryCompanyName, employmentCount, picDepartmentName
+                    const { inquiryCompanyName, picDepartmentName
                             , picEmail, picName, picPhoneNumber } = res.data.data.data;
                     self.registerData = {
                         ...self.registerData,
                         joinInquirySeq : inquirySeq,
-                        employeeCount : employmentCount,
                         inquiryCompanyName : null,
                         subscriptionPicDepartment : picDepartmentName,
                         subscriptionPicEmail : picEmail,
@@ -204,16 +188,9 @@ export default{
     },
     data() {
         return{
-            registerTab :
-                    [
-                        {  name: 'Company Information', href: '#', initial: '01', current: true },
-                        {  name: 'Service Usage Information', href: '#', initial: '02', current: false },
-                    ],
             flexbenTypeOptions : [],
             registerData : {
-                companySeq : "",
                 employeeCount : 1,
-                inquiryCompanyName : null,
                 subscriptionPicDepartment : null,
                 subscriptionPicEmail : null,
                 subscriptionPicName : null,

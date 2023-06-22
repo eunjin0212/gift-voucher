@@ -97,15 +97,18 @@
                     :width32="true"
                     :backgroundWhite="true"
                     text="Cancel"
+                    @clickEvent="$emit('back-to-list')"
                 />
                 <ElementsButton
                     :width32="true"
                     :backgroundRed="true"
                     text="Back"
+                    @clickEvent="clickBack"
                 />
                 <ElementsButton
                     :width32="true"
-                    text="Next"
+                    text="Submit"
+                    @clickEvent="clickSubmit"
                 />
             </div>
         </div>
@@ -115,6 +118,24 @@
 <script>
 
 export default{
+    emits : [ "back-step", "submit-register", "back-to-list"],
+    props : {
 
+    },
+    data(){
+        return{
+
+        }
+    },
+    methods : {
+        clickBack(){
+            const self = this;
+            self.$emit("back-step");
+        },
+        clickSubmit(){
+            const self = this;
+            self.$emit("submit-register");
+        },
+    }
 }
 </script>

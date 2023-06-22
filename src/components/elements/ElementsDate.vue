@@ -20,7 +20,6 @@ export default{
         }
 	},
     mounted (){
-        console.log( moment.tz.guess() )
     },
 	emits : ['update:modelValue', "changeDate"],
 	methods : {
