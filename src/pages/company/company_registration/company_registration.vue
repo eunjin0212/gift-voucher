@@ -37,6 +37,7 @@
                         v-show="currentStep==registerTab[0].value"
                         @next-step="goToUsageInformation"
                         @back-to-list="backToList"
+                        v-model:contractFile="contractFile"
                     />
                     <UsageInformation
                         v-show="currentStep==registerTab[1].value"
@@ -66,9 +67,9 @@ export default {
             const self = this;
             self.currentStep = tab.value;
         },
-        goToUsageInformation( registerData ){
+        goToUsageInformation( companyInformation ){
             const self = this;
-            console.log( {registerData })
+            self.companyRegisterData = { ...companyInformation };
 
             self.clickTabs( self.registerTab[1] );
             self.registerTab[1].checked = true;
@@ -78,29 +79,44 @@ export default {
             self.clickTabs( self.registerTab[0] );
             self.registerTab[1].checked = false;
         },
-        registerCompany(){
+        async registerCompany( usageInformation ){
             const self = this;
+
+            let contractFilePath;
+            try {
+                contractFilePath = await self.submitDocumentFiles();
+            }catch{
+                alert( "Fail to file upload");
+                return;
+            }
+
+            self.companyRegisterData = { ...self.companyRegisterData,
+                                        ...usageInformation, contractFilePath };
+
             console.log( "submit" );
-        },
-        backToList(){
-            location.href="/company/company_list";
-        },
-
-        clickSubmit(){
-            const self = this;
-
-            const registerData = {
-                                    ...self.registerData,
-                                    subscriptionPicPhoneNumber : self.registerData.subscriptionPicPhoneNumber.replace(/\D/g, '')
-                                };
-
             const url = self.$api("uri", "post-company" );
-            self.$axios.post( url , registerData )
+            self.$axios.post( url , self.companyRegisterData )
                 .then( () => {
-                    alert("success to regiter company" )
+                    alert("success to register company" )
                     location.href = "/company/company_list";
                 })
                 .catch( alert )
+
+        },
+        submitDocumentFiles(){
+            const self = this;
+
+            const url = self.$api("uri", "post-file-direct-upload" );
+            const { file, name } = self.contractFile;
+            let form = new FormData();
+            form.append( `uploadFile1` , file );
+            form.append( `uploadFileName1` , name );
+
+            return self.$axios.post( url, form, { headers : {'Content-Type' : 'multipart/form-data;'} })
+                            .then( res => res.data.data.uploadFile1 );
+        },
+        backToList(){
+            location.href="/company/company_list";
         },
     },
     data() {
@@ -110,9 +126,11 @@ export default {
                     {  text: 'Company Information', href: '#company_information'
                         , initial: '01', value : "COMPANY_INFORMATION", checked : true },
                     {  text: 'Service Usage Information', href: '#usage_information'
-                        , initial: '02', value : "USAGE_INFORMATION", checked : false },
+                        , initial: '02', value : "USAGE_INFORMATION", checked : true },
                 ],
             currentStep : "COMPANY_INFORMATION",
+            contractFile : null,
+            companyRegisterData : {}
         }
     },
     mounted(){

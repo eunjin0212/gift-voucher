@@ -24,6 +24,7 @@ defineProps({
   minNumber: Number,
   maxlength: Number,
   required : Boolean,
+  isError : Boolean,
 });
 
 defineEmits(["update:modelValue"]);
@@ -34,14 +35,14 @@ defineEmits(["update:modelValue"]);
     <h1 v-if="name" class="text-sm font-semibold text-slate-800">{{ name }}</h1>
     <div>
       <input
-        class="mt-1 shadow-sm block w-full sm:text-sm border-gray-300 rounded-md"
+        class="shadow-sm block w-full sm:text-sm border-gray-300 rounded-md"
         :class="{
           'h-11': height11,
           'focus:ring-indigo-500': !readonly,
           'focus:border-indigo-500': !readonly,
           'text-right': isNumber,
           'mt-3': name,
-          'border-red-500': error,
+          'border-red-500': error || isError,
           'w-96': !full && !width24 && !width14 && !width60 && !width72,
           'w-60': width60,
           'w-full': full,

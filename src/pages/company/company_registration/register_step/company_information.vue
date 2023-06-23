@@ -1,18 +1,92 @@
 <template>
     <div class="p-3 rounded-lg w-full max-w-7xl bg-white shadow-md shadow-gray-200 flex flex-col">
         <form @submit.prevent="clickSubmit">
-            <div class="my-2 flex flex-col gap-4" >
+            <div class="my-2 flex flex-col gap-4 mx-4" >
                 <div class="text-2xl font-bold"> company Information </div>
                 <ElementsInput
                     :name="'Company Name'"
-                    :width72="true"
+                    :full="true"
                     :maxlength="60"
                     v-model="registerData.companyName"
                     :required="true"
                 />
-            </div>
-            <div class="my-7 flex flex-col gap-4">
-                <div class="text-2xl font-bold"> PIC Information </div>
+                <ElementsInput
+                    :name="'Representative Name'"
+                    :full="true"
+                    :maxlength="60"
+                    v-model="registerData.representativeName"
+                    :required="true"
+                />
+                <ElementsInput
+                    :name="'Business registration number'"
+                    :full="true"
+                    :maxlength="60"
+                    v-model="registerData.BusinessRegistrationNum"
+                    :required="true"
+                />
+                <div class="text-sm font-semibold text-slate-800"> Company Number </div>
+                <div class="w-full flex gap-2">
+                    <ElementsInput
+                        :modelValue="63"
+                        :disabled="true"
+                        :width14="true"
+                        :maxlength="200"
+                    />
+                    <ElementsInput
+                        class=""
+                        v-model="registerData.companyNumber"
+                        :full="true"
+                        :maxlength="200"
+                        :required="true"
+                        :inputtype="'tel'"
+                    />
+                </div>
+                <ElementsInput
+                    v-model="registerData.companyEmail"
+                    :name="'Company Email'"
+                    :full="true"
+                    :inputtype="'email'"
+                    :maxlength="100"
+                    :required="true"
+                />
+                <ElementsInput
+                    v-model="registerData.companyAddress"
+                    :name="'Company Address'"
+                    :full="true"
+                    :maxlength="199"
+                    :required="true"
+                />
+
+                <div>
+                    <div class="text-sm font-semibold text-slate-800 mb-3"> Contract File </div>
+                    <template v-if="contractFile">
+                        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 flex justify-between">
+                        <div class="text-blue-600 grid items-baseline" >
+                            {{  contractFile.name }}
+                        </div>
+                        <div
+                            class="border border-red-600 p-2 bg-white rounded-md font-semibold text-red-600 cursor-pointer"
+                            name="poDocumentFile"
+                            @click="$emit('update:contractFile', null )"
+                        >
+                            delete
+                        </div>
+                    </dd>
+                    </template>
+
+                    <template v-else>
+                        <dd class="text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                            <input type="file"
+                                class="w-full mt-1 shadow-sm block sm:text-sm bg-white border-gray-300 rounded-md"
+                                multiple
+                                @input="afterFileSelect"
+                                :required="true"
+                            />
+                        </dd>
+                    </template>
+                </div>
+
+                <div class="text-2xl font-bold mt-4"> PIC Information </div>
                 <ElementsInput
                     v-model="registerData.subscriptionPicName"
                     :name="'PIC Name'"
@@ -35,36 +109,24 @@
                     :maxlength="100"
                     :required="true"
                 />
-                <ElementsInput
-                    v-model="registerData.subscriptionPicPhoneNumber"
-                    :name="'PIC Contract(Tel)'"
-                    :full="true"
-                    :maxlength="60"
-                    :inputtype="'tel'"
-                    :required="true"
-                />
+                <div class="text-sm font-semibold text-slate-800"> PIC Contract(Tel) </div>
+                <div class="w-full gap-2v flex gap-1">
+                    <ElementsInput
+                        :modelValue="63"
+                        :disabled="true"
+                        :width14="true"
+                        :maxlength="200"
+                    />
+                    <ElementsInput
+                        v-model="registerData.subscriptionPicPhoneNumber"
+                        :full="true"
+                        :maxlength="60"
+                        :required="true"
+                        :inputtype="'tel'"
+                    />
+                </div>
             </div>
-            <div class="my-7 flex flex-col gap-4">
-                <div class="text-2xl font-bold"> Service Usage Information </div>
-                <ElementsDate
-                    :name="'Start Date'"
-                    v-model="registerData.subscribeStartDate"
-                />
-                <ElementsDate
-                    :name="'End Date'"
-                    v-model="registerData.subscribeEndDate"
-                />
-                <ElementsDate
-                    :name="'Use Fee Deposit Date'"
-                    v-model="registerData.useFeeDepositDate"
-                />
-                <ElementsSelect
-                    :name="'FlexBen Type'"
-                    :full="true"
-                    :options="flexbenTypeOptions"
-                    v-model="registerData.flexbenCampaignSeq"
-                />
-            </div>
+
             <div class="flex justify-end gap-4 my-3">
                 <ElementsButton
                     :backgroundWhite="true" :width32="true"
@@ -83,82 +145,18 @@
 </template>
 
 <script>
-import moment from "moment";
 
 export default{
     components : {
 
     },
     props : {
+        contractFile :{
+            default : ()=>{}
+        }
     },
-    emits : [ "next-step", "back-to-list"],
+    emits : [ "next-step", "back-to-list", "update:contractFile"],
     methods:{
-        backToList(){
-            location.href="/company/company_list";
-        },
-        getFlexbenType(){
-            const self = this;
-            const url = self.$api("uri", "get-flexben-campaign-List");
-            self.$axios.get( url )
-                .then( res => {
-                    self.flexbenTypeOptions= res.data.data.list.map(( { bizCampaignId, flexbenCampaignSeq, flexbenCampaignTitle}) =>({
-                            text : flexbenCampaignTitle,
-                            value : flexbenCampaignSeq,
-                            bizCampaignId
-                        })
-                    );
-                })
-        },
-        clickSubmit(){
-            const self = this;
-            if( ! self.validationCheck() ) {
-                alert( "Please enter the contents." );
-                return;
-            }
-
-            if( ! self.validatePhoneNumber() ){
-                alert( "Please enter a valid phone number. The number should start with either 09 or 08 and have more than 11 digits." );
-                return;
-            }
-
-            if( ! self.validationTimeCheck() ){
-                alert("The start date should be earlier than the end date.");
-                return;
-            }
-
-            self.$emit("next-step", self.registerData );
-        },
-        validationCheck(){
-            const self = this;
-            let isValid = true;
-
-            const { subscribeStartDate, subscribeEndDate, useFeeDepositDate, flexbenCampaignSeq } = self.registerData;
-
-            Object.values({ subscribeStartDate, subscribeEndDate, useFeeDepositDate, flexbenCampaignSeq }).map( (  value ) => {
-                if( ! value ){
-                    isValid = false;
-                    return;
-                }
-            });
-
-            return isValid;
-        },
-        validatePhoneNumber() {
-            const self = this;
-            let { subscriptionPicPhoneNumber } = self.registerData;
-
-            subscriptionPicPhoneNumber = subscriptionPicPhoneNumber.replace(/\D/g, '');
-            const regex = /^(09|08)\d{9,}$/;
-            return regex.test( subscriptionPicPhoneNumber );
-        },
-        validationTimeCheck(){
-            const self = this;
-            const { subscribeStartDate, subscribeEndDate } = self.registerData;
-            const startDate = moment( subscribeStartDate );
-            const endDate = moment( subscribeEndDate );
-
-            return endDate.isAfter(startDate);
-        },
         getInquiryData(){
             const self = this;
             const params = new URLSearchParams( window.location.search );
@@ -174,7 +172,6 @@ export default{
                     self.registerData = {
                         ...self.registerData,
                         joinInquirySeq : inquirySeq,
-                        inquiryCompanyName : null,
                         subscriptionPicDepartment : picDepartmentName,
                         subscriptionPicEmail : picEmail,
                         subscriptionPicName : picName,
@@ -185,28 +182,61 @@ export default{
                 } )
                 .catch( alert )
         },
+
+        afterFileSelect( e ){
+            const self = this;
+            const { files } = e.target
+            if( files.size < 0 ){
+                return ;
+            }
+            self.$emit("update:contractFile", files[0] );
+
+        },
+        deleteSelectedFile(){
+            const self = this;
+            self.$emit("update:contractFile", null );
+        },
+        clickSubmit(){
+            const self = this;
+            if( ! self.validatePhoneNumber() ){
+                alert( "Please enter a valid phone number. The number should start with either 09 or 08 and have more than 11 digits." );
+                return;
+            }
+
+            self.$emit("next-step", self.registerData );
+        },
+        validatePhoneNumber() {
+            const self = this;
+            let { subscriptionPicPhoneNumber, companyNumber } = self.registerData;
+
+            subscriptionPicPhoneNumber = subscriptionPicPhoneNumber.replace(/\D/g, '');
+            companyNumber = companyNumber.replace(/\D/g, '');
+            const regex = /^(09|08)\d{9,}$/;
+            let isValid = regex.test( subscriptionPicPhoneNumber );
+            isValid = regex.test(companyNumber);
+            return isValid;
+        },
     },
     data() {
         return{
-            flexbenTypeOptions : [],
             registerData : {
-                employeeCount : 1,
+                companyName : null,
+                representativeName : "",
+                BusinessRegistrationNum : "",
+                companyNumber : "",
+                companyEmail : "",
+                companyAddress : "",
+                contractFilePath : "",
                 subscriptionPicDepartment : null,
                 subscriptionPicEmail : null,
                 subscriptionPicName : null,
                 subscriptionPicPhoneNumber : null,
-                companyName : null,
-                subscribeStartDate : null,
-                subscribeEndDate : null,
-                useFeeDepositDate : null,
-                flexbenCampaignSeq : "",
                 joinInquirySeq : ""
-            }
+            },
         }
     },
     mounted(){
         const self = this;
-        self.getFlexbenType();
         self.getInquiryData();
     }
 }
