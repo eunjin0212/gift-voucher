@@ -167,29 +167,12 @@ export default {
                         @click-event="getCompanyListData()"
                     />
                 </div>
-<!--
-                {
-                "subscriptionCompanySeq": "23062311540797836310",
-                "regDate": "2023-06-23T03:54:07Z",
-                "employeeCount": 0,
-                "companySeq": "23062311540659481774",
-                "companyName": "regualar_01",
-                "flexbenTypeName": "Type A",
-                "subscriptionPicEmail": "hailey@sharetreats.com",
-                "subscriptionPicPhoneNumber": "09000000001",
-                "subscriptionPicName": "hailey",
-                "subscriptionPicDepartment": "dev",
-                "suspendedDate": null,
-                "billingStatus": "TRIAL",
-                "companySubscribeStatus": "ACTIVE"
-            },
- -->
                 <div class=" mt-6 overflow-x-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                     <table class="relative min-w-full divide-y divide-gray-300  ">
                         <thead class="sticky bg-gray-50 top-0 left-0 right-0 border-b border-gray-50" style="z-index: 1;">
                             <tr>
                                 <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900 sm:pl-6 ">Reg <br/>Date</th>
-                                <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900 sm:pl-6">Company <br/>Name</th>
+                                <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900">Company <br/>Name</th>
                                 <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900">PIC <br/> Name</th>
                                 <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900">PIC <br/> Email </th>
                                 <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900">PIC <br/> Phone <br/> Number</th>

@@ -1,56 +1,51 @@
 <template>
-    <div> 
-        <form 
-            class="flex items-center" 
-            :class="{ 'mt-5' : mt5 , 'justify-between items-center' : justifyBetween}"
-            >
-            <p class="mr-[12px]" :class="{ 'font-bold' : fontBold }"> 
-                {{ toggleLabel }} 
-            </p>
-            <Switch
-                as="button"
-                v-model="enabled" :class="[enabled ? 'bg-indigo-600' : 'bg-gray-200', 'relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500']">
-                <span aria-hidden="true" :class="[enabled ? 'translate-x-5' : 'translate-x-0', 'pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200']" />
-            </Switch>
-        </form>
+    <div
+        :class="[ modelValue == falseValue ? 'bg-gray-200' : 'bg-indigo-600']"
+        class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors
+        duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+        >
+        <input
+            v-model="selected"
+            :true-value="trueValue"
+            :false-value="falseValue"
+            type="checkbox" class="cursor-pointer opacity-0 absolute w-full h-full peer appearance-none rounded-md"
+        />
+        <span :class="[ modelValue == falseValue ? 'translate-x-5' : 'translate-x-0', 'pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out']">
+            <span :class="[ modelValue == falseValue ? 'opacity-0 ease-out duration-100' : 'opacity-100 ease-in duration-200', 'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity']" aria-hidden="true">
+                <svg class="h-3 w-3 text-indigo-600" fill="currentColor" viewBox="0 0 12 12">
+                    <path d="M3.707 5.293a1 1 0 00-1.414 1.414l1.414-1.414zM5 8l-.707.707a1 1 0 001.414 0L5 8zm4.707-3.293a1 1 0 00-1.414-1.414l1.414 1.414zm-7.414 2l2 2 1.414-1.414-2-2-1.414 1.414zm3.414 2l4-4-1.414-1.414-4 4 1.414 1.414z" />
+                </svg>
+            </span>
+            <span :class="[ modelValue == falseValue ? 'opacity-100 ease-in duration-200' : 'opacity-0 ease-out duration-100', 'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity']" aria-hidden="true">
+                <svg class="h-3 w-3 text-gray-400" fill="none" viewBox="0 0 12 12">
+                    <path d="M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </span>
+        </span>
     </div>
 </template>
 
 <script>
-import { Switch } from '@headlessui/vue'
 
 export default{
     components : {
-        Switch
     },
     props : {
         modelValue : [Boolean, String],
-        toggleLabel : String,
-        mt5 : Boolean,
-        justifyBetween : Boolean,
-        fontBold : Boolean,
-        useStringValueObj : Object,
+        trueValue : [ Boolean, String ],
+        falseValue : [ Boolean, String ],
     },
     computed:{
-        enabled:{
+        selected:{
             get(){
                 const self = this;
 
-                if( typeof self.modelValue == 'string'){
-                    return (self.useStringValueObj[true] == self.modelValue);
-                }
-
-                return this.modelValue
+                return self.modelValue
             },
             set(value){
                 const self = this;
-                let newValue = value;
 
-                if( typeof self.modelValue == 'string'){
-                    newValue = self.useStringValueObj[value];
-                }
-
-                self.$emit('update:modelValue', newValue );
+                self.$emit('update:modelValue', value );
                 self.$emit('afterClick');
             }
         }

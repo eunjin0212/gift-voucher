@@ -126,7 +126,7 @@ export default {
                     {  text: 'Company Information', href: '#company_information'
                         , initial: '01', value : "COMPANY_INFORMATION", checked : true },
                     {  text: 'Service Usage Information', href: '#usage_information'
-                        , initial: '02', value : "USAGE_INFORMATION", checked : true },
+                        , initial: '02', value : "USAGE_INFORMATION", checked : false },
                 ],
             currentStep : "COMPANY_INFORMATION",
             contractFile : null,
