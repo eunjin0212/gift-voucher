@@ -54,6 +54,7 @@
                             class="col-span-3 place-self-end"
                             :text="'Save'"
                             :width60="true"
+                            @click="$emit('submit-usage-settings', companySettingData)"
                         />
                     </div>
                 </dl>
@@ -92,9 +93,9 @@ export default{
             default : () => {},
         },
     },
+    emits : ["submit-usage-settings"],
     data(){
         return {
-            selected : "ACTIVE",
             companySettingData : {},
         }
     },

@@ -33,6 +33,7 @@
                 <CompanySettings
                     v-if="mainTabs.find( tab=> tab.name === 'SETTINGS' ).current === true"
                     :registerData="registerData"
+                    @submit-usage-settings="editCompanyUsageSettings"
                 />
             </AppMain>
 
@@ -177,6 +178,19 @@ export default {
             self.$axios.put( url, editCompanyData )
                 .then( ( ) => {
                     alert( " success to update ");
+                    self.getDisplayData();
+                })
+                .catch( alert)
+        },
+        editCompanyUsageSettings( editSettingData ){
+            const self = this;
+            editSettingData.subscriptionCompanySeq = self.registerData.subscriptionCompanySeq;
+            editSettingData.companySeq = self.registerData.companySeq;
+
+            const url = self.$api("uri", "put-company-usage-setting");
+            self.$axios.put( url, editSettingData )
+                .then( ()=>{
+                    alert("Success to update ");
                     self.getDisplayData();
                 })
                 .catch( alert)

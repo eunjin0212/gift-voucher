@@ -249,10 +249,8 @@ export default {
             if( ! self.validateEditCompanyInfo() ) {
                 return;
             }
-            console.log( " validate check ");
 
             if( self.contractFile.name ){
-                console.log( " file is not empty ");
                 self.$emit( "submit-file", self.contractFile );
 
                 self.editCompanyData.contractFilePath = self.registerData.contractFilePath
