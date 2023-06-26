@@ -2,13 +2,22 @@
     <div class="bg-white shadow-md shadow-gray-200 p-4 mt-6">
         <form @submit.prevent="clickSubmitButton">
             <div class="flex flex-col gap-4" >
-                <div class="py-2 text-xl font-bold text-zinc-900"> company Information </div>
+                <div class="flex justify-between">
+                    <div class="py-2 text-xl font-bold text-zinc-900"> company Information </div>
+                    <ElementsButton
+                        :width32="true"
+                        :text="'Edit'"
+                        v-if="! isEdit "
+                        @click="isEdit=true"
+                    />
+                </div>
                 <ElementsInput
                     :name="'Company Name'"
                     :full="true"
                     :maxlength="60"
                     v-model="editCompanyData.companyName"
                     :required="true"
+                    :disabled="!isEdit"
                 />
                 <ElementsInput
                     :name="'Representative Name'"
@@ -16,6 +25,7 @@
                     :maxlength="60"
                     v-model="editCompanyData.representativeName"
                     :required="true"
+                    :disabled="!isEdit"
                 />
                 <ElementsInput
                     :name="'Business registration number'"
@@ -23,6 +33,7 @@
                     :maxlength="60"
                     v-model="editCompanyData.businessRegistrationNumber"
                     :required="true"
+                    :disabled="!isEdit"
                 />
                 <div class="text-sm font-semibold text-slate-800"> Company Number </div>
                 <div class="w-full flex gap-2">
@@ -39,6 +50,7 @@
                         :maxlength="200"
                         :required="true"
                         :inputtype="'tel'"
+                        :disabled="!isEdit"
                     />
                 </div>
                 <ElementsInput
@@ -48,6 +60,7 @@
                     :inputtype="'email'"
                     :maxlength="100"
                     :required="true"
+                    :disabled="!isEdit"
                 />
                 <ElementsInput
                     v-model="editCompanyData.companyAddress"
@@ -55,6 +68,7 @@
                     :full="true"
                     :maxlength="199"
                     :required="true"
+                    :disabled="!isEdit"
                 />
                 <div>
                     <div class="text-sm font-semibold text-slate-800 mb-3"> Contract File </div>
@@ -64,6 +78,7 @@
                             {{  showTheFileName(editCompanyData.contractFilePath) }}
                         </div>
                         <div
+                            v-if="isEdit"
                             class="border border-red-600 p-2 bg-white rounded-md font-semibold text-red-600 cursor-pointer"
                             @click="deleteContractFilePath"
                         >
@@ -77,6 +92,7 @@
                             {{  contractFile.name }}
                         </div>
                         <div
+                            v-if="isEdit"
                             class="border border-red-600 p-2 bg-white rounded-md font-semibold text-red-600 cursor-pointer"
                             @click="deleteContractFile"
                         >
@@ -104,6 +120,7 @@
                     :full="true"
                     :maxlength="60"
                     :required="true"
+                    :disabled="!isEdit"
                 />
                 <ElementsInput
                     v-model="editCompanyData.subscriptionPicDepartment"
@@ -111,6 +128,7 @@
                     :full="true"
                     :maxlength="60"
                     :required="true"
+                    :disabled="!isEdit"
                 />
                 <ElementsInput
                     v-model="editCompanyData.subscriptionPicEmail"
@@ -119,6 +137,7 @@
                     :inputtype="'email'"
                     :maxlength="100"
                     :required="true"
+                    :disabled="!isEdit"
                 />
                 <div class="text-sm font-semibold text-slate-800"> PIC Contract(Tel) </div>
                 <div class="w-full gap-2v flex gap-1">
@@ -135,17 +154,12 @@
                         :maxlength="60"
                         :required="true"
                         :inputtype="'tel'"
+                        :disabled="!isEdit"
                     />
                 </div>
 
             </div>
-            <div class="flex justify-end gap-4 my-3">
-                <ElementsButton
-                    :backgroundWhite="true" :width32="true"
-                    :text="'Cancel'"
-                    :inputtype="'button'"
-                    @click="$emit('click-cancel')"
-                />
+            <div class="flex justify-end gap-4 my-3" v-if="isEdit">
                 <ElementsButton
                     :width32="true"
                     :text="'Save'"
@@ -177,6 +191,7 @@ export default {
     },
     data(){
         return {
+            isEdit : false,
             editCompanyData : {
                 companyName : null,
                 representativeName : "",
@@ -249,7 +264,7 @@ export default {
             if( ! self.validateEditCompanyInfo() ) {
                 return;
             }
-
+            self.isEdit = false;
             if( self.contractFile.name ){
                 self.$emit( "submit-file", self.contractFile );
 

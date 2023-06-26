@@ -23,7 +23,6 @@
                 <CompanyInfoEdit
                     v-if="mainTabs.find( tab=> tab.name === 'COMPANY_INFO' ).current === true"
                     @editCompanyInfo="editCompanyInfoData"
-                    @clickCancel="returnToServiceUsage"
                     @submit-file="submitContractFile"
                     :registerData="registerData"
                     :billingStatusOptions="billingStatusOptions"
@@ -222,10 +221,6 @@ export default {
                     self.masterAdmin.list = res.data.data.list;
                 })
                 .catch( alert )
-        },
-        returnToServiceUsage(){
-            const self = this;
-            self.clickTabs( self.mainTabs[0] );
         },
         backToCompanyList(){
             location.href='/company/company_list';
