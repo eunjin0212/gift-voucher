@@ -21,7 +21,7 @@
                     :name="'Business registration number'"
                     :full="true"
                     :maxlength="60"
-                    v-model="registerData.BusinessRegistrationNum"
+                    v-model="registerData.businessRegistrationNumber"
                     :required="true"
                 />
                 <div class="text-sm font-semibold text-slate-800"> Company Number </div>
@@ -34,7 +34,7 @@
                     />
                     <ElementsInput
                         class="grow"
-                        v-model="registerData.companyNumber"
+                        v-model="registerData.contactNumber"
                         :full="true"
                         :maxlength="200"
                         :required="true"
@@ -42,7 +42,7 @@
                     />
                 </div>
                 <ElementsInput
-                    v-model="registerData.companyEmail"
+                    v-model="registerData.contactEmail"
                     :name="'Company Email'"
                     :full="true"
                     :inputtype="'email'"
@@ -208,13 +208,13 @@ export default{
         },
         validatePhoneNumber() {
             const self = this;
-            let { subscriptionPicPhoneNumber, companyNumber } = self.registerData;
+            let { subscriptionPicPhoneNumber, contactNumber } = self.registerData;
 
             subscriptionPicPhoneNumber = subscriptionPicPhoneNumber.replace(/\D/g, '');
-            companyNumber = companyNumber.replace(/\D/g, '');
+            contactNumber = contactNumber.replace(/\D/g, '');
             const regex = /^(09|08)\d{9,}$/;
             let isValid = regex.test( subscriptionPicPhoneNumber );
-            isValid = regex.test(companyNumber);
+            isValid = regex.test(contactNumber);
             return isValid;
         },
     },
@@ -223,9 +223,9 @@ export default{
             registerData : {
                 companyName : null,
                 representativeName : "",
-                BusinessRegistrationNum : "",
-                companyNumber : "",
-                companyEmail : "",
+                businessRegistrationNumber : "",
+                contactNumber : "",
+                contactEmail : "",
                 companyAddress : "",
                 contractFilePath : "",
                 subscriptionPicDepartment : null,

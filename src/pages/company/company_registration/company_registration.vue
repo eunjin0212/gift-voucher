@@ -107,9 +107,9 @@ export default {
             const self = this;
 
             const url = self.$api("uri", "post-file-direct-upload" );
-            const { file, name } = self.contractFile;
+            const { name } = self.contractFile;
             let form = new FormData();
-            form.append( `uploadFile1` , file );
+            form.append( `uploadFile1` , self.contractFile );
             form.append( `uploadFileName1` , name );
 
             return self.$axios.post( url, form, { headers : {'Content-Type' : 'multipart/form-data;'} })

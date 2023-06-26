@@ -21,7 +21,7 @@
                             <ElementsToggle
                                 :trueValue="'ACTIVE'"
                                 :falseValue="'DEACTIVE'"
-                                v-model="selected"
+                                v-model="companySettingData.filingUsageStatus"
                             />
                         </dd>
                     </div>
@@ -33,7 +33,7 @@
                             <ElementsToggle
                                 :trueValue="'ACTIVE'"
                                 :falseValue="'DEACTIVE'"
-                                v-model="selected"
+                                v-model="companySettingData.payrollUsageStatus"
                             />
                         </dd>
                     </div>
@@ -45,7 +45,7 @@
                             <ElementsToggle
                                 :trueValue="'ACTIVE'"
                                 :falseValue="'DEACTIVE'"
-                                v-model="selected"
+                                v-model="companySettingData.kpiUsageStatus"
                             />
                         </dd>
                     </div>
@@ -86,10 +86,22 @@
 
 
 export default{
+    props : {
+        registerData : {
+            type : Object,
+            default : () => {},
+        },
+    },
     data(){
         return {
-            selected : "ACTIVE"
+            selected : "ACTIVE",
+            companySettingData : {},
         }
+    },
+    mounted(){
+        const self = this;
+        const { filingUsageStatus, kpiUsageStatus, payrollUsageStatus} = self.registerData;
+        self.companySettingData = { filingUsageStatus, kpiUsageStatus, payrollUsageStatus };
     }
 }
 
