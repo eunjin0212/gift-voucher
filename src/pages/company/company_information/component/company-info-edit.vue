@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white shadow-md shadow-gray-200 p-4 mt-6">
+    <div class="bg-white shadow-md shadow-gray-200 p-4 mt-6  max-w-7xl">
         <form @submit.prevent="clickSubmitButton">
             <div class="flex flex-col gap-4" >
                 <div class="flex justify-between">
@@ -108,6 +108,7 @@
                                 multiple
                                 @input="afterFileSelect"
                                 :required="true"
+                                :disabled="!isEdit"
                             />
                         </dd>
                     </template>
@@ -178,10 +179,6 @@ export default {
     props : {
         registerData : {
             type : Object,
-            default : () => {}
-        },
-        billingStatusOptions : {
-            type : Array,
             default : () => {}
         },
         flexbenTypeOptions : {

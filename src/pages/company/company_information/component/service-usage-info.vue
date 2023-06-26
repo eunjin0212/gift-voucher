@@ -1,5 +1,5 @@
 <template>
-    <div id="service-usage-info" class="mt-6 max-w-[1024px]">
+    <div id="service-usage-info" class="mt-6  max-w-7xl">
         <div class="overflow-hidden bg-white shadow sm:rounded-lg">
             <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
                 <dl class="sm:divide-y sm:divide-gray-200">

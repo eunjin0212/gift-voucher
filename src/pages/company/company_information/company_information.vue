@@ -2,7 +2,7 @@
     <div id="app" class="min-w-[1024px] min-h-[100vh] flex">
         <AppAside />
             <AppMain :headerName="registerData.companyName">
-                <div class="flex justify-between max-w-[1024px]">
+                <div class="flex justify-between max-w-7xl">
                     <MainTabs :tabs="mainTabs" class="mt-9" @clickEvent="clickTabs" />
                     <ElementsButton
                         text="Back To List"
@@ -25,7 +25,6 @@
                     @editCompanyInfo="editCompanyInfoData"
                     @submit-file="submitContractFile"
                     :registerData="registerData"
-                    :billingStatusOptions="billingStatusOptions"
                     :flexbenTypeOptions="flexbenTypeOptions"
                 />
 
@@ -77,26 +76,8 @@ export default {
                 list : [],
             },
             flexbenTypeOptions : [],
-            billingStatusOptions : [
-                { text : "Testing", value : "TRIAL" },
-                { text : "Billing", value : "BILLING" }
-            ],
-            registerData : {
-                subscriptionCompanySeq: null,
-                companySeq: null,
-                companyName: "",
-                flexbenType: null,
-                flexbenCampaignSeq: "",
-                subscriptionPicEmail: null,
-                subscriptionPicPhoneNumber: null,
-                subscriptionPicName: null,
-                subscriptionPicDepartment: null,
-                subscribeStartDate: null,
-                subscribeEndDate: null,
-                employeeCount: null,
-                useFeeDepositDate: null,
-                billingStatus: ""
-            },
+
+            registerData : {},
             searchOptions : {
                 startDate : "",
                 endDate : "",

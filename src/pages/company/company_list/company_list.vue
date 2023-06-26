@@ -28,18 +28,26 @@ export default {
                 { text : "Company Name" , value : "COMPANY_NAME" },
                 { text : 'PIC Name' , value : 'PIC_NAME'}
             ],
-            billingStatusOptions : [
+            CompanyStatusOptions : [
                 { text : "All" , value : null },
                 { text : "Testing" , value : "TRIAL" },
-                { text : "Billing" , value : "BILLING" },
+                { text : "Active" , value : "ACTIVE" },
+                { text : "Suspended" , value : "SUSPENDED" },
+                { text : "Drop-out" , value : "DROP_OUT" },
             ],
+            companyStatusDisplayOption : {
+                'TRIAL' : 'Testing',
+                'ACTIVE' : 'Active',
+                'SUSPENDED' : 'Suspended',
+                'DROP_OUT' : 'Drop-out'
+            },
             companyList: [],
             showCompanyRegistration: false,
             showCompanyPop: false,
             json_query:{
                 limit : 10,
                 offset : null,
-                billingStatus : null,
+                companySubscribeStatus : null,
                 searchOption : "COMPANY_NAME",
                 searchText : null
             },
@@ -104,13 +112,6 @@ export default {
             })
             .catch( alert )
         },
-        changeCamelCase( value ){
-            switch (value) {
-                case 'BILLING':	return 'Billing';
-                case 'TRIAL': return 'Testing';
-                default : return "";
-            }
-        },
         formatPhoneNumber(phoneNumber) {
             const regex = /^(\d{4})(\d{3})(\d{1,})$/;
             const match = regex.exec(phoneNumber);
@@ -143,11 +144,11 @@ export default {
                         + Registration Company
                     </button>
                 </div>
-                <div class="flex items-start gap-3">
+                <div class="flex items-start gap-3 flex-wrap">
                     <ElementsSelect
                         :width60="true"
-                        :options="billingStatusOptions"
-                        v-model="json_query.billingStatus"
+                        :options="CompanyStatusOptions"
+                        v-model="json_query.companySubscribeStatus"
                     />
                     <ElementsSelect
                         :width60="true"
@@ -167,7 +168,10 @@ export default {
                         @click-event="getCompanyListData()"
                     />
                 </div>
-                <div class=" mt-6 overflow-x-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                <div
+                    v-if="companyList.length > 0 "
+                    class=" mt-6 overflow-x-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg"
+                >
                     <table class="relative min-w-full divide-y divide-gray-300  ">
                         <thead class="sticky bg-gray-50 top-0 left-0 right-0 border-b border-gray-50" style="z-index: 1;">
                             <tr>
@@ -179,7 +183,6 @@ export default {
                                 <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900">Suspended<br/> Date</th>
                                 <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900">FleBen <br/> Type</th>
                                 <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900">Usage <br/> Employees </th>
-                                <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900">Billing <br/>Status</th>
                                 <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900">Status</th>
                                 <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
                                     <span class="sr-only">Edit</span>
@@ -199,8 +202,9 @@ export default {
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-center text-gray-900 ">{{ dateFormatChange(company.suspendedDate) }}</td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-center text-gray-900"> {{ company.flexbenTypeName }} </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-center text-gray-900"> {{ company.employeeCount }} </td>
-                                <td class="whitespace-nowrap px-3 py-4 text-sm text-center text-gray-900">  {{ changeCamelCase(company.billingStatus) }} </td>
-                                <td class="whitespace-nowrap px-3 py-4 text-sm text-center text-gray-900"> {{ company.companySubscribeStatus }} </td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-center text-gray-900">
+                                    {{ companyStatusDisplayOption[company.companySubscribeStatus] }}
+                                </td>
                                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                                     <ElementsButton
                                         :text="'Info'"
@@ -223,6 +227,9 @@ export default {
                             </tr>
                         </tbody>
                     </table>
+                </div>
+                <div v-else class="mt-10 flex flex-col items-center h-full justify-center gap-5">
+                    <div class="text-gray-500">  No Company Data </div>
                 </div>
                 <div class="w-full h-28 flex mt-4 justify-center items-center">
                     <ElementsPagination

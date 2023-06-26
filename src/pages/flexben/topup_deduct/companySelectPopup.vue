@@ -4,7 +4,7 @@
         class="fixed top-0 w-full h-full bg-black/50 z-20 flex justify-center items-center"
     >
         <div class="border rounded-lg shadow shadow-gray-100 bg-white">
-            <div class="px-7 py-6 flex justify-between items-center">
+            <div class="px-7 py-6 flex justify-between items-center ">
                 <h2 class="text-xl font-bold"> Select Company </h2>
                 <a
                     href="javascript:void(0)"
@@ -17,7 +17,7 @@
 
             <div class="h-[70vh]">
                 <form @submit.prevent="getCompanyListByName()"
-                    class="py-2 px-1 flex gap-2 w-[40vw]"
+                    class="py-2 px-1 flex gap-2 w-[40vw] flex-wrap"
                 >
                     <ElementsInput
                         :width72="true"
@@ -88,7 +88,7 @@ export default{
             json_query : {
                 limit : 100,
                 offset : null,
-                billingStatus : "BILLING",
+                companySubscribeStatus : null,
                 searchOption : "COMPANY_NAME",
                 searchText : ""
             },

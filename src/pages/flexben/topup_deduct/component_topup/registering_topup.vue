@@ -351,6 +351,7 @@ export default {
                 orDocumentFileName : null
             },
 
+            suspendedDate : "",
             subscribeEndDate : "",
             subscribeStartDate : "",
             subscriptionPicName : "",
@@ -449,13 +450,14 @@ export default {
         },
         selectCompanyTopUp( company ){
             const self = this;
-            const { companyName, companySeq, subscribeEndDate, subscribeStartDate, employeeCount  } = company;
+            const { companyName, companySeq, subscribeEndDate, suspendedDate, subscribeStartDate, employeeCount  } = company;
             self.registerData.companyName = companyName;
             self.registerData.companySeq = companySeq;
             self.registerData.numOfEmpCnt = employeeCount;
 
             self.subscribeStartDate = subscribeStartDate;
             self.subscribeEndDate = subscribeEndDate;
+            self.suspendedDate = suspendedDate;
 
             // ========================== init
             self.registerData.extendedStartDate = "";
@@ -466,16 +468,18 @@ export default {
         calcExtendedDate(){
             const self = this;
             const extendedPeriod = self.registerData.extendedPeriod;
-
             if( ! extendedPeriod ) return;
+
+            // 최초 topup의 경우 당일을 기준으로 extended period를 정한다
+            const standardDate = self.suspendedDate || moment().add(-1, 'day').format()
             if( extendedPeriod == "NONE" ) {
-                self.registerData.extendedStartDate = self.subscribeEndDate;
-                self.registerData.extendedEndDate = self.subscribeEndDate;
+                self.registerData.extendedStartDate = self.standardDate;
+                self.registerData.extendedEndDate = self.standardDate;
                 return;
             }
 
-            self.registerData.extendedStartDate = moment(self.subscribeEndDate).add(1, 'day').format();
-            self.registerData.extendedEndDate = moment( self.subscribeEndDate )
+            self.registerData.extendedStartDate = moment(standardDate).add(1, 'day').format();
+            self.registerData.extendedEndDate = moment( standardDate )
                                                         .add( extendedPeriod, "month")
                                                         .format();
 
