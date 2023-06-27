@@ -22,8 +22,9 @@
 
                 <CompanyInfoEdit
                     v-if="mainTabs.find( tab=> tab.name === 'COMPANY_INFO' ).current === true"
-                    @editCompanyInfo="editCompanyInfoData"
+                    @edit-company-info="editCompanyInfoData"
                     @submit-file="submitContractFile"
+                    @delete-file="deleteCurrentFile"
                     :registerData="registerData"
                     :flexbenTypeOptions="flexbenTypeOptions"
                 />
@@ -32,6 +33,7 @@
                     v-if="mainTabs.find( tab=> tab.name === 'SETTINGS' ).current === true"
                     :registerData="registerData"
                     @submit-usage-settings="editCompanyUsageSettings"
+                    @submit-suspended-settings="editAccountSettings"
                 />
             </AppMain>
 
@@ -131,7 +133,7 @@ export default {
                     );
                 })
         },
-        submitContractFile( contractFile ){
+        submitContractFile( contractFile, editCompanyData ){
             const self = this;
 
             const url = self.$api("uri", "post-file-direct-upload" );
@@ -140,14 +142,24 @@ export default {
             form.append( `uploadFile1` , contractFile );
             form.append( `uploadFileName1` , name );
 
-            return self.$axios.post( url, form, { headers : {'Content-Type' : 'multipart/form-data;'} })
-                            .then( res => {
-                                self.registerData.uploadFilePath =  res.data.data.uploadFile1;
-                            })
-                            .catch( err => {
-                                console.error("File Upload Error : ", err )
-                                alert(" Failed to file upload, Please try again" );
-                            });
+            self.$axios.post( url, form, { headers : {'Content-Type' : 'multipart/form-data;'} })
+                        .then( res => {
+                            return res.data.data.uploadFile1;
+                        })
+                        .then( contractFilePath => {
+
+                            self.editCompanyInfoData( { ...editCompanyData, contractFilePath } )
+                        })
+                        .catch( err => {
+                            console.error("File Upload Error : ", err )
+                            alert(" Failed to file upload, Please try again" );
+                        });
+        },
+        deleteCurrentFile( currentfilePath ){
+            const self = this;
+            self.$axios.delete( currentfilePath )
+                .then( () => {} )
+                .catch( (err) => console.error( 'ERROR : ', err ))
         },
         editCompanyInfoData( editCompanyData ){
             const self = this;
@@ -161,6 +173,21 @@ export default {
                     self.getDisplayData();
                 })
                 .catch( alert)
+        },
+        editAccountSettings( editAccountData ){
+            const self = this;
+
+            editAccountData.subscriptionCompanySeq = self.registerData.subscriptionCompanySeq;
+            editAccountData.companySeq = self.registerData.companySeq;
+            console.log( {editAccountData} )
+
+            const url = self.$api("uri", "put-company-account-setting");
+            self.$axios.put( url , editAccountData )
+                        .then( () => {
+                            alert(" Success to update ");
+                            self.getDisplayData();
+                        })
+                        .catch( err => alert("failed to update ", err ));
         },
         editCompanyUsageSettings( editSettingData ){
             const self = this;

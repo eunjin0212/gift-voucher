@@ -33,7 +33,6 @@ export default {
                 { text : "Testing" , value : "TRIAL" },
                 { text : "Active" , value : "ACTIVE" },
                 { text : "Suspended" , value : "SUSPENDED" },
-                { text : "Drop-out" , value : "DROP_OUT" },
             ],
             companyStatusDisplayOption : {
                 'TRIAL' : 'Testing',
@@ -47,7 +46,7 @@ export default {
             json_query:{
                 limit : 10,
                 offset : null,
-                companySubscribeStatus : null,
+                searchStatus : null,
                 searchOption : "COMPANY_NAME",
                 searchText : null
             },
@@ -129,6 +128,15 @@ export default {
             if( ! date ) return;
             return moment(date).format(format);
         },
+        getCompanyStatusDisplayOption( subscribeStatus, billingStatus ){
+            if( subscribeStatus == 'SUSPENDED'){
+                return 'Suspended';
+            }
+            if( billingStatus == 'TRIAL' ){
+                return 'Testing';
+            }
+            return 'Active';
+        }
     },
 }; // export default
 </script>
@@ -148,7 +156,7 @@ export default {
                     <ElementsSelect
                         :width60="true"
                         :options="CompanyStatusOptions"
-                        v-model="json_query.companySubscribeStatus"
+                        v-model="json_query.searchStatus"
                     />
                     <ElementsSelect
                         :width60="true"
@@ -203,7 +211,7 @@ export default {
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-center text-gray-900"> {{ company.flexbenTypeName }} </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-center text-gray-900"> {{ company.employeeCount }} </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-center text-gray-900">
-                                    {{ companyStatusDisplayOption[company.companySubscribeStatus] }}
+                                    {{ getCompanyStatusDisplayOption(company.companySubscribeStatus, company.billingStatus ) }}
                                 </td>
                                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                                     <ElementsButton

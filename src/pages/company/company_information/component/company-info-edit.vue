@@ -86,7 +86,7 @@
                         </div>
                     </dd>
                     </template>
-                    <template v-else-if="contractFile.file ">
+                    <template v-else-if="contractFile.name ">
                         <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 flex justify-between">
                         <div class="text-blue-600 grid items-baseline" >
                             {{  contractFile.name }}
@@ -140,7 +140,7 @@
                     :required="true"
                     :disabled="!isEdit"
                 />
-                <div class="text-sm font-semibold text-slate-800"> PIC Contract(Tel) </div>
+                <div class="text-sm font-semibold text-slate-800"> PIC Contract </div>
                 <div class="w-full gap-2v flex gap-1">
                     <ElementsInput
                         :modelValue="63"
@@ -175,7 +175,7 @@
 <script>
 
 export default {
-    emits : ['edit-company-info', 'click-cancel', 'submit-file'],
+    emits : ['edit-company-info', 'click-cancel', 'submit-file', 'delete-file'],
     props : {
         registerData : {
             type : Object,
@@ -207,6 +207,12 @@ export default {
             },
         }
     },
+    watch : {
+        'registerData.contractFilePath'( newVal ){
+            const self = this;
+            self.editCompanyData.contractFilePath = newVal;
+        }
+    },
     mounted(){
         const self = this;
         const {
@@ -224,7 +230,6 @@ export default {
     methods : {
         afterFileSelect( e ){
             const self = this;
-            console.log( " file upload ", e.target.files )
             const { files } = e.target
             if( files.size < 0 ){
                 return ;
@@ -263,9 +268,9 @@ export default {
             }
             self.isEdit = false;
             if( self.contractFile.name ){
-                self.$emit( "submit-file", self.contractFile );
-
-                self.editCompanyData.contractFilePath = self.registerData.contractFilePath
+                self.$emit( "submit-file", self.contractFile, self.editCompanyData );
+                self.$emit( "delete-file", self.registerData.contractFilePath )
+                return;
             }
 
             self.$emit('edit-company-info', self.editCompanyData )

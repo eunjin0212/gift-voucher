@@ -450,10 +450,11 @@ export default {
         },
         selectCompanyTopUp( company ){
             const self = this;
-            const { companyName, companySeq, subscribeEndDate, suspendedDate, subscribeStartDate, employeeCount  } = company;
+            const { companyName, companySeq, subscribeEndDate, suspendedDate, subscribeStartDate, employeeCount, companySubscribeStatus  } = company;
             self.registerData.companyName = companyName;
             self.registerData.companySeq = companySeq;
             self.registerData.numOfEmpCnt = employeeCount;
+            self.registerData.companySubscribeStatus = companySubscribeStatus;
 
             self.subscribeStartDate = subscribeStartDate;
             self.subscribeEndDate = subscribeEndDate;
@@ -473,8 +474,8 @@ export default {
             // 최초 topup의 경우 당일을 기준으로 extended period를 정한다
             const standardDate = self.suspendedDate || moment().add(-1, 'day').format()
             if( extendedPeriod == "NONE" ) {
-                self.registerData.extendedStartDate = self.standardDate;
-                self.registerData.extendedEndDate = self.standardDate;
+                self.registerData.extendedStartDate = standardDate;
+                self.registerData.extendedEndDate = standardDate;
                 return;
             }
 

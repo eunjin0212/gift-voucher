@@ -12,7 +12,7 @@
                     <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
                         <dt class="text-sm font-medium text-gray-500">Suspended Date</dt>
                         <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 justify-self-end">
-                            {{ dateFormatChange(registerData.subscribeEndDate) }}
+                            {{ dateFormatChange(registerData.subscribeEndDate) || 'No Suspended Date' }}
                         </dd>
                     </div>
                     <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
@@ -24,13 +24,13 @@
                     <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
                         <dt class="text-sm font-medium text-gray-500">FlexBen Type</dt>
                         <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 justify-self-end">
-                            {{ registerData.flexbenType }}
+                            {{ registerData.flexbenTypeName }}
                         </dd>
                     </div>
                     <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
                         <dt class="text-sm font-medium text-gray-500">Status</dt>
                         <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 justify-self-end">
-                            Active
+                            {{ getCompanyStatusDisplayOption(registerData.companySubscribeStatus, registerData.billingStatus )}}
                         </dd>
                     </div>
                     <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
@@ -85,6 +85,15 @@ export default {
             if( ! date ) return;
             return moment(date).format(format);
         },
+        getCompanyStatusDisplayOption( subscribeStatus, billingStatus ){
+            if( subscribeStatus == 'SUSPENDED'){
+                return 'Suspended';
+            }
+            if( billingStatus == 'TRIAL' ){
+                return 'Testing';
+            }
+            return 'Active';
+        }
     }
 }
 </script>

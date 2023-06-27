@@ -20,7 +20,7 @@
                         <dd class="mt-1 text-sm leading-6 text-gray-700 col-span-2 place-self-end font-semibold">
                             <ElementsToggle
                                 :trueValue="'ACTIVE'"
-                                :falseValue="'DEACTIVE'"
+                                :falseValue="'DEACTIVATED'"
                                 v-model="companySettingData.filingUsageStatus"
                             />
                         </dd>
@@ -32,7 +32,7 @@
                         <dd class="mt-1 text-sm leading-6 text-gray-700 col-span-2 place-self-end font-semibold">
                             <ElementsToggle
                                 :trueValue="'ACTIVE'"
-                                :falseValue="'DEACTIVE'"
+                                :falseValue="'DEACTIVATED'"
                                 v-model="companySettingData.payrollUsageStatus"
                             />
                         </dd>
@@ -44,7 +44,7 @@
                         <dd class="mt-1 text-sm leading-6 text-gray-700 col-span-2 place-self-end font-semibold">
                             <ElementsToggle
                                 :trueValue="'ACTIVE'"
-                                :falseValue="'DEACTIVE'"
+                                :falseValue="'DEACTIVATED'"
                                 v-model="companySettingData.kpiUsageStatus"
                             />
                         </dd>
@@ -62,29 +62,47 @@
         </div>
 
         <div class="flex flex-col gap-4 mt-5 px-6 py-3 w-[50vw] bg-white shadow-md shadow-gray-200">
-            <div class="text-indigo-900 font-semibold text-xl pt-3"> Accounts Settings</div>
-            <p class="text-xs text-zinc-500"> If you stop using the service, only the administrator can log in,
-                and other employees cannot log in.
-            </p>
-            <ElementsSelect
-                class=""
-            />
-            <ElementsDate
-                class=""
-            />
+            <div class="flex justify-between items-baseline">
+                <div class="text-indigo-900 font-semibold text-xl pt-3"> Accounts Settings</div>
+                <ElementsToggle
+                    :trueValue="'ACTIVE'"
+                    :falseValue="'SUSPENDED'"
+                    v-model="companySettingData.companySubscribeStatus"
+                />
+            </div>
+            <div class="w-[567px] text-neutral-700 text-[12px] font-normal">If turn off, you can not use all of HRnFLEX service.
+                <br/>If you want to deactivate your account on a specific date, please reserve a Suspended date.
+            </div>
+            <div v-if="companySettingData.suspendedDate" class="w-[347px] h-8 bg-zinc-100 rounded  border border-gray-300 flex justify-between px-2 items-center">
+                <div class="w-[213px] text-indigo-600 text-[12px] font-normal">Suspended Schedule : {{ dateFormatChange( registerData.suspendedDate) }}</div>
+                <div class="w-[53px] h-5 px-6 py-[11px] bg-indigo-600 rounded shadow justify-center items-center gap-3 inline-flex">
+                    <div class="text-center text-neutral-50 text-[10px] font-semibold leading-tight">Delete</div>
+                </div>
+            </div>
+            <template v-if="companySettingData.companySubscribeStatus !== 'SUSPENDED'">
+                <ElementsSelect
+                    :options="companyStatusReservOptions"
+                    v-model="reserveStatus"
+                />
+                <ElementsDate
+                    class="mt-[-10px]"
+                    v-model="companySettingData.suspendedDate"
+                    :lowerLimit="todayDate"
+                />
+            </template>
             <ElementsButton
                 class="col-span-3 place-self-end pt-4"
                 :text="'Save'"
                 :width60="true"
+                @clickEvent="clickAccountSettingSave"
             />
         </div>
-
 
     </div>
 </template>
 
 <script>
-
+import moment from 'moment'
 
 export default{
     props : {
@@ -93,16 +111,43 @@ export default{
             default : () => {},
         },
     },
-    emits : ["submit-usage-settings"],
+    emits : ["submit-usage-settings", "submit-suspended-settings"],
     data(){
         return {
             companySettingData : {},
+            companyStatusReservOptions : [
+                { text : "Suspended" , value : "SUSPENDED"},
+            ],
+            reserveStatus : "SUSPENDED",
+            todayDate : moment().add(1, 'days').format('yyyy-MM-DD HH:mm:ss'),
+        }
+    },
+    methods : {
+        dateFormatChange( date, format= "MM/DD/yyyy" ){
+            if( ! date ) return;
+            return moment(date).format(format);
+        },
+        clickAccountSettingSave(){
+            const self = this;
+            let submitDate = {};
+
+            const { companySubscribeStatus, suspendedDate } = self.companySettingData
+            if( self.companySettingData.companySubscribeStatus == 'SUSPENDED' ){
+                submitDate = { companySubscribeStatus }
+            }else if( self.companySettingData.companySubscribeStatus == 'ACTIVE'  ){
+                submitDate = {
+                    companySubscribeStatus,
+                    suspendedDate
+                }
+            }
+
+            self.$emit("submit-suspended-settings", submitDate );
         }
     },
     mounted(){
         const self = this;
-        const { filingUsageStatus, kpiUsageStatus, payrollUsageStatus} = self.registerData;
-        self.companySettingData = { filingUsageStatus, kpiUsageStatus, payrollUsageStatus };
+        const { filingUsageStatus, kpiUsageStatus, payrollUsageStatus, companySubscribeStatus, suspendedDate} = self.registerData;
+        self.companySettingData = { filingUsageStatus, kpiUsageStatus, payrollUsageStatus, companySubscribeStatus, suspendedDate };
     }
 }
 

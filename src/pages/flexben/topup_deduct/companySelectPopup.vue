@@ -88,7 +88,7 @@ export default{
             json_query : {
                 limit : 100,
                 offset : null,
-                companySubscribeStatus : null,
+                searchStatus : null,
                 searchOption : "COMPANY_NAME",
                 searchText : ""
             },

@@ -16,6 +16,7 @@
         "get-company-admin" : "/api/company/admin",
         "put-company-info" : "/api/company/company-info",
         "put-company-usage-setting" : "/api/company/usage-setting",
+        "put-company-account-setting" : "/api/company/account-setting",
 
         "get-flexben-campaign-List" : "/api/flexben/campaign",
         "get-flexben-report-List" : "/api/flexben/report",
