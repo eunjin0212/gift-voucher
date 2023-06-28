@@ -75,9 +75,6 @@
             </div>
             <div v-if="companySettingData.suspendedDate" class="w-[347px] h-8 bg-zinc-100 rounded  border border-gray-300 flex justify-between px-2 items-center">
                 <div class="w-[213px] text-indigo-600 text-[12px] font-normal">Suspended Schedule : {{ dateFormatChange( registerData.suspendedDate) }}</div>
-                <div class="w-[53px] h-5 px-6 py-[11px] bg-indigo-600 rounded shadow justify-center items-center gap-3 inline-flex">
-                    <div class="text-center text-neutral-50 text-[10px] font-semibold leading-tight">Delete</div>
-                </div>
             </div>
             <template v-if="companySettingData.companySubscribeStatus !== 'SUSPENDED'">
                 <ElementsSelect
