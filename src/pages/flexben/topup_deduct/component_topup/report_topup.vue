@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div v-if="flexbenHistory.list.length > 0 " class="mt-6 overflow-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-            <table class="divide-y divide-gray-300">
+        <div v-if="flexbenHistory.list.length > 0 " class="mt-6 overflow-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg ">
+            <table class="divide-y divide-gray-300 w-full">
                 <thead>
                     <tr>
                         <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900 sm:pl-6">Date</th>
