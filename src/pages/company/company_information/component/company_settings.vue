@@ -76,7 +76,10 @@
             <div v-if="companySettingData.suspendedDate" class="w-[347px] h-8 bg-zinc-100 rounded  border border-gray-300 flex justify-between px-2 items-center">
                 <div class="w-[213px] text-indigo-600 text-[12px] font-normal">Suspended Schedule : {{ dateFormatChange( registerData.suspendedDate) }}</div>
             </div>
-            <template v-if="companySettingData.companySubscribeStatus !== 'SUSPENDED'">
+            <template v-if="companySettingData.companySubscribeStatus === 'SUSPENDED'">
+                <p class="text-red-700 text-xs mt-[-10px]"> * Already Suspended </p>
+            </template>
+            <template v-if="companySettingData.companySubscribeStatus === 'ACTIVE'">
                 <ElementsSelect
                     :options="companyStatusReservOptions"
                     v-model="reserveStatus"
@@ -129,9 +132,14 @@ export default{
             let submitDate = {};
 
             const { companySubscribeStatus, suspendedDate } = self.companySettingData
-            if( self.companySettingData.companySubscribeStatus == 'SUSPENDED' ){
+            if(  companySubscribeStatus == 'ACTIVE' && ! suspendedDate ){
+                alert("Suspended date should be required.");
+                return;
+            }
+
+            if( companySubscribeStatus == 'SUSPENDED' ){
                 submitDate = { companySubscribeStatus }
-            }else if( self.companySettingData.companySubscribeStatus == 'ACTIVE'  ){
+            }else if( companySubscribeStatus == 'ACTIVE'  ){
                 submitDate = {
                     companySubscribeStatus,
                     suspendedDate
@@ -143,8 +151,8 @@ export default{
     },
     mounted(){
         const self = this;
-        const { filingUsageStatus, kpiUsageStatus, payrollUsageStatus, companySubscribeStatus, suspendedDate} = self.registerData;
-        self.companySettingData = { filingUsageStatus, kpiUsageStatus, payrollUsageStatus, companySubscribeStatus, suspendedDate };
+        const { filingUsageStatus, kpiUsageStatus, payrollUsageStatus, companySubscribeStatus} = self.registerData;
+        self.companySettingData = { filingUsageStatus, kpiUsageStatus, payrollUsageStatus, companySubscribeStatus, suspendedDate : null };
     }
 }
 
