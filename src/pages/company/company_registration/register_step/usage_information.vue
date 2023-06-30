@@ -98,6 +98,11 @@ export default{
         clickSubmit(){
             const self = this;
 
+            if ( ! self.registerData.flexbenCampaignSeq){
+                alert( "FlexBen Type must be selected");
+                return;
+            }
+
             if( ! self.registerData.subscribeStartDate ){
                 alert("Start Date must be selected.");
                 return;

@@ -76,7 +76,7 @@
             <div v-if="companySettingData.suspendedDate" class="w-[347px] h-8 bg-zinc-100 rounded  border border-gray-300 flex justify-between px-2 items-center">
                 <div class="w-[213px] text-indigo-600 text-[12px] font-normal">Suspended Schedule : {{ dateFormatChange( registerData.suspendedDate) }}</div>
             </div>
-            <template v-if="companySettingData.companySubscribeStatus === 'SUSPENDED'">
+            <template v-if="registerData.companySubscribeStatus === 'SUSPENDED'">
                 <p class="text-red-700 text-xs mt-[-10px]"> * Already Suspended </p>
             </template>
             <template v-if="companySettingData.companySubscribeStatus === 'ACTIVE'">
