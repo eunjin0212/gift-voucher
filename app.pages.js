@@ -54,5 +54,9 @@ module.exports = {
     report : {
         template: 'public/default.html',
         title: 'Report'
+    },
+    'settings/HRnFLEX_settings' : {
+        template: 'public/default.html',
+        title: 'HRnFLEX Settings'
     }
 }

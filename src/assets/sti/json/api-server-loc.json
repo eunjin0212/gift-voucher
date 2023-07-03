@@ -55,6 +55,11 @@
         "get-flexben-available-company" : "/api/flexben/summary/available-company",
         "get-flexben-rank-top-up" : "/api/flexben/summary/rank-top-up",
 
+        "get-hr-admin-list" : "/api/hr-admin",
+        "post-hr-admin" : "/api/hr-admin",
+        "put-hr-admin" : "/api/hr-admin",
+        "delete-hr-admin" : "/api/hr-admin",
+
         "test-api" : "/api/flexben/test",
         "ENDSTRING" : "END"
     }

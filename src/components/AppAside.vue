@@ -47,6 +47,17 @@ let items = reactive([
         href: "/flexben/settings",
         text: "FlexBen Settings",
     },
+    {
+        children: true,
+        img: "app-side-7",
+        text: "Setting",
+    },
+    {
+        parent: "app-side-7",
+        show: false,
+        href: "/settings/HRnFLEX_settings",
+        text: "HRnFLEX Settings",
+    },
 ]);
 
 onMounted(() => {
