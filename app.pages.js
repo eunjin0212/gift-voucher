@@ -58,5 +58,9 @@ module.exports = {
     'settings/HRnFLEX_settings' : {
         template: 'public/default.html',
         title: 'HRnFLEX Settings'
+    },
+    'settings/admin_setting' : {
+        template: 'public/default.html',
+        title: 'HRnFLEX Settings'
     }
 }

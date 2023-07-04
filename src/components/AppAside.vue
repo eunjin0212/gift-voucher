@@ -58,6 +58,12 @@ let items = reactive([
         href: "/settings/HRnFLEX_settings",
         text: "HRnFLEX Settings",
     },
+    {
+        parent: "app-side-7",
+        show: false,
+        href: "/settings/admin_setting",
+        text: "Admin Settings",
+    },
 ]);
 
 onMounted(() => {
