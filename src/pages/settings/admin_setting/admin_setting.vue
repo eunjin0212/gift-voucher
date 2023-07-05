@@ -19,7 +19,6 @@
             <section
                 class="content w-[70%] ml-5 pt-[20px] px-[31px] pb-[37px] bg-white mt-[23px] box-style-border border rounded shadow"
             >
-            <!-- 권한대상 & popup  -->
                 <PermissionEmployee
                     :selectedGroup="selectedGroup"
                     @afterSave="getGroupList"
@@ -43,7 +42,7 @@
                     class="mb-[26px] border-gray-300 border-[1px] rounded-[8px] py-[11px] px-[21px] w-full truncate"
                     type="text"
                     placeholder="Enter Group name"
-                    v-model="editGroupWindow.inputValue"
+                    v-model.trim="editGroupWindow.inputValue"
                     :maxlength="200"
                 />
             </div>
@@ -66,64 +65,67 @@ export default{
     data(){
         return {
             items : ["Settings"],
-    ///////////////////////////////////////////
+            ///////////////////////////////////
             editGroupWindow : {
                 show : false,
                 title: 'Add Group',
                 buttonName: 'Add',
                 inputValue: '',
-                selectedGroupSeq:'',
+                cmsRoleGroupSeq:'',
             },
             showEditEmployeeWindow : false,
             rateType : "single",
             ////////////////////////////////////////
             groupList : [],
             selectedGroup : {
-                roleGroupSeq: "",
-                companySeq: "",
-                roleGroupDefaultType: "SUPER_ADMIN",
+                cmsRoleGroupSeq: "",
                 roleGroupName: "",
                 countEmployee:0
             }
         }
     },
+    mounted(){
+        const self = this;
+        self.getGroupList();
+    },
     methods: {
 		openEditGroupWindow(title, buttonName, group) {
 			const self = this;
 			self.editGroupWindow.show = true;
-        self.editGroupWindow.title=title;
-        self.editGroupWindow.buttonName=buttonName;
-        self.editGroupWindow.inputValue= group?group.roleGroupName :'';
-        self.editGroupWindow.selectedGroupSeq= group?group.roleGroupSeq :'';
+            self.editGroupWindow.title=title;
+            self.editGroupWindow.buttonName=buttonName;
+            self.editGroupWindow.inputValue= group?.roleGroupName || '';
+            self.editGroupWindow.cmsRoleGroupSeq= group?.cmsRoleGroupSeq || '';
 		},
 		openEditEmployeeWindow() {
 			const self = this;
             self.showEditEmployeeWindow = true;
 		},
         getGroupList() {
-        const self = this;
+            const self = this;
 
-        const url = self.$api("uri", "get-admin-permission-role-group-list")
-        self.$axios.get(url)
-            .then((res) => {
-                self.groupList = res.data.data.permissionRoleGroupList;
-                self.selectedGroup = self.groupList[0];
-            })
-            .catch((err) => {
-                console.error('err : ', err);
-            });
+            const url = self.$api("uri", "get-permission-role-group-list")
+            self.$axios.get(url)
+                .then((res) => {
+                    self.groupList = res.data.data.list;
+                    self.selectedGroup = self.groupList[0];
+                })
+                .catch((err) => {
+                    console.error('err : ', err);
+                });
         },
         saveGroupName() {
-                const self = this;
-            const groupSeq = self.editGroupWindow.selectedGroupSeq;
+            const self = this;
+
+            const cmsRoleGroupSeq = self.editGroupWindow.cmsRoleGroupSeq;
             const roleGroupName = self.editGroupWindow.inputValue;
+            const updateData = { roleGroupName }
 
+            // new gorup insert
+            if( ! cmsRoleGroupSeq ){
+                const url = self.$api('uri', 'post-permission-role-group');
 
-        // new gorup insert
-            if( !groupSeq ){
-                const url = self.$api('uri', 'post-admin-permisson-role-group');
-
-                self.$axios.post(url, { 'roleGroupName':roleGroupName.trim()})
+                self.$axios.post(url, updateData )
                             .then(res => {
                                 self.getGroupList();
                                 self.editGroupWindow.show = false;
@@ -131,9 +133,10 @@ export default{
                             .catch((err) => {
                                 alert('Fail to save. Please try again.');
                             });
+
             }else{
-                const url = self.$api('uri', 'put-admin-permisson-role-group').replace('{roleGroupSeq}', groupSeq);
-                self.$axios.put(url, {roleGroupName})
+                const url = self.$api('uri', 'put-permission-role-group').replace('{roleGroupSeq}', cmsRoleGroupSeq);
+                self.$axios.put(url, updateData )
                             .then(res => {
                                 self.getGroupList();
                                 self.editGroupWindow.show = false;
@@ -142,12 +145,13 @@ export default{
                                 alert('Fail to save. Please try again.');
                             });
             }
+
         }, //end saveGroupName
         deleteGroup(roleGroupSeq){
-            if(!confirm('Are you sure to delete group?')) return;
+            if( ! confirm('Are you sure to delete group?') ) return;
 
             const self = this;
-            const url = self.$api('uri', 'delete-admin-permisson-role-group').replace('{roleGroupSeq}', roleGroupSeq);
+            const url = self.$api('uri', 'delete-permission-role-group').replace('{roleGroupSeq}', roleGroupSeq );
             self.$axios.delete(url)
                 .then(res => {
                     self.getGroupList();

@@ -1,5 +1,5 @@
 <script>
-import { getInitPersonalCodes, getInitMenuCodes } from "./PermissionCodes.js";
+import { getInitMenuCodes } from "./PermissionCodes.js";
 
 export default {
     props: {
@@ -16,14 +16,16 @@ export default {
                 }
         }
     },
-    watch: {
-        selectedGroup(newGroup, oldGroup){
-            this.getPermissionCodeList(this.allRenderPermissions);
-        }
-    },
+    // watch: {
+    //     selectedGroup(newGroup, oldGroup){
+    //         this.getPermissionCodeList(this.allRenderPermissions);
+    //     }
+    // },
     emits: [],
     components: {},
     mounted() {
+        const self = this;
+        self.allRenderPermissions();
     },
     data() {
         return {
@@ -60,38 +62,8 @@ export default {
             });
         },
         allRenderPermissions(){
-            this.reRenderEmployeeAccessPermission();
-            this.reRenderFunctionAccessPermissions();
-        },
-        reRenderEmployeeAccessPermission(){
-            const personalCodes = getInitPersonalCodes();
-
-            this.hasPermissionCodeList.forEach(permission=>{
-                if(permission.hasAccess === 'N') return;
-                if(permission.accessPermissionClassif !== 'PERSONAL') return;
-
-                const code = permission.accessPermissionCode;
-                let renderKey;
-                const index = personalCodes.findIndex(p=>{
-                    renderKey = Object.keys(p).find(key=>p[key] === code);
-                    return !!renderKey;
-                })
-
-                if(index <0 ) return;
-
-                if(renderKey === 'apiCode') {
-                    const level = permission.accessApiPermissionLevel;
-                    personalCodes[index] = {...personalCodes[index], apiLevelValue:level}
-                }
-                else if(renderKey === 'viewCode'){
-                    personalCodes[index] = {...personalCodes[index], checked:'VIEW'}
-                }
-                else if(renderKey === 'editCode'){
-                    personalCodes[index] = {...personalCodes[index], checked:'EDIT'}
-                }
-
-            })// end hasPermissionCodeList
-            this.personalCodes = personalCodes;
+            const self = this;
+            self.reRenderFunctionAccessPermissions();
         },
         reRenderFunctionAccessPermissions(){
             const menuCodes = getInitMenuCodes();
@@ -156,7 +128,7 @@ export default {
                         accessPermissionType: foundPermissionCodeSet.accessPermissionType,
                         accessPermissionCode: foundPermissionCodeSet.accessPermissionCode,
                         accessApiPermissionLevel : foundPermissionCodeSet.accessApiPermissionLevel
-                })
+                    })
                 }
                 if(code.checked === 'EDIT'){
                     const editCode = code.editCode;
@@ -166,18 +138,9 @@ export default {
                         accessPermissionType: foundPermissionCodeSet.accessPermissionType,
                         accessPermissionCode: foundPermissionCodeSet.accessPermissionCode,
                         accessApiPermissionLevel : foundPermissionCodeSet.accessApiPermissionLevel
-                })
+                    })
                 }
-                if(code.apiCode && code.apiCode.length>0 && code.apiLevelValue){
-                    const apiCode = code.apiCode;
-                    const foundPermissionCodeSet = hasPermissionCodeList.find(p=>p.accessPermissionCode===apiCode);
-                    codeFormList.push({
-                        accessPermissionRuleSeq: foundPermissionCodeSet.accessPermissionRuleSeq,
-                        accessPermissionType: foundPermissionCodeSet.accessPermissionType,
-                        accessPermissionCode: foundPermissionCodeSet.accessPermissionCode,
-                        accessApiPermissionLevel : code.apiLevelValue
-                })
-            }
+
         }) // end selectedCodes for
 
         const groupSeq = self.selectedGroup.roleGroupSeq;
@@ -198,60 +161,10 @@ export default {
 </script>
 <template>
     <div>
-        <div class="mt-3.5 border-gray-300 border-[1px] rounded-[10px] bg-[#FDFDFD]">
-            <div class="flex justify-between p-[12px] border-b-[1px]">
-                <h3 class="font-bold text-[18px]">Permissions (Employee Profile Access)</h3>
-                <button @click="saveAccessPermission('PERSONAL')" class="rounded-lg w-[86px] h-[33px] leading-[33px] bg-[#4361EE] text-[#fff] text-[12px]" >
-                    Save
-                </button>
-            </div>
-            <template v-for="(code, idx) in personalCodes" :key="code.permissionName">
-                <div class="border-b flex items-center h-13 text-xs font-medium p-[12px] "
-                    :class="{'rounded-[10px]':idx === personalCodes.length-1}"
-                >
-                    <div class="w-[20%] text-left">{{code.permissionName}}</div>
-                    <div class="flex-1 text-left">
-                        <label>
-                        <input
-                            :id="`${code.basicCode}-none`" type="radio" value="NONE" :name="code.basicCode" v-model="code.checked"
-                            class="checked mr-2 w-6 h-6 text-[#4361EE] bg-gray-100 border-gray-300 focus:ring-white"
-                        />
-                        <span class="text-[#7B7E81] text-[13px]">N/A</span>
-                        </label>
-                    </div>
-                    <div class="flex-1 text-left">
-                        <label>
-                            <input
-                                :id="code.viewCode" type="radio" value="VIEW" :name="code.basicCode" v-model="code.checked"
-                                class="mr-2 w-6 h-6 text-[#4361EE] bg-gray-100 border-gray-300 focus:ring-white"
-                            />
-                            <span class="text-[#7B7E81] text-[13px]">View</span>
-                        </label>
-                    </div>
-                    <div class="flex-1 text-left">
-                        <label>
-                            <input
-                                :id="code.editCode" type="radio" value="EDIT" :name="code.basicCode" v-model="code.checked"
-                                class="mr-2 w-6 h-6 text-[#4361EE] bg-gray-100 border-gray-300 focus:ring-white"
-                            />
-                            <span class="text-[#7B7E81] text-[13px]">View&Edit</span>
-                        </label>
-                    </div>
-                    <div class="flex-1 text-left" :class="[code.showApicode?'':'invisible']">
-                        <ElementsSelectRef
-                            :readonly="code.checked==='NONE'"
-                            v-model="code.apiLevelValue"
-                            :options="apiLevelOptions"
-                            :width60="true"
-                        />
-                    </div>
-                </div>
-            </template>
-        </div>
         <div class="mt-3.5 border-gray-300 border-[1px] rounded-[10px]">
             <div class="flex justify-between p-[12px] border-b-[1px]">
-                <h3 class="font-bold text-[18px]">Permissions by function</h3>
-                <button @click="saveAccessPermission('MENU')" class="rounded-lg w-[86px] h-[33px] leading-[33px] bg-[#4361EE] text-[#fff] text-[12px]">
+                <h3 class="font-bold text-[18px]">Permissions Per Menu</h3>
+                <button @click="saveAccessPermission()" class="rounded-lg w-[86px] h-[33px] leading-[33px] bg-[#4361EE] text-[#fff] text-[12px]">
                     Save
                 </button>
             </div>
@@ -265,7 +178,7 @@ export default {
                         <div class="flex-1 text-left">
                             <label v-if="!code.disableCode||code.disableCode!='NONE'">
                                 <input
-                                    :id="`${code.basicCode}-none`" type="radio" value="NONE" :name="code.basicCode" v-model="code.checked"
+                                    :id="`${code.basicCode}-none`" type="radio" :value="null" :name="code.basicCode" v-model="code.checked"
                                     class="checked mr-2 w-6 h-6 text-[#4361EE] bg-gray-100 border-gray-300 focus:ring-white"
                                 />
                                 <span class="text-[#7B7E81] text-[13px]">N/A</span>
@@ -274,7 +187,7 @@ export default {
                         <div class="flex-1 text-left">
                             <label v-if="!code.disableCode||code.disableCode!='VIEW'">
                                 <input
-                                    :id="code.viewCode" type="radio" value="VIEW" :name="code.basicCode" v-model="code.checked"
+                                    :id="code.viewCode" type="radio" :value="code.viewCode" :name="code.basicCode" v-model="code.checked"
                                     class="mr-2 w-6 h-6 text-[#4361EE] bg-gray-100 border-gray-300 focus:ring-white"
                                 />
                                 <span class="text-[#7B7E81] text-[13px]">View</span>
@@ -283,19 +196,11 @@ export default {
                         <div class="flex-1 text-left">
                             <label v-if="!code.disableCode||code.disableCode!='EDIT'">
                                 <input
-                                    :id="code.editCode" type="radio" value="EDIT" :name="code.basicCode" v-model="code.checked"
+                                    :id="code.editCode" type="radio" :value="code.editCode" :name="code.basicCode" v-model="code.checked"
                                     class="mr-2 w-6 h-6 text-[#4361EE] bg-gray-100 border-gray-300 focus:ring-white"
                                 />
                                 <span class="text-[#7B7E81] text-[13px]">View&Edit</span>
                             </label>
-                        </div>
-                        <div class="flex-1 text-left" :class="[code.showApicode?'':'invisible']">
-                            <ElementsSelectRef
-                                :readonly="code.checked==='NONE'"
-                                v-model="code.apiLevelValue"
-                                :options="apiLevelOptions"
-                                :width60="true"
-                            />
                         </div>
                     </div>
                 </template>

@@ -7,7 +7,6 @@ const initMenuCodes = [
         basicCode: 'SUMMARY',
         viewCode: 'SUMMARY_VIEW',
         editCode: 'SUMMARY_EDIT',
-        showApicode: false
     },
     {
         permissionName: 'Activate Process',
@@ -15,7 +14,6 @@ const initMenuCodes = [
         basicCode: 'ACTIVATE_PROCESS',
         viewCode: 'ACTIVATE_PROCESS_VIEW',
         editCode: 'ACTIVATE_PROCESS_EDIT',
-        showApicode: false
     },
     {
         permissionName: 'Company - Setting',
@@ -23,7 +21,6 @@ const initMenuCodes = [
         basicCode: 'COMPANY_SETTING',
         viewCode: 'COMPANY_SETTING_VIEW',
         editCode: 'COMPANY_SETTING_EDIT',
-        showApicode: false
     },
     {
         permissionName: 'Company - Suspended',
@@ -31,7 +28,6 @@ const initMenuCodes = [
         basicCode: 'COMPANY_SUSPENDED',
         viewCode: 'COMPANY_SUSPENDED_VIEW',
         editCode: 'COMPANY_SUSPENDED_EDIT',
-        showApicode: false
     },
     {
         permissionName: 'Report',
@@ -40,7 +36,6 @@ const initMenuCodes = [
         basicCode: 'REPORT',
         viewCode: '',
         editCode: 'REPORT_EDIT',
-        showApicode: false
     },
     {
         permissionName: 'FlexBen Summary',
@@ -49,7 +44,6 @@ const initMenuCodes = [
         basicCode: 'FLEXBEN_SUMMARY',
         viewCode: '',
         editCode: 'FLEXBEN_SUMMARY_EDIT',
-        showApicode: false
     },
     {
         permissionName: 'FlexBen Top up',
@@ -57,21 +51,53 @@ const initMenuCodes = [
         basicCode: 'FLEXBEN_EXECUTE',
         viewCode: 'FLEXBEN_EXECUTE_VIEW',
         editCode: 'FLEXBEN_EXECUTE_EDIT',
-        showApicode: false
     },
     {
-        permissionName: 'FlexBen Top up',
+        permissionName: 'FlexBen Settings',
         checked: 'NONE',
-        basicCode: 'FLEXBEN_EXECUTE',
-        viewCode: 'FLEXBEN_EXECUTE_VIEW',
-        editCode: 'FLEXBEN_EXECUTE_EDIT',
-        showApicode: false
+        basicCode: 'FLEXBEN_SETTING',
+        viewCode: 'FLEXBEN_SETTING_VIEW',
+        editCode: 'FLEXBEN_SETTING_EDIT',
     },
-
+    {
+        permissionName: 'Notice Settings',
+        checked: 'NONE',
+        basicCode: 'NOTICE',
+        viewCode: 'NOTICE_VIEW',
+        editCode: 'NOTICE_EDIT',
+    },
+    {
+        permissionName: 'Holiday Settings',
+        checked: 'NONE',
+        basicCode: 'HOLIDAY',
+        viewCode: 'HOLIDAY_VIEW',
+        editCode: 'HOLIDAY_EDIT',
+    },
+    {
+        permissionName: 'Account Settings',
+        checked: 'NONE',
+        basicCode: 'ACCOUNT',
+        viewCode: 'ACCOUNT_VIEW',
+        editCode: 'ACCOUNT_EDIT',
+    },
+    {
+        permissionName: 'System Maintenance Settings',
+        checked: 'NONE',
+        basicCode: 'SYSTEM_MAINTENANCE',
+        viewCode: 'SYSTEM_MAINTENANCE_VIEW',
+        editCode: 'SYSTEM_MAINTENANCE_EDIT',
+    },
+    {
+        permissionName: 'Admin Settings',
+        checked: 'NONE',
+        basicCode: 'ADMIN',
+        viewCode: 'ADMIN_VIEW',
+        editCode: 'ADMIN_EDIT',
+    },
 ];
 
+const getInitMenuCodes = () => initMenuCodes.map( c => Object.assign({}, c) ); // map( c=> {...c})
 
-const getInitMenuCodes = () => initMenuCodes.map(c=>Object.assign({}, c)); // map( c=> {...c})
 export {
     getInitMenuCodes
 }

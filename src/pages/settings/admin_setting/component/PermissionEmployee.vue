@@ -5,28 +5,19 @@ import { CssClassUtil } from "@/plugins/app-util";
 export default {
     props: {
         selectedGroup : {
-        type : Object,
-        default: () =>({
-                roleGroupSeq: "",
-                companySeq: "",
-                roleGroupDefaultType: "SUPER_ADMIN",
-                roleGroupName: "",
-                countEmployee:0
-            })
+            type : Object,
+            default: () =>({
+                    roleGroupSeq: "",
+                    companySeq: "",
+                    roleGroupDefaultType: "SUPER_ADMIN",
+                    roleGroupName: "",
+                    countEmployee:0
+                })
         }
     },
     watch: {
         selectedGroup(newGroup, oldGroup){
         this.getPermissionEmployeeList(newGroup.roleGroupSeq);
-        }
-    },
-    computed: {
-        selectedGroupName(){
-            if(this.selectedGroup.roleGroupDefaultType==='SUPER_ADMIN')
-                return 'Master Admin ';
-            if(this.selectedGroup.roleGroupDefaultType==='ADMIN')
-                return 'Head Group';
-            return this.selectedGroup.roleGroupName;
         }
     },
     emits: ['afterSave'],
@@ -168,24 +159,10 @@ export default {
     <div class="mt-3.5 border-gray-300 border-[1px] rounded-[10px] min-h-300">
         <div class="flex justify-between p-[12px] border-b-[1px]">
         <h3 class="font-bold text-[18px]">
-            {{selectedGroupName}} List
+            {{ roleGroupName }} List
         </h3>
-        <span v-if="selectedGroupName == 'Head Group'" class="text-sm italic text-gray-500">*Marked as 'Head' : Employees > Profile</span>
-        <button
-            @click="clickShowEditEmployeeBtn"
-            class="active flex rounded-lg border-gray-300 border-[1px] w-[150px] h-[32px] bg-[#fff] text-sm p-[2px]"
-            v-if="selectedGroup.roleGroupDefaultType!=='ADMIN'"
-        >
-            <span class="leading-[32px] pr-[1px] ml-[5px]">Edit</span>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mt-[3px]"
-            >
-                <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
-                />
-            </svg>
+        <button @click="clickShowEditEmployeeBtn" class="rounded-lg w-20 h-8 leading-[33px] bg-[#4361EE] text-[#fff] text-xs">
+            Edit
         </button>
         </div>
             <div class="p-[12px] bg-[#FDFDFD] rounded-[10px] grid grid-flow-row-dense grid-cols-3">
@@ -196,38 +173,38 @@ export default {
                     {{ employee.employeeName.substring(0, 1).toUpperCase()}}
                 </div>
                 <div class="col-span-2">
-                        <div style="padding-right: 10px;" class="w-20">
-                            <div v-if="employee.employeeStatus=='ON_LEAVE'"
-                                class="border rounded-full border-blue-400 text-blue-400 text-center text-xs"
-                            >
-                                Inactive
-                            </div>
-                            <div v-else-if="employee.employeeStatus=='RESIGNED'"
-                                class=" border rounded-full border-gray-400 text-gray-400 text-center text-xs w-[90px]"
-                            >
-                                Resigned
-                            </div>
-                            <div v-else-if="employee.employeeStatus=='EXTENSION_REQUIRED'"
-                                class=" border rounded-full border-yellow-400 text-yellow-400 text-center text-xs w-[90px]"
-                            >
-                                Extension <br> Required
-                            </div>
-                            <div v-else-if="employee.employeeStatus=='EXTENSION_PAST_DUE'"
-                                class=" border rounded-full border-red-400 text-red-400 text-center text-xs w-[90px]"
-                            >
-                                Contract Info <br> Required
-                            </div>
-                            <div v-else-if="employee.employeeStatus=='CONTRACT_INFO_REQUIRED'"
-                                class=" border rounded-full border-red-400 text-red-400 text-center text-xs w-[90px]"
-                            >
-                                Extension <br>Past Due
-                            </div>
-                            <div v-else
-                                class=" border rounded-full border-emerald-400 text-emerald-400 text-center text-xs"
-                            >
-                                Active
-                            </div>
+                    <div style="padding-right: 10px;" class="w-20">
+                        <div v-if="employee.employeeStatus=='ON_LEAVE'"
+                            class="border rounded-full border-blue-400 text-blue-400 text-center text-xs"
+                        >
+                            Inactive
                         </div>
+                        <div v-else-if="employee.employeeStatus=='RESIGNED'"
+                            class=" border rounded-full border-gray-400 text-gray-400 text-center text-xs w-[90px]"
+                        >
+                            Resigned
+                        </div>
+                        <div v-else-if="employee.employeeStatus=='EXTENSION_REQUIRED'"
+                            class=" border rounded-full border-yellow-400 text-yellow-400 text-center text-xs w-[90px]"
+                        >
+                            Extension <br> Required
+                        </div>
+                        <div v-else-if="employee.employeeStatus=='EXTENSION_PAST_DUE'"
+                            class=" border rounded-full border-red-400 text-red-400 text-center text-xs w-[90px]"
+                        >
+                            Contract Info <br> Required
+                        </div>
+                        <div v-else-if="employee.employeeStatus=='CONTRACT_INFO_REQUIRED'"
+                            class=" border rounded-full border-red-400 text-red-400 text-center text-xs w-[90px]"
+                        >
+                            Extension <br>Past Due
+                        </div>
+                        <div v-else
+                            class=" border rounded-full border-emerald-400 text-emerald-400 text-center text-xs"
+                        >
+                            Active
+                        </div>
+                    </div>
                     <div class="text-[14px] font-bold text-left truncate">{{ employee.employeeName }}</div>
                     <div class="subject text-[14px] font-normal truncate">{{ employee.departmentName }}</div>
                 </div>
