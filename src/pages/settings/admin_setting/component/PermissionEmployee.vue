@@ -1,15 +1,11 @@
 <script>
-import ElementsSelect from "@/components/elements/ElementsSelect.vue";
-import { CssClassUtil } from "@/plugins/app-util";
 
 export default {
     props: {
         selectedGroup : {
             type : Object,
             default: () =>({
-                    roleGroupSeq: "",
-                    companySeq: "",
-                    roleGroupDefaultType: "SUPER_ADMIN",
+                    cmsRoleGroupSeq: "",
                     roleGroupName: "",
                     countEmployee:0
                 })
@@ -17,135 +13,102 @@ export default {
     },
     watch: {
         selectedGroup(newGroup, oldGroup){
-        this.getPermissionEmployeeList(newGroup.roleGroupSeq);
+            const self = this;
+            self.getPermissionEmployeeList(newGroup.cmsRoleGroupSeq);
         }
     },
     emits: ['afterSave'],
     components: {
-        ElementsSelect,
     },
     mounted() {
-        this.getDepartmentOptions();
     },
     data() {
         return {
-            permissionEmployeeList : [],
             nameForSearch:'',
-            serarchTimer: null,
-            ////////////////////////////////////////////////////
-            showEditEmployeeWindow: false,
-            selectedDepartment: "ALL",
-            departmentOptions: [
-                {
-                text: "ALL",
-                value: "ALL",
-                },
-            ],
+            permissionEmployeeList : [],
             searchEmployeeList: [],
+
+            bindEditPopup : {
+                isOpen : false,
+                selectedGroup : []
+            }
         };
     },
     methods: {
         clickShowEditEmployeeBtn(){
-        this.showEditEmployeeWindow=true;
-        this.selectedDepartment ='ALL';
-        this.nameForSearch = '';
-
-        this.getEmployeeListBySearch();
-        },
-        getDepartmentOptions(){
             const self = this;
+            self.nameForSearch = '';
 
-            const url = self.$api('uri', 'get-department')
-            const json_query = JSON.stringify({
-                showRootNode: null
-            });
-            self.$axios.get(url, { params : { json_query }}).then(res => {
-                const optionList = res.data.data.list.map( dep => ({
-                text : dep.departmentName,
-                value : dep.departmentSeq
-                }))
-                self.departmentOptions = self.departmentOptions.concat(optionList);
-            });
+            self.getEmployeeListBySearch();
+            self.bindEditPopup.selectedGroup = [ ...self.permissionEmployeeList ];
+            self.bindEditPopup.isOpen=true;
         },
         changeNameForSearch(){
             const self = this;
-            clearTimeout(self.serarchTimer);
-            self.serarchTimer = setTimeout(() => {
+            let searchTimer;
+
+            clearTimeout(searchTimer);
+            searchTimer = setTimeout(() => {
                 self.getEmployeeListBySearch();
             }, 1000);
         },
         getEmployeeListBySearch(){
             const self = this;
-            const url = self.$api("uri", "get-employee");
-            let json_query = {
-                limit : 50,
-                offset : 0,
-                departmentSeq : self.selectedDepartment=='ALL'? '' : self.selectedDepartment,
-                employeeStatus :'ACTIVE',
-                employeeName : self.nameForSearch,
-                jobTitleSeq : null,
-            }
-            json_query = JSON.stringify(json_query);
-            self.$axios.get(url, { params : { json_query } }).then(res => {
-                const searchList = res.data.data.list ||[];
-                const checkedList = self.permissionEmployeeList || [];
-                self.searchEmployeeList = searchList.map(e => {
-                if(checkedList.find(m => m.employeeSeq == e.employeeSeq))
-                    return {...e, checked:true }
-                return {...e}
-                });
-            });
+            const url = self.$api("uri", "get-hr-admin-list");
+            const json_query = { searchText : self.nameForSearch };
+
+            const params = new URLSearchParams();
+            params.append( "json_query", JSON.stringify( json_query ) );
+
+            self.$axios.get( url, { params } )
+                        .then( res => {
+                            self.searchEmployeeList = res.data.data.list;
+                        })
+                        .catch( err =>{
+                            alert(err );
+                        })
         },
-        getPermissionEmployeeList(roleGroupSeq){
+        getPermissionEmployeeList(cmsRoleGroupSeq){
             const self = this;
-            const url = self.$api("uri", "get-admin-role-group-employee-bind-list")
-                            .replace('{roleGroupSeq}', roleGroupSeq);
+            const url = self.$api("uri", "get-role-group-employee-bind-list")
+                            .replace('{roleGroupSeq}', cmsRoleGroupSeq);
 
             self.$axios.get(url).then(res => {
-                self.permissionEmployeeList = res.data.data.roleGroupEmployeeList || [];
+                self.permissionEmployeeList = res.data.data.list;
             });
+
         },
-        addPemissionEmployee(addEmployee){
-            if(addEmployee.checked) return;
-            this.permissionEmployeeList.push({...addEmployee});
-            const searchEmployeeList = this.searchEmployeeList;
-            const idx = searchEmployeeList.findIndex(e=> e===addEmployee);
-            searchEmployeeList.splice(idx, 1, {...addEmployee, checked:true});
+        addPemissionEmployee( selectedAdmin ){
+            const self = this;
+            if (self.bindEditPopup.selectedGroup.find( emp => emp.hrAdminSeq == selectedAdmin.hrAdminSeq )) {
+                self.bindEditPopup.selectedGroup = self.bindEditPopup.selectedGroup
+                                                        .filter(item => item.hrAdminSeq !== selectedAdmin.hrAdminSeq);
+            } else {
+                self.bindEditPopup.selectedGroup.push(selectedAdmin);
+            }
         },
-        deletePermissionEmployee(deleteEmployee) {
+        deletePermissionEmployee( deleteEmployee ) {
+            const self = this;
             if(deleteEmployee==='ALL'){
-                this.permissionEmployeeList = [];
-                this.searchEmployeeList = this.searchEmployeeList.map(e=>{ return {...e, checked:false} });
+                self.bindEditPopup.selectedGroup = [];
                 return;
             }
-            let idx = this.permissionEmployeeList.indexOf(deleteEmployee);
-            this.permissionEmployeeList.splice(idx, 1);
+            self.bindEditPopup.selectedGroup = self.bindEditPopup.selectedGroup
+                                                        .filter(item => item.hrAdminSeq !== deleteEmployee.hrAdminSeq);
 
-            const searchEmployeeList = this.searchEmployeeList;
-            idx = searchEmployeeList.findIndex(e => e.employeeSeq ==deleteEmployee.employeeSeq);
-            searchEmployeeList.splice(idx, 1, {...searchEmployeeList[idx], checked:false});
-        },
-        getColor(seq){
-            return CssClassUtil.getProfileBackColor(seq);
         },
         savePermissionEmployee(){
             const self = this;
 
-            if(self.selectedGroup.roleGroupDefaultType === 'SUPER_ADMIN' && self.permissionEmployeeList.length === 0){
-                alert("Super Administoreator group must has one employee or more.");
-                return;
-            }
-            const roleGroupSeq = self.selectedGroup.roleGroupSeq;
-            const newPermissionEmployeeSeqs = self.permissionEmployeeList.map(e=>e.employeeSeq);
-            const url = self.$api('uri', 'put-admin-role-group-employee-bind').replace('{roleGroupSeq}', roleGroupSeq);
+            const cmsRoleGroupSeq = self.selectedGroup.cmsRoleGroupSeq;
+            const adminSeqList = self.bindEditPopup.selectedGroup.map( emp => emp.hrAdminSeq );
 
-            self.$axios.put(url, { employeeSeqList : newPermissionEmployeeSeqs })
+            const url = self.$api('uri', 'put-role-group-employee-bind').replace('{roleGroupSeq}', cmsRoleGroupSeq);
+
+            self.$axios.put(url, { adminSeqList })
                         .then(res =>{
-                                self.getPermissionEmployeeList(roleGroupSeq);
-                                self.showEditEmployeeWindow = false;
-                                if(self.selectedGroup.roleGroupDefaultType !== 'NORMAL') {
-                                self.$emit('afterSave');
-                            }
+                            self.getPermissionEmployeeList(cmsRoleGroupSeq);
+                            self.bindEditPopup.isOpen = false;
                         })
                         .catch( error => {
                             alert('Fail to save. Please try again.');
@@ -159,7 +122,7 @@ export default {
     <div class="mt-3.5 border-gray-300 border-[1px] rounded-[10px] min-h-300">
         <div class="flex justify-between p-[12px] border-b-[1px]">
         <h3 class="font-bold text-[18px]">
-            {{ roleGroupName }} List
+            {{ selectedGroup.roleGroupName }} List
         </h3>
         <button @click="clickShowEditEmployeeBtn" class="rounded-lg w-20 h-8 leading-[33px] bg-[#4361EE] text-[#fff] text-xs">
             Edit
@@ -168,45 +131,13 @@ export default {
             <div class="p-[12px] bg-[#FDFDFD] rounded-[10px] grid grid-flow-row-dense grid-cols-3">
             <template v-for="employee in permissionEmployeeList" :key="employee.employeeSeq">
                 <div class="grid grid-flow-row-dense grid-cols-3 m-2">
-                <div :class="[getColor(employee.employeeSeq)]"
-                    class="capital flex items-center justify-center w-[54px] h-[54px] rounded-[40px] text-white text-[26px]">
-                    {{ employee.employeeName.substring(0, 1).toUpperCase()}}
+                <div
+                    class="bg-black capital flex items-center justify-center w-[54px] h-[54px] rounded-[40px] text-white text-[26px]">
+                    {{ employee.hrAdminName.substring(0, 1).toUpperCase()}}
                 </div>
                 <div class="col-span-2">
-                    <div style="padding-right: 10px;" class="w-20">
-                        <div v-if="employee.employeeStatus=='ON_LEAVE'"
-                            class="border rounded-full border-blue-400 text-blue-400 text-center text-xs"
-                        >
-                            Inactive
-                        </div>
-                        <div v-else-if="employee.employeeStatus=='RESIGNED'"
-                            class=" border rounded-full border-gray-400 text-gray-400 text-center text-xs w-[90px]"
-                        >
-                            Resigned
-                        </div>
-                        <div v-else-if="employee.employeeStatus=='EXTENSION_REQUIRED'"
-                            class=" border rounded-full border-yellow-400 text-yellow-400 text-center text-xs w-[90px]"
-                        >
-                            Extension <br> Required
-                        </div>
-                        <div v-else-if="employee.employeeStatus=='EXTENSION_PAST_DUE'"
-                            class=" border rounded-full border-red-400 text-red-400 text-center text-xs w-[90px]"
-                        >
-                            Contract Info <br> Required
-                        </div>
-                        <div v-else-if="employee.employeeStatus=='CONTRACT_INFO_REQUIRED'"
-                            class=" border rounded-full border-red-400 text-red-400 text-center text-xs w-[90px]"
-                        >
-                            Extension <br>Past Due
-                        </div>
-                        <div v-else
-                            class=" border rounded-full border-emerald-400 text-emerald-400 text-center text-xs"
-                        >
-                            Active
-                        </div>
-                    </div>
-                    <div class="text-[14px] font-bold text-left truncate">{{ employee.employeeName }}</div>
-                    <div class="subject text-[14px] font-normal truncate">{{ employee.departmentName }}</div>
+                    <div class="text-[14px] font-bold text-left truncate">{{ employee.hrAdminName }}</div>
+                    <div class="subject text-[14px] font-normal truncate">{{ employee.loginId }}</div>
                 </div>
                 </div>
             </template>
@@ -214,23 +145,16 @@ export default {
     </div>
     <Teleport to="body">
         <AppPopup
-            v-model="showEditEmployeeWindow"
-            :name="`Members of ${selectedGroupName}`"
+            v-model="bindEditPopup.isOpen"
+            :name="`Members of ${selectedGroup.roleGroupName}`"
             buttonText="Save"
-            @afterClose="getPermissionEmployeeList(selectedGroup.roleGroupSeq||'')"
+            @afterClose="getPermissionEmployeeList( selectedGroup.cmsRoleGroupSeq || '' )"
             @buttonEvent="savePermissionEmployee"
         >
             <div>
                 <div class="flex w-[963px] min-h-[500px]">
                     <div class="w-[379px] border-gray-300 border-r-[1px]">
                         <div class="p-[24px]">
-                            <ElementsSelect
-                                v-model="selectedDepartment"
-                                :options="departmentOptions"
-                                :full="true"
-                                @change="getEmployeeListBySearch"
-                                class="mt-[16px] h-[48px] rounded"
-                            />
                             <input
                                 type="text"
                                 placeholder="Search by Name"
@@ -241,30 +165,32 @@ export default {
                         </div>
 
                         <div class="title text-[#9CA2AB] font-medium text-[14px] border-gray-300 px-[28px] mb-2">
-                            Searched Employees
+                            All Accounts
                         </div>
                         <div>
                             <ul>
                                 <li v-if="searchEmployeeList.length===0"
-                                    class="flex items-center py-[15px] px-[31px] border-gray-300 border-y-[1px]"
+                                    class="flex flex-col items-center py-[15px] px-[31px] "
                                 >
                                     <div class="ml-[10px] text-gray-500 text-15">
                                         No Data
                                     </div>
                                 </li>
-                                <template v-for="(employee, index) in searchEmployeeList" :key="employee.employeeSeq">
+                                <template v-for="(admin, index) in searchEmployeeList" :key="admin.hrAdminSeq">
                                     <li class="grid grid-rows-1 grid-cols-6 py-[8px] px-[31px] border-gray-300"
                                         :class="[index==0? 'border-y-[1px]':'border-b-[1px]']"
-                                        @click="addPemissionEmployee(employee)">
-                                        <div :class="[getColor(employee.employeeSeq)]"
-                                            class="capital flex items-center justify-center w-[54px] h-[54px] rounded-[40px] text-white text-[26px]">
-                                            {{employee.employeeName.substring(0, 1).toUpperCase()}}
+                                        @click="addPemissionEmployee(admin)"
+                                    >
+                                        <div
+                                            class="bg-slate-600 capital flex items-center justify-center w-[54px] h-[54px] rounded-[40px] text-white text-[26px]">
+                                            {{admin.hrAdminName.substring(0, 1).toUpperCase()}}
                                         </div>
                                         <div class="ml-[10px] col-span-4">
-                                            <div class="name text-[14px] font-bold">{{employee.employeeName}}</div>
-                                            <div class="subject text-[14px] font-normal">{{employee.departmentName}}</div>
+                                            <div class="name text-[14px] font-bold">{{admin.hrAdminName}}</div>
+                                            <div class="subject text-[14px] font-normal">{{admin.loginId}}</div>
                                         </div>
-                                        <div v-if="employee.checked" class="text-[#4361EE] text-center">
+
+                                        <div v-if="bindEditPopup.selectedGroup.find( emp => emp.hrAdminSeq == admin.hrAdminSeq )" class="text-[#4361EE] text-center">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-12">
                                                 <path
                                                     stroke-linecap="round"
@@ -280,7 +206,7 @@ export default {
                     </div>
                     <div class="employees_container mt-[15px] p-[24px]">
                         <div class="p-[24px] w-[528px] h-[289px] border-gray-300 rounded-[10px] border-[1px] text-center flex-col items-center"
-                            v-if="permissionEmployeeList.length===0">
+                            v-if="bindEditPopup.selectedGroup.length===0">
                             <p class="text-center text-[#A8AAAC] text-[12px] mt-[90px] ml-[230px]">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-center">
                                     <path
@@ -296,19 +222,19 @@ export default {
                         </div>
                         <div v-else class="p-[24px] mt-[20px] w-[528px] h-289 border-gray-300 rounded-[10px] border-[1px] text-center flex-col items-center">
                             <div class="flex justify-between">
-                                <p class="text-[12px]">Checked ({{permissionEmployeeList.length}})</p>
+                                <p class="text-[12px]">Checked ({{bindEditPopup.selectedGroup.length}})</p>
                                 <p class="text-[#F40009] text-[12px]" @click="deletePermissionEmployee('ALL')">Delete All</p>
                             </div>
                             <div class="grid grid-flow-row-dense grid-cols-1 mt-[26px]">
-                                <template v-for="pE in permissionEmployeeList" :key="pE.employeeSeq">
+                                <template v-for="pE in bindEditPopup.selectedGroup" :key="pE.hrAdminSeq">
                                     <div class="grid grid-rows-1 grid-cols-5 mb-3">
-                                        <div :class="[getColor(pE.employeeSeq)]"
-                                            class="capital flex items-center justify-center w-[54px] h-[54px] rounded-[40px] text-white text-[26px] ml-2">
-                                            {{pE.employeeName.substring(0, 1).toUpperCase()}}
+                                        <div
+                                            class="bg-cyan-700 capital flex items-center justify-center w-[54px] h-[54px] rounded-[40px] text-white text-[26px] ml-2">
+                                            {{pE.hrAdminName.substring(0, 1).toUpperCase()}}
                                         </div>
                                         <div class="ml-[10px] col-span-3">
-                                            <div class="text-[14px] font-bold text-left">{{pE.employeeName}}</div>
-                                            <div class="subject text-[14px] font-normal text-left pl-2 pt-1">{{pE.departmentName}}</div>
+                                            <div class="text-[14px] font-bold text-left">{{pE.hrAdminName}}</div>
+                                            <div class="subject text-[14px] font-normal text-left pl-2 pt-1">{{pE.loginId}}</div>
                                         </div>
                                         <div class="flex items-center justify-center ml-8">
                                             <p class="text-[#8F969] text-[12px]"

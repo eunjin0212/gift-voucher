@@ -111,9 +111,13 @@ export default{
     methods : {
         getAdminList(){
             const self = this;
+            const json_query = { searchText : null };
+
+            const params = new URLSearchParams();
+            params.append( "json_query", JSON.stringify( json_query ) );
 
             const url = self.$api("uri", "get-hr-admin-list");
-            self.$axios.get( url )
+            self.$axios.get( url, { params } )
                         .then( res => {
                             self.adminList = res.data.data.list;
                         })
