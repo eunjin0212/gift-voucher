@@ -33,7 +33,7 @@ const initMenuCodes = [
         checked: null,
         basicCode: 'REPORT',
         viewCode: '',
-        editCode: 'REPORT_EDIT',
+        editCode: 'FLEXBEN_REPORT_EDIT',
     },
     {
         permissionName: 'FlexBen Summary',
