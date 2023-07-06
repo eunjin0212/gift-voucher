@@ -7,154 +7,92 @@ export default {
             type : Object,
             default: function(){
                     return {
-                        roleGroupSeq: "",
-                        companySeq: "",
-                        roleGroupDefaultType: "SUPER_ADMIN",
+                        cmsRoleGroupSeq: "",
                         roleGroupName: "",
                         countEmployee:0
                     }
                 }
         }
     },
-    // watch: {
-    //     selectedGroup(newGroup, oldGroup){
-    //         this.getPermissionCodeList(this.allRenderPermissions);
-    //     }
-    // },
+    watch: {
+        selectedGroup(newGroup, oldGroup){
+            const self = this;
+            self.getPermissionCodeList(self.reRenderFunctionAccessPermissions);
+        }
+    },
     emits: [],
     components: {},
     mounted() {
-        const self = this;
-        self.allRenderPermissions();
     },
     data() {
         return {
-            apiLevelOptions: [
-                {
-                    text: "All",
-                    value: "ALL",
-                },
-                {
-                    text: "My Team & Subordinates",
-                    value: "SUB_DEPT",
-                },
-                {
-                    text: "My Team Only",
-                    value: "ONLY_DEPT",
-                },
-            ],
-            personalCodes:[],
             menuCodes:[],
-            ///////////////////////////////////////
             hasPermissionCodeList:[],
         };
     },
     methods: {
         getPermissionCodeList(next){
             const self = this;
-            const roleGroupSeq = self.selectedGroup.roleGroupSeq ||'';
+            const roleGroupSeq = self.selectedGroup.cmsRoleGroupSeq ||'';
 
-            const url = self.$api('uri', 'get-admin-access-permission-group-bind-list')
+            const url = self.$api('uri', 'get-permission-role-group-bind-list')
                             .replace('{roleGroupSeq}', roleGroupSeq)
             self.$axios.get(url).then(res => {
-                self.hasPermissionCodeList= res.data.data.bindCodeList;
+                self.hasPermissionCodeList = res.data.data.list;
                 next && next();
             });
         },
-        allRenderPermissions(){
-            const self = this;
-            self.reRenderFunctionAccessPermissions();
-        },
         reRenderFunctionAccessPermissions(){
+            const self = this;
             const menuCodes = getInitMenuCodes();
 
-            this.hasPermissionCodeList.forEach(permission=>{
+            this.hasPermissionCodeList.forEach( permission=>{
                 if(permission.hasAccess === 'N') return;
-                if(permission.accessPermissionClassif !== 'MENU') return;
-
                 const code = permission.accessPermissionCode; // DASHBOARD_VIEW, DASHBOARD_EDIT, etc ..
 
-                let renderKey;
                 const index = menuCodes.findIndex(p=>{
-                    renderKey = Object.keys(p).find(key=>p[key] === code);
-                    return !!renderKey;
+                    let renderKey = Object.keys(p).find(key=>p[key] === code);
+                    return !! renderKey;
                 })
 
-                if(index <0 ) return;
+                menuCodes[index].checked = code;
 
-                if(renderKey === 'apiCode') {
-                    const level = permission.accessApiPermissionLevel;
-                    menuCodes[index] = {...menuCodes[index], apiLevelValue:level}
-                }
-                else if(renderKey === 'viewCode'){
-                    menuCodes[index] = {...menuCodes[index], checked:'VIEW'}
-                }
-                else if(renderKey === 'editCode'){
-                    menuCodes[index] = {...menuCodes[index], checked:'EDIT'}
-                }
             })// end hasPermissionCodeList
 
-            this.menuCodes = menuCodes;
+            self.menuCodes = menuCodes;
         },
-        saveAccessPermission(selectedClassifName){
+        saveAccessPermission(){
             const self = this;
 
             const codeFormList = [];
-            const hasPermissionCodeList = this.hasPermissionCodeList;
+            const hasPermissionCodeList = self.hasPermissionCodeList;
 
-            hasPermissionCodeList.forEach(p => {
-                if(p.accessPermissionClassif === selectedClassifName) return;
-                if(p.hasAccess === 'N') return;
-                if(p.accessPermissionCode === 'SETTING_EDIT') return;
+            self.menuCodes.forEach(code=>{
+                if( ! code.checked ) return;
+
+                const { cmsAccessPermissionMenuRuleSeq
+                        , accessPermissionType
+                        , accessPermissionCode } = hasPermissionCodeList.find( p=>p.accessPermissionCode===code.checked);
+
                 codeFormList.push({
-                    accessPermissionRuleSeq: p.accessPermissionRuleSeq,
-                    accessPermissionType: p.accessPermissionType,
-                    accessPermissionCode: p.accessPermissionCode,
-                    accessApiPermissionLevel : p.accessApiPermissionLevel
+                    cmsAccessPermissionMenuRuleSeq
+                    , accessPermissionCode
+                    , accessPermissionType
                 })
-            })
 
-            const selectedCodes = selectedClassifName === 'MENU'? self.menuCodes : self.personalCodes;
-            selectedCodes.forEach(code=>{
-                if(code.checked === 'NONE') return;
-                // skip to save sub menu when parent is not edit
-                if(code.parentBasicCode && selectedCodes.find(e => e.basicCode==code.parentBasicCode).checked !== 'EDIT') return;
+            }) // end selectedCodes for
 
-                if(code.checked === 'VIEW'){
-                    const viewCode = code.viewCode;
-                    const foundPermissionCodeSet = hasPermissionCodeList.find(p=>p.accessPermissionCode===viewCode);
-                    codeFormList.push({
-                        accessPermissionRuleSeq: foundPermissionCodeSet.accessPermissionRuleSeq,
-                        accessPermissionType: foundPermissionCodeSet.accessPermissionType,
-                        accessPermissionCode: foundPermissionCodeSet.accessPermissionCode,
-                        accessApiPermissionLevel : foundPermissionCodeSet.accessApiPermissionLevel
-                    })
-                }
-                if(code.checked === 'EDIT'){
-                    const editCode = code.editCode;
-                    const foundPermissionCodeSet = hasPermissionCodeList.find(p=>p.accessPermissionCode===editCode);
-                    codeFormList.push({
-                        accessPermissionRuleSeq: foundPermissionCodeSet.accessPermissionRuleSeq,
-                        accessPermissionType: foundPermissionCodeSet.accessPermissionType,
-                        accessPermissionCode: foundPermissionCodeSet.accessPermissionCode,
-                        accessApiPermissionLevel : foundPermissionCodeSet.accessApiPermissionLevel
-                    })
-                }
-
-        }) // end selectedCodes for
-
-        const groupSeq = self.selectedGroup.roleGroupSeq;
-        const url = self.$api('uri', 'put-admin-access-permission-group-bind').replace('{roleGroupSeq}', groupSeq);
-        self.$axios.put(url, {codeFormList})
-            .then(res => {
-                const next = selectedClassifName === 'MENU'
-                    ? self.reRenderFunctionAccessPermissions
-                    : self.reRenderEmployeeAccessPermission ;
-                self.getPermissionCodeList(next)
-            })
-            .catch((err) => {
-                alert('Fail to save. Please try again.');
-            });
+            const groupSeq = self.selectedGroup.cmsRoleGroupSeq;
+            const url = self.$api('uri', 'put-access-permission-role-group-bind')
+                            .replace('{roleGroupSeq}', groupSeq);
+            self.$axios.put(url, {codeFormList})
+                .then(res => {
+                    alert('Success to save');
+                    self.getPermissionCodeList(self.reRenderFunctionAccessPermissions)
+                })
+                .catch((err) => {
+                    alert('Fail to save. Please try again.');
+                });
         },
     },
 };
@@ -172,7 +110,6 @@ export default {
                 <template v-for="(code, idx) in menuCodes" :key="code.permissionName">
                     <div class="border-b flex items-center h-13 text-xs font-medium p-[12px] "
                         :class="{'rounded-[10px]':idx === menuCodes.length-1, 'bg-gray-50':code.parentBasicCode}"
-                        v-if="!code.parentBasicCode||menuCodes.find(e => e.basicCode==code.parentBasicCode).checked == 'EDIT'"
                     >
                         <div class="w-[20%] text-left">{{code.permissionName}}</div>
                         <div class="flex-1 text-left">
