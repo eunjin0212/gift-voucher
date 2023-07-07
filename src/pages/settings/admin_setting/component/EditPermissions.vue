@@ -9,6 +9,7 @@ export default {
                     return {
                         cmsRoleGroupSeq: "",
                         roleGroupName: "",
+                        roleGroupDefaultType : "",
                         countEmployee:0
                     }
                 }
@@ -101,15 +102,21 @@ export default {
 <template>
     <div>
         <div class="mt-3.5 border-gray-300 border-[1px] rounded-[10px]">
-            <div class="flex justify-between p-[12px] border-b-[1px]">
-                <h3 class="font-bold text-[18px]">Permissions Per Menu</h3>
-                <button
-                    v-if="$appUtil.checkPermission('ADMIN_EDIT')"
-                    @click="saveAccessPermission()"
-                    class="rounded-lg w-[86px] h-[33px] leading-[33px] bg-[#4361EE] text-[#fff] text-[12px]"
-                >
-                    Save
-                </button>
+            <div class="p-[12px] border-b-[1px]">
+                <div class="flex justify-between ">
+                    <h3 class="font-bold text-[18px]">Permissions Per Menu</h3>
+                    <button
+                        v-if="$appUtil.checkPermission('ADMIN_EDIT')"
+                        @click="saveAccessPermission()"
+                        class="rounded-lg w-[86px] h-[33px] leading-[33px] bg-[#4361EE] text-[#fff] text-[12px]"
+                    >
+                        Save
+                    </button>
+                </div>
+                <div class="text-sm italic text-gray-600 mt-2" v-if="selectedGroup.roleGroupDefaultType === 'SUPER_ADMIN'">
+                    * Caution: As you selected Super-Admin-Group, you are not allowed to select the N/A option for each menu.
+                    <br/>Please choose either the 'View' or 'Edit' option to proceed
+                </div>
             </div>
             <div class="bg-[#FDFDFD] rounded-[10px]">
                 <template v-for="(code, idx) in menuCodes" :key="code.permissionName">
@@ -121,7 +128,7 @@ export default {
                         <div class="flex-1 text-left">
                             <label v-if="!code.disableCode||code.disableCode!='NONE'">
                                 <input
-                                    :disabled="!$appUtil.checkPermission('ADMIN_EDIT')"
+                                    :disabled="!$appUtil.checkPermission('ADMIN_EDIT') || selectedGroup.roleGroupDefaultType =='SUPER_ADMIN'"
                                     :id="`${code.basicCode}-none`" type="radio" :value="null" :name="code.basicCode" v-model="code.checked"
                                     class="checked mr-2 w-6 h-6 text-[#4361EE] bg-gray-100 border-gray-300 focus:ring-white"
                                 />

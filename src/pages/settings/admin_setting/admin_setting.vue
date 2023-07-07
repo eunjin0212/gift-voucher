@@ -12,6 +12,7 @@
             <PermissionGroup
                 :roleGroupList="groupList"
                 :selectedGroup="selectedGroup"
+                :superAdminGroup="superAdminGroup"
                 @selectGroup="(group)=>selectedGroup=group"
                 @openEditGroupWindow="openEditGroupWindow"
                 @clickDeleteBtn="deleteGroup"
@@ -77,9 +78,11 @@ export default{
             rateType : "single",
             ////////////////////////////////////////
             groupList : [],
+            superAdminGroup : [],
             selectedGroup : {
                 cmsRoleGroupSeq: "",
                 roleGroupName: "",
+                roleGroupDefaultType : "",
                 countEmployee:0
             }
         }
@@ -107,7 +110,8 @@ export default{
             const url = self.$api("uri", "get-permission-role-group-list")
             self.$axios.get(url)
                 .then((res) => {
-                    self.groupList = res.data.data.list;
+                    self.groupList = res.data.data.list.filter( group => group.roleGroupDefaultType =='NORMAL');
+                    self.superAdminGroup = res.data.data.list.filter( group =>  group.roleGroupDefaultType == 'SUPER_ADMIN');
                     self.selectedGroup = self.groupList[0];
                 })
                 .catch((err) => {

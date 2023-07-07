@@ -7,6 +7,7 @@ export default {
             default: () =>({
                     cmsRoleGroupSeq: "",
                     roleGroupName: "",
+                    roleGroupDefaultType : "",
                     countEmployee:0
                 })
         }
@@ -89,6 +90,7 @@ export default {
         },
         deletePermissionEmployee( deleteEmployee ) {
             const self = this;
+
             if(deleteEmployee==='ALL'){
                 self.bindEditPopup.selectedGroup = [];
                 return;
@@ -100,8 +102,13 @@ export default {
         savePermissionEmployee(){
             const self = this;
 
-            const cmsRoleGroupSeq = self.selectedGroup.cmsRoleGroupSeq;
+            const { cmsRoleGroupSeq, roleGroupDefaultType } = self.selectedGroup;
             const adminSeqList = self.bindEditPopup.selectedGroup.map( emp => emp.hrAdminSeq );
+
+            if( roleGroupDefaultType == 'SUPER_ADMIN' && adminSeqList.length < 1 ){
+                alert("This is Default Primary group. It should have more than 1 admin.")
+                return;
+            }
 
             const url = self.$api('uri', 'put-role-group-employee-bind').replace('{roleGroupSeq}', cmsRoleGroupSeq);
 
