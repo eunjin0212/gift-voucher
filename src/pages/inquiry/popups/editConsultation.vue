@@ -31,6 +31,7 @@
                                                     type="text" name="consultation-emp" id="consultation-emp" autocomplete="consultation-emp" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                                     v-model="inquiry.consultantEmpName"
                                                     :required="true"
+                                                    :disabled="!$appUtil.checkPermission('ACTIVATE_PROCESS_EDIT')"
                                                 />
                                             </div>
 
@@ -38,6 +39,7 @@
                                                 <label class="block text-sm font-medium text-gray-700">Consultation Date</label>
                                                 <ElementsDate
                                                     v-model="inquiry.consultationDatetime"
+                                                    :disabled="!$appUtil.checkPermission('ACTIVATE_PROCESS_EDIT')"
                                                 />
                                             </div>
 
@@ -47,6 +49,7 @@
                                                     type="text" name="company-name" id="company-name" autocomplete="company-name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                                     v-model="inquiry.inquiryCompanyName"
                                                     :required="true"
+                                                    :disabled="!$appUtil.checkPermission('ACTIVATE_PROCESS_EDIT')"
                                                 />
                                             </div>
 
@@ -57,6 +60,7 @@
                                                     v-model="inquiry.employmentCount"
                                                     :required="true"
                                                     :min="0"
+                                                    :disabled="!$appUtil.checkPermission('ACTIVATE_PROCESS_EDIT')"
                                                 />
                                             </div>
 
@@ -66,6 +70,7 @@
                                                     type="text" name="pic-name" id="pic-name" autocomplete="pic-name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                                     v-model="inquiry.picName"
                                                     :required="true"
+                                                    :disabled="!$appUtil.checkPermission('ACTIVATE_PROCESS_EDIT')"
                                                 />
                                             </div>
 
@@ -75,6 +80,7 @@
                                                     type="text" name="Department" id="Department" autocomplete="Department" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                                     v-model="inquiry.picDepartmentName"
                                                     :required="true"
+                                                    :disabled="!$appUtil.checkPermission('ACTIVATE_PROCESS_EDIT')"
                                                 />
                                             </div>
 
@@ -84,6 +90,7 @@
                                                     type="email" name="email-address" id="email-address" autocomplete="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                                     v-model="inquiry.picEmail"
                                                     :required="true"
+                                                    :disabled="!$appUtil.checkPermission('ACTIVATE_PROCESS_EDIT')"
                                                 />
                                             </div>
 
@@ -100,6 +107,7 @@
                                                         type="tel" name="pic-phone-number" id="pic-phone-number" autocomplete="pic-phone-number"
                                                         class="mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                                         v-model="inquiry.picPhoneNumber"
+                                                        :disabled="!$appUtil.checkPermission('ACTIVATE_PROCESS_EDIT')"
                                                         :required="true"
                                                     />
                                                 </div>
@@ -110,6 +118,7 @@
                                                 <textarea
                                                     name="inquiryContent" id="inquiryContent" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                                     v-model="inquiry.inquiryRequestContent"
+                                                    :disabled="!$appUtil.checkPermission('ACTIVATE_PROCESS_EDIT')"
                                                 />
                                             </div>
 
@@ -123,6 +132,7 @@
                 <div class="w-full h-px bg-gray-200"></div>
                 <div
                     class="px-4 py-6 flex justify-end"
+                    v-if="$appUtil.checkPermission('ACTIVATE_PROCESS_EDIT')"
                 >
                     <ElementsButton
                         text="Cancel"

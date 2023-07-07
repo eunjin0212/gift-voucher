@@ -69,6 +69,7 @@ export default {
 
             self.menuCodes.forEach(code=>{
                 if( ! code.checked ) return;
+                if( code.parentBasicCode && self.menuCodes.find( e => e.basicCode==code.parentBasicCode).checked == null ) return;
 
                 const { cmsAccessPermissionMenuRuleSeq
                         , accessPermissionType
@@ -102,7 +103,11 @@ export default {
         <div class="mt-3.5 border-gray-300 border-[1px] rounded-[10px]">
             <div class="flex justify-between p-[12px] border-b-[1px]">
                 <h3 class="font-bold text-[18px]">Permissions Per Menu</h3>
-                <button @click="saveAccessPermission()" class="rounded-lg w-[86px] h-[33px] leading-[33px] bg-[#4361EE] text-[#fff] text-[12px]">
+                <button
+                    v-if="$appUtil.checkPermission('ADMIN_EDIT')"
+                    @click="saveAccessPermission()"
+                    class="rounded-lg w-[86px] h-[33px] leading-[33px] bg-[#4361EE] text-[#fff] text-[12px]"
+                >
                     Save
                 </button>
             </div>
@@ -110,11 +115,13 @@ export default {
                 <template v-for="(code, idx) in menuCodes" :key="code.permissionName">
                     <div class="border-b flex items-center h-13 text-xs font-medium p-[12px] "
                         :class="{'rounded-[10px]':idx === menuCodes.length-1, 'bg-gray-50':code.parentBasicCode}"
+                        v-if="!code.parentBasicCode||menuCodes.find(e => e.basicCode==code.parentBasicCode).checked !== null"
                     >
                         <div class="w-[20%] text-left">{{code.permissionName}}</div>
                         <div class="flex-1 text-left">
                             <label v-if="!code.disableCode||code.disableCode!='NONE'">
                                 <input
+                                    :disabled="!$appUtil.checkPermission('ADMIN_EDIT')"
                                     :id="`${code.basicCode}-none`" type="radio" :value="null" :name="code.basicCode" v-model="code.checked"
                                     class="checked mr-2 w-6 h-6 text-[#4361EE] bg-gray-100 border-gray-300 focus:ring-white"
                                 />
@@ -124,6 +131,7 @@ export default {
                         <div class="flex-1 text-left">
                             <label v-if="!code.disableCode||code.disableCode!='VIEW'">
                                 <input
+                                    :disabled="!$appUtil.checkPermission('ADMIN_EDIT')"
                                     :id="code.viewCode" type="radio" :value="code.viewCode" :name="code.basicCode" v-model="code.checked"
                                     class="mr-2 w-6 h-6 text-[#4361EE] bg-gray-100 border-gray-300 focus:ring-white"
                                 />
@@ -133,6 +141,7 @@ export default {
                         <div class="flex-1 text-left">
                             <label v-if="!code.disableCode||code.disableCode!='EDIT'">
                                 <input
+                                    :disabled="!$appUtil.checkPermission('ADMIN_EDIT')"
                                     :id="code.editCode" type="radio" :value="code.editCode" :name="code.basicCode" v-model="code.checked"
                                     class="mr-2 w-6 h-6 text-[#4361EE] bg-gray-100 border-gray-300 focus:ring-white"
                                 />

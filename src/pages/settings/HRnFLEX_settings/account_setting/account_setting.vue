@@ -6,6 +6,7 @@
                 :text="'+ Add'"
                 :width32="true"
                 @click-event="openAddAccount()"
+                v-if="$appUtil.checkPermission('ACCOUNT_EDIT')"
             />
         </div>
         <div class="">
@@ -30,7 +31,9 @@
                             <td class="whitespace-normal px-3 py-4 text-sm text-center text-gray-900"> {{  admin.accountMemo }} </td>
                             <td class="whitespace-nowrap  text-sm text-gray-900 pr-3">
 
-                                <Menu as="div" class="relative inline-block text-left">
+                                <Menu as="div" class="relative inline-block text-left"
+                                    v-if="$appUtil.checkPermission('ACCOUNT_EDIT')"
+                                >
                                     <div>
                                         <MenuButton class="flex items-center rounded-full  text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">
                                             <span class="sr-only">Open options</span>

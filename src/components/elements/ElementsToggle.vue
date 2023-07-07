@@ -3,11 +3,12 @@
         :class="[ modelValue == falseValue ? 'bg-gray-200' : 'bg-indigo-600']"
         class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors
         duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-        >
+    >
         <input
             v-model="selected"
             :true-value="trueValue"
             :false-value="falseValue"
+            :disabled="disabled"
             type="checkbox" class="cursor-pointer opacity-0 absolute w-full h-full peer appearance-none rounded-md"
         />
         <span :class="[ modelValue == falseValue ? 'translate-x-5' : 'translate-x-0', 'pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out']">
@@ -31,6 +32,7 @@ export default{
     components : {
     },
     props : {
+        disabled : Boolean,
         modelValue : [Boolean, String],
         trueValue : [ Boolean, String ],
         falseValue : [ Boolean, String ],
@@ -44,6 +46,8 @@ export default{
             },
             set(value){
                 const self = this;
+
+                if( self.disabled ) return;
 
                 self.$emit('update:modelValue', value );
                 self.$emit('afterClick');

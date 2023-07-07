@@ -4,14 +4,16 @@
         <AppMain :headerName="'Inquiry'">
             <div class="mt-8 p-3 rounded-lg w-full max-w-7xl bg-white shadow-md shadow-gray-200 flex flex-col">
                 <div class="flex flex-col items-end gap-5 flex-wrap py-5 pr-5">
-                    <div class="flex flex-row justify-between w-full">
+                    <div class="flex flex-row w-full justify-between">
                         <ElementsButton
+                            class=""
                             :backgroundWhite="true"
                             :text="'Delete'"
                             :width28="true" :fitHeight="true"
                             @click="deleteInquiry"
+                            v-if="$appUtil.checkPermission('ACTIVATE_PROCESS_EDIT')"
                         />
-                        <div class="flex gap-2">
+                        <div class="flex gap-2 items-baseline justify-self-end">
                             <ElementsSelect
                                 :options="searchSelectOptions"
                                 :width60="true"
@@ -37,6 +39,7 @@
                                 <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900 sm:pl-6">
                                     <div class="flex h-5 items-center">
                                         <input
+                                            v-if="$appUtil.checkPermission('ACTIVATE_PROCESS_EDIT')"
                                             v-model="deleteAllInquiry"
                                             id="all" name="all" type="checkbox" class="h-4 w-4 rounded border-gray-300  focus:ring-indigo-500"
                                         />
@@ -63,6 +66,7 @@
                                         <input
                                             :value="inquiry" v-model="deleteInquiryArray"
                                             id="" name="delete" type="checkbox" class="h-4 w-4 rounded border-gray-300  focus:ring-indigo-500"
+                                            v-if="$appUtil.checkPermission('ACTIVATE_PROCESS_EDIT')"
                                         />
                                     </div>
                                 </td>
@@ -77,6 +81,7 @@
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ dateFormatChange(inquiry.consultationDatetime) }} </td>
                                 <td class="relative whitespace-nowrap py-4 pr-4 text-right text-sm font-medium sm:pr-6">
                                     <ElementsButton
+                                        v-if="$appUtil.checkPermission('ACTIVATE_PROCESS_EDIT')"
                                         :text="'Registration'"
                                         :width28="true"
                                         :borderRed="true"

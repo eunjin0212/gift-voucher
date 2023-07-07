@@ -53,7 +53,9 @@ export default {
                             >
                                 {{group.roleGroupName}}
                             </p>
-                            <Menu as="div" class="relative inline-block text-left">
+                            <Menu as="div" class="relative inline-block text-left"
+                                v-if="$appUtil.checkPermission('ADMIN_EDIT')"
+                            >
                                 <div>
                                     <MenuButton class="flex items-center rounded-full text-gray-400 hover:text-gray-600">
                                         <span class="sr-only">Open Options</span>
@@ -91,6 +93,7 @@ export default {
                 <button
                     @click="$emit('openEditGroupWindow', 'Add New Group', 'Add')"
                     class="active rounded-lg w-full p-3 bg-white border-gray-300 border-[1px] mt-[40px]"
+                    v-if="$appUtil.checkPermission('ADMIN_EDIT')"
                 >
                     + Add New Group
                 </button>

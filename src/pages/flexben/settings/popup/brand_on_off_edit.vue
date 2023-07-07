@@ -46,8 +46,10 @@
                                     <td class="whitespace-nowrap px-3 py-4 text-center text-sm text-gray-900">
                                         <div :class="[brand_off_list.includes(brand.flexbenGoodsBrandSeq) ? 'bg-gray-200' : 'bg-indigo-600', 'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2']">
                                             <input
+                                                :disabled="!$appUtil.checkPermission('FLEXBEN_SETTING_EDIT')"
                                                 :value="brand.flexbenGoodsBrandSeq" v-model="brand_off_list"
-                                                type="checkbox" class="cursor-pointer opacity-0 absolute w-full h-full peer appearance-none rounded-md"
+                                                type="checkbox"
+                                                class="cursor-pointer opacity-0 absolute w-full h-full peer appearance-none rounded-md"
                                             />
                                             <span :class="[brand_off_list.includes(brand.flexbenGoodsBrandSeq) ? 'translate-x-5' : 'translate-x-0', 'pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out']">
                                                 <span :class="[brand_off_list.includes(brand.flexbenGoodsBrandSeq) ? 'opacity-0 ease-out duration-100' : 'opacity-100 ease-in duration-200', 'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity']" aria-hidden="true">
@@ -72,7 +74,9 @@
             </div>
 
             <div class="w-full h-px bg-gray-200"></div>
-            <div class="px-4 py-6 flex justify-end">
+            <div class="px-4 py-6 flex justify-end"
+                v-if="$appUtil.checkPermission('FLEXBEN_SETTING_EDIT')"
+            >
                 <ElementsButton
                     text="Cancel"
                     :width28="true"

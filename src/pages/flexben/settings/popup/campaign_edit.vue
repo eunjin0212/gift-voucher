@@ -5,7 +5,10 @@
     >
         <div class="border rounded-lg shadow shadow-gray-100 bg-white">
             <div class="px-7 py-6 flex justify-between items-center">
-                <h2 class="text-xl font-bold"> Edit Company's Campaign </h2>
+                <h2 class="text-xl font-bold">
+                    <span v-if="$appUtil.checkPermission('FLEXBEN_EXECUTE_EDIT')"> Edit Company's Campaign </span>
+                    <span v-else> View Company List </span>
+                </h2>
                 <a
                     href="javascript:void(0)"
                     class="ml-20"
@@ -33,12 +36,15 @@
                         />
                     </form>
 
-                    <table class="min-w-full max-w-[50vh] min-h-[20vh]">
+                    <table
+                        v-if="companyListBySearch.length > 0"
+                        class="min-w-full max-w-[50vh] min-h-[20vh]">
                         <thead class="bg-gray-100">
                             <tr>
                                 <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900 sm:pl-6">
                                     <div class="flex h-5 items-center">
                                         <input
+                                            v-if="$appUtil.checkPermission('FLEXBEN_SETTING_EDIT')"
                                             v-model="checkAllEdit"
                                             id="all" name="all" type="checkbox" class="h-4 w-4 rounded border-gray-300  focus:ring-indigo-500"
                                         />
@@ -53,6 +59,7 @@
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900 sm:pl-6">
                                     <div class="flex h-5 items-center">
                                         <input
+                                            v-if="$appUtil.checkPermission('FLEXBEN_SETTING_EDIT')"
                                             :value="company" v-model="wantToEditList"
                                             id="" type="checkbox" class="h-4 w-4 rounded border-gray-300  focus:ring-indigo-500"
                                         />
@@ -65,8 +72,12 @@
                             </tr>
                         </tbody>
                     </table>
+                    <div v-else class="mt-10 flex flex-col items-center h-full justify-center gap-5">
+                        <div class="text-gray-500">   No Company in this Campaign type </div>
+                    </div>
                 </div>
                 <div
+                    v-if="$appUtil.checkPermission('FLEXBEN_SETTING_EDIT')"
                     class="px-4 py-6 flex justify-end"
                 >
                     <ElementsButton

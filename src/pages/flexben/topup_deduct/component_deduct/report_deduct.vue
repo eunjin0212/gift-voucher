@@ -29,6 +29,7 @@
                         </td>
                         <td class="whitespace-nowrap text-sm text-gray-900 pr-3">
                             <div
+                                v-if="$appUtil.checkPermission('FLEXBEN_EXECUTE_EDIT')"
                                 class="cursor-pointer border text-center border-blue-300 px-2 py-2 rounded-md"
                                 @click="clickEditHistoryFile(history.mileageCompanyHistorySeq)"
                             > Edit </div>

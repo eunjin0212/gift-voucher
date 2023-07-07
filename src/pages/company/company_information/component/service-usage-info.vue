@@ -45,13 +45,14 @@
                 </dl>
             </div>
         </div>
-        <div>
+        <div v-if="$appUtil.checkPermissionArray(['FLEXBEN_SETTING_VIEW', 'FLEXBEN_EXECUTE_EDIT'])">
             <div class="mt-7">
                 <div class="flex justify-between">
                     <div class="pl-5 text-zinc-900 text-lg font-semibold"> Top up History </div>
                     <ElementsButton
                         :text="'+ Top-up'"
                         :width32="true"
+                        v-if="$appUtil.checkPermission('FLEXBEN_EXECUTE_EDIT')"
                         @clickEvent="$emit('register-top-up')"
                     />
                 </div>

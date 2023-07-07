@@ -124,7 +124,11 @@ export default {
         <h3 class="font-bold text-[18px]">
             {{ selectedGroup.roleGroupName }} List
         </h3>
-        <button @click="clickShowEditEmployeeBtn" class="rounded-lg w-20 h-8 leading-[33px] bg-[#4361EE] text-[#fff] text-xs">
+        <button
+            @click="clickShowEditEmployeeBtn"
+            class="rounded-lg w-20 h-8 leading-[33px] bg-[#4361EE] text-[#fff] text-xs"
+            v-if="$appUtil.checkPermission('ADMIN_EDIT')"
+        >
             Edit
         </button>
         </div>

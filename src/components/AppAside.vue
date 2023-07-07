@@ -1,7 +1,27 @@
 <script setup>
-import { ref, reactive, onMounted } from "vue";
+import { ref, reactive, onMounted, inject } from "vue";
+const { checkPermissionArray, checkPermission } = inject( 'appUtil' )
 
 const show = ref(true);
+
+const COMPANY_SETTINGS = ['COMPANY_SETTING_VIEW', 'COMPANY_SETTING_EDIT'
+                        , 'COMPANY_SUSPENDED_VIEW', 'COMPANY_SUSPENDED_EDIT'];
+
+const FLEXBEN_SETTING = ['FLEXBEN_SETTING_VIEW', 'FLEXBEN_SETTING_EDIT'];
+const FLEXBEN_EXECUTE = ['FLEXBEN_EXECUTE_VIEW', 'FLEXBEN_EXECUTE_EDIT'];
+
+const FLEXBEN_PERMISSIONS = [ 'FLEXBEN_SUMMARY_EDIT'
+                            ,'FLEXBEN_EXECUTE_VIEW', 'FLEXBEN_EXECUTE_EDIT'
+                            ,'FLEXBEN_EXECUTE_VIEW', 'FLEXBEN_EXECUTE_EDIT'
+                            ,'FLEXBEN_SETTING_VIEW', 'FLEXBEN_SETTING_EDIT'
+                            ];
+
+const HRnFLEX_SETTING = [ 'NOTICE_VIEW','NOTICE_EDIT'
+                        ,'ACCOUNT_VIEW','ACCOUNT_EDIT'
+                        ,'SYSTEM_MAINTENANCE_VIEW','SYSTEM_MAINTENANCE_EDIT'
+                        ,'HOLIDAY_VIEW','HOLIDAY_EDIT'];
+
+const ADMIN_SETTING = [ 'ADMIN_EDIT','ADMIN_VIEW'];
 
 let items = reactive([
 //    {
@@ -13,56 +33,66 @@ let items = reactive([
         href: "/inquiry",
         img: "app-side-3",
         text: "Activate Process",
+        hasPermission : checkPermissionArray(['ACTIVATE_PROCESS_VIEW', 'ACTIVATE_PROCESS_EDIT'])
     },
     {
         href: "/company/company_list",
         img: "app-side-2",
         text: "Company",
+        hasPermission : checkPermissionArray(COMPANY_SETTINGS),
     },
     {
         href: "/report",
         img: "app-side-4",
         text: "Report",
+        hasPermission : checkPermission('FLEXBEN_REPORT_EDIT')
     },
     {
         children: true,
         img: "app-side-6",
         text: "FlexBen",
+        hasPermission : checkPermissionArray( FLEXBEN_PERMISSIONS )
     },
     {
         parent: "app-side-6",
         show: false,
         href: "/flexben/summary",
         text: "Summary",
+        hasPermission : checkPermission('FLEXBEN_SUMMARY_EDIT')
     },
     {
         parent: "app-side-6",
         show: false,
         href: "/flexben/topup_deduct",
         text: "Top-up/Deduct",
+        hasPermission : checkPermissionArray( FLEXBEN_EXECUTE )
     },
     {
         parent: "app-side-6",
         show: false,
         href: "/flexben/settings",
         text: "FlexBen Settings",
+        hasPermission : checkPermissionArray( FLEXBEN_SETTING )
     },
     {
         children: true,
         img: "app-side-7",
         text: "Setting",
+        hasPermission : checkPermissionArray( ADMIN_SETTING ) || checkPermissionArray( HRnFLEX_SETTING )
     },
     {
         parent: "app-side-7",
         show: false,
         href: "/settings/HRnFLEX_settings",
         text: "HRnFLEX Settings",
+        hasPermission : checkPermissionArray( HRnFLEX_SETTING )
     },
     {
         parent: "app-side-7",
         show: false,
         href: "/settings/admin_setting",
         text: "Admin Settings",
+        hasPermission : checkPermissionArray( ADMIN_SETTING )
     },
 ]);
 
@@ -131,6 +161,7 @@ function clickShowButton() {
         <div class="mt-5">
             <template v-for="(item, index) in items" v-bind:key="index">
                 <a
+                    v-if="item.hasPermission"
                     v-show="!item.parent || item.show"
                     class="block h-12 rounded-md flex items-center blu-hover transition-all duration-500 cursor-pointer"
                     :class="{ 'mt-4': index > 0, 'blu-dark': item['isCurrentHref'] }"

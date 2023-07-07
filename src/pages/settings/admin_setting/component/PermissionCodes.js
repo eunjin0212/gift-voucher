@@ -26,6 +26,7 @@ const initMenuCodes = [
         basicCode: 'COMPANY_SUSPENDED',
         viewCode: 'COMPANY_SUSPENDED_VIEW',
         editCode: 'COMPANY_SUSPENDED_EDIT',
+        parentBasicCode: 'COMPANY_SETTING'
     },
     {
         permissionName: 'Report',

@@ -21,6 +21,7 @@
                             <ElementsToggle
                                 :trueValue="'ACTIVE'"
                                 :falseValue="'DEACTIVATED'"
+                                :disabled="!$appUtil.checkPermission('COMPANY_SETTING_EDIT')"
                                 v-model="companySettingData.filingUsageStatus"
                             />
                         </dd>
@@ -33,6 +34,7 @@
                             <ElementsToggle
                                 :trueValue="'ACTIVE'"
                                 :falseValue="'DEACTIVATED'"
+                                :disabled="!$appUtil.checkPermission('COMPANY_SETTING_EDIT')"
                                 v-model="companySettingData.payrollUsageStatus"
                             />
                         </dd>
@@ -45,6 +47,7 @@
                             <ElementsToggle
                                 :trueValue="'ACTIVE'"
                                 :falseValue="'DEACTIVATED'"
+                                :disabled="!$appUtil.checkPermission('COMPANY_SETTING_EDIT')"
                                 v-model="companySettingData.kpiUsageStatus"
                             />
                         </dd>
@@ -54,6 +57,7 @@
                             class="col-span-3 place-self-end"
                             :text="'Save'"
                             :width60="true"
+                            v-if="$appUtil.checkPermission('COMPANY_SETTING_EDIT')"
                             @click="$emit('submit-usage-settings', companySettingData)"
                         />
                     </div>
@@ -61,13 +65,17 @@
             </div>
         </div>
 
-        <div class="flex flex-col gap-4 mt-5 px-6 py-3 w-[50vw] bg-white shadow-md shadow-gray-200">
+        <div
+            v-if="$appUtil.checkPermissionArray(['COMPANY_SUSPENDED_EDIT', 'COMPANY_SUSPENDED_VIEW'])"
+            class="flex flex-col gap-4 mt-5 px-6 py-3 w-[50vw] bg-white shadow-md shadow-gray-200"
+        >
             <div class="flex justify-between items-baseline">
                 <div class="text-indigo-900 font-semibold text-xl pt-3"> Accounts Settings</div>
                 <ElementsToggle
                     :trueValue="'ACTIVE'"
                     :falseValue="'SUSPENDED'"
                     v-model="companySettingData.companySubscribeStatus"
+                    :disabled="!$appUtil.checkPermission('COMPANY_SUSPENDED_EDIT')"
                 />
             </div>
             <div class="w-[567px] text-neutral-700 text-[12px] font-normal">If turn off, you can not use all of HRnFLEX service.
@@ -95,9 +103,9 @@
                 :text="'Save'"
                 :width60="true"
                 @clickEvent="clickAccountSettingSave"
+                v-if="$appUtil.checkPermission('COMPANY_SUSPENDED_EDIT')"
             />
         </div>
-
     </div>
 </template>
 

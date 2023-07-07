@@ -86,7 +86,9 @@
             </div>
 
             <div class="w-full h-px bg-gray-200"></div>
-            <div class="px-4 py-6 flex justify-end">
+            <div class="px-4 py-6 flex justify-end"
+                v-if="$appUtil.checkPermission('ACCOUNT_EDIT')"
+            >
                 <ElementsButton
                     text="Cancel"
                     :width28="true"
