@@ -112,7 +112,7 @@ export default{
                 .then((res) => {
                     self.groupList = res.data.data.list.filter( group => group.roleGroupDefaultType =='NORMAL');
                     self.superAdminGroup = res.data.data.list.filter( group =>  group.roleGroupDefaultType == 'SUPER_ADMIN');
-                    self.selectedGroup = self.groupList[0];
+                    self.selectedGroup = self.superAdminGroup[0];
                 })
                 .catch((err) => {
                     console.error('err : ', err);

@@ -45,7 +45,8 @@ function checkPermissionArray( permissionArr ){
 }
 
 function checkPagePermission(){
-    const pageCodeList = document.querySelector('meta[name="permission"]').content;
+    const pageCodeList = document.querySelector('meta[name="permission"]')?.content;
+
     if( !pageCodeList ) return;
 
     for (const pageCode of pageCodeList.split(',')) {
