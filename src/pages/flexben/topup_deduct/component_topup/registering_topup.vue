@@ -28,12 +28,7 @@
                                 <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                                     <div>
                                         <div class="flex items-center">
-                                            <input
-                                                name="point-execution-method" type="radio"
-                                                :checked="true"
-                                                class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                                            />
-                                            <label class="ml-3 block text-sm font-medium text-gray-700">
+                                            <label class="block text-sm font-medium text-gray-800">
                                                 Top-up
                                             </label>
                                         </div>

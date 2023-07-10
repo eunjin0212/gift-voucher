@@ -31,7 +31,7 @@
                         <tr v-for="(history, index) in availableCom_data.list"
                             v-bind:key="index"  :class="{ 'bg-[#F8F8FD]': (index % 2 !== 0) }"
                         >
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-center text-gray-700 sm:pl-6"> {{ index +1  }}</td>
+                            <td class="whitespace-nowrap px-3 py-4 text-sm text-center text-gray-700 sm:pl-6"> {{ history.rowNum  }}</td>
                             <td class="whitespace-nowrap px-3 py-4 text-sm text-center text-gray-700"> {{ history.companyName }} </td>
                             <td class="whitespace-nowrap px-3 py-4 text-sm text-center text-gray-700"> {{ formatNumberWithComma(history.walletCompanyMileage) }} </td>
                         </tr>

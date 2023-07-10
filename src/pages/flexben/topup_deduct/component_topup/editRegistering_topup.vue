@@ -1,8 +1,8 @@
 <template>
     <div>
-        <div class="flex flex-col p-3 w-full max-w-7xl mt-4 gap-3">
+        <div class="flex flex-col p-3 w-full max-w-7xl mt-4 gap-3 bg-white shadow-md shadow-gray-200 rounded-lg">
             <div class="overflow-hidden mt-3">
-                <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
+                <div class="border-gray-200 px-4 py-5 sm:p-0">
                     <dl class="sm:divide-y sm:divide-gray-200">
                         <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
                             <dt class="text-sm font-medium text-gray-500">company</dt>
@@ -20,12 +20,7 @@
                                 <div>
                                     <div class="space-y-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-10">
                                         <div class="flex items-center">
-                                            <input
-                                                name="point-execution-method" type="radio"
-                                                :checked="true"
-                                                class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                                            />
-                                            <label class="ml-3 block text-sm font-medium text-gray-700">
+                                            <label class="block text-sm font-medium text-gray-700">
                                                 Top-up
                                             </label>
                                         </div>

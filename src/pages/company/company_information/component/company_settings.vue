@@ -73,7 +73,7 @@
             <div class="w-[567px] text-neutral-700 text-[12px] font-normal">If turn off, you can not use all of HRnFLEX service.
                 <br/>If you want to deactivate your account on a specific date, please reserve a Suspended date.
             </div>
-            <div v-if="companySettingData.suspendedDate" class="w-[347px] h-8 bg-zinc-100 rounded  border border-gray-300 flex justify-between px-2 items-center">
+            <div v-if="registerData.suspendedDate" class="w-[347px] h-8 bg-zinc-100 rounded  border border-gray-300 flex justify-between px-2 items-center">
                 <div class="w-[213px] text-indigo-600 text-[12px] font-normal">Suspended Schedule : {{ dateFormatChange( registerData.suspendedDate) }}</div>
             </div>
             <template v-if="registerData.companySubscribeStatus === 'SUSPENDED'">
@@ -151,7 +151,7 @@ export default{
     },
     mounted(){
         const self = this;
-        const { filingUsageStatus, kpiUsageStatus, payrollUsageStatus, companySubscribeStatus} = self.registerData;
+        const { filingUsageStatus, kpiUsageStatus, payrollUsageStatus, companySubscribeStatus,} = self.registerData;
         self.companySettingData = { filingUsageStatus, kpiUsageStatus, payrollUsageStatus, companySubscribeStatus, suspendedDate : null };
     }
 }

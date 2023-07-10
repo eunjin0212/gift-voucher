@@ -24,7 +24,7 @@
                     <div class="text-gray-800"> Filing </div>
                     <ElementsToggle
                         :trueValue="'ACTIVE'"
-                        :falseValue="'DEACTIVE'"
+                        :falseValue="'DEACTIVATED'"
                         v-model="registerData.filingUsageStatus"
                     />
                 </div>
@@ -33,7 +33,7 @@
                     <div class="text-gray-800"> Payroll </div>
                     <ElementsToggle
                         :trueValue="'ACTIVE'"
-                        :falseValue="'DEACTIVE'"
+                        :falseValue="'DEACTIVATED'"
                         v-model="registerData.payrollUsageStatus"
                     />
                 </div>
@@ -42,7 +42,7 @@
                     <div class="text-gray-800"> KPI </div>
                     <ElementsToggle
                         :trueValue="'ACTIVE'"
-                        :falseValue="'DEACTIVE'"
+                        :falseValue="'DEACTIVATED'"
                         v-model="registerData.kpiUsageStatus"
                     />
                 </div>
