@@ -61,44 +61,125 @@
             </div>
         </div>
 
-        <div class="flex flex-col gap-4 mt-5 px-6 py-3 w-[50vw] bg-white shadow-md shadow-gray-200">
-            <div class="flex justify-between items-baseline">
-                <div class="text-indigo-900 font-semibold text-xl pt-3"> Accounts Settings</div>
-                <ElementsToggle
-                    :trueValue="'ACTIVE'"
-                    :falseValue="'SUSPENDED'"
-                    v-model="companySettingData.companySubscribeStatus"
-                />
-            </div>
-            <div class="w-[567px] text-neutral-700 text-[12px] font-normal">If turn off, you can not use all of HRnFLEX service.
-                <br/>If you want to deactivate your account on a specific date, please reserve a Suspended date.
-            </div>
-            <div v-if="registerData.suspendedDate" class="w-[347px] h-8 bg-zinc-100 rounded  border border-gray-300 flex justify-between px-2 items-center">
-                <div class="w-[213px] text-indigo-600 text-[12px] font-normal">Suspended Schedule : {{ dateFormatChange( registerData.suspendedDate) }}</div>
-            </div>
-            <template v-if="registerData.companySubscribeStatus === 'SUSPENDED'">
-                <p class="text-red-700 text-xs mt-[-10px]"> * Already Suspended </p>
-            </template>
-            <template v-if="companySettingData.companySubscribeStatus === 'ACTIVE'">
-                <ElementsSelect
-                    :options="companyStatusReservOptions"
-                    v-model="reserveStatus"
-                />
-                <ElementsDate
-                    class="mt-[-10px]"
-                    v-model="companySettingData.suspendedDate"
-                    :lowerLimit="todayDate"
-                />
-            </template>
-            <ElementsButton
-                class="col-span-3 place-self-end pt-4"
-                :text="'Save'"
-                :width60="true"
-                @clickEvent="clickAccountSettingSave"
-            />
-        </div>
 
+
+<!-- // Suspended Setting ================================================================================== -->
+        <div class="mt-5 px-6 py-3 w-[50vw] bg-white shadow-md shadow-gray-200">
+            <div class="text-indigo-900 font-semibold text-xl pt-3"> Suspend Service </div>
+            <template v-if="registerData.companySubscribeStatus === 'SUSPENDED'">
+                <div class="pt-4 flex flex-col gap-24 justify-end">
+                    <div>
+                        <div>
+                            <span class="text-sm font-semibold"> Status : </span>
+                            <span class="text-sm font-semibold text-red-600"> Suspended </span>
+                        </div>
+                        <div>
+                            <span class="text-sm font-semibold"> Date of Suspension : </span>
+                            <span class="text-sm font-semibold"> {{ dateFormatChange( registerData.suspendedDate) }} </span>
+                        </div>
+                    </div>
+                    <ElementsButton
+                        class=" place-self-end pt-4"
+                        :text="'Restore'"
+                        :width60="true"
+                        :backgroundRed="true"
+                        @clickEvent="openPopup('Restore')"
+                    />
+                </div>
+            </template>
+            <template v-else-if="registerData.suspendedDate">
+                <div class="pt-4 flex flex-col gap-24 justify-end">
+                    <div v-if="registerData.suspendedDate"
+                        class=" w-[347px] h-8 bg-zinc-100 rounded  border border-gray-300 flex justify-between px-2 items-center">
+                        <div class="w-[213px] text-indigo-600 text-[12px] font-normal">Suspended Schedule : {{ dateFormatChange( registerData.suspendedDate) }}</div>
+                    </div>
+                    <ElementsButton
+                        class=" place-self-end pt-4"
+                        :text="'Change Schedule'"
+                        :width60="true"
+                        :backgroundRed="true"
+                        @clickEvent="openPopup()"
+                    />
+                </div>
+            </template>
+            <template v-else-if=" ! registerData.suspendedDate ">
+                <div class="flex flex-col gap-4 mt-4">
+                    <p class="pt-2  font-semibold text-base "> Suspend Service </p>
+                    <div class="flex items-center">
+                        <input
+                            name="notification-method" type="radio"
+                            value="SUSPENDED"
+                            v-model="companySettingData.companySubscribeStatus"
+                            class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                        />
+                        <label  class="ml-3 block text-sm font-medium leading-6 text-gray-900">
+                            Suspend this company of HRnFLEX services
+                        </label>
+                    </div>
+                    <p class="font-semibold text-base "> Suspension Delay </p>
+                    <div class="flex items-center">
+                        <input
+                            value="ACTIVE"
+                            name="notification-method" type="radio"
+                            v-model="companySettingData.companySubscribeStatus"
+                            class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                        />
+                        <label  class="ml-3 block text-sm font-medium leading-6 text-gray-900">
+                            Use
+                        </label>
+                    </div>
+                    <ElementsDate
+                        v-if="companySettingData.companySubscribeStatus==='ACTIVE'"
+                        v-model="companySettingData.suspendedDate"
+                        :lowerLimit="todayDate"
+                    />
+                    <ElementsButton
+                        class="col-span-3 place-self-end pt-4"
+                        :disabled="! companySettingData.companySubscribeStatus "
+                        :text="'Suspend'"
+                        :width60="true"
+                        @clickEvent="setSuspendSetting"
+                    />
+                </div>
+            </template>
+        </div>
+        <Teleport to="body">
+            <div v-if="suspendedPopup.isOpen" class="fixed top-0 w-full h-full bg-black/50 z-20 flex justify-center items-center">
+                <div
+                    class="w-[500px] rounded-sm border border-zinc-200 bg-white"
+                >
+                    <div class="flex justify-between text-lg font-semibold">
+                        <div class=" py-5 px-5 "> {{ suspendedPopup.title }}</div>
+                        <div class="px-10 py-4 cursor-pointer text-2xl" @click="hidePopup"> X </div>
+                    </div>
+                    <div class="pt-10 px-6 pb-14 border-b border-t border-zinc-200 ">
+                        <div class="text-neutral-600 text-sm font-bold mb-4"> Suspended Date </div>
+                        <ElementsDate
+                            v-model="companySettingData.suspendedDate"
+                            :lowerLimit="todayDate"
+                        />
+                    </div>
+                    <div class="flex gap-2 justify-end px-5 py-5">
+                        <ElementsButton
+                            class=""
+                            :text="'Cancel'"
+                            :width32="true"
+                            @clickEvent="hidePopup"
+                            :backgroundWhite="true"
+                        />
+                        <ElementsButton
+                            class=""
+                            :text="'Change'"
+                            :width32="true"
+                            :backgroundRed="true"
+                            @click-event="clickAccountSettingSave"
+                        />
+                    </div>
+                </div>
+            </div>
+        </Teleport>
     </div>
+
 </template>
 
 <script>
@@ -115,11 +196,17 @@ export default{
     data(){
         return {
             companySettingData : {},
-            companyStatusReservOptions : [
-                { text : "Suspended" , value : "SUSPENDED"},
-            ],
-            reserveStatus : "SUSPENDED",
+
             todayDate : moment().add(1, 'days').format('yyyy-MM-DD HH:mm:ss'),
+
+            setSuspended : {
+                suspendDelay : false,
+                suspendedDate : null,
+            },
+            suspendedPopup : {
+                isOpen : false,
+                title : 'Change Schedule'
+            },
         }
     },
     methods : {
@@ -129,7 +216,22 @@ export default{
         },
         clickAccountSettingSave(){
             const self = this;
-            let submitDate = {};
+            const { suspendedDate } = self.companySettingData;
+            if( ! suspendedDate ){
+                alert("Suspended date should be required.");
+                return;
+            }
+
+            const companySubscribeStatus = 'ACTIVE';
+            const submitData = { companySubscribeStatus,suspendedDate }
+
+            self.$emit("submit-suspended-settings", submitData );
+            self.hidePopup();
+        },
+        setSuspendSetting(){
+            const self = this;
+
+            let submitData = {};
 
             const { companySubscribeStatus, suspendedDate } = self.companySettingData
             if(  companySubscribeStatus == 'ACTIVE' && ! suspendedDate ){
@@ -137,22 +239,33 @@ export default{
                 return;
             }
 
-            if( companySubscribeStatus == 'SUSPENDED' ){
-                submitDate = { companySubscribeStatus }
-            }else if( companySubscribeStatus == 'ACTIVE'  ){
-                submitDate = {
-                    companySubscribeStatus,
-                    suspendedDate
-                }
+            if( !confirm( 'Are you sure to suspend? ') ){
+                return;
             }
 
-            self.$emit("submit-suspended-settings", submitDate );
+            if( companySubscribeStatus == 'ACTIVE'  ){
+                self.clickAccountSettingSave();
+                return;
+            }
+
+            submitData = { companySubscribeStatus }
+            self.$emit("submit-suspended-settings", submitData );
+        },
+        hidePopup(){
+            const self = this;
+            self.suspendedPopup.isOpen = false;
+            self.companySettingData.suspendedDate = null;
+        },
+        openPopup( title = 'Change Schedule' ){
+            const self = this;
+            self.suspendedPopup.isOpen = true;
+            self.suspendedPopup.title = title;
         }
     },
     mounted(){
         const self = this;
-        const { filingUsageStatus, kpiUsageStatus, payrollUsageStatus, companySubscribeStatus,} = self.registerData;
-        self.companySettingData = { filingUsageStatus, kpiUsageStatus, payrollUsageStatus, companySubscribeStatus, suspendedDate : null };
+        const { filingUsageStatus, kpiUsageStatus, payrollUsageStatus } = self.registerData;
+        self.companySettingData = { filingUsageStatus, kpiUsageStatus, payrollUsageStatus, companySubscribeStatus : null , suspendedDate : null };
     }
 }
 
