@@ -69,6 +69,9 @@
         "get-permission-role-group-bind-list" :  "/api/admin-setting/permission-group-bind/list/{roleGroupSeq}",
         "put-access-permission-role-group-bind" :  "/api/admin-setting/permission-group-bind/update/{roleGroupSeq}",
 
+        "get-system-maintenance-list" : "/api/system-maintenance/list",
+        "put-system-maintenance-info" : "/api/system-maintenance/{systemMaintenanceSeq}",
+
         "test-api" : "/api/flexben/test",
         "ENDSTRING" : "END"
     }

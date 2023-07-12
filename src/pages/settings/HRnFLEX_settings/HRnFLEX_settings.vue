@@ -7,7 +7,9 @@
                 <AccountSetting
                     v-if="mainTabs.find( tab=> tab.name === 'ACCOUNT' )?.current === true"
                 />
-
+                <MaintenanceSetting
+                    v-if="mainTabs.find( tab=> tab.name === 'SYSTEM_MAINTENANCE' )?.current === true"
+                />
             </div>
         </AppMain>
     </div>
@@ -18,10 +20,11 @@ import AppAside from "@/components/AppAside.vue";
 import AppMain from "@/components/main/AppMain.vue";
 import MainTabs from "@/components/main/sections/MainTabs.vue"
 import AccountSetting from '@/pages/settings/HRnFLEX_settings/account_setting/account_setting.vue'
+import MaintenanceSetting from '@/pages/settings/HRnFLEX_settings/maintenance_setting/maintenance_setting.vue'
 
 export default{
     components : {
-        AppAside, AppMain, MainTabs, AccountSetting
+        AppAside, AppMain, MainTabs, AccountSetting, MaintenanceSetting
     },
     data(){
         return{
@@ -39,7 +42,6 @@ export default{
     methods : {
         clickTabs( tabItem ){
             const self = this;
-            console.log(tabItem)
             self.mainTabs.map( tab => {
                 tab.current = tabItem.name === tab.name;
             })
