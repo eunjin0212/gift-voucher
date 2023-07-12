@@ -23,8 +23,9 @@
                 <ElementsSelect
                     v-if="searchOption.server === 'COMPANY'"
                     :width40="true"
+                    :useDefaultMsg="true"
                     :options="secondDepthOptions"
-                    :defaultMsg="'2nd Category'"
+                    :defaultMsg="searchOption.secondDepthNullMsg"
                     v-model="searchOption.secondDepth"
                     :readonly="! searchOption.firstDepth"
                 />
@@ -138,6 +139,7 @@ export default{
             firstDepthOptions : [],
             secondDepthOptions : [],
             searchOption : {
+                secondDepthNullMsg : "2nd Category",
                 server : "",
                 firstDepth : "",
                 secondDepth : "",
@@ -166,9 +168,7 @@ export default{
             }
 
             const option = (self.secondDepthByFirst[newVal] || []).map( m => ({ text : m, value: m }))
-            if( option.length == 0 ) {
-                option.push( { text : "No 2nd Category", value : null } )
-            }
+            self.searchOption.secondDepthNullMsg = option.length == 0 ? 'No 2nd Category' : '2nd Category'
 
             self.secondDepthOptions = option;
         }
@@ -196,7 +196,7 @@ export default{
                     acc[ server ].push( depthOneCategory );
                 }
                 return acc;
-            }, { COMPANY : [], EMPLOYEE : [] })
+            }, { COMPANY : [], EMPLOYEE : [] });
 
             self.secondDepthByFirst = list.reduce( ( acc, item ) => {
                 const { server, depthOneCategory, depthTwoCategory } = item;

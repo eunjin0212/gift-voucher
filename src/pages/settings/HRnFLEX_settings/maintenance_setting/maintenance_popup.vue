@@ -115,7 +115,7 @@
                 <ElementsButton
                     class="ml-2"
                     :inputtype="'submit'"
-                    :text="'Change'"
+                    :text="'Save'"
                     :width28="true"
                     :height12="true"
                 />
