@@ -138,7 +138,7 @@
                         :disabled="! companySettingData.companySubscribeStatus "
                         :text="'Suspend'"
                         :width60="true"
-                        @clickEvent="setSuspendSetting"
+                        @clickEvent="setSuspendedNowOrDelay"
                     />
                 </div>
             </template>
@@ -158,21 +158,46 @@
                             v-model="companySettingData.suspendedDate"
                             :lowerLimit="todayDate"
                         />
+                        <div
+                            class="relative flex items-start"
+                            v-if="registerData.companySubscribeStatus=='ACTIVE'"
+                        >
+                            <div class="flex h-6 items-center">
+                                <input
+                                    v-model="companySettingData.companySubscribeStatus"
+                                    :true-value="'SUSPENDED'" :false-value="'ACTIVE'"
+                                    aria-describedby="comments-description" type="checkbox"
+                                    class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                                />
+                            </div>
+                            <div class="ml-3 text-sm leading-6">
+                                <label class="font-medium text-gray-900"> Close Now </label>
+                                <p class="text-gray-500 italic text-sm">
+                                    The Suspension action will be performed immediately.
+                                </p>
+                            </div>
+                        </div>
                     </div>
                     <div class="flex gap-2 justify-end px-5 py-5">
                         <ElementsButton
-                            class=""
                             :text="'Cancel'"
                             :width32="true"
                             @clickEvent="hidePopup"
                             :backgroundWhite="true"
                         />
                         <ElementsButton
-                            class=""
+                            v-if="registerData.companySubscribeStatus === 'SUSPENDED'"
+                            :text="'Restore'"
+                            :width32="true"
+                            :backgroundRed="true"
+                            @click-event="setSuspendedDelay"
+                        />
+                        <ElementsButton
+                            v-else-if="registerData.companySubscribeStatus === 'ACTIVE'"
                             :text="'Change'"
                             :width32="true"
                             :backgroundRed="true"
-                            @click-event="clickAccountSettingSave"
+                            @click-event="setSuspendedNowOrChange"
                         />
                     </div>
                 </div>
@@ -205,7 +230,7 @@ export default{
             },
             suspendedPopup : {
                 isOpen : false,
-                title : 'Change Schedule'
+                title : 'Change Schedule',
             },
         }
     },
@@ -214,52 +239,57 @@ export default{
             if( ! date ) return;
             return moment(date).format(format);
         },
-        clickAccountSettingSave(){
+        setSuspendedNowOrDelay(){
             const self = this;
-            const { suspendedDate } = self.companySettingData;
+            const { companySubscribeStatus } = self.companySettingData
+
+            if( ! confirm( 'Are you sure to suspend?') ) {
+                return;
+            }
+
+            companySubscribeStatus === 'SUSPENDED' ? self.setSuspendedNow() : self.setSuspendedDelay();
+
+            return;
+        },
+        setSuspendedNowOrChange(){
+            const self = this;
+            const { companySubscribeStatus } = self.companySettingData
+            if(  companySubscribeStatus == 'SUSPENDED' ){
+                if ( confirm( 'Are you sure to suspend?') ){
+                    self.setSuspendedNow();
+                }
+                return;
+            }
+
+            self.setSuspendedDelay();
+        },
+        setSuspendedDelay(){
+            const self = this;
+            const { suspendedDate } = self.companySettingData
             if( ! suspendedDate ){
                 alert("Suspended date should be required.");
                 return;
             }
-
-            const companySubscribeStatus = 'ACTIVE';
-            const submitData = { companySubscribeStatus,suspendedDate }
-
+            const submitData = { companySubscribeStatus : 'ACTIVE', suspendedDate }
             self.$emit("submit-suspended-settings", submitData );
             self.hidePopup();
         },
-        setSuspendSetting(){
+        setSuspendedNow(){
             const self = this;
-
-            let submitData = {};
-
-            const { companySubscribeStatus, suspendedDate } = self.companySettingData
-            if(  companySubscribeStatus == 'ACTIVE' && ! suspendedDate ){
-                alert("Suspended date should be required.");
-                return;
-            }
-
-            if( !confirm( 'Are you sure to suspend? ') ){
-                return;
-            }
-
-            if( companySubscribeStatus == 'ACTIVE'  ){
-                self.clickAccountSettingSave();
-                return;
-            }
-
-            submitData = { companySubscribeStatus }
+            const submitData = { companySubscribeStatus : 'SUSPENDED' };
             self.$emit("submit-suspended-settings", submitData );
+            self.hidePopup();
         },
         hidePopup(){
             const self = this;
             self.suspendedPopup.isOpen = false;
-            self.companySettingData.suspendedDate = null;
         },
         openPopup( title = 'Change Schedule' ){
             const self = this;
             self.suspendedPopup.isOpen = true;
             self.suspendedPopup.title = title;
+            self.companySettingData.suspendedDate = null;
+            self.companySettingData.companySubscribeStatus = null;
         }
     },
     mounted(){
