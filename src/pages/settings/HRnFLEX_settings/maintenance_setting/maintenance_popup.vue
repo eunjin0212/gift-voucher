@@ -57,7 +57,7 @@
                             </div>
                         </dd>
                     </div>
-                    <div class="py-2 grid grid-cols-3 gap-4 px-6 items-baseline">
+                    <div class="py-2 grid grid-cols-3 gap-4 px-6 items-baseline" v-if="maintenanceInfo.depthTwoCategory">
                         <dt class="text-sm font-medium text-gray-500"> 2nd Category </dt>
                         <dd class="mt-1 text-sm text-gray-900 col-span-2 flex justify-between">
                             <div class="shadow-sm py-2 px-3 block w-full sm:text-sm border-[1px] border-gray-300 rounded-md bg-gray-50">
