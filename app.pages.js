@@ -46,5 +46,9 @@ module.exports = {
     report : {
         template: 'public/default.html',
         title: 'Report'
+    },
+    admin_dashboard : {
+        template: 'public/default.html',
+        title: 'Summary'
     }
 }
