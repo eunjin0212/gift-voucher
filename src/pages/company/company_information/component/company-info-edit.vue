@@ -8,7 +8,7 @@
                         :width32="true"
                         :text="'Edit'"
                         v-if="! isEdit "
-                        @click="isEdit=true"
+                        @click="$emit('update:isEdit', true)"
                     />
                 </div>
                 <ElementsInput
@@ -175,7 +175,7 @@
 <script>
 
 export default {
-    emits : ['edit-company-info', 'click-cancel', 'submit-file', 'delete-file'],
+    emits : ['edit-company-info', 'click-cancel', 'submit-file', 'delete-file', 'update:isEdit'],
     props : {
         registerData : {
             type : Object,
@@ -184,11 +184,11 @@ export default {
         flexbenTypeOptions : {
             type : Array,
             default : () => {}
-        }
+        },
+        isEdit : Boolean,
     },
     data(){
         return {
-            isEdit : false,
             editCompanyData : {
                 companyName : null,
                 representativeName : "",
@@ -226,6 +226,8 @@ export default {
             contactNumber, contactEmail, companyAddress, subscriptionPicDepartment,
             subscriptionPicName, subscriptionPicEmail,subscriptionPicPhoneNumber
         };
+
+        self.$emit('update:isEdit', false);
     },
     methods : {
         afterFileSelect( e ){
@@ -266,7 +268,6 @@ export default {
             if( ! self.validateEditCompanyInfo() ) {
                 return;
             }
-            self.isEdit = false;
             if( self.contractFile.name ){
                 self.$emit( "submit-file", self.contractFile, self.editCompanyData );
                 self.$emit( "delete-file", self.registerData.contractFilePath )
@@ -279,6 +280,7 @@ export default {
             const self = this;
             const { contactNumber, subscriptionPicPhoneNumber, } = self.editCompanyData;
 
+
             if( ! self.validatePhoneNumber(contactNumber ) || ! self.validatePhoneNumber(subscriptionPicPhoneNumber) ){
                 alert( "Please enter a valid phone number. The number should start with either 09 or 08 and have more than 11 digits." );
                 return false;
@@ -289,6 +291,8 @@ export default {
         validatePhoneNumber( contactNumber ) {
             contactNumber = contactNumber.replace(/\D/g, '');
             const regex = /^(09|08)\d{9,}$/;
+            console.log( contactNumber, regex.test( contactNumber ) )
+
             return regex.test( contactNumber );
         },
 

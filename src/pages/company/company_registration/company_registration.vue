@@ -69,10 +69,24 @@ export default {
         },
         goToUsageInformation( companyInformation ){
             const self = this;
-            self.companyRegisterData = { ...companyInformation };
 
-            self.clickTabs( self.registerTab[1] );
-            self.registerTab[1].checked = true;
+            const url = self.$api("uri", "post-company-name-duplicate-check");
+            self.$axios.post( url, { companyName : companyInformation.companyName })
+                        .then( () => {
+                            self.companyRegisterData = { ...companyInformation };
+
+                            self.clickTabs( self.registerTab[1] );
+                            self.registerTab[1].checked = true;
+                        })
+                        .catch( err => {
+                            const { code, message } = err.response.data;
+                            if( code === 'HR_COMPANY_INSERT_ALREADY_USED_NAME_400_FAILED'){
+                                alert( message );
+                                return;
+                            }
+                            alert(" Fail to save Information, Please try again");
+                            return;
+                        })
         },
         backToCompanyInformation(){
             const self = this;

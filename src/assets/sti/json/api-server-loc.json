@@ -17,6 +17,8 @@
         "put-company-info" : "/api/company/company-info",
         "put-company-usage-setting" : "/api/company/usage-setting",
         "put-company-account-setting" : "/api/company/account-setting",
+        "post-company-name-duplicate-check" : "/api/company/duplicationCheck",
+
 
         "get-flexben-campaign-List" : "/api/flexben/campaign",
         "get-flexben-report-List" : "/api/flexben/report",

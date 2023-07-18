@@ -27,6 +27,7 @@
                     @delete-file="deleteCurrentFile"
                     :registerData="registerData"
                     :flexbenTypeOptions="flexbenTypeOptions"
+                    v-model:isEdit="editableInfo"
                 />
 
                 <CompanySettings
@@ -94,6 +95,7 @@ export default {
                 offset : 0,
                 page : 1,
             },
+            editableInfo : false
         }
     },
     methods :{
@@ -171,8 +173,16 @@ export default {
                 .then( ( ) => {
                     alert( " success to update ");
                     self.getDisplayData();
+                    self.editableInfo = false;
                 })
-                .catch( alert)
+                .catch( err =>{
+                    const { code, message } = err.response.data;
+                    if( code === 'HR_COMPANY_INSERT_ALREADY_USED_NAME_400_FAILED'){
+                        alert( message );
+                        return;
+                    }
+                    alert(" Failed to update ")
+                })
         },
         editAccountSettings( editAccountData ){
             const self = this;
