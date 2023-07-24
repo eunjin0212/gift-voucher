@@ -79,6 +79,7 @@ export default {
             self.editFlexbenPopup.campaignSeq = typeSeq;
         },
 
+
     },
     mounted(){
         const self = this;

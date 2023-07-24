@@ -33,11 +33,19 @@ module.exports = {
     },
     'flexben/topup_deduct/editRegistering' : {
         template: 'public/default.html',
-        title: 'Register Topup/Deduct'
+        title: 'Edit Topup/Deduct'
     },
     'flexben/settings' : {
         template: 'public/default.html',
-        title: 'Register Topup/Deduct'
+        title: 'FlexBen Settings'
+    },
+    'flexben/settings/product_setting/detail' : {
+        template: 'public/default.html',
+        title: 'Product Setting'
+    },
+    'flexben/summary' : {
+        template: 'public/default.html',
+        title: 'FlexBen Summary'
     },
     'inquiry' : {
         template: 'public/default.html',

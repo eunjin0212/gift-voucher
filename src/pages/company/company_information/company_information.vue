@@ -2,7 +2,7 @@
     <div id="app" class="min-w-[1024px] min-h-[100vh] flex">
         <AppAside />
             <AppMain :headerName="registerData.companyName">
-                <div class="flex justify-between">
+                <div class="flex justify-between max-w-7xl">
                     <MainTabs :tabs="mainTabs" class="mt-9" @clickEvent="clickTabs" />
                     <ElementsButton
                         text="Back To List"
@@ -11,184 +11,39 @@
                         @click="backToCompanyList"
                     />
                 </div>
-                <div id="service-usage-info" class="mt-6" v-show="mainTabs.find( tab=> tab.name === 'SERVICE_USAGE_INFO' ).current === true">
-                    <div class="overflow-hidden bg-white shadow sm:rounded-lg">
-                        <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
-                            <dl class="sm:divide-y sm:divide-gray-200">
-                                <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-                                    <dt class="text-sm font-medium text-gray-500">Start Date</dt>
-                                    <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 justify-self-end">
-                                        {{ dateFormatChange(registerData.subscribeStartDate) }}
-                                    </dd>
-                                </div>
-                                <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-                                    <dt class="text-sm font-medium text-gray-500">End Date</dt>
-                                    <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 justify-self-end">
-                                        {{ dateFormatChange(registerData.subscribeEndDate) }}
-                                    </dd>
-                                </div>
-                                <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-                                    <dt class="text-sm font-medium text-gray-500">Number of Usage Employees</dt>
-                                    <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 justify-self-end">
-                                        {{ registerData.employeeCount }}
-                                    </dd>
-                                </div>
-                                <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-                                    <dt class="text-sm font-medium text-gray-500">FlexBen Type</dt>
-                                    <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 justify-self-end">
-                                        {{ registerData.flexbenType }}
-                                    </dd>
-                                </div>
-                                <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-                                    <dt class="text-sm font-medium text-gray-500">Master Admin </dt>
-                                    <dd
-                                        class="mt-1 text-sm  sm:col-span-2 sm:mt-0 justify-self-end text-blue-600 cursor-pointer"
-                                        @click="OpenMasterAdminList()"
-                                    >
-                                        List
-                                    </dd>
-                                </div>
 
-                            </dl>
-                        </div>
-                    </div>
+                <ServiceUsageInfo
+                    v-show="mainTabs.find( tab=> tab.name === 'SERVICE_USAGE_INFO' ).current === true"
+                    :flexbenHistory="flexbenHistory"
+                    :registerData="registerData"
+                    @register-top-up="goToRegistering"
+                    @show-admin="OpenMasterAdminList"
+                />
 
-                    <Teleport to="body">
-                        <AppPopup v-model="masterAdmin.isOpen" name="Master Admin List" >
+                <CompanyInfoEdit
+                    v-if="mainTabs.find( tab=> tab.name === 'COMPANY_INFO' ).current === true"
+                    @edit-company-info="editCompanyInfoData"
+                    @submit-file="submitContractFile"
+                    @delete-file="deleteCurrentFile"
+                    :registerData="registerData"
+                    :flexbenTypeOptions="flexbenTypeOptions"
+                    v-model:isEdit="editableInfo"
+                />
 
-                            <div class="flex flex-col min-w-[40vw]">
-                                <div class="-my-2 -mx-4 sm:-mx-6 lg:-mx-8">
-                                    <div class="inline-block min-w-full py-2 align-middle">
-                                        <div class="shadow-sm ring-1 ring-black ring-opacity-5">
-                                            <table class="min-w-full border-separate px-6" style="border-spacing: 0">
-                                                <thead class="bg-gray-50">
-                                                    <tr>
-                                                        <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 bg-opacity-75 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:pl-6 lg:pl-8">Name</th>
-                                                        <th scope="col" class="sticky top-0 z-10 hidden border-b border-gray-300 bg-gray-50 bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:table-cell">
-                                                            Department Name / Job title Name
-                                                        </th>
-                                                        <th scope="col" class="sticky top-0 z-10 hidden border-b border-gray-300 bg-gray-50 bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter lg:table-cell">Email</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody class="bg-white" v-if="masterAdmin.list.length > 0">
-                                                    <tr v-for="(admin, personIdx) in masterAdmin.list" :key="admin.email">
-                                                        <td :class="[personIdx !== masterAdmin.list.length - 1 ? 'border-b border-gray-200' : '', 'whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8']">
-                                                            {{ admin.employeeName }}
-                                                        </td>
-                                                        <td :class="[personIdx !== masterAdmin.list.length - 1 ? 'border-b border-gray-200' : '', 'whitespace-nowrap px-3 py-4 text-sm text-gray-500 hidden sm:table-cell']">
-                                                            {{ `${admin.departmentName} / ${ admin.jobTitleName }` }}
-                                                        </td>
-                                                        <td :class="[personIdx !== masterAdmin.list.length - 1 ? 'border-b border-gray-200' : '', 'whitespace-nowrap px-3 py-4 text-sm text-gray-500 hidden lg:table-cell']">
-                                                            {{ admin.email }}
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                                <div v-else class="w-full min-h-[10vh] flex items-center justify-center">
-                                                    No Admin
-                                                </div>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </AppPopup>
-                    </Teleport>
-                </div> <!-- SERVICE_USAGE_INFO -->
-
-                <div id="company-info"  v-show="mainTabs.find( tab=> tab.name === 'COMPANY_INFO' ).current === true" class="bg-white shadow-md shadow-gray-200 p-4 mt-6">
-                    <form @submit.prevent="clickSubmitCompanyData">
-                        <div class="my-2 flex flex-col gap-4" >
-                            <ElementsInput
-                                :name="'Company Name'"
-                                :width72="true"
-                                :maxlength="60"
-                                v-model="editCompanyData.companyName"
-                                :required="true"
-                            />
-                            <ElementsInput
-                                :name="'PIC Name'"
-                                :full="true"
-                                :maxlength="60"
-                                v-model="editCompanyData.subscriptionPicName"
-                                :required="true"
-                            />
-                            <ElementsInput
-                                :name="'PIC Department'"
-                                :full="true"
-                                :maxlength="60"
-                                :required="true"
-                                v-model="editCompanyData.subscriptionPicDepartment"
-                            />
-                            <ElementsInput
-                                :name="'PIC Email'"
-                                :full="true"
-                                :inputtype="'email'"
-                                :maxlength="100"
-                                :required="true"
-                                v-model="editCompanyData.subscriptionPicEmail"
-                            />
-                            <ElementsInput
-                                v-model="editCompanyData.subscriptionPicPhoneNumber"
-                                :name="'PIC Phone number'"
-                                :full="true"
-                                :maxlength="60"
-                                :inputtype="'tel'"
-                                :required="true"
-                            />
-                        </div>
-                        <div class="my-7 flex flex-col gap-4">
-                            <div class="text-2xl font-bold"> Service Usage Information </div>
-                            <ElementsDate
-                                :name="'Start Date'"
-                                v-model="editCompanyData.subscribeStartDate"
-                            />
-                            <ElementsDate
-                                :name="'End Date'"
-                                v-model="editCompanyData.subscribeEndDate"
-                            />
-                            <div>
-                                <h1 class="text-sm font-semibold text-slate-800"> Number of Employee </h1>
-                                <input type="number"
-                                    class="w-44 mt-1 shadow-sm block sm:text-sm border-gray-300 rounded-md"
-                                    :min="1"
-                                    v-model="editCompanyData.employeeCount"
-                                    :required="true"
-                                />
-                            </div>
-                            <ElementsDate
-                                :name="'Use Fee Deposit Date'"
-                                v-model="editCompanyData.useFeeDepositDate"
-                            />
-                            <ElementsSelect
-                                :name="'FlexBen Type'"
-                                :full="true"
-                                :options="flexbenTypeOptions"
-                                v-model="editCompanyData.flexbenCampaignSeq"
-                            />
-                            <ElementsSelect
-                                :name="'Billing Stauts'"
-                                :full="true"
-                                :options="billingStatusOptions"
-                                v-model="editCompanyData.billingStatus"
-                            />
-                        </div>
-                        <div class="flex justify-end gap-4 my-3">
-                            <ElementsButton
-                                :backgroundWhite="true" :width32="true"
-                                :text="'Cancel'"
-                                :inputtype="'button'"
-                                @click="returnToServiceUsage"
-                            />
-                            <ElementsButton
-                                :width32="true"
-                                :text="'Save'"
-                                :inputtype="'submit'"
-                            />
-                        </div>
-                    </form>
-
-                </div>
+                <CompanySettings
+                    v-if="mainTabs.find( tab=> tab.name === 'SETTINGS' ).current === true"
+                    :registerData="registerData"
+                    @submit-usage-settings="editCompanyUsageSettings"
+                    @submit-suspended-settings="editAccountSettings"
+                />
             </AppMain>
+
+            <Teleport to="body">
+                <AdminPopUp
+                    :masterAdmin="masterAdmin"
+                    v-if="masterAdmin.isOpen"
+                />
+            </Teleport>
     </div>
 </template>
 
@@ -196,87 +51,76 @@
 import AppAside from "@/components/AppAside.vue";
 import AppMain from "@/components/main/AppMain.vue";
 import MainTabs from "@/components/main/sections/MainTabs.vue"
+import CompanySettings from "@/pages/company/company_information/component/company_settings.vue"
+import ServiceUsageInfo from "@/pages/company/company_information/component/service-usage-info.vue"
+import CompanyInfoEdit from "./component/company-info-edit.vue";
+import AdminPopUp from "./component/admin-pop-up.vue";
 import moment from 'moment';
 
 export default {
     components : {
-        AppAside, AppMain, MainTabs    },
+        AppAside, AppMain, MainTabs
+        , CompanySettings, ServiceUsageInfo, CompanyInfoEdit, AdminPopUp
+    },
     mounted(){
         const self = this;
         self.getFlexbenType();
-        self.getCompanyData();
+        self.getDisplayData();
     },
     data(){
         return{
             mainTabs : [
                 { text : "Service Usage Info", name : "SERVICE_USAGE_INFO", current : true },
                 { text : "Company Info" , name : "COMPANY_INFO", current : false },
+                { text : "Settings" , name : "SETTINGS", current : false },
             ],
             masterAdmin : {
                 isOpen : false,
                 list : [],
             },
             flexbenTypeOptions : [],
-            billingStatusOptions : [
-                { text : "Testing", value : "TRIAL" },
-                { text : "Billing", value : "BILLING" }
-            ],
-            registerData : {
-                subscriptionCompanySeq: null,
-                companySeq: null,
-                companyName: "",
-                flexbenType: null,
-                flexbenCampaignSeq: "",
-                subscriptionPicEmail: null,
-                subscriptionPicPhoneNumber: null,
-                subscriptionPicName: null,
-                subscriptionPicDepartment: null,
-                subscribeStartDate: null,
-                subscribeEndDate: null,
-                employeeCount: null,
-                useFeeDepositDate: null,
-                billingStatus: ""
-            },
-            editCompanyData : {
-                subscriptionCompanySeq: null,
-                companySeq: null,
-                companyName: null,
-                flexbenType: null,
-                flexbenCampaignSeq: "",
-                subscriptionPicEmail: null,
-                subscriptionPicPhoneNumber: null,
-                subscriptionPicName: null,
-                subscriptionPicDepartment: null,
-                subscribeStartDate: null,
-                subscribeEndDate: null,
-                employeeCount: null,
-                useFeeDepositDate: null,
-                billingStatus: ""
-            },
-            json_query : {
+
+            registerData : {},
+            searchOptions : {
+                startDate : "",
+                endDate : "",
+                transactionType : "TOPUP_FROM_HRFLEX",
+                companyName : "",
                 companySeq : null,
             },
+            flexbenHistory : {
+                list : [],
+                total : 0,
+                limit : -1,
+                offset : 0,
+                page : 1,
+            },
+            editableInfo : false
         }
-
-
     },
     methods :{
-        returnToServiceUsage(){
+        async getDisplayData(){
             const self = this;
-            self.clickTabs( self.mainTabs[0] );
-        },
-        backToCompanyList(){
-            location.href='/company/company_list';
-        },
-        clickTabs( tabItem ){
-            const self = this;
-            self.mainTabs.map( tab => {
-                tab.current = tabItem.name === tab.name;
-            })
-
-            if( tabItem.name === "COMPANY_INFO" ){
-                self.editCompanyData = { ...self.registerData };
+            try {
+                self.registerData = await self.getCompanyData()
+            }catch(e){
+                console.error( " ERROR : ", e);
             }
+
+            self.getFlexbenHistoryList( self.registerData.companySeq );
+
+        },
+        getCompanyData(){
+            const self = this;
+            const urlParams = new URLSearchParams( window.location.search );
+            if( ! urlParams.has( "subscriptionCompanySeq" ) ){
+                return;
+            }
+            const subscriptionCompanySeq = urlParams.get("subscriptionCompanySeq");
+            const url = self.$api("uri", "get-company");
+
+            return self.$axios.get( `${url}/${subscriptionCompanySeq}` )
+                    .then( res => res.data.data );
         },
         getFlexbenType(){
             const self = this;
@@ -291,85 +135,102 @@ export default {
                     );
                 })
         },
-        clickSubmitCompanyData(){
+        submitContractFile( contractFile, editCompanyData ){
             const self = this;
-            const { subscribeStartDate, subscribeEndDate,useFeeDepositDate, flexbenCampaignSeq, billingStatus } = self.editCompanyData;
-            if( ! self.validationCheck( { subscribeStartDate, subscribeEndDate,useFeeDepositDate, flexbenCampaignSeq, billingStatus }) ) {
-                alert( "Please enter the contents." );
-                return;
-            }
 
-            if( ! self.validatePhoneNumber() ){
-                alert( "Please enter a valid phone number. The number should start with either 09 or 08 and have more than 11 digits." );
-                return;
-            }
+            const url = self.$api("uri", "post-file-direct-upload" );
+            const { name } = contractFile;
+            let form = new FormData();
+            form.append( `uploadFile1` , contractFile );
+            form.append( `uploadFileName1` , name );
 
-            if( ! self.validationTimeCheck() ){
-                alert("The start date should be earlier than the end date.");
-                return;
-            }
+            self.$axios.post( url, form, { headers : {'Content-Type' : 'multipart/form-data;'} })
+                        .then( res => {
+                            return res.data.data.uploadFile1;
+                        })
+                        .then( contractFilePath => {
 
+                            self.editCompanyInfoData( { ...editCompanyData, contractFilePath } )
+                        })
+                        .catch( err => {
+                            console.error("File Upload Error : ", err )
+                            alert(" Failed to file upload, Please try again" );
+                        });
+        },
+        deleteCurrentFile( currentfilePath ){
+            const self = this;
+            self.$axios.delete( currentfilePath )
+                .then( () => {} )
+                .catch( (err) => console.error( 'ERROR : ', err ))
+        },
+        editCompanyInfoData( editCompanyData ){
+            const self = this;
+            editCompanyData.subscriptionCompanySeq = self.registerData.subscriptionCompanySeq;
+            editCompanyData.companySeq = self.registerData.companySeq;
 
-            const url = self.$api("uri", "put-company");
-            self.$axios.put( url, self.editCompanyData )
+            const url = self.$api("uri", "put-company-info");
+            self.$axios.put( url, editCompanyData )
                 .then( ( ) => {
                     alert( " success to update ");
-                    self.getCompanyData();
+                    self.getDisplayData();
+                    self.editableInfo = false;
+                })
+                .catch( err =>{
+                    const { code, message } = err.response.data;
+                    if( code === 'HR_COMPANY_INSERT_ALREADY_USED_NAME_400_FAILED'){
+                        alert( message );
+                        return;
+                    }
+                    alert(" Failed to update ")
+                })
+        },
+        editAccountSettings( editAccountData ){
+            const self = this;
+
+            editAccountData.subscriptionCompanySeq = self.registerData.subscriptionCompanySeq;
+            editAccountData.companySeq = self.registerData.companySeq;
+            console.log( {editAccountData} )
+
+            const url = self.$api("uri", "put-company-account-setting");
+            self.$axios.put( url , editAccountData )
+                        .then( () => {
+                            alert(" Success to update ");
+                            self.getDisplayData();
+                        })
+                        .catch( err => alert("failed to update ", err ));
+        },
+        editCompanyUsageSettings( editSettingData ){
+            const self = this;
+            editSettingData.subscriptionCompanySeq = self.registerData.subscriptionCompanySeq;
+            editSettingData.companySeq = self.registerData.companySeq;
+
+            const url = self.$api("uri", "put-company-usage-setting");
+            self.$axios.put( url, editSettingData )
+                .then( ()=>{
+                    alert("Success to update ");
+                    self.getDisplayData();
                 })
                 .catch( alert)
         },
-        validationCheck( validValues ){
-            let isValid = true;
-            Object.entries( validValues ).map( ([key, value] )=> {
-                if( ! value ){
-                    isValid = false;
-                    console.log( key )
-                    return;
-                }
-            });
-            return isValid;
-        },
-        validatePhoneNumber() {
+        getFlexbenHistoryList( companySeq ){
             const self = this;
-            let { subscriptionPicPhoneNumber } = self.editCompanyData;
-
-            subscriptionPicPhoneNumber = subscriptionPicPhoneNumber.replace(/\D/g, '');
-            const regex = /^(09|08)\d{9,}$/;
-            return regex.test( subscriptionPicPhoneNumber );
-        },
-        validationTimeCheck(){
-            const self = this;
-            const { subscribeStartDate, subscribeEndDate } = self.editCompanyData;
-            const startDate = moment( subscribeStartDate );
-            const endDate = moment( subscribeEndDate );
-
-            console.log( startDate, endDate, endDate.isAfter(startDate) )
-
-            return endDate.isAfter(startDate);
-        },
-        getCompanyData(){
-            const self = this;
-            const urlParams = new URLSearchParams( window.location.search );
-            if( ! urlParams.has( "subscriptionCompanySeq" ) ){
-                return;
-            }
-            const companySeq = urlParams.get("subscriptionCompanySeq");
-            const url = self.$api("uri", "get-company");
-
-            self.$axios.get( `${url}/${companySeq}` )
-                .then( res => {
-                    self.json_query.companySeq = res.data.data.companySeq;
-                    self.registerData = { ...res.data.data };
-                } )
-                .catch( alert );
-
+            const { limit, offset } = self.flexbenHistory;
+            const url = self.$api("uri", "get-flexben-history");
+            const json_query = { ...self.searchOptions, limit, offset, companySeq };
+            self.$axios.get( url , { params : { json_query : JSON.stringify(json_query) } })
+                .then((res) => {
+                    self.flexbenHistory.total = res.data.data.count;
+                    self.flexbenHistory.list = res.data.data.list;
+                })
+                .catch( alert )
         },
         OpenMasterAdminList(){
             const self = this;
-            self.json_query = { ...self.json_query };
+            const { companySeq } = self.registerData;
+            const json_query = { companySeq };
 
             const params = new URLSearchParams();
-            params.append( "json_query", JSON.stringify( self.json_query ) );
+            params.append( "json_query", JSON.stringify( json_query ) );
 
             const url = self.$api("uri", "get-company-admin");
             self.$axios.get( url, { params } )
@@ -379,13 +240,29 @@ export default {
                 })
                 .catch( alert )
         },
-        afterClickPage( item ){
-            const self = this;
-            self.OpenMasterAdminList( item, false );
+        backToCompanyList(){
+            location.href='/company/company_list';
         },
-        dateFormatChange( date, format= "MM/DD/yyyy" ){
-            if( ! date ) return;
-            return moment(date).format(format);
+        goToRegistering(){
+            location.href=`/flexben/topup_deduct/registering?transaction=TOP-UP`;
+        },
+        clickTabs( tabItem ){
+            const self = this;
+            self.mainTabs.map( tab => {
+                tab.current = tabItem.name === tab.name;
+            })
+        },
+
+        /*  타임체크 로직 필요유무 확인  */
+        validationTimeCheck(){
+            const self = this;
+            const { subscribeStartDate, subscribeEndDate } = self.editCompanyData;
+            const startDate = moment( subscribeStartDate );
+            const endDate = moment( subscribeEndDate );
+
+            console.log( startDate, endDate, endDate.isAfter(startDate) )
+
+            return endDate.isAfter(startDate);
         },
     }
 }

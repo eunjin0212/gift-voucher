@@ -14,6 +14,7 @@ defineProps({
   backgroundRed: Boolean,
   borderDashed: Boolean,
   borderRed: Boolean,
+
   fitHeight: Boolean,
   disabled: Boolean,
   height12: Boolean,
@@ -56,6 +57,39 @@ defineProps({
         }"
         @click="$emit('clickEvent')"
         :disabled="disabled"
+        :type="inputtype"
+        :value="text"
+    >
+    <input
+        v-else-if="disabled"
+        class="border rounded border-gray-300 bg-gray-100 text-sm font-semibold transition-all duration-500 text-center"
+        :class="{
+            'px-5': fitContent,
+            'w-96':
+            !fitContent &&
+            !width20 &&
+            !width24 &&
+            !width28 &&
+            !width32 &&
+            !width60 &&
+            !widthFull,
+            'w-fit': fitContent,
+            'w-20': width20,
+            'w-24': width24,
+            'w-28': width28,
+            'w-32': width32,
+            'w-60' : width60,
+            'w-full': widthFull,
+            'border-dashed': borderDashed,
+            'border-gray-400': borderDashed,
+            'py-2.5': fitHeight,
+            'h-fit': fitHeight,
+            'h-14': !fitHeight && !height12,
+            'h-12': height12,
+            'text-gray-500' : !buttonWarningRed,
+            'text-red-500' : buttonWarningRed,
+        }"
+        :disabled="true"
         :type="inputtype"
         :value="text"
     >

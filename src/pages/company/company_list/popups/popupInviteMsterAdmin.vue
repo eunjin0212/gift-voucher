@@ -87,7 +87,7 @@ export default {
             }
 
             const url = self.$api("uri", "put-invite-admin" );
-            self.$axios.post( url, inviteForm )
+            self.$axios.put( url, inviteForm )
                 .then( () => {
                     alert(" resend ");
                 })

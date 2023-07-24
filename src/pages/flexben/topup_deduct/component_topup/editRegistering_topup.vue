@@ -1,8 +1,8 @@
 <template>
     <div>
-        <div class="flex flex-col p-3 w-full max-w-7xl mt-4 gap-3">
+        <div class="flex flex-col p-3 w-full max-w-7xl mt-4 gap-3 bg-white shadow-md shadow-gray-200 rounded-lg">
             <div class="overflow-hidden mt-3">
-                <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
+                <div class="border-gray-200 px-4 py-5 sm:p-0">
                     <dl class="sm:divide-y sm:divide-gray-200">
                         <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
                             <dt class="text-sm font-medium text-gray-500">company</dt>
@@ -20,12 +20,7 @@
                                 <div>
                                     <div class="space-y-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-10">
                                         <div class="flex items-center">
-                                            <input
-                                                name="point-execution-method" type="radio"
-                                                :checked="true"
-                                                class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                                            />
-                                            <label class="ml-3 block text-sm font-medium text-gray-700">
+                                            <label class="block text-sm font-medium text-gray-700">
                                                 Top-up
                                             </label>
                                         </div>
@@ -34,9 +29,63 @@
                             </dd>
                         </div>
                         <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                            <dt class="text-sm font-medium text-gray-500">Extension Period</dt>
+                            <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                                <div>
+                                    <span v-if="registerData.extendedPeriod == 'NONE' || !registerData.extendedPeriod"> None </span>
+                                    <span v-else> {{ `${registerData.extendedPeriod} Month` }} </span>
+                                </div>
+                            </dd>
+                        </div>
+
+                        <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                            <dt class="text-sm font-medium text-gray-500">Extended Use Date</dt>
+                            <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                                <span> {{ dateFormatChange(registerData.extendedStartDate) }} </span>
+                                <span v-if="registerData.extendedStartDate || registerData.extendedEndDate"> ~ </span>
+                                <span > {{ dateFormatChange(registerData.extendedEndDate) }} </span>
+                            </dd>
+                        </div>
+
+                        <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
                             <dt class="text-sm font-medium text-gray-500">Points</dt>
                             <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                                 <div> {{ registerData.mileageVolume }} </div>
+                            </dd>
+                        </div>
+
+                        <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                            <dt class="text-sm font-medium text-gray-500">PIC Name</dt>
+                            <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 flex justify-between">
+                                <ElementsInput
+                                    v-model="registerData.picName"
+                                    :maxlength="100"
+                                />
+                                <ElementsButton
+                                    :width20="true"
+                                    :height12="true"
+                                    :bgWhiteAndtextIndigo="true"
+                                    :text="'Save'"
+                                    @clickEvent="changeSelectedElem('picName')"
+                                />
+                            </dd>
+                        </div>
+
+                        <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                            <dt class="text-sm font-medium text-gray-500">Status</dt>
+                            <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 flex justify-between">
+                                <ElementsSelect
+                                    :width60="true"
+                                    :options="contractStatusOptions"
+                                    v-model="registerData.topUpContractStatus"
+                                />
+                                <ElementsButton
+                                    :width20="true"
+                                    :height12="true"
+                                    :bgWhiteAndtextIndigo="true"
+                                    :text="'Save'"
+                                    @clickEvent="changeSelectedElem('topUpContractStatus')"
+                                />
                             </dd>
                         </div>
 
@@ -83,7 +132,7 @@
                                         :height12="true"
                                         :bgWhiteAndtextIndigo="true"
                                         :text="'Save'"
-                                        @clickEvent="changeSelectedDocName('poDocNo')"
+                                        @clickEvent="changeSelectedElem('poDocNo')"
                                     />
                                 </dd>
                             </div>
@@ -132,7 +181,7 @@
                                         :height12="true"
                                         :bgWhiteAndtextIndigo="true"
                                         :text="'Save'"
-                                        @clickEvent="changeSelectedDocName('invoiceDocNo')"
+                                        @clickEvent="changeSelectedElem('invoiceDocNo')"
                                     />
                                 </dd>
                             </div>
@@ -181,7 +230,7 @@
                                         :height12="true"
                                         :bgWhiteAndtextIndigo="true"
                                         :text="'Save'"
-                                        @clickEvent="changeSelectedDocName('orDocNo')"
+                                        @clickEvent="changeSelectedElem('orDocNo')"
                                     />
                                 </dd>
                             </div>
@@ -201,6 +250,7 @@
 </template>
 
 <script>
+import moment from "moment";
 
 export default {
     mounted(){
@@ -225,7 +275,11 @@ export default {
                 orDocumentFilePath : null,
                 poDocNo : null,
                 invoiceDocNo : null,
-                orDocNo : null
+                orDocNo : null,
+                picName : "",
+                extendedPeriod : "",
+                extendedEndDate : "",
+                extendedStartDate : ""
             },
             documentFiles : {
                 poDocumentFile : null,
@@ -235,6 +289,12 @@ export default {
                 orDocumentFile : null,
                 poDocumentFileName : null
             },
+            contractStatusOptions : [
+                { text : "Requested", value : "REQUESTED" },
+                { text : "PO received", value : "PO_RECEIVED" },
+                { text : "Invoice sent", value : "INVOICE_SENT" },
+                { text : "Receipt issued", value : "RECEIPT_ISSUED" },
+            ],
         }
     },
     methods:{
@@ -318,7 +378,7 @@ export default {
             const self = this;
             return self.$axios.delete( filePath )
         },
-        changeSelectedDocName( elementName ){
+        changeSelectedElem( elementName ){
             const self = this;
             const mileageCompanyHistorySeq = new URLSearchParams( window.location.search ).get("mileageSeq");
             const updateData = {
@@ -331,6 +391,10 @@ export default {
                     let { message } = err.response.data;
                     alert( message );
                 })
+        },
+        dateFormatChange( date, format= "MM/DD/yyyy" ){
+            if( ! date ) return;
+            return moment(date).format(format);
         },
     }
 

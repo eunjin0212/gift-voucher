@@ -14,10 +14,12 @@ export default{
         isNotBgWhite : Boolean,
         lowerLimit : String,
         upperLimit : String,
-
+        placeholder : {
+            type : String,
+            default : 'mm/dd/yyyy'
+        }
 	},
     mounted (){
-        console.log( moment.tz.guess() )
     },
 	emits : ['update:modelValue', "changeDate"],
 	methods : {
@@ -72,17 +74,19 @@ export default{
 	<div>
 		<h1 v-if="name" class="mb-3 text-sm font-semibold text-slate-800">{{ name }}</h1>
 		<div
-			class="max-w-6xl h-12  flex transition-all duration-500"
+			class="max-w-6xl h-12 flex transition-all duration-500"
             :class="[ isNotBgWhite ? '' : 'bg-white']"
 		>
 			<Datepicker
                 inputFormat="MM/dd/yyyy"
-                class="shadow-sm block w-full sm:text-sm border-gray-300 rounded-md text-md border pr-3 text-right h-8"
+                class="shadow-sm block w-full sm:text-sm border-gray-300 rounded-md text-md border pr-3 text-right h-10"
                 :class="{'bg-slate-50 border-none' : disabled }"
 				v-model="dateValue"
                 :disabled="disabled"
                 :lowerLimit="stringToDate(lowerLimit)"
                 :upperLimit="stringToDate(upperLimit)"
+                :placeholder="placeholder"
+                :weekStartsOn="0"
 			/>
 		</div>
 		<p class="mt-3.5 text-xs font-normal text-red-500" v-show="error">*{{ error }}</p>

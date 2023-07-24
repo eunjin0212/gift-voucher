@@ -36,14 +36,14 @@ export default{
         },
         startPage(){
             const self = this;
-            if(self.endPage == self.totalPage ) return self.endPage - ( self.endPage % self.pageSize - 1 );
+            if(self.endPage == self.totalPage && self.endPage % self.pageSize != 0) return self.endPage - ( self.endPage % self.pageSize - 1 );
             return Math.max(self.endPage - ( self.pageSize-1 ) , 1);
         },
         currentPage:{
             get(){
                 const self = this;
                 if(!self.modelValue) self.$emit('update:modelValue', 1);
-                return this.modelValue 
+                return this.modelValue
             },
             set(value){
                 const self = this;

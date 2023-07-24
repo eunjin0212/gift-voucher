@@ -14,12 +14,23 @@
         "get-company" : "/api/company",
         "post-company" : "/api/company",
         "get-company-admin" : "/api/company/admin",
-        "put-company" : "/api/company",
+        "put-company-info" : "/api/company/company-info",
+        "put-company-usage-setting" : "/api/company/usage-setting",
+        "put-company-account-setting" : "/api/company/account-setting",
+        "post-company-name-duplicate-check" : "/api/company/duplicationCheck",
+
 
         "get-flexben-campaign-List" : "/api/flexben/campaign",
         "get-flexben-report-List" : "/api/flexben/report",
         "get-flexben-history" : "/api/flexben/history",
         "put-flexben-history" : "/api/flexben/history",
+
+        "get-flexben-product-info-list" : "/api/flexben/setting/product-info",
+        "get-flexben-product-info" : "/api/flexben/setting/product-info/{flexbenGoodsPriceCampaignSeq}",
+        "put-flexben-product-info" : "/api/flexben/setting/product-info",
+
+        "get-flexben-report-excel" : "/api/flexben/report/excel",
+        "get-flexben-history-excel" : "/api/flexben/history/excel",
 
         "get-join-inquiry" :  "/api/inquiry",
         "put-join-inquiry" : "/api/inquiry",
@@ -42,6 +53,11 @@
         "put-company-brand-on-off" : "/api/flexben/setting/brand-on-off/company",
         "put-company-flexben-campaign" :"/api/flexben/setting/type",
 
+        "get-flexben-point-summary" : "/api/flexben/summary/point-summary",
+        "get-flexben-available-company" : "/api/flexben/summary/available-company",
+        "get-flexben-rank-top-up" : "/api/flexben/summary/rank-top-up",
+
+        "test-api" : "/api/flexben/test",
         "ENDSTRING" : "END"
     }
 }
