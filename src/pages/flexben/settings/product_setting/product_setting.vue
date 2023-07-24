@@ -1,6 +1,7 @@
 <template>
     <div class="mt-8 p-3 rounded-lg w-full max-w-7xl bg-white shadow-md shadow-gray-200 flex flex-col">
         <ElementsButton
+            v-if="enableTestTools()"
             class="my-3"
             text="BizWallet - Product Status Update Test - test용도"
             :fit-content="true"
@@ -119,6 +120,9 @@ export default {
         }
     },
     methods : {
+        enableTestTools(){
+            return ! (process.env.VUE_APP_SERVER_MODE === 'prd');
+        },
         TestBizWallet(){
             const self = this;
             const url = self.$api("uri", "test-api");
