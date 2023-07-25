@@ -69,6 +69,12 @@
         "get-permission-role-group-bind-list" :  "/api/admin-setting/permission-group-bind/list/{roleGroupSeq}",
         "put-access-permission-role-group-bind" :  "/api/admin-setting/permission-group-bind/update/{roleGroupSeq}",
 
+        "get-holiday-version-list" : "/api/holiday/version/list",
+        "get-holiday-initial-list" : "/api/holiday/initial/{holidayInitialVersionSeq}",
+        "post-holiday-initial" : "/api/holiday/initial",
+        "put-holiday-initial" : "/api/holiday/initial/{holidayInitialVersionSeq}",
+        "delete-holiday-initial" : "/api/holiday/initial/{holidayInitialVersionSeq}",
+
         "test-api" : "/api/flexben/test",
         "ENDSTRING" : "END"
     }

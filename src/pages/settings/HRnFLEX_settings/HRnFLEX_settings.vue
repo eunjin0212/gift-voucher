@@ -7,7 +7,9 @@
                 <AccountSetting
                     v-if="mainTabs.find( tab=> tab.name === 'ACCOUNT' )?.current === true"
                 />
-
+                <HolidaySetting
+                    v-if="mainTabs.find( tab=> tab.name === 'HOLIDAY' )?.current === true"
+                />
             </div>
         </AppMain>
     </div>
@@ -18,10 +20,11 @@ import AppAside from "@/components/AppAside.vue";
 import AppMain from "@/components/main/AppMain.vue";
 import MainTabs from "@/components/main/sections/MainTabs.vue"
 import AccountSetting from '@/pages/settings/HRnFLEX_settings/account_setting/account_setting.vue'
+import HolidaySetting from '@/pages/settings/HRnFLEX_settings/holiday_setting/holiday_setting.vue'
 
 export default{
     components : {
-        AppAside, AppMain, MainTabs, AccountSetting
+        AppAside, AppMain, MainTabs, AccountSetting, HolidaySetting
     },
     data(){
         return{
@@ -34,7 +37,7 @@ export default{
     },
     mounted(){
         const self = this;
-        self.clickTabs( self.mainTabs[0] );
+        self.clickTabs( self.mainTabs[1] );
     },
     methods : {
         clickTabs( tabItem ){
