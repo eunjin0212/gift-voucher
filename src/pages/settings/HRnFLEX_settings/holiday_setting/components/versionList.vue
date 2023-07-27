@@ -36,12 +36,12 @@
                             {{ dateFormatter(version.regDate) }}
                             <br/> {{ dateFormatter(version.regDate, "HH:mm:ss") }}
                         </td>
-                        <td class="whitespace-nowrap px-3 py-4 text-sm text-center text-gray-700 cursor-pointer">
+                        <td class="whitespace-nowrap px-3 py-4 text-sm text-center text-gray-700">
                             {{ statusConvert[version.versionApplicationStatus] }}
                         </td>
                         <td class="whitespace-nowrap px-3 py-4 text-sm text-center text-gray-700">
                             <span
-                                class="underline text-blue-600"
+                                class="underline text-blue-600 cursor-pointer"
                                 @click="goToDetailHoliday( version )"
                             >
                                 {{ version.initialVersionTitle }}

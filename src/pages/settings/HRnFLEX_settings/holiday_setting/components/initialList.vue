@@ -17,9 +17,12 @@
                     </dd>
                 </div>
                 <div class="px-5 py-2 grid grid-cols-4 gap-4 ">
-                    <dt class="text-sm font-semibold leading-6 text-gray-900">Application Start Date</dt>
+                    <dt class="text-sm font-semibold leading-6 text-gray-900">Application Period </dt>
                     <dd class="text-sm leading-6 text-gray-700 col-span-3 mt-0">
-                        {{  dateFormatter(versionInfo.applicationPeriodStart)  }}
+                        <span>{{  dateFormatter(versionInfo.applicationPeriodStart)  }}</span>
+                        <span v-if="versionInfo.applicationPeriodEnd">
+                            - {{  dateFormatter(versionInfo.applicationPeriodEnd)  }}
+                        </span>
                     </dd>
                 </div>
                 <div class="px-5 py-2 grid grid-cols-4 gap-4 ">

@@ -37,7 +37,7 @@ export default{
     },
     mounted(){
         const self = this;
-        self.clickTabs( self.mainTabs[1] );
+        self.clickTabs( self.mainTabs[0] );
     },
     methods : {
         clickTabs( tabItem ){
