@@ -13,7 +13,7 @@
                 </div>
 
                 <ServiceUsageInfo
-                    v-show="mainTabs.find( tab=> tab.name === 'SERVICE_USAGE_INFO' ).current === true"
+                    v-if="mainTabs.find( tab=> tab.name === 'SERVICE_USAGE_INFO' ).current === true"
                     :flexbenHistory="flexbenHistory"
                     :registerData="registerData"
                     @register-top-up="goToRegistering"
@@ -66,6 +66,10 @@ export default {
         const self = this;
         self.getFlexbenType();
         self.getDisplayData();
+
+        window.addEventListener('hashchange', ()=>{
+            self.findCurrentPage();
+		});
     },
     data(){
         return{
@@ -108,7 +112,7 @@ export default {
             }
 
             self.getFlexbenHistoryList( self.registerData.companySeq );
-
+            self.findCurrentPage();
         },
         getCompanyData(){
             const self = this;
@@ -250,7 +254,18 @@ export default {
             const self = this;
             self.mainTabs.map( tab => {
                 tab.current = tabItem.name === tab.name;
-            })
+            });
+            location.hash = tabItem.name;
+        },
+        findCurrentPage(){
+            const self = this;
+            const hash = window.location.hash.substring(1)
+            if( ! hash ) return;
+
+            const tab = self.mainTabs.find( tab=> tab.name === hash );
+            if( ! tab.current ) {
+                self.clickTabs( tab );
+            }
         },
 
         /*  타임체크 로직 필요유무 확인  */

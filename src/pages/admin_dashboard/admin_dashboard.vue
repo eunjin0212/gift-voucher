@@ -90,10 +90,14 @@
                                         :fitContent="true"
                                         :bgWhiteAndtextIndigo="true"
                                         :height12="true"
+                                        @clickEvent="gotoCompanyInfoPage(company.subscriptionCompanySeq)"
                                     />
                                 </td>
                                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                    <div class="bg-white cursor-pointer border rounded hover:bg-red-100 border-rose-400 w-24 py-1 transition-all duration-500 text-center">
+                                    <div
+                                        class="bg-white cursor-pointer border rounded hover:bg-red-100 border-rose-400 w-24 py-1 transition-all duration-500 text-center"
+                                        @click="clickPeriodExtended(company.subscriptionCompanySeq)"
+                                    >
                                         <div
                                             href="#" class="text-rose-600   whitespace-normal"
                                         >
@@ -156,6 +160,9 @@ export default {
     methods : {
         gotoCompanyInfoPage( subscribeSeq ){
             location.href = `/company/company_information/?subscriptionCompanySeq=${subscribeSeq}`;
+        },
+        clickPeriodExtended( subscribeSeq ){
+            location.href = `/company/company_information?subscriptionCompanySeq=${subscribeSeq}#SETTINGS`
         },
         dateFormatChange( date, format= "MM/DD/yyyy" ){
             if( ! date ) return;
@@ -221,6 +228,7 @@ export default {
         const self = this;
         self.getCompanySummary();
         self.getCompany30LeftSubscribe();
+        self.getPointSummary();
     }
 }
 
