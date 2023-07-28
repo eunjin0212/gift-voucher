@@ -85,7 +85,7 @@
                                     class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                                 />
                                 <label for="" class="ml-3 block text-sm font-medium leading-6 text-gray-900">
-                                    Enable
+                                    Using Maintenance
                                 </label>
                             </div>
                             <div class="flex items-center">
@@ -94,7 +94,7 @@
                                     class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                                 />
                                 <label for="" class="ml-3 block text-sm font-medium leading-6 text-gray-900">
-                                    Disable
+                                    Using Service
                                 </label>
                             </div>
                         </dd>

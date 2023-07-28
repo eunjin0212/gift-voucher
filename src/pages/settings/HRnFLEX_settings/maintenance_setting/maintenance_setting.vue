@@ -64,8 +64,8 @@
                             <td class="whitespace-normal px-3 py-4 text-sm text-center text-gray-900"> {{ maintenance.depthTwoCategory || '-' }} </td>
                             <td class="whitespace-normal px-3 py-4 text-sm text-center text-gray-900"> {{ maintenance.maintenanceTitle }}</td>
                             <td class="whitespace-normal px-3 py-4 text-sm text-center text-gray-900">
-                                <span v-if="maintenance.maintenanceUseYn === 'Y'"> Enable </span>
-                                <span v-if="maintenance.maintenanceUseYn === 'N'"> Disabled </span>
+                                <span v-if="maintenance.maintenanceUseYn === 'Y'"> Using Maintenance </span>
+                                <span v-if="maintenance.maintenanceUseYn === 'N'"> Using Service </span>
                             </td>
                             <td class="whitespace-nowrap  text-sm text-gray-900 pr-3">
                                 <Menu as="div" class="relative inline-block text-left"
