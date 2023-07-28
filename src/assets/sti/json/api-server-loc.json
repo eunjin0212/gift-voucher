@@ -58,6 +58,9 @@
         "get-flexben-rank-top-up" : "/api/flexben/summary/rank-top-up",
 
         "test-api" : "/api/flexben/test",
+        "get-company-summary" : "/api/dashboard/companySummary",
+        "get-list-30-days-subscribe-company" : "/api/dashboard/30_subscirbeCompany",
+
         "ENDSTRING" : "END"
     }
 }
