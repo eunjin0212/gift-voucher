@@ -42,6 +42,9 @@
         "put-company-brand-on-off" : "/api/flexben/setting/brand-on-off/company",
         "put-company-flexben-campaign" :"/api/flexben/setting/type",
 
+        "get-company-summary" : "/api/dashboard/companySummary",
+        "get-list-30-days-subscribe-company" : "/api/dashboard/30_subscirbeCompany",
+
         "ENDSTRING" : "END"
     }
 }

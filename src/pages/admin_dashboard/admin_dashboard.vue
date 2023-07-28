@@ -43,9 +43,10 @@
                     <h3 class="text-xl font-semibold leading-6 text-gray-900">To be Expired Service</h3>
                     <div class=" mt-6 overflow-x-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                     <table class="relative min-w-full divide-y divide-gray-300  ">
-                        <thead class="sticky bg-white top-0 left-0 right-0 border-b border-gray-200" style="z-index: 1;">
+                        <thead class="sticky bg-white top-0 left-0 right-0 border-b border-gray-200 " style="z-index: 1;">
                             <tr>
-                                <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900 sm:pl-6"> Company <br/> Name </th>
+                                <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900 sm:pl-6"> No </th>
+                                <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900"> Company <br/> Name </th>
                                 <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900">Start <br/> Date</th>
                                 <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900">End <br/> Date</th>
                                 <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900">Admin <br/> Name</th>
@@ -61,17 +62,28 @@
                                 </th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-gray-200 bg-white"
+                        <tbody class="divide-y divide-gray-200"
+                            v-if="toBeExpire.list.length == 0 "
+                        >
+                            <tr class="">
+                                <td class="py-10 items-center text-center">
+                                    No To be Expired Service
+                                </td>
+                            </tr>
+                        </tbody>
+
+                        <tbody v-else class="divide-y divide-gray-200 bg-white"
                         >
                             <tr v-for="(company, index) in toBeExpire.list" v-bind:key="index" :class="{ 'bg-[#F8F8FD]': (index % 2 !== 0) }">
-                                <td class="text-center whitespace-nowrap px-3 py-4 text-sm text-gray-900 sm:pl-6"> Sharetreats </td>
-                                <td class="text-center whitespace-nowrap px-3 py-4 text-sm text-gray-900">  01/01/2023 </td>
-                                <td class="text-center whitespace-nowrap px-3 py-4 text-sm text-gray-900">  01/01/2023 </td>
+                                <td class="text-center whitespace-nowrap px-3 py-4 text-sm text-gray-900 sm:pl-6"> {{ company.rowNum }} </td>
+                                <td class="text-center whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ company.companyName }} </td>
+                                <td class="text-center whitespace-nowrap px-3 py-4 text-sm text-gray-900">  {{ dateFormatChange( company.subscribeStartDate ) }} </td>
+                                <td class="text-center whitespace-nowrap px-3 py-4 text-sm text-gray-900">  {{ dateFormatChange( company.subscribeEndDate ) }}</td>
                                 <td class="text-center whitespace-nowrap px-3 py-4 text-sm text-gray-900"> henry </td>
                                 <td class="text-center whitespace-nowrap px-3 py-4 text-sm text-gray-900"> henry@sharetreats.com </td>
                                 <td class="text-center whitespace-nowrap px-3 py-4 text-sm text-gray-900"> 09000000000  </td>
-                                <td class="text-center whitespace-nowrap px-3 py-4 text-sm text-gray-900"> 3,000 </td>
-                                <td class="text-center whitespace-nowrap px-3 py-4 text-sm text-gray-900"> 55 </td>
+                                <td class="text-center whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ formatNumberWithComma(company.walletCompanyMileage) }} </td>
+                                <td class="text-center whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ company.empCnt }} </td>
                                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                                     <ElementsButton
                                         :text="'Info'"
@@ -113,6 +125,7 @@ import AppAside from "@/components/AppAside.vue";
 import AppMain from "@/components/main/AppMain.vue";
 import ElementsPagination from "@/components/elements/ElementsPagination.vue"
 import ElementsButton from "@/components/elements/ElementsButton.vue"
+import moment from 'moment';
 
 export default {
     components : {
@@ -124,26 +137,23 @@ export default {
                 TRIAL : { name: 'Texting Company', stat: 71897 },
                 ACTIVE : { name: 'Active Company', stat: 71897 },
                 SUSPENDED : { name: 'Suspended Company', stat: 71897 },
-                DROP_OUT : { name: 'Drop out Company', stat: 71897 },
+                DROP_OUT : { name: 'Drop out Company', stat: 0 },
             },
             pointStats : {
-                TOTAL_TOP_UP : { name: 'Total top-up point', stat: 1000000000 },
-                AVAILABLE : { name: 'Available Point', stat: 10000 },
-                USED_POINT : { name: 'Used Point', stat: 10 },
+                TOTAL_TOP_UP : { name: 'Total top-up point', stat: 0 },
+                AVAILABLE : { name: 'Available Point', stat: 0 },
+                USED_POINT : { name: 'Used Point', stat: 0 },
             },
-            toBeExpire :{
+            toBeExpire : {
                 limit : 10,
-                offset : null,
+                offset : 0,
                 page : 1,
-                total : 66,
-                list : Array.from( Array(10) ),
+                total : 0,
+                list : [],
             },
         }
     },
     methods : {
-        afterClickPage( item ){
-            console.log(item)
-        },
         gotoCompanyInfoPage( subscribeSeq ){
             location.href = `/company/company_information/?subscriptionCompanySeq=${subscribeSeq}`;
         },
@@ -156,7 +166,61 @@ export default {
             const local = 'en-US';
             const formattedNumber = number.toLocaleString(local);
             return formattedNumber;
-        }
+        },
+        getCompanySummary(){
+            const self = this;
+            const url = self.$api("uri", "get-company-summary");
+            self.$axios.get( url )
+                        .then(res => {
+                            const { active,  suspended, testing } = res.data.data;
+                            self.companyStats.TRIAL.stat = testing;
+                            self.companyStats.ACTIVE.stat = active;
+                            self.companyStats.SUSPENDED.stat = suspended;
+
+                        }).catch( err => {
+                            alert(err);
+                        })
+        },
+        getCompany30LeftSubscribe( offset=0, afterClickPage = false ){
+            const self = this;
+            const url = self.$api( "uri", "get-list-30-days-subscribe-company" );
+            self.toBeExpire.offset = offset;
+
+            let json_query = {  limit : self.toBeExpire.limit, offset };
+
+            self.$axios.get( url , { params : { json_query : JSON.stringify( json_query ) } }  )
+                .then(res => {
+                    self.toBeExpire.total = res.data.data.total;
+                    self.toBeExpire.list = res.data.data.list;
+                    if( ! afterClickPage ){
+                        self.toBeExpire.page = 1;
+                    }
+                })
+                .catch( err => {
+                    alert(err);
+                })
+        },
+        afterClickPage( item ){
+            const self = this;
+            self.getCompany30LeftSubscribe( item , true );
+        },
+        getPointSummary(){
+            const self = this;
+            const url = self.$api("uri", "get-flexben-point-summary" );
+
+            self.$axios.get( url )
+                    .then( res => {
+                        const { totalAvailable, totalTopUp, totalUsed } = res.data.data.data;
+                        self.pointStats.TOTAL_TOP_UP.stat = totalTopUp;
+                        self.pointStats.AVAILABLE.stat = totalAvailable;
+                        self.pointStats.USED_POINT.stat = totalUsed;
+                    })
+        },
+    },
+    mounted(){
+        const self = this;
+        self.getCompanySummary();
+        self.getCompany30LeftSubscribe();
     }
 }
 
