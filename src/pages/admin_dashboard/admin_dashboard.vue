@@ -49,9 +49,9 @@
                                 <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900"> Company <br/> Name </th>
                                 <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900">Start <br/> Date</th>
                                 <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900">End <br/> Date</th>
-                                <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900">Admin <br/> Name</th>
-                                <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900">Admin <br/> Email</th>
-                                <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900">Admin <br/> Phone <br/> Number </th>
+                                <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900">PIC <br/> Name</th>
+                                <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900">PIC <br/> Email</th>
+                                <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900">PIC <br/> Phone <br/> Number </th>
                                 <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900">Remain Point </th>
                                 <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900">Num Of <br/> Usage <br/> Employees </th>
                                 <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
@@ -79,9 +79,9 @@
                                 <td class="text-center whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ company.companyName }} </td>
                                 <td class="text-center whitespace-nowrap px-3 py-4 text-sm text-gray-900">  {{ dateFormatChange( company.subscribeStartDate ) }} </td>
                                 <td class="text-center whitespace-nowrap px-3 py-4 text-sm text-gray-900">  {{ dateFormatChange( company.subscribeEndDate ) }}</td>
-                                <td class="text-center whitespace-nowrap px-3 py-4 text-sm text-gray-900"> henry </td>
-                                <td class="text-center whitespace-nowrap px-3 py-4 text-sm text-gray-900"> henry@sharetreats.com </td>
-                                <td class="text-center whitespace-nowrap px-3 py-4 text-sm text-gray-900"> 09000000000  </td>
+                                <td class="text-center whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ company.subscriptionPicName }} </td>
+                                <td class="text-center whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ company.subscriptionPicEmail}} </td>
+                                <td class="text-center whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ formatPhoneNumber(company.subscriptionPicPhoneNumber) }} </td>
                                 <td class="text-center whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ formatNumberWithComma(company.walletCompanyMileage) }} </td>
                                 <td class="text-center whitespace-nowrap px-3 py-4 text-sm text-gray-900"> {{ company.empCnt }} </td>
                                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
@@ -141,7 +141,7 @@ export default {
                 TRIAL : { name: 'Texting Company', stat: 71897 },
                 ACTIVE : { name: 'Active Company', stat: 71897 },
                 SUSPENDED : { name: 'Suspended Company', stat: 71897 },
-                DROP_OUT : { name: 'Drop out Company', stat: 0 },
+                // DROP_OUT : { name: 'Drop out Company', stat: 0 },
             },
             pointStats : {
                 TOTAL_TOP_UP : { name: 'Total top-up point', stat: 0 },
@@ -173,6 +173,16 @@ export default {
             const local = 'en-US';
             const formattedNumber = number.toLocaleString(local);
             return formattedNumber;
+        },
+        formatPhoneNumber(phoneNumber) {
+            const regex = /^(\d{4})(\d{3})(\d{1,})$/;
+            const match = regex.exec(phoneNumber);
+
+            if (match) {
+                const formattedNumber = `${match[1]}-${match[2]}-${match[3]}`;
+                return formattedNumber;
+            }
+            return phoneNumber;
         },
         getCompanySummary(){
             const self = this;
