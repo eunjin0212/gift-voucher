@@ -69,6 +69,7 @@
                             </td>
                             <td class="whitespace-nowrap  text-sm text-gray-900 pr-3">
                                 <Menu as="div" class="relative inline-block text-left"
+                                    v-if="$appUtil.checkPermission('SYSTEM_MAINTENANCE_EDIT')"
                                 >
                                     <div>
                                         <MenuButton class="flex items-center rounded-full  text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">
