@@ -70,7 +70,7 @@ const pages = {
     'inquiry' : {
         template: 'public/default.html',
         title: 'Inquiry',
-        permission : ['ACTIVATE_PROCESS_VIEW', 'ACTIVATE_PROCESS_EDIT']
+        permission : []
     },
     report : {
         template: 'public/default.html',
