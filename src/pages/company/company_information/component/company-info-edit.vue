@@ -7,8 +7,8 @@
                     <ElementsButton
                         :width32="true"
                         :text="'Edit'"
-                        v-if="! isEdit "
-                        @click="$emit('update:isEdit', true)"
+                        v-if="! isEdit && $appUtil.checkPermission('COMPANY_SETTING_EDIT')"
+                       @click="$emit('update:isEdit', true)"
                     />
                 </div>
                 <ElementsInput
@@ -165,6 +165,7 @@
                     :width32="true"
                     :text="'Save'"
                     :inputtype="'submit'"
+                    v-if="$appUtil.checkPermission('COMPANY_SETTING_EDIT')"
                 />
             </div>
         </form>

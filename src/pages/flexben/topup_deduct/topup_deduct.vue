@@ -10,6 +10,7 @@
                         :fitContent="true"
                         class="self-end "
                         @clickEvent="goToRegistering()"
+                        v-if="$appUtil.checkPermission('FLEXBEN_EXECUTE_EDIT')"
                     />
                 </div>
                 <div class="mt-8 p-3 rounded-lg w-full max-w-7xl bg-white shadow-md shadow-gray-200 flex flex-col">

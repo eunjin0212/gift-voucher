@@ -15,7 +15,8 @@ function loadPages() {
       entry: pEnum === 'index' ? './src/main.js' : `./src/pages/${pEnum}/${lastPage}.js`,
       template: pageInfo.template || 'public/landing.html',
       title: pageInfo.title || 'HR Project',
-      chunks: ['chunk-vendors', 'chunk-common', pEnum]
+      chunks: ['chunk-vendors', 'chunk-common', pEnum],
+      meta:{ 'permission': pageInfo.permission ? pageInfo.permission.join(',') :  '' }
     }
   })
 

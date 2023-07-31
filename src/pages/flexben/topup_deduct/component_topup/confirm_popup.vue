@@ -125,7 +125,10 @@
                         </dd>
                     </div>
                 </dl>
-                <div class="flex gap-2 justify-end border-t border-gray-200 py-4 px-6">
+                <div
+                    class="flex gap-2 justify-end border-t border-gray-200 py-4 px-6"
+                    v-if="$appUtil.checkPermission('FLEXBEN_EXECUTE_EDIT')"
+                >
                     <ElementsButton
                         text="Cancel"
                         :width28="true"

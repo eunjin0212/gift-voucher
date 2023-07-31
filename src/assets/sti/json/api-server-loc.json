@@ -57,6 +57,20 @@
         "get-flexben-available-company" : "/api/flexben/summary/available-company",
         "get-flexben-rank-top-up" : "/api/flexben/summary/rank-top-up",
 
+        "get-hr-admin-list" : "/api/hr-admin",
+        "post-hr-admin" : "/api/hr-admin",
+        "put-hr-admin" : "/api/hr-admin",
+        "delete-hr-admin" : "/api/hr-admin",
+
+        "get-permission-role-group-list" :  "/api/admin-setting/permission-group/list",
+        "post-permission-role-group" :  "/api/admin-setting/permission-group/insert",
+        "put-permission-role-group" :  "/api/admin-setting/permission-group/update/{roleGroupSeq}",
+        "delete-permission-role-group" :  "/api/admin-setting/permission-group/delete/{roleGroupSeq}",
+        "get-role-group-employee-bind-list" :  "/api/admin-setting/role-group-bind/list/{roleGroupSeq}",
+        "put-role-group-employee-bind" :  "/api/admin-setting/role-group-bind/update/{roleGroupSeq}",
+        "get-permission-role-group-bind-list" :  "/api/admin-setting/permission-group-bind/list/{roleGroupSeq}",
+        "put-access-permission-role-group-bind" :  "/api/admin-setting/permission-group-bind/update/{roleGroupSeq}",
+
         "test-api" : "/api/flexben/test",
         "ENDSTRING" : "END"
     }

@@ -16,14 +16,6 @@ export default {
     data() {
         return {
             companyCount : null,
-            tabs: [
-                {
-                name: "company",
-                text: "Company",
-                count : null,
-                current: true,
-                },
-            ],
             searchOptions : [
                 { text : "Company Name" , value : "COMPANY_NAME" },
                 { text : 'PIC Name' , value : 'PIC_NAME'}
@@ -148,6 +140,7 @@ export default {
             <div class="mt-8 p-3 rounded-lg w-full max-w-7xl bg-white shadow-md shadow-gray-200 flex flex-col">
                 <div class="flex py-5 justify-end">
                     <button class="h-12 w-fit px-5 py-3 border rounded border-indigo-600 bg-indigo-600 text-sm font-semibold text-white hover:bg-indigo-800 transition-all duration-500 text-center"
+                        v-if="$appUtil.checkPermission('ACTIVATE_PROCESS_EDIT')"
                         @click="companyRegistrationPop">
                         + Registration Company
                     </button>
@@ -223,18 +216,20 @@ export default {
                                     />
                                 </td>
                                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                    <div
-                                        v-if="company.companySubscribeStatus =='ACTIVE'"
-                                        class="cursor-pointer border rounded hover:bg-red-100 border-rose-400 w-24 py-1 transition-all duration-500 text-center"
-                                    >
+                                    <div v-if="$appUtil.checkPermission('COMPANY_SETTING_EDIT')">
                                         <div
-                                            href="#" class="text-rose-600   whitespace-normal"
-                                            @click="clickPasswordSending( company )"
+                                            v-if="company.companySubscribeStatus =='ACTIVE'"
+                                            class="cursor-pointer border rounded hover:bg-red-100 border-rose-400 w-24 py-1 transition-all duration-500 text-center"
                                         >
-                                            Password Sending
+                                            <div
+                                                href="#" class="text-rose-600   whitespace-normal"
+                                                @click="clickPasswordSending( company )"
+                                            >
+                                                Password Sending
+                                            </div>
                                         </div>
+                                        <div v-else-if="company.companySubscribeStatus =='SUSPENDED'" class="text-center text-sm text-gray-600"> Suspended <br/> Company </div>
                                     </div>
-                                    <div v-else class="text-center text-sm text-gray-600"> Suspended <br/> Company </div>
                                 </td>
                             </tr>
                         </tbody>

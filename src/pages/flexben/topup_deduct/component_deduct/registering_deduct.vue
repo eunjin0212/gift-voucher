@@ -95,7 +95,10 @@
                         </dl>
                     </div>
                 </div>
-                <div class="flex justify-end gap-4">
+                <div
+                    class="flex justify-end gap-4"
+                    v-if="$appUtil.checkPermission('FLEXBEN_EXECUTE_EDIT')"
+                >
                     <ElementsButton
                         :backgroundWhite="true"
                         :inputtype="'button'"

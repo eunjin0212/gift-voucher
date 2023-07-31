@@ -44,6 +44,7 @@
                                         <label for="about" class="block text-sm text-gray-600 font-semibold leading-6">Product Description</label>
                                         <div class="mt-2 mr-5 ">
                                             <textarea id="about" name="about" rows="20"
+                                                :disabled="!$appUtil.checkPermission('FLEXBEN_SETTING_EDIT')"
                                                 class="resize-none block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                                 v-model="productInfo.goodsDescription"
                                             />
@@ -59,7 +60,7 @@
                                             v-model="productInfo.displayYn"
                                             true-value="Y"
                                             false-value="N"
-                                            :disabled="productInfo.goodsSalesStatus ==='STOP'"
+                                            :disabled="productInfo.goodsSalesStatus ==='STOP' || !$appUtil.checkPermission('FLEXBEN_SETTING_EDIT')"
                                             type="checkbox" class="cursor-pointer opacity-0 absolute w-full h-full peer appearance-none rounded-md"
                                         />
                                         <span :class="[productInfo.displayYn=='N' ? 'translate-x-5' : 'translate-x-0', 'pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out']">
@@ -88,7 +89,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="self-end pb-5 pr-5">
+                <div class="self-end pb-5 pr-5"
+                    v-if="$appUtil.checkPermission('FLEXBEN_SETTING_EDIT')"
+                >
                     <ElementsButton
                         :width32="true"
                         :text="'Save'"

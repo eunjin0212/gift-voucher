@@ -9,7 +9,7 @@
                         <dd class="text-sm text-gray-500"> Discount rate {{ type.flexbenCampaignTitle }} </dd>
                         <dt class="sr-only"> Count of company </dt>
                         <dd class="mt-3">
-                            <span class="px-2 py-1 text-xs font-medium text-green-800"> {{ type.countUseCompany }} Company </span>
+                            <span class="px-2 py-1 text-xs font-medium text-green-800"> {{ type.countUseCompany || 0 }} Company </span>
                         </dd>
                     </dl>
                 </div>
@@ -19,7 +19,8 @@
                             class="cursor-pointer rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-500 hover:text-gray-800"
                             @click="clickEditFlexbenType(type.flexbenCampaignSeq)"
                         >
-                            Edit
+                            <span v-if="$appUtil.checkPermission('FLEXBEN_SETTING_EDIT')"> Edit </span>
+                            <span v-else > View </span>
                         </div>
                     </div>
                 </div>

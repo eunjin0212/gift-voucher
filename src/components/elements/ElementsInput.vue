@@ -24,7 +24,7 @@ defineProps({
   minNumber: Number,
   maxlength: Number,
   required : Boolean,
-  isError : Boolean,
+  isError : Boolean
 });
 
 defineEmits(["update:modelValue"]);

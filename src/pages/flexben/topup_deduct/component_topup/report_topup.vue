@@ -61,7 +61,11 @@
                         </td>
                         <td class="whitespace-nowrap px-3 py-4 text-sm text-center text-gray-900"> {{ contractStatusObj[history.topUpContractStatus] }}  </td>
                         <td class="whitespace-nowrap  text-sm text-gray-900 pr-3">
-                            <div class="cursor-pointer border border-blue-300 text-center px-4 py-2 rounded-md" @click="clickEditHistoryFile(history.mileageCompanyHistorySeq)"> Edit </div>
+                            <div
+                                v-if="$appUtil.checkPermission('FLEXBEN_EXECUTE_EDIT')"
+                                class="cursor-pointer border border-blue-300 text-center px-4 py-2 rounded-md"
+                                @click="clickEditHistoryFile(history.mileageCompanyHistorySeq)"
+                            > Edit </div>
                         </td>
                     </tr>
                 </tbody>

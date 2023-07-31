@@ -21,6 +21,7 @@
                             <ElementsToggle
                                 :trueValue="'ACTIVE'"
                                 :falseValue="'DEACTIVATED'"
+                                :disabled="!$appUtil.checkPermission('COMPANY_SETTING_EDIT')"
                                 v-model="companySettingData.filingUsageStatus"
                             />
                         </dd>
@@ -33,6 +34,7 @@
                             <ElementsToggle
                                 :trueValue="'ACTIVE'"
                                 :falseValue="'DEACTIVATED'"
+                                :disabled="!$appUtil.checkPermission('COMPANY_SETTING_EDIT')"
                                 v-model="companySettingData.payrollUsageStatus"
                             />
                         </dd>
@@ -45,6 +47,7 @@
                             <ElementsToggle
                                 :trueValue="'ACTIVE'"
                                 :falseValue="'DEACTIVATED'"
+                                :disabled="!$appUtil.checkPermission('COMPANY_SETTING_EDIT')"
                                 v-model="companySettingData.kpiUsageStatus"
                             />
                         </dd>
@@ -54,6 +57,7 @@
                             class="col-span-3 place-self-end"
                             :text="'Save'"
                             :width60="true"
+                            v-if="$appUtil.checkPermission('COMPANY_SETTING_EDIT')"
                             @click="$emit('submit-usage-settings', companySettingData)"
                         />
                     </div>

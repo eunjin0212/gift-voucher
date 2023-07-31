@@ -29,6 +29,33 @@ async function fetchAuthorityFromNetwork(){
     }
 }
 
+function checkPermission(pageCode){
+    if( ! window.logOnProfile ) return false;
+
+    const { permissions } = window.logOnProfile.data;
+    return permissions.includes(pageCode);
+}
+
+function checkPermissionArray( permissionArr ){
+    if( ! permissionArr ) return false;
+    for( const code of permissionArr ){
+        if( checkPermission( code ) ) return true;
+    }
+    return false;
+}
+
+function checkPagePermission(){
+    const pageCodeList = document.querySelector('meta[name="permission"]')?.content;
+
+    if( !pageCodeList ) return;
+
+    for (const pageCode of pageCodeList.split(',')) {
+        if(checkPermission(pageCode)) return;
+    }
+    alert("You don't have permission this page");
+    history.back();
+}
+
 async function initApp(app, disableSignOn){
     var isProd = process.env.NODE_ENV === 'production';
     // for debugging purpose
@@ -39,19 +66,20 @@ async function initApp(app, disableSignOn){
         window.slog = console.log.bind(console);
         window.slog.clear = console.clear.bind(console);
     }
-    
+
 
     window.logOnProfile = null;
 
     if( ! disableSignOn ){
         let authResponse = await fetchAuthorityFromNetwork();
         window.logOnProfile = authResponse;
+        checkPagePermission();
     }
 
 
     const init = () => console.log("plugin can be used!!");
     app.config.globalProperties.$init=init;
-    
+
     // app.config.unwrapInjectedRef = true;
     app.config.globalProperties.$axios=createAxios(emitter);
     app.config.globalProperties.$api=serverApi;
@@ -62,14 +90,14 @@ async function initApp(app, disableSignOn){
         return !!logOnProfile;
     }
     app.config.globalProperties.$appUtil={
-        uuidv4,
+        uuidv4, checkPermission, checkPermissionArray
     };
 
     app.provide('api', serverApi);
     app.provide('emitter', emitter);
     app.provide('axios', app.config.globalProperties.$axios);
     app.provide('appUtil', app.config.globalProperties.$appUtil);
-    
+
     return app;
 }
 
