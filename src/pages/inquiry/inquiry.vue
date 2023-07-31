@@ -2,7 +2,7 @@
     <div id="app" class="min-w-[1024px] min-h-[100vh] flex">
         <AppAside />
         <AppMain :headerName="'Inquiry'">
-            <div class="mt-8 p-3 rounded-lg w-full max-w-7xl bg-white shadow-md shadow-gray-200 flex flex-col">
+            <div class="mt-8 p-3 rounded-lg w-full max-w-7xl bg-white shadow-md shadow-gray-200 flex flex-col" v-if="$appUtil.checkPermissionArray(['ACTIVATE_PROCESS_VIEW', 'ACTIVATE_PROCESS_EDIT'])">
                 <div class="flex flex-col items-end gap-5 flex-wrap py-5 pr-5">
                     <div class="flex flex-row w-full justify-between">
                         <ElementsButton

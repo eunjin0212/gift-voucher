@@ -68,7 +68,9 @@
 
 
 <!-- // Suspended Setting ================================================================================== -->
-        <div class="mt-5 px-6 py-3 w-[50vw] bg-white shadow-md shadow-gray-200">
+        <div class="mt-5 px-6 py-3 w-[50vw] bg-white shadow-md shadow-gray-200"
+            v-if="$appUtil.checkPermissionArray(['COMPANY_SUSPENDED_VIEW', 'COMPANY_SUSPENDED_EDIT'])"
+        >
             <div class="text-indigo-900 font-semibold text-xl pt-3"> Suspend Service </div>
             <template v-if="registerData.companySubscribeStatus === 'SUSPENDED'">
                 <div class="pt-4 flex flex-col gap-24 justify-end">
@@ -83,6 +85,7 @@
                         </div>
                     </div>
                     <ElementsButton
+                        v-if="$appUtil.checkPermission('COMPANY_SUSPENDED_EDIT')"
                         class=" place-self-end pt-4"
                         :text="'Restore'"
                         :width60="true"
@@ -103,6 +106,7 @@
                         :width60="true"
                         :backgroundRed="true"
                         @clickEvent="openPopup()"
+                        v-if="$appUtil.checkPermission('COMPANY_SUSPENDED_EDIT')"
                     />
                 </div>
             </template>
@@ -138,6 +142,7 @@
                         :lowerLimit="todayDate"
                     />
                     <ElementsButton
+                        v-if="$appUtil.checkPermission('COMPANY_SUSPENDED_EDIT')"
                         class="col-span-3 place-self-end pt-4"
                         :disabled="! companySettingData.companySubscribeStatus "
                         :text="'Suspend'"

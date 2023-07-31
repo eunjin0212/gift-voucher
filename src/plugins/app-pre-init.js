@@ -36,6 +36,7 @@ function checkPermission(pageCode){
     return permissions.includes(pageCode);
 }
 
+// 하나라도 있으면 true
 function checkPermissionArray( permissionArr ){
     if( ! permissionArr ) return false;
     for( const code of permissionArr ){
