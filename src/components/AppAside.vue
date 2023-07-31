@@ -28,6 +28,7 @@ let items = reactive([
         href: "/admin_dashboard",
         img: "app-side-1",
         text: "Summary",
+        hasPermission : true
     },
     {
         href: "/inquiry",

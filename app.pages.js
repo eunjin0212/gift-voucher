@@ -89,7 +89,8 @@ const pages = {
     },
     admin_dashboard : {
         template: 'public/default.html',
-        title: 'Summary'
+        title: 'Summary',
+        permission : []
 	}
 }
 
