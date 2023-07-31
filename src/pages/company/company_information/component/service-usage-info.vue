@@ -95,6 +95,7 @@ export default {
             }
             return 'Active';
         }
-    }
+    },
+
 }
 </script>

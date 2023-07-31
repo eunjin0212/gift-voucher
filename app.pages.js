@@ -86,7 +86,11 @@ const pages = {
         template: 'public/default.html',
         title: 'HRnFLEX Settings',
         permission : ADMIN_SETTING
-    }
+    },
+    admin_dashboard : {
+        template: 'public/default.html',
+        title: 'Summary'
+	}
 }
 
 
