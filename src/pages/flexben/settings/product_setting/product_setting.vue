@@ -121,7 +121,8 @@ export default {
     },
     methods : {
         enableTestTools(){
-            return ! (process.env.VUE_APP_SERVER_MODE === 'prd');
+            // return ! (process.env.VUE_APP_SERVER_MODE === 'prd');
+            return true;
         },
         TestBizWallet(){
             const self = this;
