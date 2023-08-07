@@ -1,12 +1,11 @@
 <template>
     <div class="mt-8 p-3 rounded-lg w-full max-w-7xl bg-white shadow-md shadow-gray-200 flex flex-col">
         <ElementsButton
-            v-if="enableTestTools()"
             class="my-3"
-            text="BizWallet - Product Status Update Test - test용도"
+            text="Update Product Status"
             :fit-content="true"
             :height12="true"
-            @click-event="TestBizWallet()"
+            @click-event="updateProductStatus()"
         />
         <div class="flex gap-2 max-w-full my-4">
             <ElementsSelect
@@ -124,10 +123,14 @@ export default {
             // return ! (process.env.VUE_APP_SERVER_MODE === 'prd');
             return true;
         },
-        TestBizWallet(){
+        updateProductStatus(){
             const self = this;
-            const url = self.$api("uri", "test-api");
-            self.$axios.post( url ).then(res => res ).catch( console.error )
+            const url = self.$api("uri", "post-update-product-status");
+            self.$axios.post( url )
+                        .then(res => res )
+                        .catch( err =>{
+                            alert(err)
+                        } )
         },
         getFlexbenType(){
             const self = this;

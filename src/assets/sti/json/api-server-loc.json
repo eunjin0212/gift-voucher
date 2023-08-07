@@ -74,7 +74,7 @@
         "get-system-maintenance-list" : "/api/system-maintenance/list",
         "put-system-maintenance-info" : "/api/system-maintenance/{systemMaintenanceSeq}",
 
-        "test-api" : "/api/flexben/test",
+        "post-update-product-status" : "/api/flexben/product-update",
         "ENDSTRING" : "END"
     }
 }
