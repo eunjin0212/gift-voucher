@@ -74,6 +74,12 @@
         "get-company-summary" : "/api/dashboard/companySummary",
         "get-list-30-days-subscribe-company" : "/api/dashboard/30_subscirbeCompany",
 
+        "get-holiday-version-list" : "/api/holiday/version/list",
+        "get-holiday-initial-list" : "/api/holiday/initial/{holidayInitialVersionSeq}",
+        "post-holiday-initial" : "/api/holiday/initial",
+        "put-holiday-initial" : "/api/holiday/initial/{holidayInitialVersionSeq}",
+        "delete-holiday-initial" : "/api/holiday/initial/{holidayInitialVersionSeq}",
+
 
         "get-system-maintenance-list" : "/api/system-maintenance/list",
         "put-system-maintenance-info" : "/api/system-maintenance/{systemMaintenanceSeq}",

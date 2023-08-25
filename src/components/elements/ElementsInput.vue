@@ -9,6 +9,8 @@ defineProps({
   full: Boolean,
   width24: Boolean,
   width14: Boolean,
+  width40 : Boolean,
+  width56: Boolean,
   width60: Boolean,
   width72: Boolean,
   height11: Boolean,
@@ -24,7 +26,8 @@ defineProps({
   minNumber: Number,
   maxlength: Number,
   required : Boolean,
-  isError : Boolean
+  isError : Boolean,
+  textCenter : Boolean,
 });
 
 defineEmits(["update:modelValue"]);
@@ -43,13 +46,16 @@ defineEmits(["update:modelValue"]);
           'text-right': isNumber,
           'mt-3': name,
           'border-red-500': error || isError,
-          'w-96': !full && !width24 && !width14 && !width60 && !width72,
+          'w-96': !full && !width24 && !width14 && !width60 && !width72 && !width56 && !width40,
           'w-60': width60,
+          'w-56': width56,
+          'w-40': width40,
           'w-full': full,
           'w-24': width24,
           'w-14': width14,
           'w-72': width72,
           'bg-gray-100': disabled,
+          'text-center' : textCenter,
         }"
         :type="inputtype || 'text'"
         :placeholder="placeholder"
