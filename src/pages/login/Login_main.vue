@@ -37,17 +37,6 @@ export default {
             self.loginRequest.loginId = "";
             self.loginRequest.loginPwd = "";
         },
-        isloginPwdOk(pwd) {
-            //비밀번호가 입력되어 있는지 체크
-            const self = this;
-            if (pwd == "") {
-                self.loginRequestError.loginPwd =
-                    "Please provide your loginPwd";
-            } else {
-                self.loginRequestError.loginPwd = "";
-                return 0;
-            }
-        },
         errMsgReset() {
             const self = this;
             self.loginRequestError.loginId = "";
@@ -57,22 +46,22 @@ export default {
             const self = this;
 
             //비어있는 갯수 체크
-            let notVaild = 0;
+            let isLoginValid = true;
 
             //--------------
             if (self.loginRequest.loginId == "") {
                 self.loginRequestError.loginId =
                     "Please enter a vaild Account";
-                notVaild += 1;
+                isLoginValid = false;
             }
             if (self.loginRequest.loginPwd == "") {
                 self.loginRequestError.loginPwd =
                     "Please provide your loginPwd";
-                notVaild += 1;
+                isLoginValid = false;
             }
             //--------------
 
-            return notVaild == 0;
+            return isLoginValid;
         },
 
         login() {
@@ -98,7 +87,7 @@ export default {
                 .post(url, formProps)
                 .then((res) => {
                     console.log(url + ":result", res);
-                    location.href = "/inquiry";
+                    location.href = "/admin_dashboard";
                 })
                 .catch((err) => {
                     //억지로 포커스 해제

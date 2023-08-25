@@ -28,12 +28,13 @@ let items = reactive([
         href: "/admin_dashboard",
         img: "app-side-1",
         text: "Summary",
+        hasPermission : true
     },
     {
         href: "/inquiry",
         img: "app-side-3",
         text: "Activate Process",
-        hasPermission : true
+        hasPermission : checkPermissionArray(['ACTIVATE_PROCESS_VIEW', 'ACTIVATE_PROCESS_EDIT'])
     },
     {
         href: "/company/company_list",

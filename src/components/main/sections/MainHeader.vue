@@ -1,16 +1,11 @@
 <script setup>
 import { inject, reactive, ref } from "vue";
-// import AppPopup from "@/components/AppPopup.vue";
-// import PopupEmployeesInformation from "@/pages/employees/employees/popups/PopupCompanyInformation.vue";
 import { ChevronDownIcon } from "@heroicons/vue/solid";
 import { CogIcon } from "@heroicons/vue/outline";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
 import AppPopup from "@/components/AppPopup.vue";
 import { ValidateUtil } from "@/plugins/app-util.js";
 import DashboardNotifications from "@/components/main/notification/DashboardNotifications.vue";
-
-
-// const showMyProfile = ref(false);
 
 if (!window.logOnProfile) {
     location.href = "/login";
@@ -68,7 +63,7 @@ function enableTestTools(){
     >
         <!-- Testing tool settings for local and staging only -->
         <a  class="border rounded-full border-gray-200 w-12 h-12 bg-white flex justify-center items-center transition-all duration-500s hover:bg-gray-100"
-            href="javascript:void(0)" 
+            href="javascript:void(0)"
             v-show="enableTestTools() === true"
             @click="clickTestingTools"
         >
@@ -77,7 +72,7 @@ function enableTestTools(){
         <!-- 알람 이미지 -->
         <DashboardNotifications v-model:open="notificationList.show" v-model:arriveNewNews="notificationList.countNewNews"/>
         <a  class="border rounded-full border-gray-200 w-12 h-12 bg-white flex justify-center items-center transition-all duration-500s hover:bg-gray-100"
-            href="javascript:void(0)" 
+            href="javascript:void(0)"
             @click="clickViewNotifications"
         >
             <img src="@/assets/img/main-header-1.svg" v-if="notificationList.countNewNews > 0"/>
