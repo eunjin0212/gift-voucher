@@ -53,7 +53,7 @@ export default {
             self.selectedVersion = {};
             self.initialHolidayList = [];
 
-            const holidayInitialVersionSeq = self.versionList[0].holidayInitialVersionSeq;
+            const holidayInitialVersionSeq = self.versionList[0]?.holidayInitialVersionSeq;
 
             const url = self.$api("uri", "get-holiday-initial-list")
                             .replace("{holidayInitialVersionSeq}", holidayInitialVersionSeq);
