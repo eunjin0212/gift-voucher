@@ -140,9 +140,9 @@ export default {
     data(){
         return {
             companyStats : {
-                TRIAL : { name: 'Texting Company', stat: 71897 },
-                ACTIVE : { name: 'Active Company', stat: 71897 },
-                SUSPENDED : { name: 'Suspended Company', stat: 71897 },
+                TRIAL : { name: 'Testing Company', stat: 0 },
+                ACTIVE : { name: 'Active Company', stat: 0 },
+                SUSPENDED : { name: 'Suspended Company', stat: 0 },
                 // DROP_OUT : { name: 'Drop out Company', stat: 0 },
             },
             pointStats : {
