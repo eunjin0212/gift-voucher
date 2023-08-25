@@ -24,11 +24,11 @@ const HRnFLEX_SETTING = [ 'NOTICE_VIEW','NOTICE_EDIT'
 const ADMIN_SETTING = [ 'ADMIN_EDIT','ADMIN_VIEW'];
 
 let items = reactive([
-//    {
-//     href: "/hrDashboard",
-//     img: "app-side-1",
-//     text: "Summary",
-//   },
+    {
+        href: "/admin_dashboard",
+        img: "app-side-1",
+        text: "Summary",
+    },
     {
         href: "/inquiry",
         img: "app-side-3",
