@@ -7,6 +7,7 @@ defineProps({
   buttonText: String,
   height12: Boolean,
   backgroundWhite: Boolean,
+  backgroundRed: Boolean,
   disabled: Boolean,
   useCancel: { type : Boolean, default : true } ,
   noneOverflowAuto:  { type : Boolean, default : false }
@@ -61,6 +62,7 @@ function buttonEvent() {
         <ElementsButton
             class="ml-2"
             :backgroundWhite="backgroundWhite"
+            :backgroundRed="backgroundRed"
             :disabled="disabled"
             :text="buttonText"
             :width28="true"

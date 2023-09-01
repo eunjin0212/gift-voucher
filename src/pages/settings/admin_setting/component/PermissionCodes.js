@@ -93,6 +93,13 @@ const initMenuCodes = [
         viewCode: 'ADMIN_VIEW',
         editCode: 'ADMIN_EDIT',
     },
+    {
+        permissionName : 'Payroll Settings',
+        checked : null,
+        basicCode : 'PAYROLL',
+        viewCode : 'PAYROLL_VIEW',
+        editCode : 'PAYROLL_EDIT'
+    }
 ];
 
 const getInitMenuCodes = () => initMenuCodes.map( c => Object.assign({}, c) ); // map( c=> {...c})

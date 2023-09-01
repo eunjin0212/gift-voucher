@@ -25,10 +25,11 @@ import MainTabs from "@/components/main/sections/MainTabs.vue"
 import AccountSetting from '@/pages/settings/HRnFLEX_settings/account_setting/account_setting.vue'
 import HolidaySetting from '@/pages/settings/HRnFLEX_settings/holiday_setting/holiday_setting.vue'
 import MaintenanceSetting from '@/pages/settings/HRnFLEX_settings/maintenance_setting/maintenance_setting.vue'
+import NoticeSetting from '@/pages/settings/HRnFLEX_settings/notice_setting/notice_setting.vue';
 
 export default{
     components : {
-        AppAside, AppMain, MainTabs, AccountSetting, HolidaySetting, MaintenanceSetting 
+        AppAside, AppMain, MainTabs, NoticeSetting, AccountSetting, MaintenanceSetting, HolidaySetting
     },
     data(){
         return{

@@ -23,6 +23,8 @@ const HRnFLEX_SETTING = [ 'NOTICE_VIEW','NOTICE_EDIT'
 
 const ADMIN_SETTING = [ 'ADMIN_EDIT','ADMIN_VIEW'];
 
+const PAYROLL_SETTING = ['PAYROLL_VIEW', 'PAYROLL_EDIT'];
+
 let items = reactive([
     {
         href: "/admin_dashboard",
@@ -77,6 +79,19 @@ let items = reactive([
     },
     {
         children: true,
+        img: "app-side-5",
+        text: "Payroll",
+        hasPermission : checkPermissionArray(PAYROLL_SETTING)
+    },
+    {
+        parent: "app-side-5",
+        show: false,
+        href: "/payroll/payroll_settings",
+        text: "Payroll Settings",
+        hasPermission : checkPermissionArray(PAYROLL_SETTING)
+    },
+    {
+        children: true,
         img: "app-side-7",
         text: "Setting",
         hasPermission : checkPermissionArray( ADMIN_SETTING ) || checkPermissionArray( HRnFLEX_SETTING )
@@ -94,7 +109,7 @@ let items = reactive([
         href: "/settings/admin_setting",
         text: "Admin Settings",
         hasPermission : checkPermissionArray( ADMIN_SETTING )
-    },
+    }
 ]);
 
 onMounted(() => {

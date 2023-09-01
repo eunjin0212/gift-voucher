@@ -17,7 +17,8 @@ export default{
         placeholder : {
             type : String,
             default : 'mm/dd/yyyy'
-        }
+        },
+        width72 : Boolean
 	},
     mounted (){
     },
@@ -79,8 +80,12 @@ export default{
 		>
 			<Datepicker
                 inputFormat="MM/dd/yyyy"
-                class="shadow-sm block w-full sm:text-sm border-gray-300 rounded-md text-md border pr-3 text-right h-10"
-                :class="{'bg-slate-50 border-none' : disabled }"
+                class="shadow-sm block w-full sm:text-sm border-gray-300 rounded-md text-md border pr-3 text-right h-11 flex transition-all duration-500"
+                :class="{
+                    'bg-slate-50 border-none' : disabled,
+                    'bg-white' : !isNotBgWhite,
+                    'w-72' : width72
+                }"
 				v-model="dateValue"
                 :disabled="disabled"
                 :lowerLimit="stringToDate(lowerLimit)"

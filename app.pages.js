@@ -9,6 +9,8 @@ const ADMIN_SETTING = [ 'ADMIN_EDIT','ADMIN_VIEW'];
 const COMPANY_SETTINGS = ['COMPANY_SETTING_VIEW', 'COMPANY_SETTING_EDIT'
                             , 'COMPANY_SUSPENDED_VIEW', 'COMPANY_SUSPENDED_EDIT']
 
+const PAYROLL_SETTING = ['PAYROLL_VIEW', 'PAYROLL_EDIT'];
+
 const pages = {
     index: {
         template: 'public/landing.html',
@@ -71,6 +73,11 @@ const pages = {
         template: 'public/default.html',
         title: 'Inquiry',
         permission : ['ACTIVATE_PROCESS_VIEW', 'ACTIVATE_PROCESS_EDIT']
+    },
+    'payroll/payroll_settings' : {
+        template: 'public/default.html',
+        title: 'Payroll Settings',
+        permission : PAYROLL_SETTING
     },
     report : {
         template: 'public/default.html',

@@ -74,6 +74,27 @@
         "get-company-summary" : "/api/dashboard/companySummary",
         "get-list-30-days-subscribe-company" : "/api/dashboard/30_subscirbeCompany",
 
+        "get-system-maintenance-list" : "/api/system-maintenance/list",
+        "put-system-maintenance-info" : "/api/system-maintenance/{systemMaintenanceSeq}",
+        "get-holiday-version-list" : "/api/holiday/version/list",
+        "get-holiday-initial-list" : "/api/holiday/initial/{holidayInitialVersionSeq}",
+        "post-holiday-initial" : "/api/holiday/initial",
+        "put-holiday-initial" : "/api/holiday/initial/{holidayInitialVersionSeq}",
+        "delete-holiday-initial" : "/api/holiday/initial/{holidayInitialVersionSeq}",
+
+        "test-api" : "/api/flexben/test",
+        "get-company-summary" : "/api/dashboard/companySummary",
+        "get-list-30-days-subscribe-company" : "/api/dashboard/30_subscirbeCompany",
+        "post-payroll-setting" : "/api/payroll/setting",
+        "get-payroll-setting" : "/api/payroll/setting",
+        "put-payroll-setting" : "/api/payroll/setting",
+        "delete-payroll-setting" : "/api/payroll/setting",
+        "get-payroll-setting-detail" : "/api/payroll/setting/setting-detail",
+        "get-payroll-setting-default-values" : "/api/payroll/setting/default-values",
+        "post-payroll-setting-with-file" : "/api/payroll/setting/with-file",
+        "put-payroll-setting-with-file" : "/api/payroll/setting/with-file",
+
+
         "get-holiday-version-list" : "/api/holiday/version/list",
         "get-holiday-initial-list" : "/api/holiday/initial/{holidayInitialVersionSeq}",
         "post-holiday-initial" : "/api/holiday/initial",
