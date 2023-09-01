@@ -4,6 +4,9 @@
         <AppMain :headerName="'HRnFLEX Settings'">
             <div class="mt-8 p-3 w-full max-w-7xl flex flex-col">
                 <MainTabs :tabs ="mainTabs" class="my-2" @clickEvent="clickTabs" />
+                <NoticeSetting
+                    v-if="mainTabs.find(tab => tab.name === 'NOTICE').current === true" 
+                />
                 <AccountSetting
                     v-if="mainTabs.find( tab=> tab.name === 'ACCOUNT' )?.current === true"
                 />

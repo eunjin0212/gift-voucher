@@ -19,6 +19,7 @@ initApp(createApp(App)).then((app) =>
 		.component("ElementsFile", ElementsFile)
 		.component("ElementsDate", ElementsDate)
 		.component("ElementsPagination", ElementsPagination)
+		.component("ElementsSelectButton", ElementsSelectButton)
 		.component("AppPopup", AppPopup)
 		.mount("#root")
 )

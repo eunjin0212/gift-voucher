@@ -359,6 +359,22 @@ export default {
         clickDetailPage(offset = 0) {
             const self = this;
             self.settingDetailViewList = self.settingDetail.wTaxFormList.slice(offset, offset + self.detailPageCondition.limit);
+            while (self.settingDetailViewList.length < self.detailPageCondition.limit) {
+                let temp = {
+                    currentYear : null,
+                    effectiveUntilYear : null,
+                    payrollWtaxSeq : null,
+                    rangeOfTaxFrom : null,
+                    rangeOfTaxTo : null,
+                    taxBracket : null,
+                    taxCode : null,
+                    taxExemption : null,
+                    taxFix : null,
+                    taxFrequency : null,
+                    taxRate : null
+                };
+                self.settingDetailViewList.push(temp);
+            }
         },
         uploadFileChange(e) {
             const self = this;

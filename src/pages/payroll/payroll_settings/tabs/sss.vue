@@ -367,7 +367,22 @@ export default {
             const self = this;
 
             self.settingDetailViewList = self.settingDetail.sssFormList.slice(offset, offset + self.detailPageCondition.limit);
-            // console.log(self.settingDetailViewList);
+            while (self.settingDetailViewList.length < self.detailPageCondition.limit) {
+                let temp = {
+                    ecEe : null,
+                    ecEr : null,
+                    monthlySalaryCreditMandatoryProvidentFund : null,
+                    monthlySalaryCreditRegularSsAndEc : null,
+                    payrollSssSeq : null,
+                    rangeOfCompensationFrom : null,
+                    rangeOfCompensationTo : null,
+                    regularSsEe : null,
+                    regularSsEr : null,
+                    wispEe : null,
+                    wispEr : null
+                };
+                self.settingDetailViewList.push(temp);
+            }
         },
         uploadFileChange(e) {
             const self = this;
