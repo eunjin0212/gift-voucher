@@ -166,7 +166,7 @@
                                 <td class="px-3 py-3 border-x border-solid border-gray-200 text-center text-sm text-gray-900"><span class="whitespace-pre-line">{{ detail.currentYear }}</span></td>
                                 <td class="px-3 py-3 border-x border-solid border-gray-200 text-center text-sm text-gray-900"><span class="whitespace-pre-line">{{ detail.effectiveUntilYear }}</span></td>
                                 <td class="px-3 py-3 border-x border-solid border-gray-200 text-center text-sm text-gray-900"><span class="whitespace-pre-line">{{ detail.taxBracket }}</span></td>
-                                <td class="px-3 py-3 border-x border-solid border-gray-200 text-center text-sm text-gray-900"><span class="whitespace-pre-line">{{ getDisplayTextOfHourType(detail.taxFrequency) }}</span></td>
+                                <td class="px-3 py-3 border-x border-solid border-gray-200 text-center text-sm text-gray-900"><span class="whitespace-pre-line">{{ getDisplayTextOfTaxFrequency(detail.taxFrequency) }}</span></td>
                                 <td class="px-3 py-3 border-x border-solid border-gray-200 text-center text-sm text-gray-900"><span class="whitespace-pre-line">{{ detail.taxCode }}</span></td>
                                 <td class="px-3 py-3 border-x border-solid border-gray-200 text-center text-sm text-gray-900"><span class="whitespace-pre-line">{{ fitDecimalFormatWithComma(detail.taxExemption) }}</span></td>
                                 <td class="px-3 py-3 border-x border-solid border-gray-200 text-center text-sm text-gray-900"><span class="whitespace-pre-line">{{ fitDecimalFormatWithComma(detail.rangeOfTaxFrom) }}</span></td>
@@ -605,9 +605,9 @@ export default {
                 alert(message);
             });
         },
-        getDisplayTextOfHourType(hourType) {
+        getDisplayTextOfTaxFrequency(taxType) {
             let result = "";
-            switch(hourType) {
+            switch(taxType) {
                 case TAX_FREQUENCY.DAILY:
                     result = "Daily";
                     break;
