@@ -282,14 +282,13 @@
 
 <script>
 import moment from 'moment';
-import { SETTING_TYPE, SETTING_MODE, SETTING_STATUS, PAYROLL_MONEY_TYPE } from "../constants/enum_payroll_setting";
-import { payrollValidator, payrollDateTimeConverter, payrollStringMaker } from "../mixin/payroll_util.js";
-import { MONEY_TYPE_OPTION } from "../constants/enum_payroll_option";
+import { SETTING_TYPE, SETTING_MODE, SETTING_STATUS, PAYROLL_MONEY_TYPE } from "@/pages/payroll/payroll_settings/constants/enum-payroll-setting";
+import { payrollValidator, payrollDateTimeConverter, payrollStringMaker } from "@/pages/payroll/payroll_settings/util/payroll-util";
+import { MONEY_TYPE_OPTION } from "@/pages/payroll/payroll_settings/constants/enum-payroll-option";
 import AppPopup from "@/components/AppPopup.vue";
 import { ArrowLeftIcon  } from '@heroicons/vue/solid';
 
 export default {
-    mixins: [payrollValidator, payrollDateTimeConverter, payrollStringMaker],
     components : {
         AppPopup, ArrowLeftIcon
     },
@@ -620,7 +619,23 @@ export default {
             }
 
             return result;
-        }
+        },
+        invalidDecimal : payrollValidator.invalidDecimal,
+        invalidSettingStatus : payrollValidator.invalidSettingStatus,
+        invalidSettingType : payrollValidator.invalidSettingType,
+        invalidMoneyTypeOption : payrollValidator.invalidMoneyTypeOption,
+        invalidStartDateTime : payrollValidator.invalidStartDateTime,
+        isReadMode : payrollValidator.isReadMode,
+        isInsertMode : payrollValidator.isInsertMode,
+        isDetailMode : payrollValidator.isDetailMode,
+        isEditMode : payrollValidator.isEditMode,
+        isPagIBig : payrollValidator.isPagIBig,
+        convertToDateTimeForViewFormat : payrollDateTimeConverter.convertToDateTimeForViewFormat,
+        convertToDateForInputFormat : payrollDateTimeConverter.convertToDateForInputFormat,
+        convertToDateTimeForServerFormat : payrollDateTimeConverter.convertToDateTimeForServerFormat,
+        getSettingStatus : payrollStringMaker.getSettingStatus,
+        makeMoneyTypeString : payrollStringMaker.makeMoneyTypeString,
+        fitDecimalFormatWithComma : payrollStringMaker.fitDecimalFormatWithComma
     },
     watch: {
         tabName: function(newValue) {

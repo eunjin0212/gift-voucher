@@ -296,14 +296,13 @@
 
 <script>
 import moment from 'moment';
-import { SETTING_TYPE, SETTING_MODE, SETTING_STATUS, PAYROLL_STANDARD_UNIT, PAYROLL_TIME_UNIT } from "../constants/enum_payroll_setting";
-import { payrollValidator, payrollDateTimeConverter, payrollStringMaker } from "../mixin/payroll_util.js";
-import { STANDARD_UNIT_OPTION, TIME_UNIT_OPTION } from "../constants/enum_payroll_option";
+import { SETTING_TYPE, SETTING_MODE, SETTING_STATUS, PAYROLL_STANDARD_UNIT, PAYROLL_TIME_UNIT } from "@/pages/payroll/payroll_settings/constants/enum-payroll-setting";
+import { payrollValidator, payrollDateTimeConverter, payrollStringMaker } from "@/pages/payroll/payroll_settings/util/payroll-util";
+import { STANDARD_UNIT_OPTION, TIME_UNIT_OPTION } from "@/pages/payroll/payroll_settings/constants/enum-payroll-option";
 import AppPopup from "@/components/AppPopup.vue";
 import { ArrowLeftIcon  } from '@heroicons/vue/solid';
 
 export default {
-    mixins: [payrollValidator, payrollDateTimeConverter, payrollStringMaker],
     components : {
         AppPopup, ArrowLeftIcon
     },
@@ -667,7 +666,24 @@ export default {
             }
 
             return result;
-        }
+        },
+        invalidDecimal : payrollValidator.invalidDecimal,
+        invalidSettingStatus : payrollValidator.invalidSettingStatus,
+        invalidSettingType : payrollValidator.invalidSettingType,
+        invalidStandardUnitOption : payrollValidator.invalidStandardUnitOption,
+        invalidTimeUnitOption : payrollValidator.invalidTimeUnitOption,
+        invalidStartDateTime : payrollValidator.invalidStartDateTime,
+        isReadMode : payrollValidator.isReadMode,
+        isInsertMode : payrollValidator.isInsertMode,
+        isDetailMode : payrollValidator.isDetailMode,
+        isEditMode : payrollValidator.isEditMode,
+        isDeMinimisBenefits : payrollValidator.isDeMinimisBenefits,
+        convertToDateTimeForViewFormat : payrollDateTimeConverter.convertToDateTimeForViewFormat,
+        convertToDateForInputFormat : payrollDateTimeConverter.convertToDateForInputFormat,
+        convertToDateTimeForServerFormat : payrollDateTimeConverter.convertToDateTimeForServerFormat,
+        getSettingStatus : payrollStringMaker.getSettingStatus,
+        makeStandardUnitString : payrollStringMaker.makeStandardUnitString,
+        fitDecimalFormatWithComma : payrollStringMaker.fitDecimalFormatWithComma
     },
     watch: {
         tabName: function(newValue) {

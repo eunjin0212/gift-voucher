@@ -274,13 +274,12 @@
 
 <script>
 import moment from 'moment';
-import { SETTING_TYPE, SETTING_MODE, SETTING_STATUS, TAX_FREQUENCY } from "../constants/enum_payroll_setting";
-import { payrollValidator, payrollDateTimeConverter, payrollStringMaker } from "../mixin/payroll_util.js";
+import { SETTING_TYPE, SETTING_MODE, SETTING_STATUS, TAX_FREQUENCY } from "@/pages/payroll/payroll_settings/constants/enum-payroll-setting";
+import { payrollValidator, payrollDateTimeConverter, payrollStringMaker } from "@/pages/payroll/payroll_settings/util/payroll-util";
 import AppPopup from "@/components/AppPopup.vue";
 import { ArrowLeftIcon  } from '@heroicons/vue/solid';
 
 export default {
-    mixins: [payrollValidator, payrollDateTimeConverter, payrollStringMaker],
     components : {
         AppPopup, ArrowLeftIcon
     },
@@ -625,7 +624,21 @@ export default {
             }
 
             return result;
-        }
+        },
+        invalidString : payrollValidator.invalidString,
+        invalidSettingStatus : payrollValidator.invalidSettingStatus,
+        invalidSettingType : payrollValidator.invalidSettingType,
+        invalidStartDateTime : payrollValidator.invalidStartDateTime,
+        isReadMode : payrollValidator.isReadMode,
+        isInsertMode : payrollValidator.isInsertMode,
+        isDetailMode : payrollValidator.isDetailMode,
+        isEditMode : payrollValidator.isEditMode,
+        isWTAX : payrollValidator.isWTAX,
+        convertToDateTimeForViewFormat : payrollDateTimeConverter.convertToDateTimeForViewFormat,
+        convertToDateForInputFormat : payrollDateTimeConverter.convertToDateForInputFormat,
+        convertToDateTimeForServerFormat : payrollDateTimeConverter.convertToDateTimeForServerFormat,
+        getSettingStatus : payrollStringMaker.getSettingStatus,
+        fitDecimalFormatWithComma : payrollStringMaker.fitDecimalFormatWithComma
     },
     watch: {
         tabName: function(newValue) {

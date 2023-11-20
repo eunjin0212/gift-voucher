@@ -19,13 +19,13 @@
 import AppAside from "@/components/AppAside.vue";
 import AppMain from "@/components/main/AppMain.vue";
 import MainTabs from "@/components/main/sections/MainTabs.vue"
-import { SETTING_TYPE } from "./constants/enum_payroll_setting";
-import premiumRateTab from "./tabs/premium_rate.vue";
-import deMinimisBenefitsTab from "./tabs/de_minimis_benefits.vue";
-import sssTab from "./tabs/sss.vue";
-import philHealthTab from "./tabs/phil-health.vue";
-import pagIbigTab from "./tabs/pag_ibig.vue";
-import wTaxTab from "./tabs/w-tax.vue";
+import { SETTING_TYPE } from "@/pages/payroll/payroll_settings/constants/enum-payroll-setting";
+import premiumRateTab from "@/pages/payroll/payroll_settings/tabs/premium_rate.vue";
+import deMinimisBenefitsTab from "@/pages/payroll/payroll_settings/tabs/de_minimis_benefits.vue";
+import sssTab from "@/pages/payroll/payroll_settings/tabs/sss.vue";
+import philHealthTab from "@/pages/payroll/payroll_settings/tabs/phil-health.vue";
+import pagIbigTab from "@/pages/payroll/payroll_settings/tabs/pag_ibig.vue";
+import wTaxTab from "@/pages/payroll/payroll_settings/tabs/w-tax.vue";
 
 
 export default {

@@ -1,4 +1,4 @@
-import {PAYROLL_STANDARD_UNIT, PAYROLL_MONEY_TYPE, PAYROLL_TIME_UNIT} from "./enum_payroll_setting";
+import {PAYROLL_STANDARD_UNIT, PAYROLL_MONEY_TYPE, PAYROLL_TIME_UNIT} from "./enum-payroll-setting";
 
 export const STANDARD_UNIT_OPTION = Object.freeze([
     {
