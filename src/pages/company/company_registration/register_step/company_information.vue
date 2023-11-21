@@ -80,10 +80,22 @@
                                 class="w-full mt-1 shadow-sm block sm:text-sm bg-white border-gray-300 rounded-md"
                                 multiple
                                 @input="afterFileSelect"
-                                :required="true"
+                                :required="!noNeedDocs"
                             />
                         </dd>
                     </template>
+                </div>
+                <div class="flex h-6 items-center">
+                    <input
+                        id="noNeedDocs"
+                        name="noNeedDocs"
+                        type="checkbox"
+                        v-model="noNeedDocs"
+                        class="h-5 p-3 w-5 rounded border-gray-300 focus:ring-indigo-500 disabled:bg-gray-100 disabled:checked:bg-indigo-500"
+                    />
+                    <div class="ml-3 text-sm leading-6">
+                        <label for="noNeedDocs" class="font-semibold text-gray-900"> Skip uploading the contract information during the trial period. </label>
+                    </div>
                 </div>
 
                 <div class="text-2xl font-bold mt-4"> PIC Information </div>
@@ -220,6 +232,7 @@ export default{
     },
     data() {
         return{
+            noNeedDocs : false,
             registerData : {
                 companyName : null,
                 representativeName : "",
