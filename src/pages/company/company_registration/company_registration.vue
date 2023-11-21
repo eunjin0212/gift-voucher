@@ -97,17 +97,18 @@ export default {
             const self = this;
 
             let contractFilePath;
-            try {
-                contractFilePath = await self.submitDocumentFiles();
-            }catch{
-                alert( "Fail to file upload");
-                return;
+            if( self.contractFile ){
+                try {
+                    contractFilePath = await self.submitDocumentFiles();
+                }catch{
+                    alert( "Fail to file upload");
+                    return;
+                }
             }
 
             self.companyRegisterData = { ...self.companyRegisterData,
                                         ...usageInformation, contractFilePath };
 
-            console.log( "submit" );
             const url = self.$api("uri", "post-company" );
             self.$axios.post( url , self.companyRegisterData )
                 .then( () => {
