@@ -422,7 +422,7 @@ export default {
             .then(res => {
                 // alert(res.data.message);
                 // console.log(res);
-                self.settingCount = res.data.data.settingCount;
+                self.settingCount = res.data.data.settingList.length;
 
                 self.settingList.splice(0, self.settingList.length);
                 self.settingList = res.data.data.settingList;

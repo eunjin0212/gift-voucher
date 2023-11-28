@@ -9,10 +9,10 @@
             </div>
             <div v-if="$appUtil.checkPermission('PAYROLL_EDIT')" v-show="isReadMode(settingMode)" class="gap-3 flex justify-between">
                 <ElementsButton
-                :text="'+ Update'"
-                :width32="true"
-                class="mt-1"
-                @clickEvent="changeAddSettingPage()"
+                    :text="'+ Update'"
+                    :width32="true"
+                    class="mt-1"
+                    @clickEvent="changeAddSettingPage()"
                 />
             </div>
         </div>
@@ -111,18 +111,18 @@
                                 <tr>
                                     <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">From</th>
                                     <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">To</th>
-                                    <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">Type</th>
-                                    <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">Employee</th>
-                                    <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">Employer</th>
+                                    <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">Percent</th>
+                                    <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">Excess Amount</th>
+                                    <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">Sum Amount</th>
                                 </tr>
                             </thead>
                             <tbody class=" bg-white">
-                                <tr v-for="(pagIbig, index) in registerData.pagIbigFormList" v-bind:key="index" class="border-x border-y border-solid border-gray-200">
-                                    <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="pagIbig.rangeOfCompensationFrom" :isNumber="true" :full="true" :required="true" /></td>
-                                    <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="pagIbig.rangeOfCompensationTo" :isNumber="true" :full="true" :required="true" /></td>
-                                    <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsSelect v-model="pagIbig.moneyType" :options="moneyTypeOption" :full="true" class="mt-[16px] h-[48px] rounded" /></td>
-                                    <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="pagIbig.pagIbigEmployee" :isNumber="true" :full="true" :required="true" /></td>
-                                    <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="pagIbig.pagIbigEmployer" :isNumber="true" :full="true" :required="true" /></td>
+                                <tr v-for="(annualTax) in registerData.annualTaxTableFormList" v-bind:key="annualTax" class="border-x border-y border-solid border-gray-200">
+                                    <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="annualTax.rangeOfFrom" :isNumber="true" :full="true" :required="true" /></td>
+                                    <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="annualTax.rangeOfTo" :isNumber="true" :full="true" :required="true" /></td>
+                                    <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="annualTax.taxPercent" :isNumber="true" :full="true" :required="true" /></td>
+                                    <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="annualTax.baseAmount" :isNumber="true" :full="true" :required="true" /></td>
+                                    <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="annualTax.constantAmount" :isNumber="true" :full="true" :required="true" /></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -165,20 +165,18 @@
                             <tr>
                                 <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">From</th>
                                 <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">To</th>
-                                <th scope="col" class="px-3 py-3 w-12 border-x border-solid border-white text-center text-sm">Type</th>
-                                <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">Employee</th>
-                                <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">Employer</th>
-                                <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">Total</th>
+                                <th scope="col" class="px-3 py-3 w-12 border-x border-solid border-white text-center text-sm">Percent</th>
+                                <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">Excess Amount</th>
+                                <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">Sum Amount</th>
                             </tr>
                         </thead>
                         <tbody class=" bg-white">
-                            <tr v-for="(detail, index) in settingDetail.pagIbigFormList" v-bind:key="index" class="border-x border-y border-solid border-gray-200">
-                                <td class="px-3 py-3 border-x border-solid border-gray-200 text-center text-sm text-gray-900"><span>{{ fitDecimalFormatWithComma(detail.rangeOfCompensationFrom) }}</span></td>
-                                <td class="px-3 py-3 border-x border-solid border-gray-200 text-center text-sm text-gray-900"><span>{{ fitDecimalFormatWithComma(detail.rangeOfCompensationTo) }}</span></td>
-                                <td class="px-3 py-3 border-x border-solid border-gray-200 text-center text-sm text-gray-900"><span>{{ getDisplayTextOfMoneyType(detail.moneyType) }}</span></td>
-                                <td class="px-3 py-3 border-x border-solid border-gray-200 text-center text-sm text-gray-900"><span>{{ fitDecimalFormatWithComma(detail.pagIbigEmployee) }}{{ makeMoneyTypeString(detail.moneyType) }}</span></td>
-                                <td class="px-3 py-3 border-x border-solid border-gray-200 text-center text-sm text-gray-900"><span>{{ fitDecimalFormatWithComma(detail.pagIbigEmployer) }}{{ makeMoneyTypeString(detail.moneyType) }}</span></td>
-                                <td class="px-3 py-3 border-x border-solid border-gray-200 text-center text-sm text-gray-900"><span>{{ fitDecimalFormatWithComma(detail.pagIbigEmployee + detail.pagIbigEmployer) }}{{ makeMoneyTypeString(detail.moneyType) }}</span></td>
+                            <tr v-for="(detail) in settingDetail.annualTaxTableFormList" v-bind:key="detail" class="border-x border-y border-solid border-gray-200">
+                                <td class="px-3 py-3 border-x border-solid border-gray-200 text-center text-sm text-gray-900"><span>{{ fitDecimalFormatWithComma(detail.rangeOfFrom) }}</span></td>
+                                <td class="px-3 py-3 border-x border-solid border-gray-200 text-center text-sm text-gray-900"><span>{{ fitDecimalFormatWithComma(detail.rangeOfTo) }}</span></td>
+                                <td class="px-3 py-3 border-x border-solid border-gray-200 text-center text-sm text-gray-900"><span>{{ fitDecimalFormatWithComma(detail.taxPercent) }}</span></td>
+                                <td class="px-3 py-3 border-x border-solid border-gray-200 text-center text-sm text-gray-900"><span>{{ fitDecimalFormatWithComma(detail.baseAmount) }}</span></td>
+                                <td class="px-3 py-3 border-x border-solid border-gray-200 text-center text-sm text-gray-900"><span>{{ fitDecimalFormatWithComma(detail.constantAmount) }}</span></td>
                             </tr>
                         </tbody>
                     </table>
@@ -193,6 +191,7 @@
                         :backgroundRed="true"
                         @click="changeDeletePopupVisible(true)"
                         @update:modelValue="changeDeletePopupVisible"
+                        
                     />
                     <ElementsButton
                         v-show="canSettingEditAndDelete"
@@ -243,25 +242,25 @@
                             />
                         </div>
                     </div>
-                    
+
                     <div class="pb-36 mt-6 overflow-x-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                         <table class="relative min-w-full divide-y divide-gray-300 table-auto">
                             <thead class="sticky top-0 left-0 right-0 text-white" style="z-index: 1; background: #4031B8;">
                                 <tr>
                                     <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">From</th>
                                     <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">To</th>
-                                    <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">Type</th>
-                                    <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">Employee</th>
-                                    <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">Employer</th>
+                                    <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">Percent</th>
+                                    <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">Excess Amount</th>
+                                    <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">Sum Amount</th>
                                 </tr>
                             </thead>
                             <tbody class=" bg-white">
-                                <tr v-for="(pagIbig, index) in updateData.pagIbigFormList" v-bind:key="index" class="border-x border-y border-solid border-gray-200">
-                                    <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="pagIbig.rangeOfCompensationFrom" :isNumber="true" :full="true" :required="true" /></td>
-                                    <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="pagIbig.rangeOfCompensationTo" :isNumber="true" :full="true" :required="true" /></td>
-                                    <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsSelect v-model="pagIbig.moneyType" :options="moneyTypeOption" :full="true" class="mt-[16px] h-[48px] rounded" /></td>
-                                    <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="pagIbig.pagIbigEmployee" :isNumber="true" :full="true" :required="true" /></td>
-                                    <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="pagIbig.pagIbigEmployer" :isNumber="true" :full="true" :required="true" /></td>
+                                <tr v-for="(annualTax) in updateData.annualTaxTableFormList" v-bind:key="annualTax" class="border-x border-y border-solid border-gray-200">
+                                    <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="annualTax.rangeOfFrom" :isNumber="true" :full="true" :required="true" /></td>
+                                    <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="annualTax.rangeOfTo" :isNumber="true" :full="true" :required="true" /></td>
+                                    <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="annualTax.taxPercent" :isNumber="true" :full="true" :required="true" /></td>
+                                    <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="annualTax.baseAmount" :isNumber="true" :full="true" :required="true" /></td>
+                                    <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="annualTax.constantAmount" :isNumber="true" :full="true" :required="true" /></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -282,9 +281,8 @@
 
 <script>
 import moment from 'moment';
-import { SETTING_TYPE, SETTING_MODE, SETTING_STATUS, PAYROLL_MONEY_TYPE } from "@/pages/payroll/payroll_settings/constants/enum-payroll-setting";
+import { SETTING_TYPE, SETTING_MODE, SETTING_STATUS } from "@/pages/payroll/payroll_settings/constants/enum-payroll-setting";
 import { payrollValidator, payrollDateTimeConverter, payrollStringMaker } from "@/pages/payroll/payroll_settings/util/payroll-util";
-import { MONEY_TYPE_OPTION } from "@/pages/payroll/payroll_settings/constants/enum-payroll-option";
 import AppPopup from "@/components/AppPopup.vue";
 import { ArrowLeftIcon  } from '@heroicons/vue/solid';
 
@@ -298,7 +296,7 @@ export default {
     },
     data(){
         return{
-            settingType : SETTING_TYPE.PAG_IBIG,
+            settingType : SETTING_TYPE.ANNUAL_TAX_TABLE,
             settingMode : SETTING_MODE.READ,
             settingCount : 0,
             settingList : [],
@@ -308,14 +306,13 @@ export default {
                 offset : 0,
                 settingType : null
             },
-            moneyTypeOption: MONEY_TYPE_OPTION,
             startDatetimeLowerLimit : null,
             registerData : {
                 settingTitle : null,
                 startDatetime : null,
                 settingType : null,
                 startDatetimeLowerLimit : null,
-                pagIbigFormList : []
+                annualTaxTableFormList : []
             },
             canSettingEditAndDelete : false,
             detailData : {
@@ -326,7 +323,7 @@ export default {
                 payrollSettingSeq : null,
                 settingTitle : null,
                 startDatetime : null,
-                pagIbigFormList : []
+                annualTaxTableFormList : []
             },
             updateData : {
                 payrollSettingSeq : null,
@@ -334,7 +331,7 @@ export default {
                 startDatetime : null,
                 settingType : null,
                 startDatetimeLowerLimit : null,
-                pagIbigFormList : []
+                annualTaxTableFormList : []
             },
             deletePopupVisible : false
         }
@@ -381,8 +378,8 @@ export default {
                 const tomorrow = moment().add(1, 'days').format();
                 self.startDatetimeLowerLimit = tomorrow;
                 
-                self.registerData.pagIbigFormList.splice(0, self.registerData.pagIbigFormList.length);
-                self.registerData.pagIbigFormList = res.data.data.defaultValues;
+                self.registerData.annualTaxTableFormList.splice(0, self.registerData.annualTaxTableFormList.length);
+                self.registerData.annualTaxTableFormList = res.data.data.defaultValues;
 
                 self.settingMode = SETTING_MODE.INSERT;
             })
@@ -420,7 +417,7 @@ export default {
                 // let { code, message } = err.response;
                 // alert(code);
                 // alert(message);
-                console.log(err);
+                console.slog(err);
             });
         },
         registerSetting() {
@@ -434,12 +431,12 @@ export default {
             if (self.invalidStartDateTime(self.registerData.startDatetime, self.registerData.startDatetimeLowerLimit)) {
                 return;
             }
-
-            if (self.invalidPagIbigData(self.registerData.pagIbigFormList)) {
+            
+            if (self.invalidAnnualTaxData(self.registerData.annualTaxTableFormList)) {
                 return;
             }
 
-            
+            self.registerData.startDatetimeLowerLimit = self.convertToDateTimeForServerFormat(self.startDatetimeLowerLimit);
             const url = self.$api("uri", "post-payroll-setting");
             self.$axios.post(url, self.registerData)
             .then(res => {
@@ -472,7 +469,7 @@ export default {
                 self.settingDetail.payrollSettingSeq = detailData.payrollSettingSeq;
                 self.settingDetail.settingTitle = detailData.settingTitle;
                 self.settingDetail.startDatetime = self.convertToDateForInputFormat(detailData.startDatetime);
-                self.settingDetail.pagIbigFormList = detailData.settingDetailList;
+                self.settingDetail.annualTaxTableFormList = detailData.settingDetailList;
 
                 self.settingMode = SETTING_MODE.DETAIL;
             })
@@ -505,7 +502,7 @@ export default {
                 return;
             }
             
-            if (self.invalidPagIbigData(self.updateData.pagIbigFormList)) {
+            if (self.invalidAnnualTaxData(self.updateData.annualTaxTableFormList)) {
                 return;
             }
 
@@ -542,27 +539,24 @@ export default {
                 alert(message);
             });
         },
-        invalidPagIbigData(pagIbigFormList) {
+        invalidAnnualTaxData(annualTaxTableFormList) {
+            // 유효성 검증 해야함
+            // from, to 는 Amount로 처리, employee, employer 는 Type에 따라 가변적으로
             const self = this;
             let isNotNumber = false;
             let invalidNumber = false;
-            for (let i = 0; i < pagIbigFormList.length; ++i) {
-                let pagIbig = pagIbigFormList[i];
-                let moneyType = pagIbig.moneyType;
+            for (let i = 0; i < annualTaxTableFormList.length; ++i) {
+                let annualTax = annualTaxTableFormList[i];
 
-                for (let data in pagIbig) {
-                    if (data === "moneyType" && self.invalidMoneyTypeOption(moneyType)) {
-                        return true;
-                    }
-
-                    if (data === "payrollPagIbigSeq" || data === "moneyType") {
+                for (let data in annualTax) {
+                    if (data === "payrollAnnualTaxTableSeq" || data === "payrollAnnualTaxTableDefaultValuesSeq" || data === "payrollSettingSeq") {
                         continue;
                     }
 
-                    pagIbig[data] = String(pagIbig[data]).replaceAll(",", "");
+                    annualTax[data] = String(annualTax[data]).replaceAll(",", "");
 
-                    if (isNaN(pagIbig[data])) {
-                        console.log("[invalid data] " + data + " : " + pagIbig[data] + " type : " + (typeof pagIbig[data]));
+                    if (isNaN(annualTax[data])) {
+                        console.log("[invalid data] " + data + " : " + annualTax[data] + " type : " + (typeof annualTax[data]));
                         isNotNumber = true;
                         break;
                     }
@@ -576,13 +570,14 @@ export default {
                     let min = -0.01;
                     let max = 10000000000000;
 
-                    if (moneyType === PAYROLL_MONEY_TYPE.PERCENT && (data === "pagIbigEmployee" || data === "pagIbigEmployer")) {
+                    if (data === "taxPercent") {
                         max = 1000;
                     }
-                    pagIbig[data] = Number(Number.parseFloat(pagIbig[data]).toFixed(2));
+                    
+                    annualTax[data] = Number(Number.parseFloat(annualTax[data]).toFixed(2));
 
-                    if (self.invalidDecimal(min, max, epsilon, pagIbig[data])) {
-                        console.log("[invalid data] " + data + " : " + pagIbig[data]);
+                    if (self.invalidDecimal(min, max, epsilon, annualTax[data])) {
+                        console.log("[invalid data] " + data + " : " + annualTax[data]);
                         invalidNumber = true;
                         break;
                     }
@@ -599,42 +594,25 @@ export default {
             }
 
             if (invalidNumber) {
-                alert("Peso must be greater than 0 and less than 10,000,000,000,000.00₱ (0 ~ 10,000,000,000,000.00)\nPercent must be greater than 0 and less than 1000.00% (0 ~ 1000)");
+                alert("Peso must be 0 or more and less than 10,000,000,000,000.00₱ (0 ~ 10,000,000,000,000.00)\nPercent must be greater than 0 and less than 1000.00% (0 ~ 1000)");
                 return true;
             }
 
             return false;
         },
-        getDisplayTextOfMoneyType(moneyType) {
-            let result = "";
-            switch(moneyType) {
-                case PAYROLL_MONEY_TYPE.PESO:
-                    result = "₱";
-                    break;
-                case PAYROLL_MONEY_TYPE.PERCENT:
-                    result = "%";
-                    break;
-                default:
-                    break;
-            }
-
-            return result;
-        },
         invalidDecimal : payrollValidator.invalidDecimal,
         invalidSettingStatus : payrollValidator.invalidSettingStatus,
         invalidSettingType : payrollValidator.invalidSettingType,
-        invalidMoneyTypeOption : payrollValidator.invalidMoneyTypeOption,
         invalidStartDateTime : payrollValidator.invalidStartDateTime,
         isReadMode : payrollValidator.isReadMode,
         isInsertMode : payrollValidator.isInsertMode,
         isDetailMode : payrollValidator.isDetailMode,
         isEditMode : payrollValidator.isEditMode,
-        isPagIBig : payrollValidator.isPagIBig,
+        isAnnualTaxTable : payrollValidator.isAnnualTaxTable,
         convertToDateTimeForViewFormat : payrollDateTimeConverter.convertToDateTimeForViewFormat,
         convertToDateForInputFormat : payrollDateTimeConverter.convertToDateForInputFormat,
         convertToDateTimeForServerFormat : payrollDateTimeConverter.convertToDateTimeForServerFormat,
         getSettingStatus : payrollStringMaker.getSettingStatus,
-        makeMoneyTypeString : payrollStringMaker.makeMoneyTypeString,
         fitDecimalFormatWithComma : payrollStringMaker.fitDecimalFormatWithComma
     },
     watch: {
@@ -642,7 +620,7 @@ export default {
             const self = this;
             self.settingType = newValue;
             // console.log(newValue);
-            if (self.isPagIBig(newValue)) {
+            if (self.isAnnualTaxTable(newValue)) {
                 self.getSettingList();
             }
         }

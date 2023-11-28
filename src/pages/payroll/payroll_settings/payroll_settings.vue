@@ -10,6 +10,7 @@
                 <philHealthTab :tabName="tabName" :visible="mainTabs.find(tab => tab.name === getPhilHealth())?.current === true" />
                 <pagIbigTab :tabName="tabName" :visible="mainTabs.find(tab => tab.name === getPagIbig())?.current === true" />
                 <wTaxTab :tabName="tabName" :visible="mainTabs.find(tab => tab.name === getWTAX())?.current === true" />
+                <annualTaxTableTab :tabName="tabName" :visible="mainTabs.find(tab => tab.name === getAnnualTaxTable())?.current === true" />
             </div>
         </AppMain>
     </div>
@@ -26,12 +27,13 @@ import sssTab from "@/pages/payroll/payroll_settings/tabs/sss.vue";
 import philHealthTab from "@/pages/payroll/payroll_settings/tabs/phil-health.vue";
 import pagIbigTab from "@/pages/payroll/payroll_settings/tabs/pag_ibig.vue";
 import wTaxTab from "@/pages/payroll/payroll_settings/tabs/w-tax.vue";
+import annualTaxTableTab from "@/pages/payroll/payroll_settings/tabs/annual-tax-table.vue";
 
 
 export default {
     components : {
         AppAside, AppMain, MainTabs,
-        premiumRateTab, deMinimisBenefitsTab, philHealthTab, pagIbigTab, sssTab, wTaxTab
+        premiumRateTab, deMinimisBenefitsTab, philHealthTab, pagIbigTab, sssTab, wTaxTab, annualTaxTableTab
     },
     methods : {
         clickTabs( tabItem ){
@@ -61,6 +63,9 @@ export default {
         },
         getWTAX() {
             return SETTING_TYPE.WTAX;
+        },
+        getAnnualTaxTable() {
+            return SETTING_TYPE.ANNUAL_TAX_TABLE;
         }
     },
     data(){
@@ -73,7 +78,8 @@ export default {
                 { text : "SSS" , name : SETTING_TYPE.SSS, current : false },
                 { text : "PhilHealth" , name : SETTING_TYPE.PHIL_HEALTH, current : false },
                 { text : "Pag-ibig" , name : SETTING_TYPE.PAG_IBIG, current : false },
-                { text : "WTAX" , name : SETTING_TYPE.WTAX, current : false }
+                { text : "WTAX" , name : SETTING_TYPE.WTAX, current : false },
+                { text : "Annual tax table" , name : SETTING_TYPE.ANNUAL_TAX_TABLE, current : false }
             ]
         }
     },

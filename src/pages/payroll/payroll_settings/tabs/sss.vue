@@ -446,7 +446,7 @@ export default {
 
             self.$axios.get(url, {params : {jsonParam}})
             .then(res => {
-                self.settingCount = res.data.data.settingCount;
+                self.settingCount = res.data.data.settingList.length;
 
                 self.settingList.splice(0, self.settingList.length);
                 self.settingList = res.data.data.settingList;
@@ -536,7 +536,7 @@ export default {
                 self.settingDetail.settingTitle = detailData.settingTitle;
                 self.settingDetail.startDatetime = self.convertToDateForInputFormat(detailData.startDatetime);
                 self.settingDetail.sssFormList = detailData.settingDetailList;
-                self.detailPageCondition.count = detailData.detailCount;
+                self.detailPageCondition.count = detailData.settingDetailList.length;
 
                 self.clickDetailPage(0);
                 self.settingMode = SETTING_MODE.DETAIL;
