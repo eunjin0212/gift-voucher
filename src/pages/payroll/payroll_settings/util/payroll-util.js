@@ -102,6 +102,9 @@ const payrollValidator = {
     },
     isWTAX(value) {
         return SETTING_TYPE.WTAX === value;
+    },
+    isAnnualTaxTable(value) {
+        return SETTING_TYPE.ANNUAL_TAX_TABLE === value;
     }
 };
 
