@@ -159,10 +159,6 @@
                     <table class="relative min-w-full divide-y divide-gray-300 table-auto">
                         <thead class="sticky top-0 left-0 right-0 text-white" style="z-index: 1; background: #4031B8;">
                             <tr>
-                                <th scope="col" colspan="2" class="px-3 py-3 border border-solid border-white text-center text-sm">Range of Compensation</th>
-                                <th scope="col" colspan="4" class="px-3 py-3 border border-solid border-white text-center text-sm">Contribution</th>
-                            </tr>
-                            <tr>
                                 <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">From</th>
                                 <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">To</th>
                                 <th scope="col" class="px-3 py-3 w-12 border-x border-solid border-white text-center text-sm">Rate</th>
