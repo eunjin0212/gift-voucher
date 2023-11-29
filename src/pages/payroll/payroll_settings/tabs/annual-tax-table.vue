@@ -111,7 +111,7 @@
                                 <tr>
                                     <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">From</th>
                                     <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">To</th>
-                                    <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">Percent</th>
+                                    <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">Rate</th>
                                     <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">Excess Amount</th>
                                     <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">Sum Amount</th>
                                 </tr>
@@ -120,7 +120,7 @@
                                 <tr v-for="(annualTax) in registerData.annualTaxTableFormList" v-bind:key="annualTax" class="border-x border-y border-solid border-gray-200">
                                     <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="annualTax.rangeOfFrom" :isNumber="true" :full="true" :required="true" /></td>
                                     <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="annualTax.rangeOfTo" :isNumber="true" :full="true" :required="true" /></td>
-                                    <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="annualTax.taxPercent" :isNumber="true" :full="true" :required="true" /></td>
+                                    <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="annualTax.taxRate" :isNumber="true" :full="true" :required="true" /></td>
                                     <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="annualTax.baseAmount" :isNumber="true" :full="true" :required="true" /></td>
                                     <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="annualTax.constantAmount" :isNumber="true" :full="true" :required="true" /></td>
                                 </tr>
@@ -165,7 +165,7 @@
                             <tr>
                                 <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">From</th>
                                 <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">To</th>
-                                <th scope="col" class="px-3 py-3 w-12 border-x border-solid border-white text-center text-sm">Percent</th>
+                                <th scope="col" class="px-3 py-3 w-12 border-x border-solid border-white text-center text-sm">Rate</th>
                                 <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">Excess Amount</th>
                                 <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">Sum Amount</th>
                             </tr>
@@ -174,7 +174,7 @@
                             <tr v-for="(detail) in settingDetail.annualTaxTableFormList" v-bind:key="detail" class="border-x border-y border-solid border-gray-200">
                                 <td class="px-3 py-3 border-x border-solid border-gray-200 text-center text-sm text-gray-900"><span>{{ fitDecimalFormatWithComma(detail.rangeOfFrom) }}</span></td>
                                 <td class="px-3 py-3 border-x border-solid border-gray-200 text-center text-sm text-gray-900"><span>{{ fitDecimalFormatWithComma(detail.rangeOfTo) }}</span></td>
-                                <td class="px-3 py-3 border-x border-solid border-gray-200 text-center text-sm text-gray-900"><span>{{ fitDecimalFormatWithComma(detail.taxPercent) }}</span></td>
+                                <td class="px-3 py-3 border-x border-solid border-gray-200 text-center text-sm text-gray-900"><span>{{ fitDecimalFormatWithComma(detail.taxRate, 4) }}</span></td>
                                 <td class="px-3 py-3 border-x border-solid border-gray-200 text-center text-sm text-gray-900"><span>{{ fitDecimalFormatWithComma(detail.baseAmount) }}</span></td>
                                 <td class="px-3 py-3 border-x border-solid border-gray-200 text-center text-sm text-gray-900"><span>{{ fitDecimalFormatWithComma(detail.constantAmount) }}</span></td>
                             </tr>
@@ -249,7 +249,7 @@
                                 <tr>
                                     <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">From</th>
                                     <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">To</th>
-                                    <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">Percent</th>
+                                    <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">Rate</th>
                                     <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">Excess Amount</th>
                                     <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">Sum Amount</th>
                                 </tr>
@@ -258,7 +258,7 @@
                                 <tr v-for="(annualTax) in updateData.annualTaxTableFormList" v-bind:key="annualTax" class="border-x border-y border-solid border-gray-200">
                                     <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="annualTax.rangeOfFrom" :isNumber="true" :full="true" :required="true" /></td>
                                     <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="annualTax.rangeOfTo" :isNumber="true" :full="true" :required="true" /></td>
-                                    <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="annualTax.taxPercent" :isNumber="true" :full="true" :required="true" /></td>
+                                    <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="annualTax.taxRate" :isNumber="true" :full="true" :required="true" /></td>
                                     <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="annualTax.baseAmount" :isNumber="true" :full="true" :required="true" /></td>
                                     <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="annualTax.constantAmount" :isNumber="true" :full="true" :required="true" /></td>
                                 </tr>
@@ -569,12 +569,14 @@ export default {
                     let epsilon = 0.000001;
                     let min = -0.01;
                     let max = 10000000000000;
+                    let fraction = 2;
 
-                    if (data === "taxPercent") {
+                    if (data === "taxRate") {
                         max = 1000;
+                        fraction = 4;
                     }
                     
-                    annualTax[data] = Number(Number.parseFloat(annualTax[data]).toFixed(2));
+                    annualTax[data] = Number(Number.parseFloat(annualTax[data]).toFixed(fraction));
 
                     if (self.invalidDecimal(min, max, epsilon, annualTax[data])) {
                         console.log("[invalid data] " + data + " : " + annualTax[data]);

@@ -181,7 +181,7 @@ const payrollStringMaker = {
         if (value == null || Number.isNaN(value)) {
             return value;
         }
-        var regexp = /\B(?=(\d{3})+(?!\d))/g;
+        var regexp = /\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g;
         return Number.parseFloat(value).toFixed(fraction).toString().replace(regexp, ',')
     }
 };
