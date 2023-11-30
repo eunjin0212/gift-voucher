@@ -12,7 +12,6 @@
                                         <ul role="list" class="divide-y divide-gray-300">
                                             <li v-for="step in registerTab" :key="step.name" class="divide-x-[1px]">
                                                 <a
-                                                    :href="step.href"
                                                     :class="[ currentStep == step.value ? ' text-indigo-600' : 'text-gray-700 hover:text-indigo-600 hover:bg-gray-50', 'group flex gap-x-3 rounded-md py-4 px-4 text-sm leading-6 font-semibold']"
                                                 >
                                                     <span v-if="step.checked" class="bg-indigo-600 text-indigo-600 border-indigo-600 flex h-6 w-6 shrink-0 items-center justify-center rounded-2xl border text-[0.625rem] font-medium bg-white']"
