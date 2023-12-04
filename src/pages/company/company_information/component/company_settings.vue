@@ -303,7 +303,11 @@ export default{
     },
     mounted(){
         const self = this;
-        const { filingUsageStatus, kpiUsageStatus, payrollUsageStatus } = self.registerData;
+        let { filingUsageStatus, kpiUsageStatus, payrollUsageStatus } = self.registerData;
+        // console.log({ filingUsageStatus, kpiUsageStatus, payrollUsageStatus })
+        filingUsageStatus = filingUsageStatus || 'DEACTIVATED';
+        kpiUsageStatus = kpiUsageStatus || 'DEACTIVATED';
+        payrollUsageStatus = payrollUsageStatus || 'DEACTIVATED';
         self.companySettingData = { filingUsageStatus, kpiUsageStatus, payrollUsageStatus, companySubscribeStatus : null , suspendedDate : null };
     }
 }
