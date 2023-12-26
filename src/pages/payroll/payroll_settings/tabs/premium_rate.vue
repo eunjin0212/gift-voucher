@@ -472,7 +472,7 @@ export default {
             const url = self.$api("uri", "post-payroll-setting");
             self.$axios.post(url, self.registerData)
             .then(res => {
-                alert(res.data.message);
+                // alert(res.data.message);
                 self.getSettingList();
             })
             .catch( err => {
@@ -542,7 +542,7 @@ export default {
             const url = self.$api("uri", "put-payroll-setting");
             self.$axios.put(url, self.updateData)
             .then(res => {
-                alert(res.data.message);
+                // alert(res.data.message);
                 self.getSettingList();
             })
             .catch( err => {
@@ -561,7 +561,7 @@ export default {
             const url = self.$api("uri", "delete-payroll-setting");
             self.$axios.delete(url, {data : self.detailData})
             .then(res => {
-                alert(res.data.message);
+                // alert(res.data.message);
                 // console.log(res);
                 self.deletePopupVisible = false;
                 self.getSettingList();

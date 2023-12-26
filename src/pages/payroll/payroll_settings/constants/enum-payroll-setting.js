@@ -18,7 +18,8 @@ export const SETTING_TYPE = Object.freeze({
     PHIL_HEALTH : "PHIL_HEALTH",
     PAG_IBIG : "PAG_IBIG",
     WTAX : "WTAX",
-    ANNUAL_TAX_TABLE : "ANNUAL_TAX_TABLE"
+    ANNUAL_TAX_TABLE : "ANNUAL_TAX_TABLE",
+    MINIMUM_WAGE : "MINIMUM_WAGE"
 });
 
 export const PAYROLL_HOUR_TYPE = Object.freeze({
