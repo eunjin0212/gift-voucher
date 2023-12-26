@@ -105,24 +105,18 @@
                         </div>
                     </div>
                         
-                    <div class="pb-36 mt-6 overflow-x-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                        <table class="relative min-w-full divide-y divide-gray-300 table-fixed">
+                    <div class="pb-10 mt-6 overflow-x-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                        <table class="relative divide-y divide-gray-300 table-fixed">
                             <thead class="sticky top-0 left-0 right-0 text-white" style="z-index: 1; background: #4031B8;">
                                 <tr>
-                                    <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">From</th>
-                                    <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">To</th>
-                                    <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">Rate</th>
-                                    <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">Excess Amount</th>
-                                    <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">Sum Amount</th>
+                                    <th scope="col" class="px-3 py-3 w-48 border-x border-solid border-white text-center text-sm">Region</th>
+                                    <th scope="col" class="px-3 py-3 w-48 border-x border-solid border-white text-center text-sm">Minimum Wage</th>
                                 </tr>
                             </thead>
                             <tbody class=" bg-white">
-                                <tr v-for="(annualTax) in registerData.annualTaxTableFormList" v-bind:key="annualTax" class="border-x border-y border-solid border-gray-200">
-                                    <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="annualTax.rangeOfFrom" :isNumber="true" :full="true" :required="true" /></td>
-                                    <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="annualTax.rangeOfTo" :isNumber="true" :full="true" :required="true" /></td>
-                                    <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="annualTax.taxRate" :isNumber="true" :full="true" :required="true" /></td>
-                                    <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="annualTax.baseAmount" :isNumber="true" :full="true" :required="true" /></td>
-                                    <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="annualTax.constantAmount" :isNumber="true" :full="true" :required="true" /></td>
+                                <tr v-for="(minimumWage) in registerData.minimumWageFormList" v-bind:key="minimumWage" class="border-x border-y border-solid border-gray-200">
+                                    <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900">{{ minimumWage.minimumWageRegion }}</td>
+                                    <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="minimumWage.minimumWageAmount" :isNumber="true" :full="true" :required="true" /></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -155,24 +149,18 @@
                     </div>
                 </div>
 
-                <div class=" mt-6 overflow-x-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                    <table class="relative min-w-full divide-y divide-gray-300 table-auto">
+                <div class="mt-6 overflow-x-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                    <table class="relative divide-y divide-gray-300 table-auto">
                         <thead class="sticky top-0 left-0 right-0 text-white" style="z-index: 1; background: #4031B8;">
                             <tr>
-                                <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">From</th>
-                                <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">To</th>
-                                <th scope="col" class="px-3 py-3 w-12 border-x border-solid border-white text-center text-sm">Rate</th>
-                                <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">Excess Amount</th>
-                                <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">Sum Amount</th>
+                                <th scope="col" class="px-3 py-3 w-48 border-x border-solid border-white text-center text-sm">Region</th>
+                                <th scope="col" class="px-3 py-3 w-48 border-x border-solid border-white text-center text-sm">Minimum Wage</th>
                             </tr>
                         </thead>
                         <tbody class=" bg-white">
-                            <tr v-for="(detail) in settingDetail.annualTaxTableFormList" v-bind:key="detail" class="border-x border-y border-solid border-gray-200">
-                                <td class="px-3 py-3 border-x border-solid border-gray-200 text-center text-sm text-gray-900"><span>{{ fitDecimalFormatWithComma(detail.rangeOfFrom) }}</span></td>
-                                <td class="px-3 py-3 border-x border-solid border-gray-200 text-center text-sm text-gray-900"><span>{{ fitDecimalFormatWithComma(detail.rangeOfTo) }}</span></td>
-                                <td class="px-3 py-3 border-x border-solid border-gray-200 text-center text-sm text-gray-900"><span>{{ fitDecimalFormatWithComma(detail.taxRate, 4) }}</span></td>
-                                <td class="px-3 py-3 border-x border-solid border-gray-200 text-center text-sm text-gray-900"><span>{{ fitDecimalFormatWithComma(detail.baseAmount) }}</span></td>
-                                <td class="px-3 py-3 border-x border-solid border-gray-200 text-center text-sm text-gray-900"><span>{{ fitDecimalFormatWithComma(detail.constantAmount) }}</span></td>
+                            <tr v-for="(detail) in settingDetail.minimumWageFormList" v-bind:key="detail" class="border-x border-y border-solid border-gray-200">
+                                <td class="px-3 py-3 border-x border-solid border-gray-200 text-center text-sm text-gray-900"><span>{{ detail.minimumWageRegion }}</span></td>
+                                <td class="px-3 py-3 border-x border-solid border-gray-200 text-center text-sm text-gray-900"><span>{{ fitDecimalFormatWithComma(detail.minimumWageAmount) }}</span></td>
                             </tr>
                         </tbody>
                     </table>
@@ -239,24 +227,18 @@
                         </div>
                     </div>
 
-                    <div class="pb-36 mt-6 overflow-x-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                        <table class="relative min-w-full divide-y divide-gray-300 table-auto">
+                    <div class="pb-10 mt-6 overflow-x-auto shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                        <table class="relative divide-y divide-gray-300 table-auto">
                             <thead class="sticky top-0 left-0 right-0 text-white" style="z-index: 1; background: #4031B8;">
                                 <tr>
-                                    <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">From</th>
-                                    <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">To</th>
-                                    <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">Rate</th>
-                                    <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">Excess Amount</th>
-                                    <th scope="col" class="px-3 py-3 w-40 border-x border-solid border-white text-center text-sm">Sum Amount</th>
+                                    <th scope="col" class="px-3 py-3 w-48 border-x border-solid border-white text-center text-sm">Region</th>
+                                    <th scope="col" class="px-3 py-3 w-48 border-x border-solid border-white text-center text-sm">Minimum Wage</th>
                                 </tr>
                             </thead>
                             <tbody class=" bg-white">
-                                <tr v-for="(annualTax) in updateData.annualTaxTableFormList" v-bind:key="annualTax" class="border-x border-y border-solid border-gray-200">
-                                    <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="annualTax.rangeOfFrom" :isNumber="true" :full="true" :required="true" /></td>
-                                    <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="annualTax.rangeOfTo" :isNumber="true" :full="true" :required="true" /></td>
-                                    <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="annualTax.taxRate" :isNumber="true" :full="true" :required="true" /></td>
-                                    <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="annualTax.baseAmount" :isNumber="true" :full="true" :required="true" /></td>
-                                    <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="annualTax.constantAmount" :isNumber="true" :full="true" :required="true" /></td>
+                                <tr v-for="(minimumWage) in updateData.minimumWageFormList" v-bind:key="minimumWage" class="border-x border-y border-solid border-gray-200">
+                                    <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900">{{ minimumWage.minimumWageRegion }}</td>
+                                    <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="minimumWage.minimumWageAmount" :isNumber="true" :full="true" :required="true" /></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -292,7 +274,7 @@ export default {
     },
     data(){
         return{
-            settingType : SETTING_TYPE.ANNUAL_TAX_TABLE,
+            settingType : SETTING_TYPE.MINIMUM_WAGE,
             settingMode : SETTING_MODE.READ,
             settingCount : 0,
             settingList : [],
@@ -308,7 +290,7 @@ export default {
                 startDatetime : null,
                 settingType : null,
                 startDatetimeLowerLimit : null,
-                annualTaxTableFormList : []
+                minimumWageFormList : []
             },
             canSettingEditAndDelete : false,
             detailData : {
@@ -319,7 +301,7 @@ export default {
                 payrollSettingSeq : null,
                 settingTitle : null,
                 startDatetime : null,
-                annualTaxTableFormList : []
+                minimumWageFormList : []
             },
             updateData : {
                 payrollSettingSeq : null,
@@ -327,7 +309,7 @@ export default {
                 startDatetime : null,
                 settingType : null,
                 startDatetimeLowerLimit : null,
-                annualTaxTableFormList : []
+                minimumWageFormList : []
             },
             deletePopupVisible : false
         }
@@ -374,8 +356,8 @@ export default {
                 const tomorrow = moment().add(1, 'days').format();
                 self.startDatetimeLowerLimit = tomorrow;
                 
-                self.registerData.annualTaxTableFormList.splice(0, self.registerData.annualTaxTableFormList.length);
-                self.registerData.annualTaxTableFormList = res.data.data.defaultValues;
+                self.registerData.minimumWageFormList.splice(0, self.registerData.minimumWageFormList.length);
+                self.registerData.minimumWageFormList = res.data.data.defaultValues;
 
                 self.settingMode = SETTING_MODE.INSERT;
             })
@@ -428,7 +410,7 @@ export default {
                 return;
             }
             
-            if (self.invalidAnnualTaxData(self.registerData.annualTaxTableFormList)) {
+            if (self.invalidMinimumWageForm(self.registerData.minimumWageFormList)) {
                 return;
             }
 
@@ -465,7 +447,7 @@ export default {
                 self.settingDetail.payrollSettingSeq = detailData.payrollSettingSeq;
                 self.settingDetail.settingTitle = detailData.settingTitle;
                 self.settingDetail.startDatetime = self.convertToDateForInputFormat(detailData.startDatetime);
-                self.settingDetail.annualTaxTableFormList = detailData.settingDetailList;
+                self.settingDetail.minimumWageFormList = detailData.settingDetailList;
 
                 self.settingMode = SETTING_MODE.DETAIL;
             })
@@ -498,7 +480,7 @@ export default {
                 return;
             }
             
-            if (self.invalidAnnualTaxData(self.updateData.annualTaxTableFormList)) {
+            if (self.invalidMinimumWageForm(self.updateData.minimumWageFormList)) {
                 return;
             }
 
@@ -535,24 +517,24 @@ export default {
                 alert(message);
             });
         },
-        invalidAnnualTaxData(annualTaxTableFormList) {
+        invalidMinimumWageForm(minimumWageFormList) {
             // 유효성 검증 해야함
             // from, to 는 Amount로 처리, employee, employer 는 Type에 따라 가변적으로
             const self = this;
             let isNotNumber = false;
             let invalidNumber = false;
-            for (let i = 0; i < annualTaxTableFormList.length; ++i) {
-                let annualTax = annualTaxTableFormList[i];
+            for (let i = 0; i < minimumWageFormList.length; ++i) {
+                let minimumWage = minimumWageFormList[i];
 
-                for (let data in annualTax) {
-                    if (data === "payrollAnnualTaxTableSeq" || data === "payrollAnnualTaxTableDefaultValuesSeq" || data === "payrollSettingSeq") {
+                for (let data in minimumWage) {
+                    if (data === "payrollMinimumWageSeq" || data === "payrollMinimumWageDefaultValuesSeq" || data === "payrollSettingSeq" || data === "minimumWageRegion") {
                         continue;
                     }
 
-                    annualTax[data] = String(annualTax[data]).replaceAll(",", "");
+                    minimumWage[data] = String(minimumWage[data]).replaceAll(",", "");
 
-                    if (isNaN(annualTax[data])) {
-                        console.log("[invalid data] " + data + " : " + annualTax[data] + " type : " + (typeof annualTax[data]));
+                    if (isNaN(minimumWage[data])) {
+                        console.log("[invalid data] " + data + " : " + minimumWage[data] + " type : " + (typeof minimumWage[data]));
                         isNotNumber = true;
                         break;
                     }
@@ -572,10 +554,10 @@ export default {
                         fraction = 4;
                     }
                     
-                    annualTax[data] = Number(Number.parseFloat(annualTax[data]).toFixed(fraction));
+                    minimumWage[data] = Number(Number.parseFloat(minimumWage[data]).toFixed(fraction));
 
-                    if (self.invalidDecimal(min, max, epsilon, annualTax[data])) {
-                        console.log("[invalid data] " + data + " : " + annualTax[data]);
+                    if (self.invalidDecimal(min, max, epsilon, minimumWage[data])) {
+                        console.log("[invalid data] " + data + " : " + minimumWage[data]);
                         invalidNumber = true;
                         break;
                     }
@@ -606,7 +588,7 @@ export default {
         isInsertMode : payrollValidator.isInsertMode,
         isDetailMode : payrollValidator.isDetailMode,
         isEditMode : payrollValidator.isEditMode,
-        isAnnualTaxTable : payrollValidator.isAnnualTaxTable,
+        isMinimumWage : payrollValidator.isMinimumWage,
         convertToDateTimeForViewFormat : payrollDateTimeConverter.convertToDateTimeForViewFormat,
         convertToDateForInputFormat : payrollDateTimeConverter.convertToDateForInputFormat,
         convertToDateTimeForServerFormat : payrollDateTimeConverter.convertToDateTimeForServerFormat,
@@ -618,7 +600,7 @@ export default {
             const self = this;
             self.settingType = newValue;
             // console.log(newValue);
-            if (self.isAnnualTaxTable(newValue)) {
+            if (self.isMinimumWage(newValue)) {
                 self.getSettingList();
             }
         }

@@ -11,6 +11,7 @@
                 <pagIbigTab :tabName="tabName" :visible="mainTabs.find(tab => tab.name === getPagIbig())?.current === true" />
                 <wTaxTab :tabName="tabName" :visible="mainTabs.find(tab => tab.name === getWTAX())?.current === true" />
                 <annualTaxTableTab :tabName="tabName" :visible="mainTabs.find(tab => tab.name === getAnnualTaxTable())?.current === true" />
+                <minimumWageTab :tabName="tabName" :visible="mainTabs.find(tab => tab.name === getMinimumWage())?.current === true" />
             </div>
         </AppMain>
     </div>
@@ -28,12 +29,12 @@ import philHealthTab from "@/pages/payroll/payroll_settings/tabs/phil-health.vue
 import pagIbigTab from "@/pages/payroll/payroll_settings/tabs/pag_ibig.vue";
 import wTaxTab from "@/pages/payroll/payroll_settings/tabs/w-tax.vue";
 import annualTaxTableTab from "@/pages/payroll/payroll_settings/tabs/annual-tax-table.vue";
-
+import minimumWageTab from "@/pages/payroll/payroll_settings/tabs/minimum-wage.vue";
 
 export default {
     components : {
         AppAside, AppMain, MainTabs,
-        premiumRateTab, deMinimisBenefitsTab, philHealthTab, pagIbigTab, sssTab, wTaxTab, annualTaxTableTab
+        premiumRateTab, deMinimisBenefitsTab, philHealthTab, pagIbigTab, sssTab, wTaxTab, annualTaxTableTab, minimumWageTab
     },
     methods : {
         clickTabs( tabItem ){
@@ -66,6 +67,9 @@ export default {
         },
         getAnnualTaxTable() {
             return SETTING_TYPE.ANNUAL_TAX_TABLE;
+        },
+        getMinimumWage() {
+            return SETTING_TYPE.MINIMUM_WAGE;
         }
     },
     data(){
@@ -73,13 +77,14 @@ export default {
             mainTabName : "Payroll Settings",
             tabName : null,
             mainTabs : [
-                { text : "Premium Rate", name : SETTING_TYPE.PREMIUM_RATE, current : false },
-                { text : "De Minimis Benefits" , name : SETTING_TYPE.DE_MINIMIS_BENEFITS, current : false },
-                { text : "SSS" , name : SETTING_TYPE.SSS, current : false },
-                { text : "PhilHealth" , name : SETTING_TYPE.PHIL_HEALTH, current : false },
-                { text : "Pag-ibig" , name : SETTING_TYPE.PAG_IBIG, current : false },
-                { text : "WTAX" , name : SETTING_TYPE.WTAX, current : false },
-                { text : "Annual tax table" , name : SETTING_TYPE.ANNUAL_TAX_TABLE, current : false }
+                {text : "Premium Rate", name : SETTING_TYPE.PREMIUM_RATE, current : false},
+                {text : "De Minimis Benefits" , name : SETTING_TYPE.DE_MINIMIS_BENEFITS, current : false},
+                {text : "SSS" , name : SETTING_TYPE.SSS, current : false},
+                {text : "PhilHealth" , name : SETTING_TYPE.PHIL_HEALTH, current : false},
+                {text : "Pag-ibig" , name : SETTING_TYPE.PAG_IBIG, current : false},
+                {text : "WTAX" , name : SETTING_TYPE.WTAX, current : false},
+                {text : "Annual tax table" , name : SETTING_TYPE.ANNUAL_TAX_TABLE, current : false},
+                {text : "Minimum Wage", name : SETTING_TYPE.MINIMUM_WAGE, current : false}
             ]
         }
     },
