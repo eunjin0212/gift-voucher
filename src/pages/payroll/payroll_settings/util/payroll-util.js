@@ -105,6 +105,9 @@ const payrollValidator = {
     },
     isAnnualTaxTable(value) {
         return SETTING_TYPE.ANNUAL_TAX_TABLE === value;
+    },
+    isMinimumWage(value) {
+        return SETTING_TYPE.MINIMUM_WAGE === value;
     }
 };
 
