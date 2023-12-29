@@ -97,6 +97,8 @@
         "get-payroll-setting-default-values" : "/api/payroll/setting/default-values",
         "post-payroll-setting-with-file" : "/api/payroll/setting/with-file",
         "put-payroll-setting-with-file" : "/api/payroll/setting/with-file",
+        "get-all-company-list" : "/api/all-company-list",
+        "post-target-payroll" : "/api/target-payroll",
 
         "post-update-product-status" : "/api/flexben/product-update",
         "ENDSTRING" : "END"

@@ -12,6 +12,7 @@
                 <wTaxTab :tabName="tabName" :visible="mainTabs.find(tab => tab.name === getWTAX())?.current === true" />
                 <annualTaxTableTab :tabName="tabName" :visible="mainTabs.find(tab => tab.name === getAnnualTaxTable())?.current === true" />
                 <minimumWageTab :tabName="tabName" :visible="mainTabs.find(tab => tab.name === getMinimumWage())?.current === true" />
+                <createPayrollManuallyTab :tabName="tabName" :visible="mainTabs.find(tab => tab.name === 'CREATE_PAYROLL_MANUALLY')?.current === true" />
             </div>
         </AppMain>
     </div>
@@ -30,11 +31,12 @@ import pagIbigTab from "@/pages/payroll/payroll_settings/tabs/pag_ibig.vue";
 import wTaxTab from "@/pages/payroll/payroll_settings/tabs/w-tax.vue";
 import annualTaxTableTab from "@/pages/payroll/payroll_settings/tabs/annual-tax-table.vue";
 import minimumWageTab from "@/pages/payroll/payroll_settings/tabs/minimum-wage.vue";
+import createPayrollManuallyTab from "@/pages/payroll/payroll_settings/tabs/create-payroll-manually.vue";
 
 export default {
     components : {
         AppAside, AppMain, MainTabs,
-        premiumRateTab, deMinimisBenefitsTab, philHealthTab, pagIbigTab, sssTab, wTaxTab, annualTaxTableTab, minimumWageTab
+        premiumRateTab, deMinimisBenefitsTab, philHealthTab, pagIbigTab, sssTab, wTaxTab, annualTaxTableTab, minimumWageTab, createPayrollManuallyTab
     },
     methods : {
         clickTabs( tabItem ){
@@ -84,7 +86,8 @@ export default {
                 {text : "Pag-ibig" , name : SETTING_TYPE.PAG_IBIG, current : false},
                 {text : "WTAX" , name : SETTING_TYPE.WTAX, current : false},
                 {text : "Annual tax table" , name : SETTING_TYPE.ANNUAL_TAX_TABLE, current : false},
-                {text : "Minimum Wage", name : SETTING_TYPE.MINIMUM_WAGE, current : false}
+                {text : "Minimum Wage", name : SETTING_TYPE.MINIMUM_WAGE, current : false},
+                {text : "Create payroll manually", name : "CREATE_PAYROLL_MANUALLY", current : false}
             ]
         }
     },
