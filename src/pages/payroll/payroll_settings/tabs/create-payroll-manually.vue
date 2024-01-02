@@ -23,7 +23,7 @@
         </div>
 
         <div v-if="$appUtil.checkPermission('PAYROLL_EDIT')" class="mt-4">
-            <div class="h-full flex flex-col">
+            <div class="h-full flex flex-col max-w-[540px]">
                 <dl class="mx-5">
                     <div class="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 items-center">
                         <dt class="text-sm font-semibold leading-6 text-gray-900 col-span-1">Target Company</dt>
