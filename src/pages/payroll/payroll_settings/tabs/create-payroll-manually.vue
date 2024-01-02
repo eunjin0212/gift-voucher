@@ -8,7 +8,7 @@
             </div>
         </div>
 
-        <div class="flex border border-solid rounded-lg w-[75%] h-32 mt-0" style="border-color: #9F9CEE; background-color: #F8F8FD;">
+        <div class="flex border border-solid rounded-lg w-[75%] h-28 mt-0" style="border-color: #9F9CEE; background-color: #F8F8FD;">
             <img
             class="h-5 w-5 mx-2.5 mt-4"
             :src="require(`@/assets/img/payroll-info.svg`)"
@@ -17,8 +17,7 @@
             <p class="text-left pt-4 font-medium">
                 You should use this function only if the company payroll is not automatically created.<br />
                 1) Target Company : Select a company.<br />
-                2) Target Date : If the cut off is 12/11 - 12/25, you must select 12/26. If the cut off is 12/26 - 1/10, you must select 1/11.<br />
-                In order for the feature to work
+                2) Target Date : If the cut off is 12/11 - 12/25, you must select 12/26. If the cut off is 12/26 - 1/10, you must select 1/11.
             </p>
         </div>
 
