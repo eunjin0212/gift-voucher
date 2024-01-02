@@ -3,20 +3,22 @@
         <div class="flex justify-between py-1">
             <div class="flex justify-start gap-5">
                 <h1 class="text-zinc-800 text-xl font-semibold leading-10 items-center ">
-                    
+                    Create Payroll Manually
                 </h1>
             </div>
         </div>
 
-        <div class="flex border border-solid rounded-lg w-2/3 h-20 mt-0" style="border-color: red; background-color: #F8F8FD;">
+        <div class="flex border border-solid rounded-lg w-[75%] h-32 mt-0" style="border-color: #9F9CEE; background-color: #F8F8FD;">
             <img
             class="h-5 w-5 mx-2.5 mt-4"
             :src="require(`@/assets/img/payroll-info.svg`)"
             alt="app-side-8"
             />
             <p class="text-left pt-4 font-medium">
-                Please enter a date after cut-off-to.<br />
-                If the cut-off-to is from December 10 to December 25, please select December 26th.
+                You should use this function only if the company payroll is not automatically created.<br />
+                1) Target Company : Select a company.<br />
+                2) Target Date : If the cut off is 12/11 - 12/25, you must select 12/26. If the cut off is 12/26 - 1/10, you must select 1/11.<br />
+                In order for the feature to work
             </p>
         </div>
 
@@ -44,12 +46,11 @@
                         </dd>
                     </div>
                     <div class="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 items-center">
-                        <dt class="text-sm font-semibold leading-6 text-gray-900 col-span-1"></dt>
-                        <dd class="col-span-2 mt-0">
+                        <dt class="text-sm font-semibold leading-6 text-gray-900"></dt>
+                        <dd class="col-span-3 mt-0">
                             <ElementsButton
-                                text="Make Payroll"
-                                :width32="true"
-                                @clickEvent="makePayroll"
+                                text="Create Payroll"
+                                @clickEvent="createPayroll"
                             />
                         </dd>
                     </div>
@@ -88,7 +89,7 @@ export default {
                 console.slog(err);
             });
         },
-        makePayroll() {
+        createPayroll() {
             const self = this;
             if (self.targetCompany == null) {
                 alert("Please choose a company.");
