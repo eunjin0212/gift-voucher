@@ -211,10 +211,16 @@ export default{
         },
         clickSubmit(){
             const self = this;
-            if( ! self.validatePhoneNumber() ){
-                alert( "Please enter a valid phone number. The number should start with either 09 or 08 and have more than 11 digits." );
+            const { subscriptionPicPhoneNumber, contactNumber } = self.registerData;
+            if(subscriptionPicPhoneNumber.length < 7 || contactNumber.length < 7){
+                alert( "Please enter a valid phone number. The number should have more than 6 digits." );
                 return;
             }
+
+            // if( ! self.validatePhoneNumber() ){
+            //     alert( "Please enter a valid phone number. The number should start with either 09 or 08 and have more than 11 digits." );
+            //     return;
+            // }
 
             self.$emit("next-step", self.registerData );
         },

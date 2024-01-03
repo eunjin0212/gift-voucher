@@ -281,11 +281,15 @@ export default {
             const self = this;
             const { contactNumber, subscriptionPicPhoneNumber, } = self.editCompanyData;
 
-
-            if( ! self.validatePhoneNumber(contactNumber ) || ! self.validatePhoneNumber(subscriptionPicPhoneNumber) ){
-                alert( "Please enter a valid phone number. The number should start with either 09 or 08 and have more than 11 digits." );
+            if (contactNumber.length < 7 || subscriptionPicPhoneNumber.length < 7) {
+                alert( "Please enter a valid phone number. The number should have more than 6 digits." );
                 return false;
             }
+
+            // if( ! self.validatePhoneNumber(contactNumber ) || ! self.validatePhoneNumber(subscriptionPicPhoneNumber) ){
+            //     alert( "Please enter a valid phone number. The number should start with either 09 or 08 and have more than 11 digits." );
+            //     return false;
+            // }
 
             return true;
         },

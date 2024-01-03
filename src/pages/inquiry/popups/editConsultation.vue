@@ -170,11 +170,17 @@ export default {
     methods : {
         saveThisPopup(){
             const self = this;
+            const { picPhoneNumber } = self.inquiry;
 
-            if( ! self.validatePhoneNumber() ){
-                alert("Please enter a valid phone number. The number should start with either 09 or 08 and have more than 11 digits.");
+            if(picPhoneNumber && picPhoneNumber.length < 7){
+                alert("Please enter a valid phone number. The number should have more than 6 digits.");
                 return;
             }
+
+            // if( ! self.validatePhoneNumber() ){
+            //     alert("Please enter a valid phone number. The number should start with either 09 or 08 and have more than 11 digits.");
+            //     return;
+            // }
 
             const updateData = {
                 ...self.inquiry,
