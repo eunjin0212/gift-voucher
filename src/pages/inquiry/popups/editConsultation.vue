@@ -172,8 +172,8 @@ export default {
             const self = this;
             const { picPhoneNumber } = self.inquiry;
 
-            if(picPhoneNumber && picPhoneNumber.length < 7){
-                alert("Please enter a valid phone number. The number should have more than 6 digits.");
+            if (!picPhoneNumber && (picPhoneNumber.length < 7 || picPhoneNumber.length > 20)) {
+                alert("Please enter a valid phone number. The number should have 7~20digits");
                 return;
             }
 

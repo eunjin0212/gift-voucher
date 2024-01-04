@@ -281,8 +281,8 @@ export default {
             const self = this;
             const { contactNumber, subscriptionPicPhoneNumber, } = self.editCompanyData;
 
-            if (contactNumber.length < 7 || subscriptionPicPhoneNumber.length < 7) {
-                alert( "Please enter a valid phone number. The number should have more than 6 digits." );
+            if ((contactNumber.length < 7 || contactNumber.length > 20) || (subscriptionPicPhoneNumber.length < 7 || subscriptionPicPhoneNumber.length > 20)) {
+                alert( "Please enter a valid phone number. The number should have 7~20digits" );
                 return false;
             }
 
