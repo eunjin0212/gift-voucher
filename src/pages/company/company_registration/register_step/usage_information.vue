@@ -16,17 +16,8 @@
 
             <div class="mx-2">
                 <div class="flex justify-between border-b-[1px] border-gray-200 pb-4">
-                    <div class="text-gray-800"> Attendance / Leave / FlexBen </div>
+                    <div class="text-gray-800"> Attendance / Leave / FlexBen / Filing </div>
                     <div> Default Provision </div>
-                </div>
-
-                <div class="flex justify-between border-b-[1px] border-gray-200 py-4">
-                    <div class="text-gray-800"> Filing </div>
-                    <ElementsToggle
-                        :trueValue="'ACTIVE'"
-                        :falseValue="'DEACTIVATED'"
-                        v-model="registerData.filingUsageStatus"
-                    />
                 </div>
 
                 <div class="flex justify-between border-b-[1px] border-gray-200 py-4">
