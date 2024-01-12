@@ -7,23 +7,10 @@
                 <dl class="divide-y divide-gray-100">
                     <div class="px-0 py-3 grid grid-cols-3 gap-4 ">
                         <dt class="text-sm font-medium leading-6 text-gray-900 col-span-1">
-                            Attendance / Leave / FlexBen
+                            Attendance / Leave / FlexBen / Filing
                         </dt>
                         <dd class="mt-1 text-sm leading-6 text-gray-700 col-span-2 place-self-end font-semibold">
                             Default
-                        </dd>
-                    </div>
-                    <div class="px-0 py-3 grid grid-cols-3 gap-4 ">
-                        <dt class="text-sm font-medium leading-6 text-gray-900 col-span-1">
-                            Filing
-                        </dt>
-                        <dd class="mt-1 text-sm leading-6 text-gray-700 col-span-2 place-self-end font-semibold">
-                            <ElementsToggle
-                                :trueValue="'ACTIVE'"
-                                :falseValue="'DEACTIVATED'"
-                                :disabled="!$appUtil.checkPermission('COMPANY_SETTING_EDIT')"
-                                v-model="companySettingData.filingUsageStatus"
-                            />
                         </dd>
                     </div>
                     <div class="px-0 py-3 grid grid-cols-3 gap-4 ">
@@ -303,12 +290,11 @@ export default{
     },
     mounted(){
         const self = this;
-        let { filingUsageStatus, kpiUsageStatus, payrollUsageStatus } = self.registerData;
-        // console.log({ filingUsageStatus, kpiUsageStatus, payrollUsageStatus })
-        filingUsageStatus = filingUsageStatus || 'DEACTIVATED';
-        kpiUsageStatus = kpiUsageStatus || 'DEACTIVATED';
+        let { payrollUsageStatus, kpiUsageStatus } = self.registerData;
+        // console.log({ kpiUsageStatus, payrollUsageStatus })
         payrollUsageStatus = payrollUsageStatus || 'DEACTIVATED';
-        self.companySettingData = { filingUsageStatus, kpiUsageStatus, payrollUsageStatus, companySubscribeStatus : null , suspendedDate : null };
+        kpiUsageStatus = kpiUsageStatus || 'DEACTIVATED';
+        self.companySettingData = { payrollUsageStatus, kpiUsageStatus, companySubscribeStatus : null , suspendedDate : null };
     }
 }
 
