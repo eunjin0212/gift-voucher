@@ -6,18 +6,18 @@
             <div class="mt-4 border-t border-gray-100">
                 <dl class="divide-y divide-gray-100">
                     <div class="px-0 py-3 grid grid-cols-3 gap-4 ">
-                        <dt class="text-sm font-medium leading-6 text-gray-900 col-span-1">
+                        <dt class="text-sm font-medium leading-6 text-gray-900 col-span-2">
                             Attendance / Leave / FlexBen / Filing
                         </dt>
-                        <dd class="mt-1 text-sm leading-6 text-gray-700 col-span-2 place-self-end font-semibold">
+                        <dd class="mt-1 text-sm leading-6 text-gray-700 col-span-1 place-self-end font-semibold">
                             Default
                         </dd>
                     </div>
                     <div class="px-0 py-3 grid grid-cols-3 gap-4 ">
-                        <dt class="text-sm font-medium leading-6 text-gray-900 col-span-1">
+                        <dt class="text-sm font-medium leading-6 text-gray-900 col-span-2">
                             Payroll
                         </dt>
-                        <dd class="mt-1 text-sm leading-6 text-gray-700 col-span-2 place-self-end font-semibold">
+                        <dd class="mt-1 text-sm leading-6 text-gray-700 col-span-1 place-self-end font-semibold">
                             <ElementsToggle
                                 :trueValue="'ACTIVE'"
                                 :falseValue="'DEACTIVATED'"
@@ -27,10 +27,10 @@
                         </dd>
                     </div>
                     <div class="px-0 py-3 grid grid-cols-3 gap-4 ">
-                        <dt class="text-sm font-medium leading-6 text-gray-900 col-span-1">
+                        <dt class="text-sm font-medium leading-6 text-gray-900 col-span-2">
                             KPI
                         </dt>
-                        <dd class="mt-1 text-sm leading-6 text-gray-700 col-span-2 place-self-end font-semibold">
+                        <dd class="mt-1 text-sm leading-6 text-gray-700 col-span-1 place-self-end font-semibold">
                             <ElementsToggle
                                 :trueValue="'ACTIVE'"
                                 :falseValue="'DEACTIVATED'"
