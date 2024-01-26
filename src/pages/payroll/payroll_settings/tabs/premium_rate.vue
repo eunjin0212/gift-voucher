@@ -581,7 +581,7 @@ export default {
                 for (let data in premiumRate) {
                     // 확인 안하는 것들 제외
                     // sequence 는 update 할 때만 있음
-                    if (data === "hourType" || data === "payrollPremiumRateSeq") {
+                    if (data === "hourType" || data === "payrollPremiumRateSeq" || data == "payrollPremiumRateDefaultValuesSeq") {
                         continue;
                     }
 

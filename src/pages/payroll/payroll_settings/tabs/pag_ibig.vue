@@ -555,7 +555,7 @@ export default {
                         return true;
                     }
 
-                    if (data === "payrollPagIbigSeq" || data === "moneyType") {
+                    if (data === "payrollPagIbigSeq" || data === "moneyType" || data === "payrollPagIbigDefaultValuesSeq") {
                         continue;
                     }
 

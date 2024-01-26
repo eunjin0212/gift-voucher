@@ -558,7 +558,7 @@ export default {
                         return true;
                     }
 
-                    if (data === "payrollPhilHealthSeq" || data === "moneyType") {
+                    if (data === "payrollPhilHealthSeq" || data === "moneyType" || data === "payrollPhilHealthDefaultValuesSeq") {
                         continue;
                     }
 

@@ -570,6 +570,8 @@ export default {
                 let standardUnit = deMinimisBenefits.standardUnit;
                 let timeUnit = deMinimisBenefits.timeUnit;
 
+                // 추후 계산 공식이 바뀐다면 payrollDeMinimisBenefitsDefaultValuesSeq는 무시해야 한다.
+
                 if (self.invalidStandardUnitOption(standardUnit)) {
                     return true;
                 }
