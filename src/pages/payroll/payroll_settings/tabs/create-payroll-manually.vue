@@ -110,9 +110,9 @@ export default {
                 alert(res.data.message);
             })
             .catch( err => {
-                let { code, message } = err.response;
+                let { code, message } = err.response.data;
                 alert(message);
-                console.slog(err);
+                console.log(err.response);
             });
         }
     },
