@@ -126,8 +126,8 @@
                             <tbody class=" bg-white">
                                 <tr v-for="(premiumRate, index) in registerData.premiumRateFormList" v-bind:key="index" class="border-x border-y border-solid border-gray-200">
                                     <td class="px-3 py-4 border-x border-solid border-gray-200 text-center text-sm text-gray-900"><span>{{ getDisplayTextOfHourType(premiumRate.hourType) }}</span></td>
-                                    <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="premiumRate.regularDayRate" :full="true" :required="true" /></td>
-                                    <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="premiumRate.restDayRate" :full="true" :required="true" /></td>
+                                    <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="premiumRate.regularDay" :full="true" :required="true" /></td>
+                                    <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="premiumRate.restDay" :full="true" :required="true" /></td>
                                     <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="premiumRate.regularHoliday" :full="true" :required="true" /></td>
                                     <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="premiumRate.regularHolidayAndRestDay" :full="true" :required="true" /></td>
                                     <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="premiumRate.specialNonWorkingDay" :full="true" :required="true" /></td>
@@ -188,8 +188,8 @@
                         <tbody class=" bg-white">
                             <tr v-for="(detail, index) in settingDetail.premiumRateFormList" v-bind:key="index" class="border-x border-y border-solid border-gray-200">
                                 <td class="px-3 py-4 border-x border-solid border-gray-200 text-center text-sm text-gray-900"><span>{{ getDisplayTextOfHourType(detail.hourType) }}</span></td>
-                                <td class="px-3 py-4 border-x border-solid border-gray-200 text-center text-sm text-gray-900"><span>{{ detail.regularDayRate }}%</span></td>
-                                <td class="px-3 py-4 border-x border-solid border-gray-200 text-center text-sm text-gray-900"><span>{{ detail.restDayRate }}%</span></td>
+                                <td class="px-3 py-4 border-x border-solid border-gray-200 text-center text-sm text-gray-900"><span>{{ detail.regularDay }}%</span></td>
+                                <td class="px-3 py-4 border-x border-solid border-gray-200 text-center text-sm text-gray-900"><span>{{ detail.restDay }}%</span></td>
                                 <td class="px-3 py-4 border-x border-solid border-gray-200 text-center text-sm text-gray-900"><span>{{ detail.regularHoliday }}%</span></td>
                                 <td class="px-3 py-4 border-x border-solid border-gray-200 text-center text-sm text-gray-900"><span>{{ detail.regularHolidayAndRestDay }}%</span></td>
                                 <td class="px-3 py-4 border-x border-solid border-gray-200 text-center text-sm text-gray-900"><span>{{ detail.specialNonWorkingDay }}%</span></td>
@@ -283,8 +283,8 @@
                             <tbody class=" bg-white">
                                 <tr v-for="(premiumRate, index) in updateData.premiumRateFormList" v-bind:key="index" class="border-x border-y border-solid border-gray-200">
                                     <td class="px-3 py-4 border-x border-solid border-gray-200 text-center text-sm text-gray-900"><span>{{ getDisplayTextOfHourType(premiumRate.hourType) }}</span></td>
-                                    <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="premiumRate.regularDayRate" :full="true" :required="true" /></td>
-                                    <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="premiumRate.restDayRate" :full="true" :required="true" /></td>
+                                    <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="premiumRate.regularDay" :full="true" :required="true" /></td>
+                                    <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="premiumRate.restDay" :full="true" :required="true" /></td>
                                     <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="premiumRate.regularHoliday" :full="true" :required="true" /></td>
                                     <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="premiumRate.regularHolidayAndRestDay" :full="true" :required="true" /></td>
                                     <td class="px-3 py-4 border-x border-solid border-gray-200 text-sm text-gray-900"><ElementsInput v-model="premiumRate.specialNonWorkingDay" :full="true" :required="true" /></td>
