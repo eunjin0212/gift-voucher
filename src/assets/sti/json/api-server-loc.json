@@ -100,6 +100,11 @@
         "get-all-company-list" : "/api/all-company-list",
         "post-target-payroll" : "/api/target-payroll",
 
+        "get-schedule-list" : "/api/schedule",
+        "put-schedule" : "/api/schedule/{scheduleQueueWaitSeq}",
+        "post-schedule" : "/api/schedule",
+        "delete-schedule" : "/api/schedule/{scheduleQueueWaitSeq}",
+
         "post-update-product-status" : "/api/flexben/product-update",
         "ENDSTRING" : "END"
     }

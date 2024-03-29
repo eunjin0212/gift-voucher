@@ -25,6 +25,8 @@ const ADMIN_SETTING = [ 'ADMIN_EDIT','ADMIN_VIEW'];
 
 const PAYROLL_SETTING = ['PAYROLL_VIEW', 'PAYROLL_EDIT'];
 
+const SCHEDULE_SETTING = ['SCHEDULE_VIEW', 'SCHEDULE_EDIT'];
+
 let items = reactive([
     {
         href: "/admin_dashboard",
@@ -89,6 +91,12 @@ let items = reactive([
         href: "/payroll/payroll_settings",
         text: "Payroll Settings",
         hasPermission : checkPermissionArray(PAYROLL_SETTING)
+    },
+    {
+        href: "/schedule",
+        img: "app-side-2",
+        text: "Schedule Process",
+        hasPermission : checkPermissionArray(SCHEDULE_SETTING)
     },
     {
         children: true,

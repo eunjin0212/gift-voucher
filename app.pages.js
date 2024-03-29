@@ -11,6 +11,8 @@ const COMPANY_SETTINGS = ['COMPANY_SETTING_VIEW', 'COMPANY_SETTING_EDIT'
 
 const PAYROLL_SETTING = ['PAYROLL_VIEW', 'PAYROLL_EDIT'];
 
+const SCHEDULE_SETTING = ['SCHEDULE_VIEW', 'SCHEDULE_EDIT'];
+
 const pages = {
     index: {
         template: 'public/landing.html',
@@ -78,6 +80,11 @@ const pages = {
         template: 'public/default.html',
         title: 'Payroll Settings',
         permission : PAYROLL_SETTING
+    },
+    'schedule' : {
+        template: 'public/default.html',
+        title: 'Schedule Settings',
+        permission : SCHEDULE_SETTING
     },
     report : {
         template: 'public/default.html',
