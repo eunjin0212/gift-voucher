@@ -99,6 +99,13 @@ const initMenuCodes = [
         basicCode : 'PAYROLL',
         viewCode : 'PAYROLL_VIEW',
         editCode : 'PAYROLL_EDIT'
+    },
+    {
+        permissionName : 'Schedule Settings',
+        checked : null,
+        basicCode : 'SCHEDULE',
+        viewCode : 'SCHEDULE_VIEW',
+        editCode : 'SCHEDULE_EDIT'
     }
 ];
 
