@@ -179,7 +179,7 @@ function clickShowButton() {
         <div
             class="border-b border-indigo-400 h-20 flex justify-center items-center gap-2"
         >
-            <img src="@/assets/img/hrnflex_wh_logo.png" alt="white_logo" class="h-5" />
+            <img src="@/assets/img/hrnflex_admin_logo.png" alt="admin_logo" class="h-12" />
             <h1 class="text-2xl font-bold text-white whitespace-nowrap"></h1>
         </div>
         <div class="mt-5">
