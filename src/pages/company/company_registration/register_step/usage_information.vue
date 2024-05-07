@@ -39,6 +39,33 @@
                 </div>
             </div>
 
+            <div class="text-base font-semibold mt-3"> Time-in, Time-out Settings </div>
+
+            <div class="mx-2">
+                <div class="flex justify-between border-b-[1px] border-gray-200 pb-4">
+                    <div class="text-gray-800"> Just Click </div>
+                    <div> Default </div>
+                </div>
+
+                <div class="flex justify-between border-b-[1px] border-gray-200 py-4">
+                    <div class="text-gray-800"> Photo </div>
+                    <ElementsToggle
+                        :trueValue="'ACTIVE'"
+                        :falseValue="'DEACTIVATED'"
+                        v-model="registerData.commutePhotoUsageStatus"
+                    />
+                </div>
+
+                <div class="flex justify-between border-b-[1px] border-gray-200 py-4">
+                    <div class="text-gray-800"> Location </div>
+                    <ElementsToggle
+                        :trueValue="'ACTIVE'"
+                        :falseValue="'DEACTIVATED'"
+                        v-model="registerData.commuteLocationUsageStatus"
+                    />
+                </div>
+            </div>
+
             <div class="mt-10 flex gap-2 justify-end">
                 <ElementsButton
                     :width32="true"
@@ -76,7 +103,9 @@ export default{
                 flexbenCampaignSeq: "",
                 filingUsageStatus : "ACTIVE",
                 payrollUsageStatus : "ACTIVE",
-                kpiUsageStatus : "ACTIVE"
+                kpiUsageStatus : "ACTIVE",
+                commutePhotoUsageStatus : "DEACTIVATED",
+                commuteLocationUsageStatus : "DEACTIVATED"
             },
             flexbenTypeOptions : [],
         }

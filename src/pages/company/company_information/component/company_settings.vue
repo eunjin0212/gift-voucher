@@ -52,7 +52,57 @@
             </div>
         </div>
 
-
+<!-- // Commute Setting ================================================================================== -->
+        <div class="flex flex-col mt-5 px-6 py-3 w-[50vw] bg-white shadow-md shadow-gray-200">
+            <div class="mt-4 text-indigo-900 font-semibold text-xl"> Time-in, Time-out Settings </div>
+            <div class="mt-4 border-t border-gray-100">
+                <dl class="divide-y divide-gray-100">
+                    <div class="px-0 py-3 grid grid-cols-3 gap-4 ">
+                        <dt class="text-sm font-medium leading-6 text-gray-900 col-span-2">
+                            Just Click
+                        </dt>
+                        <dd class="mt-1 text-sm leading-6 text-gray-700 col-span-1 place-self-end font-semibold">
+                            Default
+                        </dd>
+                    </div>
+                    <div class="px-0 py-3 grid grid-cols-3 gap-4 ">
+                        <dt class="text-sm font-medium leading-6 text-gray-900 col-span-2">
+                            Photo
+                        </dt>
+                        <dd class="mt-1 text-sm leading-6 text-gray-700 col-span-1 place-self-end font-semibold">
+                            <ElementsToggle
+                                :trueValue="'ACTIVE'"
+                                :falseValue="'DEACTIVATED'"
+                                :disabled="!$appUtil.checkPermission('COMPANY_SETTING_EDIT')"
+                                v-model="companySettingData.commutePhotoUsageStatus"
+                            />
+                        </dd>
+                    </div>
+                    <div class="px-0 py-3 grid grid-cols-3 gap-4 ">
+                        <dt class="text-sm font-medium leading-6 text-gray-900 col-span-2">
+                            Location
+                        </dt>
+                        <dd class="mt-1 text-sm leading-6 text-gray-700 col-span-1 place-self-end font-semibold">
+                            <ElementsToggle
+                                :trueValue="'ACTIVE'"
+                                :falseValue="'DEACTIVATED'"
+                                :disabled="!$appUtil.checkPermission('COMPANY_SETTING_EDIT')"
+                                v-model="companySettingData.commuteLocationUsageStatus"
+                            />
+                        </dd>
+                    </div>
+                    <div class="px-0 pt-9 pb-3 grid grid-cols-3 gap-4 ">
+                        <ElementsButton
+                            class="col-span-3 place-self-end"
+                            :text="'Save'"
+                            :width60="true"
+                            v-if="$appUtil.checkPermission('COMPANY_SETTING_EDIT')"
+                            @click="$emit('submit-commute-settings', companySettingData)"
+                        />
+                    </div>
+                </dl>
+            </div>
+        </div>
 
 <!-- // Suspended Setting ================================================================================== -->
         <div class="mt-5 px-6 py-3 w-[50vw] bg-white shadow-md shadow-gray-200"
@@ -213,7 +263,7 @@ export default{
             default : () => {},
         },
     },
-    emits : ["submit-usage-settings", "submit-suspended-settings"],
+    emits : ["submit-usage-settings", "submit-commute-settings", "submit-suspended-settings"],
     data(){
         return {
             companySettingData : {},
@@ -290,11 +340,13 @@ export default{
     },
     mounted(){
         const self = this;
-        let { payrollUsageStatus, kpiUsageStatus } = self.registerData;
+        let { payrollUsageStatus, kpiUsageStatus, commutePhotoUsageStatus, commuteLocationUsageStatus } = self.registerData;
         // console.log({ kpiUsageStatus, payrollUsageStatus })
         payrollUsageStatus = payrollUsageStatus || 'DEACTIVATED';
         kpiUsageStatus = kpiUsageStatus || 'DEACTIVATED';
-        self.companySettingData = { payrollUsageStatus, kpiUsageStatus, companySubscribeStatus : null , suspendedDate : null };
+        commutePhotoUsageStatus = commutePhotoUsageStatus || 'DEACTIVATED';
+        commuteLocationUsageStatus = commuteLocationUsageStatus || 'DEACTIVATED';
+        self.companySettingData = { payrollUsageStatus, kpiUsageStatus, commutePhotoUsageStatus, commuteLocationUsageStatus, companySubscribeStatus : null , suspendedDate : null };
     }
 }
 

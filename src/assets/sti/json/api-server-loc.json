@@ -16,6 +16,7 @@
         "get-company-admin" : "/api/company/admin",
         "put-company-info" : "/api/company/company-info",
         "put-company-usage-setting" : "/api/company/usage-setting",
+        "put-commute-usage-setting" : "/api/company/commute-usage-setting",
         "put-company-account-setting" : "/api/company/account-setting",
         "post-company-name-duplicate-check" : "/api/company/duplicationCheck",
 

@@ -34,6 +34,7 @@
                     v-if="mainTabs.find( tab=> tab.name === 'SETTINGS' ).current === true"
                     :registerData="registerData"
                     @submit-usage-settings="editCompanyUsageSettings"
+                    @submit-commute-settings="editCommuteUsageSettings"
                     @submit-suspended-settings="editAccountSettings"
                 />
             </AppMain>
@@ -209,6 +210,19 @@ export default {
             editSettingData.companySeq = self.registerData.companySeq;
 
             const url = self.$api("uri", "put-company-usage-setting");
+            self.$axios.put( url, editSettingData )
+                .then( ()=>{
+                    alert("Success to update ");
+                    self.getDisplayData();
+                })
+                .catch( alert)
+        },
+        editCommuteUsageSettings( editSettingData ){
+            const self = this;
+            editSettingData.subscriptionCompanySeq = self.registerData.subscriptionCompanySeq;
+            editSettingData.companySeq = self.registerData.companySeq;
+
+            const url = self.$api("uri", "put-commute-usage-setting");
             self.$axios.put( url, editSettingData )
                 .then( ()=>{
                     alert("Success to update ");
