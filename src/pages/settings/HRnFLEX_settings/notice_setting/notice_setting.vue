@@ -20,74 +20,74 @@
         </div>
         
         <div v-if="noticeList.length > 0" class="mt-3 overflow-auto pb-[5vh] md:rounded-lg">
-                <table class="divide-y divide-gray-300 w-full shadow border-[1px] border-black border-opacity-10">
-                    <thead class="bg-[#F8F8FD] w-full">
-                        <tr>
-                            <th scope="col" class="px-1 py-3.5 text-center text-sm text-gray-900">No</th>
-                            <th scope="col" class="px-1 py-3.5 text-center text-sm text-gray-900">Date</th>
-                            <th scope="col" class="px-1 py-3.5 text-center text-sm text-gray-900">Admin</th>
-                            <th scope="col" class="px-1 py-3.5 text-center text-sm text-gray-900">Title</th>
-                            <th scope="col" class="px-1 py-3.5 text-center text-sm text-gray-900">Display Home</th>
-                            <th scope="col" class="px-1 py-3.5 text-center text-sm text-gray-900">Display Period</th>
-                            <th scope="col" class="px-1 py-3.5 text-center text-sm text-gray-900"> <span class="sr-only"> Edit </span> </th>
-                        </tr>
-                    </thead>
-                    <tbody class=" bg-white">
-                        <tr v-for="(notice, index) in noticeList" v-bind:key="index"
-                            :class="{ 'bg-[#F8F8FD]': (index % 2 !== 0) }"
-                        >
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-center text-gray-900"> {{noticeCount - ((currentPage - 1) * pageCondition.limit) - index}} </td>
-                            <td class="whitespace-pre px-3 py-4 text-sm text-center text-gray-900"> {{dateFormatChange(notice.writeDatetime)}} </td>
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-center text-gray-900"> {{notice.loginId}} </td>
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-center text-gray-900"> {{notice.noticeTitle}} </td>
-                            <td class="whitespace-normal px-3 py-4 text-sm text-center text-gray-900"> {{notice.displayHomeYn}} </td>
-                            <td class="whitespace-normal px-3 py-4 text-sm text-center text-gray-900">
-                                <span v-if="notice.displayHomeYn === 'Y'">
-                                    {{convertDateFormat(notice.displayHomeStartDatetime)}} ~ {{convertDateFormat(notice.displayHomeEndDatetime)}}
-                                </span> 
-                                <span v-else>
-                                    -
-                                </span>
-                            </td>
-                            <td class="whitespace-nowrap  text-sm text-gray-900 pr-3">
+            <table class="divide-y divide-gray-300 w-full shadow border-[1px] border-black border-opacity-10">
+                <thead class="bg-[#F8F8FD] w-full">
+                    <tr>
+                        <th scope="col" class="px-1 py-3.5 text-center text-sm text-gray-900">No</th>
+                        <th scope="col" class="px-1 py-3.5 text-center text-sm text-gray-900">Date</th>
+                        <th scope="col" class="px-1 py-3.5 text-center text-sm text-gray-900">Admin</th>
+                        <th scope="col" class="px-1 py-3.5 text-center text-sm text-gray-900">Title</th>
+                        <th scope="col" class="px-1 py-3.5 text-center text-sm text-gray-900">Display Home</th>
+                        <th scope="col" class="px-1 py-3.5 text-center text-sm text-gray-900">Display Period</th>
+                        <th scope="col" class="px-1 py-3.5 text-center text-sm text-gray-900"> <span class="sr-only"> Edit </span> </th>
+                    </tr>
+                </thead>
+                <tbody class=" bg-white">
+                    <tr v-for="(notice, index) in noticeList" v-bind:key="index"
+                        :class="{ 'bg-[#F8F8FD]': (index % 2 !== 0) }"
+                    >
+                        <td class="whitespace-nowrap px-3 py-4 text-sm text-center text-gray-900"> {{noticeCount - ((currentPage - 1) * pageCondition.limit) - index}} </td>
+                        <td class="whitespace-pre px-3 py-4 text-sm text-center text-gray-900"> {{dateFormatChange(notice.writeDatetime)}} </td>
+                        <td class="whitespace-nowrap px-3 py-4 text-sm text-center text-gray-900"> {{notice.loginId}} </td>
+                        <td class="whitespace-nowrap px-3 py-4 text-sm text-center text-gray-900"> {{notice.noticeTitle}} </td>
+                        <td class="whitespace-normal px-3 py-4 text-sm text-center text-gray-900"> {{notice.displayHomeYn}} </td>
+                        <td class="whitespace-normal px-3 py-4 text-sm text-center text-gray-900">
+                            <span v-if="notice.displayHomeYn === 'Y'">
+                                {{convertDateFormat(notice.displayHomeStartDatetime)}} ~ {{convertDateFormat(notice.displayHomeEndDatetime)}}
+                            </span> 
+                            <span v-else>
+                                -
+                            </span>
+                        </td>
+                        <td class="whitespace-nowrap  text-sm text-gray-900 pr-3">
 
-                                <Menu v-if="$appUtil.checkPermission('NOTICE_EDIT')" as="div" class="relative inline-block text-left">
-                                    <div>
-                                        <MenuButton class="flex items-center rounded-full  text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">
-                                            <span class="sr-only">Open options</span>
-                                            <DotsVerticalIcon class="h-5 w-5" aria-hidden="true" />
-                                        </MenuButton>
-                                    </div>
+                            <Menu v-if="$appUtil.checkPermission('NOTICE_EDIT')" as="div" class="relative inline-block text-left">
+                                <div>
+                                    <MenuButton class="flex items-center rounded-full  text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">
+                                        <span class="sr-only">Open options</span>
+                                        <DotsVerticalIcon class="h-5 w-5" aria-hidden="true" />
+                                    </MenuButton>
+                                </div>
 
-                                    <transition
-                                        enter-active-class="transition ease-out duration-100"
-                                        enter-from-class="transform opacity-0 scale-95"
-                                        enter-to-class="transform opacity-100 scale-100"
-                                        leave-active-class="transition ease-in duration-75"
-                                        leave-from-class="transform opacity-100 scale-100"
-                                        leave-to-class="transform opacity-0 scale-95"
-                                    >
-                                        <MenuItems class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                            <div class="py-1">
-                                                <MenuItem v-slot="{ active }" @click="openEditNotice(notice)">
-                                                    <div :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">
-                                                        Edit
-                                                    </div>
-                                                </MenuItem>
-                                                <MenuItem v-slot="{ active }" @click="deleteNotice(notice)">
-                                                    <div :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">
-                                                        Delete
-                                                    </div>
-                                                </MenuItem>
-                                            </div>
-                                        </MenuItems>
-                                    </transition>
-                                </Menu>
+                                <transition
+                                    enter-active-class="transition ease-out duration-100"
+                                    enter-from-class="transform opacity-0 scale-95"
+                                    enter-to-class="transform opacity-100 scale-100"
+                                    leave-active-class="transition ease-in duration-75"
+                                    leave-from-class="transform opacity-100 scale-100"
+                                    leave-to-class="transform opacity-0 scale-95"
+                                >
+                                    <MenuItems class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                        <div class="py-1">
+                                            <MenuItem v-slot="{ active }" @click="openEditNotice(notice)">
+                                                <div :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">
+                                                    Edit
+                                                </div>
+                                            </MenuItem>
+                                            <MenuItem v-slot="{ active }" @click="deleteNotice(notice)">
+                                                <div :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">
+                                                    Delete
+                                                </div>
+                                            </MenuItem>
+                                        </div>
+                                    </MenuItems>
+                                </transition>
+                            </Menu>
 
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
         <div v-else class="mt-3 flex flex-col items-center h-full justify-center gap-5">
