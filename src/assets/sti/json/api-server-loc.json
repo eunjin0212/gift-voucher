@@ -8,6 +8,7 @@
         "post-testTools-messageClient":"/api/test-tools/message-client/send",
 
         "post-sign-in":"/sign/sign-in",
+        "post-sign-in-google":"/sign/sign-in-google",
         "get-sign-on" : "/api/sign/sign-on",
         "post-sign-out" : "/api/sign/sign-out",
 

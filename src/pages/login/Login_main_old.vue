@@ -13,11 +13,13 @@ export default {
             items: ["Login"],
             loginRequestError: {
                 loginId: "",
+                loginPwd: "",
                 message: ""
             },
             loginRequest: {
                 selectPosition: "admin",
                 loginId: "",
+                loginPwd: "",
             },
             noticePopup: false,
             axiosNoti: false,
@@ -26,43 +28,60 @@ export default {
 
     mounted() {
         // if(window.logOnProfile) location.href = '/company_settings/company_information'
-        this.initGoogleLogin();
+        this.initLoginRequest();
     },
     methods: {
-        initGoogleLogin() {
+        initLoginRequest() {
+            //init
             const self = this;
-            const ele = document.createElement("script");
-            ele.src = 'https://accounts.google.com/gsi/client';
-            ele.onload = ()=>{
-                // Document : https://developers.google.com/identity/gsi/web/guides/display-button#javascript
-                google.accounts.id.initialize({
-                    client_id: '106710875587-lerncth9mc7vn04aaimhpv23l1pg94f4.apps.googleusercontent.com',
-                    callback: (response) => {
-                        console.warn("Encoded JWT ID token ", response.credential);
-                        console.log("google response", response);
-                        self.clerkSignInWithServer(response.credential);
-                    }
-                });
-                google.accounts.id.renderButton(
-                    document.getElementById("buttonDiv"),
-                    { theme: "outline", size: "large" }  // customization attributes
-                );
-                google.accounts.id.prompt(); // also display the One Tap dialog
-            };
-            document.getElementsByTagName("head")[0].appendChild(ele);
+            self.loginRequest.loginId = "";
+            self.loginRequest.loginPwd = "";
         },
-        clerkSignInWithServer(authToken){
+        errMsgReset() {
             const self = this;
-            self.loginRequest.loginId = authToken;
+            self.loginRequestError.loginId = "";
+            self.loginRequestError.loginPwd = "";
+        },
+        isValid() {
+            const self = this;
+
+            //비어있는 갯수 체크
+            let isLoginValid = true;
+
+            //--------------
+            if (self.loginRequest.loginId == "") {
+                self.loginRequestError.loginId =
+                    "Please enter a vaild Account";
+                isLoginValid = false;
+            }
+            if (self.loginRequest.loginPwd == "") {
+                self.loginRequestError.loginPwd =
+                    "Please provide your loginPwd";
+                isLoginValid = false;
+            }
+            //--------------
+
+            return isLoginValid;
+        },
+
+        login() {
+            const self = this;
+
+            //처음에 errMsgReset 해줌
+            self.errMsgReset();
+
+            //비어있는지 체크
+            if (!self.isValid()) return;
+
             self.connect();
         },
         connect() {
             const self = this;
-            const formProps = {
-                "loginId" : self.loginRequest.loginId
-            };
+            const formProps = Object.fromEntries(
+                new FormData(self.$refs["loginForm"])
+            );
 
-            let url = self.$api("uri", "post-sign-in-google");
+            let url = self.$api("uri", "post-sign-in");
 
             self.$axios
                 .post(url, formProps)
@@ -104,6 +123,10 @@ export default {
 
             self.noticePopup = false;
         },
+        onSubmit(event) {
+            event.preventDefault();
+            this.login();
+        },
     },
 };
 </script>
@@ -123,12 +146,34 @@ export default {
                 </div>
                 <form
                     class="flex-1 flex flex-col justify-center items-center"
+                    @submit="onSubmit"
                     ref="loginForm"
                 >
                     <h1 class="text-4xl font-semibold">Admin Login</h1>
-                    <div class="mt-3.5">
-                        <div id='buttonDiv' class="margin-left:auto; margin-right:auto; display: inline-block;"></div>
-                    </div>
+                    <ElementsInput
+                        class="mt-3.5"
+                        v-model="loginRequest.loginId"
+                        name="Account"
+                        placeholder="Enter Account"
+                        :error="loginRequestError.loginId"
+                        inputName="loginId"
+                        inputtype="text"
+                    />
+                    <ElementsInput
+                        class="mt-3.5"
+                        v-model="loginRequest.loginPwd"
+                        name="Password"
+                        placeholder="Enter Password"
+                        :error="loginRequestError.loginPwd"
+                        inputName="loginPwd"
+                        inputtype="password"
+                        ref="password"
+                    />
+                    <ElementsButton
+                        class="mt-8"
+                        text="Login"
+                        inputtype="submit"
+                    />
                 </form>
             </div>
         </LoginMain>
