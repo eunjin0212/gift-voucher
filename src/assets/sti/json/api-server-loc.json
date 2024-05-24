@@ -7,6 +7,7 @@
     "uris" : {
         "post-testTools-messageClient":"/api/test-tools/message-client/send",
 
+        "get-sign-google-oauth-client" : "/sign/google-oauth/client",
         "post-sign-in":"/sign/sign-in",
         "post-sign-in-google":"/sign/sign-in-google",
         "get-sign-on" : "/api/sign/sign-on",

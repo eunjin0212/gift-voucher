@@ -56,11 +56,6 @@
                                                         Edit
                                                     </div>
                                                 </MenuItem>
-                                                <MenuItem v-slot="{ active }" @click="openEditPassword(admin)">
-                                                    <div :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">
-                                                        Password Edit
-                                                    </div>
-                                                </MenuItem>
                                                 <MenuItem v-slot="{ active }" @click="deleteThisAccount(admin)">
                                                     <div :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">
                                                         Delete
@@ -84,7 +79,6 @@
                 :adminData="accountPopup.data"
                 @create="createAccount"
                 @change="editAccount"
-                @change-password="editPassword"
             />
         </Teleport>
     </div>
@@ -143,12 +137,6 @@ export default{
             self.accountPopup.executeType = "EDIT";
             self.accountPopup.data = selectedData;
         },
-        openEditPassword( selectedData ){
-            const self = this;
-            self.accountPopup.isOpen = true;
-            self.accountPopup.executeType = "PASSWORD_EDIT";
-            self.accountPopup.data = selectedData;
-        },
         createAccount( {accountMemo, loginPwd ,loginId ,hrAdminName} ){
             const self = this;
             const url = self.$api("uri", "post-hr-admin");
@@ -166,20 +154,6 @@ export default{
             const self = this;
             const url = self.$api("uri", "put-hr-admin");
             const editData = { hrAdminSeq, hrAdminName, loginId, accountMemo };
-
-            self.$axios.put( url , editData )
-                .then( res => {
-                    self.accountPopup.isOpen = false;
-                    self.getAdminList();
-                })
-                .catch( err => {
-                    alert("Fail To update");
-                })
-        },
-        editPassword( {hrAdminSeq, loginPwd} ){
-            const self = this;
-            const url = self.$api("uri", "put-hr-admin");
-            const editData = { hrAdminSeq, loginPwd };
 
             self.$axios.put( url , editData )
                 .then( res => {

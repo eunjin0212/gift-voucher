@@ -11,7 +11,6 @@
                 <h2 class="text-xl font-bold">
                     <span v-if="executeType ==='EDIT'">Edit HRnFLEX Account</span>
                     <span v-else-if="executeType ==='CREATE'">Add HRnFLEX Account </span>
-                    <span v-else-if="executeType ==='PASSWORD_EDIT'">Edit HRnFLEX Account Password </span>
                 </h2>
                 <a
                     href="javascript:void(0)"
@@ -32,7 +31,6 @@
                                     v-model.trim="accountData.hrAdminName"
                                     :maxlength="200"
                                     :required="true"
-                                    :disabled="executeType==='PASSWORD_EDIT'"
                                     autocomplete="hrAdminName"
                                 />
                             </dd>
@@ -45,23 +43,8 @@
                                     :maxlength="200"
                                     :inputtype="'email'"
                                     :required="true"
-                                    :disabled="executeType==='EDIT' || executeType==='PASSWORD_EDIT'"
+                                    :disabled="executeType==='EDIT'"
                                     autocomplete="loginId"
-                                />
-                            </dd>
-                        </div>
-                        <div
-                            v-if="executeType === 'CREATE' || executeType==='PASSWORD_EDIT'"
-                            class="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 items-center"
-                        >
-                            <dt class="text-sm font-semibold leading-6 text-gray-900 col-span-1"> Password </dt>
-                            <dd class="col-span-2 mt-0">
-                                <ElementsInput
-                                    v-model.trim="accountData.loginPwd"
-                                    :maxlength="200"
-                                    :required="true"
-                                    :inputtype="'password'"
-                                    autocomplete="loginPwd"
                                 />
                             </dd>
                         </div>
@@ -97,7 +80,7 @@
                     @click-event="hidePopup"
                 />
                 <ElementsButton
-                    v-if="executeType==='EDIT' || executeType==='PASSWORD_EDIT'"
+                    v-if="executeType==='EDIT'"
                     class="ml-2"
                     :inputtype="'submit'"
                     :text="'Change'"
@@ -121,13 +104,13 @@
 export default {
     components :{
     },
-    emits : [ 'update:modelValue','change','create', 'change-password'],
+    emits : [ 'update:modelValue','change','create'],
     props : {
         modelValue: Boolean,
         executeType : {
             type : String,
             validator(value) {
-                return ['CREATE', 'EDIT', 'PASSWORD_EDIT'].includes(value)
+                return ['CREATE', 'EDIT'].includes(value)
             }
         },
         adminData : {
@@ -156,19 +139,9 @@ export default {
                 self.updateAccountData();
                 return;
             }
-
-            if( self.executeType === 'PASSWORD_EDIT' ){
-                self.updateAccountPassword();
-                return;
-            }
         },
         insertAccountData(){
             const self = this;
-
-            if( self.accountData.loginPwd.length < 8 ){
-                alert("Password should be over 8 digits.");
-                return;
-            }
 
             self.$emit('create', self.accountData);
         },
@@ -177,15 +150,6 @@ export default {
 
             self.$emit('change', self.accountData );
         },
-        updateAccountPassword(){
-            const self = this;
-            if( self.accountData.loginPwd.length < 8 ){
-                alert("Password should be over 8 digits.");
-                return;
-            }
-
-            self.$emit("change-password", self.accountData);
-        }
     },
     mounted(){
 
@@ -200,19 +164,12 @@ export default {
             self.accountData = {
                 hrAdminName : null,
                 loginId : null,
-                loginPwd : null,
                 accountMemo : null,
             }
 
             if( self.executeType ==='EDIT' ){
                 const { hrAdminSeq, hrAdminName, loginId, accountMemo } = self.adminData;
                 self.accountData = { hrAdminSeq, hrAdminName, loginId, accountMemo }
-                return;
-            }
-
-            if( self.executeType ==='PASSWORD_EDIT' ){
-                const { hrAdminSeq, loginId, hrAdminName } = self.adminData;
-                self.accountData = { hrAdminSeq, loginId, hrAdminName, loginPwd : null }
                 return;
             }
         }

@@ -31,20 +31,20 @@ export default {
     methods: {
         initGoogleLogin() {
             const self = this;
+            const clientId = window.googleOauthClient.googleOauthClientId;
+
             const ele = document.createElement("script");
             ele.src = 'https://accounts.google.com/gsi/client';
             ele.onload = ()=>{
                 // Document : https://developers.google.com/identity/gsi/web/guides/display-button#javascript
                 google.accounts.id.initialize({
-                    client_id: '106710875587-lerncth9mc7vn04aaimhpv23l1pg94f4.apps.googleusercontent.com',
+                    client_id: clientId,
                     callback: (response) => {
-                        console.warn("Encoded JWT ID token ", response.credential);
-                        console.log("google response", response);
                         self.clerkSignInWithServer(response.credential);
                     }
                 });
                 google.accounts.id.renderButton(
-                    document.getElementById("buttonDiv"),
+                    document.getElementById("google-login"),
                     { theme: "outline", size: "large" }  // customization attributes
                 );
                 google.accounts.id.prompt(); // also display the One Tap dialog
@@ -127,7 +127,7 @@ export default {
                 >
                     <h1 class="text-4xl font-semibold">Admin Login</h1>
                     <div class="mt-3.5">
-                        <div id='buttonDiv' class="margin-left:auto; margin-right:auto; display: inline-block;"></div>
+                        <div id='google-login' class="margin-left:auto; margin-right:auto; display: inline-block;"></div>
                     </div>
                 </form>
             </div>

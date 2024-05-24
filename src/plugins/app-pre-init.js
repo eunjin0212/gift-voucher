@@ -29,6 +29,33 @@ async function fetchAuthorityFromNetwork(){
     }
 }
 
+async function getSignGoogleOauthClientId(){
+    const url = serverApi('uri', 'get-sign-google-oauth-client');
+    const urlInit = {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json'
+        },
+        mode: 'cors',
+        credentials: process.env.VUE_APP_SERVER_MODE !== 'loc'?'include':'omit',
+        cache: 'no-store'
+    };
+    try {
+        let response = await fetch(url, urlInit);
+        if (response.ok) { // HTTP 상태 코드가 200~299일 경우
+            // 응답 몬문을 받습니다(관련 메서드는 아래에서 설명).
+            let js = await response.json();
+            return js;
+        } else {
+            console.error("[SIGN] getSignGoogleOauthClientId HTTP-Error: ", response.status);
+            return;
+        }
+    } catch (error) {
+        console.error(error);
+        return;
+    }
+}
+
 function checkPermission(pageCode){
     if( ! window.logOnProfile ) return false;
 
@@ -75,6 +102,10 @@ async function initApp(app, disableSignOn){
         let authResponse = await fetchAuthorityFromNetwork();
         window.logOnProfile = authResponse;
         checkPagePermission();
+    } else {
+        //비 로그인시 구글 클라이언트 데이터를 가져온다
+        let oauthClientResponse = await getSignGoogleOauthClientId();
+        window.googleOauthClient = oauthClientResponse.data;
     }
 
 
