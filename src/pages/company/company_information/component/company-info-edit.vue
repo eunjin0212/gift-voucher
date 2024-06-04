@@ -8,7 +8,7 @@
                         :width32="true"
                         :text="'Edit'"
                         v-if="! isEdit && $appUtil.checkPermission('COMPANY_SETTING_EDIT')"
-                       @click="$emit('update:isEdit', true)"
+                        @click="$emit('update:isEdit', true)"
                     />
                 </div>
                 <ElementsInput
@@ -299,8 +299,7 @@ export default {
             console.log( contactNumber, regex.test( contactNumber ) )
 
             return regex.test( contactNumber );
-        },
-
+        }
     }
 }
 </script>
