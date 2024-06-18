@@ -104,7 +104,10 @@ export default {
             const url = self.$api('uri', 'post-update-product-status');
             self.$axios
                 .post(url)
-                .then((res) => res)
+                .then((res) => {
+                    const self = this;
+                    self.getProductSettingList();
+                })
                 .catch((err) => {
                     alert(err);
                 });
