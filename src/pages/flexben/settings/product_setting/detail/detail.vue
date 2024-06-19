@@ -126,9 +126,9 @@ export default {
     data() {
         return {
             productInfo: {
-                flexbenGoodsInfoSeq: '',
+                flexbenGoodsSeq: '',
                 goodsDescription: '',
-                goodsImgUrl: '',
+                goodsImageUrl: '',
                 goodsName: '',
                 goodsSeq: '',
                 displayYn: '',
