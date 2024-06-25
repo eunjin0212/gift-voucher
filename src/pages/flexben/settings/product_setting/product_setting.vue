@@ -76,7 +76,7 @@ export default {
                 STOP: 'Stopped',
             },
             searchOptions: [
-                { text: 'Brand Name', value: 'BIZ_BRAND_NAME' },
+                { text: 'Brand Name', value: 'BRAND_NAME' },
                 { text: 'Goods Name', value: 'GOODS_NAME' },
             ],
             flexBenCampaignOptions: [],
