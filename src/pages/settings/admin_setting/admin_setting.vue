@@ -94,6 +94,7 @@ export default {
             self.editGroupWindow.buttonName = buttonName;
             self.editGroupWindow.inputValue = group?.roleGroupName || '';
             self.editGroupWindow.cmsRoleGroupSeq = group?.cmsRoleGroupSeq || '';
+            self.resetErrorMessage();
         },
         openEditEmployeeWindow() {
             const self = this;
