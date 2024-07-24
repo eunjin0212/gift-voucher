@@ -10,10 +10,12 @@
     "build-loc": "cross-env VUE_APP_SERVER_MODE=loc vue-cli-service build",
     "build-prd": "cross-env VUE_APP_SERVER_MODE=prd vue-cli-service build",
     "build-stg": "cross-env VUE_APP_SERVER_MODE=stg vue-cli-service build",
+    "build-dev": "cross-env VUE_APP_SERVER_MODE=dev vue-cli-service build",
     "help": "vue-cli-service build --help",
     "serve-loc": "cross-env VUE_APP_SERVER_MODE=loc vue-cli-service serve",
     "serve-prd": "cross-env VUE_APP_SERVER_MODE=prd vue-cli-service serve",
-    "serve-stg": "cross-env VUE_APP_SERVER_MODE=stg vue-cli-service serve"
+    "serve-stg": "cross-env VUE_APP_SERVER_MODE=stg vue-cli-service serve",
+    "serve-dev": "cross-env VUE_APP_SERVER_MODE=dev vue-cli-service serve"
   },
   "dependencies": {
     "@heroicons/vue": "^1.0.6",
