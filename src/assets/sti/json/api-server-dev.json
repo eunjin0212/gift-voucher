@@ -1,7 +1,7 @@
 {
     "meta" : {
-        "api-baseurl" : "http://localhost:65333",
-        "cdn-baseurl" : "/"
+        "api-baseurl" : "https://dev-admin.hrnflex.ph",
+        "cdn-baseurl" : "https://dev-admin.hrnflex.ph"
     },
     "uris" : {
     }
