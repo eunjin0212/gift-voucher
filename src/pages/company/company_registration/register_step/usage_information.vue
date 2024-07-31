@@ -14,55 +14,63 @@
             />
             <div class="text-base font-semibold mt-3"> Menu Settings </div>
 
-            <div class="mx-2">
-                <div class="flex justify-between border-b-[1px] border-gray-200 pb-4">
-                    <div class="text-gray-800"> Attendance / Leave / FlexBen / Filing </div>
-                    <div> Default Provision </div>
-                </div>
-
-                <div class="flex justify-between border-b-[1px] border-gray-200 py-4">
-                    <div class="text-gray-800"> Payroll </div>
-                    <ElementsToggle
-                        :trueValue="'ACTIVE'"
-                        :falseValue="'DEACTIVATED'"
-                        v-model="registerData.payrollUsageStatus"
-                    />
-                </div>
-
-                <div class="flex justify-between border-b-[1px] border-gray-200 py-4">
-                    <div class="text-gray-800"> KPI </div>
-                    <ElementsToggle
-                        :trueValue="'ACTIVE'"
-                        :falseValue="'DEACTIVATED'"
-                        v-model="registerData.kpiUsageStatus"
-                    />
-                </div>
+            <div v-if="companyType == 'FLEXBEN_ONLY'"
+                class="flex justify-between border-b-[1px] border-gray-200 pb-4">
+                <div class="text-gray-800">  FlexBen </div>
+                <div> Default Provision </div>
             </div>
 
-            <div class="text-base font-semibold mt-3"> Time-in, Time-out Settings </div>
+            <div v-else>
+                <div class="mx-2">
+                    <div class="flex justify-between border-b-[1px] border-gray-200 pb-4">
+                        <div class="text-gray-800"> Attendance / Leave / FlexBen / Filing </div>
+                        <div> Default Provision </div>
+                    </div>
 
-            <div class="mx-2">
-                <div class="flex justify-between border-b-[1px] border-gray-200 pb-4">
-                    <div class="text-gray-800"> Just Click </div>
-                    <div> Default </div>
+                    <div class="flex justify-between border-b-[1px] border-gray-200 py-4">
+                        <div class="text-gray-800"> Payroll </div>
+                        <ElementsToggle
+                            :trueValue="'ACTIVE'"
+                            :falseValue="'DEACTIVATED'"
+                            v-model="registerData.payrollUsageStatus"
+                        />
+                    </div>
+
+                    <div class="flex justify-between border-b-[1px] border-gray-200 py-4">
+                        <div class="text-gray-800"> KPI </div>
+                        <ElementsToggle
+                            :trueValue="'ACTIVE'"
+                            :falseValue="'DEACTIVATED'"
+                            v-model="registerData.kpiUsageStatus"
+                        />
+                    </div>
                 </div>
 
-                <div class="flex justify-between border-b-[1px] border-gray-200 py-4">
-                    <div class="text-gray-800"> Photo </div>
-                    <ElementsToggle
-                        :trueValue="'ACTIVE'"
-                        :falseValue="'DEACTIVATED'"
-                        v-model="registerData.commutePhotoUsageStatus"
-                    />
-                </div>
+                <div class="text-base font-semibold mt-3"> Time-in, Time-out Settings </div>
 
-                <div class="flex justify-between border-b-[1px] border-gray-200 py-4">
-                    <div class="text-gray-800"> Location </div>
-                    <ElementsToggle
-                        :trueValue="'ACTIVE'"
-                        :falseValue="'DEACTIVATED'"
-                        v-model="registerData.commuteLocationUsageStatus"
-                    />
+                <div class="mx-2">
+                    <div class="flex justify-between border-b-[1px] border-gray-200 pb-4">
+                        <div class="text-gray-800"> Just Click </div>
+                        <div> Default </div>
+                    </div>
+
+                    <div class="flex justify-between border-b-[1px] border-gray-200 py-4">
+                        <div class="text-gray-800"> Photo </div>
+                        <ElementsToggle
+                            :trueValue="'ACTIVE'"
+                            :falseValue="'DEACTIVATED'"
+                            v-model="registerData.commutePhotoUsageStatus"
+                        />
+                    </div>
+
+                    <div class="flex justify-between border-b-[1px] border-gray-200 py-4">
+                        <div class="text-gray-800"> Location </div>
+                        <ElementsToggle
+                            :trueValue="'ACTIVE'"
+                            :falseValue="'DEACTIVATED'"
+                            v-model="registerData.commuteLocationUsageStatus"
+                        />
+                    </div>
                 </div>
             </div>
 
@@ -98,6 +106,7 @@ export default{
     },
     data(){
         return{
+            companyType : new URLSearchParams(window.location.search).get('companyType'),
             registerData : {
                 subscribeStartDate : "",
                 flexbenCampaignSeq: "",
@@ -105,7 +114,8 @@ export default{
                 payrollUsageStatus : "ACTIVE",
                 kpiUsageStatus : "ACTIVE",
                 commutePhotoUsageStatus : "DEACTIVATED",
-                commuteLocationUsageStatus : "DEACTIVATED"
+                commuteLocationUsageStatus : "DEACTIVATED",
+                flexbenOnlyUsageStatus : "DEACTIVATED",
             },
             flexbenTypeOptions : [],
         }
@@ -126,6 +136,15 @@ export default{
             if( ! self.registerData.subscribeStartDate ){
                 alert("Start Date must be selected.");
                 return;
+            }
+
+            if (self.companyType == "FLEXBEN_ONLY") {
+                self.registerData.filingUsageStatus = "DEACTIVATED";
+                self.registerData.payrollUsageStatus = "DEACTIVATED";
+                self.registerData.kpiUsageStatus = "DEACTIVATED";
+                self.registerData.commutePhotoUsageStatus = "DEACTIVATED";
+                self.registerData.commuteLocationUsageStatus = "DEACTIVATED";
+                self.registerData.flexbenOnlyUsageStatus = "ACTIVE";
             }
 
             self.$emit("submit-register", self.registerData );
