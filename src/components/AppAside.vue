@@ -27,6 +27,8 @@ const PAYROLL_SETTING = ['PAYROLL_VIEW', 'PAYROLL_EDIT'];
 
 const SCHEDULE_SETTING = ['SCHEDULE_VIEW', 'SCHEDULE_EDIT'];
 
+const IMAGE_TOKEN_SETTING = ['IMAGE_TOKEN_VIEW', 'IMAGE_TOKEN_EDIT'];
+
 let items = reactive([
     {
         href: "/admin_dashboard",
@@ -97,6 +99,12 @@ let items = reactive([
         img: "app-side-2",
         text: "Schedule Process",
         hasPermission : checkPermissionArray(SCHEDULE_SETTING)
+    },
+    {
+        href: "/image-token",
+        img: "app-side-11",
+        text: "CloudFlare Image Token",
+        hasPermission: checkPermissionArray(IMAGE_TOKEN_SETTING)
     },
     {
         children: true,

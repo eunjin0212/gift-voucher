@@ -1,7 +1,7 @@
 {
     "meta" : {
         "baseUrl" : "/",
-        "api-baseurl" : "http://localhost:7080",
+        "api-baseurl" : "http://localhost:65333",
         "cdn-baseurl" : "/"
     },
     "uris" : {
@@ -107,6 +107,9 @@
         "put-schedule" : "/api/schedule/{scheduleQueueWaitSeq}",
         "post-schedule" : "/api/schedule",
         "delete-schedule" : "/api/schedule/{scheduleQueueWaitSeq}",
+
+        "get-image-token-list" : "/api/image-token",
+        "post-image-token" : "/api/image-token",
 
         "post-update-product-status" : "/api/flexben/product-update",
         "ENDSTRING" : "END"

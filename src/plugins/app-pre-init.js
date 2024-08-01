@@ -10,7 +10,8 @@ async function fetchAuthorityFromNetwork(){
             'Accept': 'application/json'
         },
         mode: 'cors',
-        credentials: process.env.VUE_APP_SERVER_MODE !== 'loc'?'include':'omit',
+        // credentials: process.env.VUE_APP_SERVER_MODE !== 'loc'?'include':'omit',
+        credentials: 'include',
         cache: 'no-store'
     };
     try {

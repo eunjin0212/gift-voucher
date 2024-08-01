@@ -14,7 +14,9 @@ defineProps({
   width32: Boolean,
   width60: Boolean,
   width72: Boolean,
+  width25rem: Boolean,
   height11: Boolean,
+  height12: Boolean,
   readonly: {
     type: Boolean,
     default: false,
@@ -39,17 +41,18 @@ defineEmits(["update:modelValue"]);
     <h1 v-if="name" class="text-sm font-semibold text-slate-800">{{ name }}</h1>
     <div>
       <input
-        class="shadow-sm block w-full sm:text-sm border-gray-300 rounded-md"
+        class="block shadow shadow-gray-100 border-gray-200 rounded-md text-sm font-semibold"
         :class="{
           'h-11': height11,
+          'h-12': height12,
           'focus:ring-indigo-500': !readonly,
           'focus:border-indigo-500': !readonly,
           'text-right': isNumber,
           'mt-3': name,
           'border-red-500': error || isError,
-          'w-96': !full && !width24 && !width14 && !width60 && !width72 && !width56 && !width40,
+          'w-96': !full && !width24 && !width14 && !width60 && !width72 && !width56 && !width40 && !width25rem,
           'border-red-500': error,
-          'w-96': !full && !width24 && !width14 && !width60 && !width72 && !width32,
+          'w-96': !full && !width24 && !width14 && !width60 && !width72 && !width32 && !width25rem,
           'w-60': width60,
           'w-56': width56,
           'w-40': width40,
@@ -60,6 +63,7 @@ defineEmits(["update:modelValue"]);
           'w-32': width32,
           'bg-gray-100': disabled,
           'text-center' : textCenter,
+          'w-[25rem]': width25rem,
         }"
         :type="inputtype || 'text'"
         :placeholder="placeholder"

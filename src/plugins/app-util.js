@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 var RecaptchaUtil = {
     setRecaptchaJs : function(){
         var scriptEl = document.createElement('script');
@@ -185,8 +187,36 @@ const DefaultImage= {
 }
 // -------------------------------------------------------------------------------------------------
 
+const DateFormatUtil = {
+    fitDateFormat(value) {
+        if (!value) {
+            return;
+        }
+        return moment(value).format('MM/DD/yyyy');
+    },
+    fitDateTimeFormat(value) {
+        if (!value) {
+            return;
+        }
+        return moment(value).format('YYYY-MM-DD HH:mm:ss');
+    },
+    monthDayFormat(value) {
+        if (!value) {
+            return;
+        }
+        return moment(value).format('MM/DD');
+    },
+    convertToDateTimeForServerFormat(date) {
+        if (!date) {
+            return;
+        }
+        return moment(date).hours(0).minutes(0).seconds(0).format('YYYY-MM-DD HH:mm:ss');
+    },
+};
+
 export {
     RecaptchaUtil,
     ValidateUtil,
-    DefaultImage
+    DefaultImage,
+    DateFormatUtil
 };

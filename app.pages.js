@@ -13,6 +13,8 @@ const PAYROLL_SETTING = ['PAYROLL_VIEW', 'PAYROLL_EDIT'];
 
 const SCHEDULE_SETTING = ['SCHEDULE_VIEW', 'SCHEDULE_EDIT'];
 
+const IMAGE_TOKEN_SETTING = ['IMAGE_TOKEN_VIEW', 'IMAGE_TOKEN_EDIT'];
+
 const pages = {
     index: {
         template: 'public/landing.html',
@@ -91,6 +93,11 @@ const pages = {
         title: 'Report',
         permission : ['FLEXBEN_REPORT_EDIT']
     },
+    'image-token' : {
+        template: 'public/default.html',
+        title: 'CloudFlare Image Token Settings',
+        permission : IMAGE_TOKEN_SETTING
+    },
     'settings/HRnFLEX_settings' : {
         template: 'public/default.html',
         title: 'HRnFLEX Settings',
@@ -101,7 +108,7 @@ const pages = {
         title: 'HRnFLEX Settings',
         permission : ADMIN_SETTING
     },
-     admin_dashboard : {
+    admin_dashboard : {
         template: 'public/default.html',
         title: 'Summary',
         permission : []

@@ -106,6 +106,13 @@ const initMenuCodes = [
         basicCode : 'SCHEDULE',
         viewCode : 'SCHEDULE_VIEW',
         editCode : 'SCHEDULE_EDIT'
+    },
+    {
+        permissionName : 'CloudFlare Image Token Settings',
+        checked : null,
+        basicCode : 'IMAGE_TOKEN',
+        viewCode : 'IMAGE_TOKEN_VIEW',
+        editCode : 'IMAGE_TOKEN_EDIT'
     }
 ];
 
