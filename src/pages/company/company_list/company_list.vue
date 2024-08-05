@@ -112,6 +112,8 @@ export default {
 
             if (self.currentTabName == "FLEXBEN_ONLY") {
                 json_query.flexbenOnly = true;
+            } else {
+                json_query.flexbenOnly = false;
             }
 
             const url = self.$api('uri', 'get-company');
