@@ -4,7 +4,7 @@
             <div class="flex justify-start gap-5">
                 <ArrowLeftIcon v-show="!isReadMode(settingMode)" class="w-7 cursor-pointer" @click="backSettingMode" />
                 <h1 class="text-zinc-800 text-xl font-semibold leading-10 items-center ">
-                    {{isInsertMode(settingMode) ? "Update " : isEditMode(settingMode) ? "Edit" : "" }} {{ settingType }}
+                    {{isInsertMode(settingMode) ? "Update " : isEditMode(settingMode) ? "Edit" : "" }} Income Tax
                 </h1>
             </div>
             <div v-if="$appUtil.checkPermission('PAYROLL_EDIT')" v-show="isReadMode(settingMode)" class="gap-3 flex justify-between">

@@ -84,7 +84,7 @@ export default {
                 {text : "SSS" , name : SETTING_TYPE.SSS, current : false},
                 {text : "PhilHealth" , name : SETTING_TYPE.PHIL_HEALTH, current : false},
                 {text : "Pag-ibig" , name : SETTING_TYPE.PAG_IBIG, current : false},
-                {text : "WTAX" , name : SETTING_TYPE.WTAX, current : false},
+                {text : "Income Tax" , name : SETTING_TYPE.WTAX, current : false},
                 {text : "Annual tax table" , name : SETTING_TYPE.ANNUAL_TAX_TABLE, current : false},
                 {text : "Minimum Wage", name : SETTING_TYPE.MINIMUM_WAGE, current : false},
                 {text : "Create payroll manually", name : "CREATE_PAYROLL_MANUALLY", current : false}
