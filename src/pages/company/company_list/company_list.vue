@@ -101,7 +101,6 @@ export default {
                 .get(url, { params })
                 .then((res) => {
                     self.passwordSending.invitedList = res.data.data.list;
-                    console.log(res.data.data.list);
                 })
                 .catch(alert);
         },
