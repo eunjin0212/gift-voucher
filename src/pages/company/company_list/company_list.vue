@@ -3,6 +3,7 @@ import AppAside from '@/components/AppAside.vue';
 import AppMain from '@/components/main/AppMain.vue';
 import ElementsPagination from '@/components/elements/ElementsPagination.vue';
 import PopupInviteMasterAdmin from '@/pages/company/company_list/popups/popupInviteMsterAdmin.vue';
+import MainTabs from "@/components/main/sections/MainTabs.vue"
 import { ValidateUtil } from '@/plugins/app-util.js';
 import moment from 'moment';
 
@@ -12,9 +13,15 @@ export default {
         AppMain,
         ElementsPagination,
         PopupInviteMasterAdmin,
+        MainTabs,
     },
     data() {
         return {
+            mainTabs : [
+                { text : "HRnFLEX", name : "HRFLEX", current : true },
+                { text : "Flexben only" , name : "FLEXBEN_ONLY", current : false },
+            ],
+            currentTabName: null,
             companyCount: null,
             searchOptions: [
                 { text: 'Company Name', value: 'COMPANY_NAME' },
@@ -61,13 +68,53 @@ export default {
         over15CharFromFullName: ValidateUtil.over15CharFromFullName,
         over15Charaters: ValidateUtil.over15Charaters,
         convertPhoneGlobalToLocal: ValidateUtil.convertPhoneGlobalToLocal,
+        initCompany() {
+            const self = this;
+            self.companyCount = null;
+            self.companyList = [];
+            self.selectCompany = null;
+            self.currentPage = null;
+            self.json_query = {
+                limit: 10,
+                    offset: null,
+                    searchStatus: null,
+                    searchOption: 'COMPANY_NAME',
+                    searchText: null,
+            };
+        },
+        clickTabs( tabItem ){
+            const self = this;
+            self.mainTabs.map( tab => {
+                tab.current = tabItem.name === tab.name;
+            })
+
+            self.currentTabName = self.mainTabs.find( tab => tab.current ).name;
+
+            self.initCompany();
+            self.getCompanyListData();
+        },
         companyRegistrationPop() {
-            location.href = '/company/company_registration';
+            const self = this;
+            let registerPath = '/company/company_registration';
+
+            // new URLSearchParams(window.location.search).get('startTab'),
+
+            if (self.currentTabName == "FLEXBEN_ONLY") {
+                registerPath += '?companyType=FLEXBEN_ONLY'
+            }
+
+            location.href = registerPath;
         },
         getCompanyListData(offset = 0, afterClickPage = false) {
             const self = this;
             self.json_query.offset = offset;
             let json_query = { ...self.json_query };
+
+            if (self.currentTabName == "FLEXBEN_ONLY") {
+                json_query.flexbenOnly = true;
+            } else {
+                json_query.flexbenOnly = false;
+            }
 
             const url = self.$api('uri', 'get-company');
             json_query = JSON.stringify(json_query);
@@ -139,6 +186,7 @@ export default {
         <AppAside />
         <AppMain :headerName="'Company'">
             <div class="mt-8 p-3 rounded-lg w-full max-w-7xl bg-white shadow-md shadow-gray-200 flex flex-col">
+                <MainTabs :tabs ="mainTabs" class="my-2" @clickEvent="clickTabs" />
                 <div class="flex py-5 justify-end">
                     <button
                         class="h-12 w-fit px-5 py-3 border rounded border-indigo-600 bg-indigo-600 text-sm font-semibold text-white hover:bg-indigo-800 transition-all duration-500 text-center"

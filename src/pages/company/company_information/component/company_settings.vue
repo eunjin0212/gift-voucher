@@ -1,112 +1,130 @@
 <template>
-
     <div>
-        <div class="flex flex-col mt-5 px-6 py-3 w-[50vw] bg-white shadow-md shadow-gray-200">
-            <div class="mt-4 text-indigo-900 font-semibold text-xl"> Menu Settings</div>
-            <div class="mt-4 border-t border-gray-100">
-                <dl class="divide-y divide-gray-100">
-                    <div class="px-0 py-3 grid grid-cols-3 gap-4 ">
-                        <dt class="text-sm font-medium leading-6 text-gray-900 col-span-2">
-                            Attendance / Leave / FlexBen / Filing
-                        </dt>
-                        <dd class="mt-1 text-sm leading-6 text-gray-700 col-span-1 place-self-end font-semibold">
-                            Default
-                        </dd>
-                    </div>
-                    <div class="px-0 py-3 grid grid-cols-3 gap-4 ">
-                        <dt class="text-sm font-medium leading-6 text-gray-900 col-span-2">
-                            Payroll
-                        </dt>
-                        <dd class="mt-1 text-sm leading-6 text-gray-700 col-span-1 place-self-end font-semibold">
-                            <ElementsToggle
-                                :trueValue="'ACTIVE'"
-                                :falseValue="'DEACTIVATED'"
-                                :disabled="!$appUtil.checkPermission('COMPANY_SETTING_EDIT')"
-                                v-model="companySettingData.payrollUsageStatus"
-                            />
-                        </dd>
-                    </div>
-                    <div class="px-0 py-3 grid grid-cols-3 gap-4 ">
-                        <dt class="text-sm font-medium leading-6 text-gray-900 col-span-2">
-                            KPI
-                        </dt>
-                        <dd class="mt-1 text-sm leading-6 text-gray-700 col-span-1 place-self-end font-semibold">
-                            <ElementsToggle
-                                :trueValue="'ACTIVE'"
-                                :falseValue="'DEACTIVATED'"
-                                :disabled="!$appUtil.checkPermission('COMPANY_SETTING_EDIT')"
-                                v-model="companySettingData.kpiUsageStatus"
-                            />
-                        </dd>
-                    </div>
-                    <div class="px-0 pt-9 pb-3 grid grid-cols-3 gap-4 ">
-                        <ElementsButton
-                            class="col-span-3 place-self-end"
-                            :text="'Save'"
-                            :width60="true"
-                            v-if="$appUtil.checkPermission('COMPANY_SETTING_EDIT')"
-                            @click="$emit('submit-usage-settings', companySettingData)"
-                        />
-                    </div>
-                </dl>
+        <div v-if="companySettingData.flexbenOnlyUsageStatus == 'ACTIVE'">
+            <div class="flex flex-col mt-5 px-6 py-3 w-[50vw] bg-white shadow-md shadow-gray-200">
+                <div class="mt-4 text-indigo-900 font-semibold text-xl"> Menu Settings</div>
+                <div class="mt-4 border-t border-gray-100">
+                    <dl class="divide-y divide-gray-100">
+                        <div class="px-0 py-3 grid grid-cols-3 gap-4 ">
+                            <dt class="text-sm font-medium leading-6 text-gray-900 col-span-2">
+                                FlexBen
+                            </dt>
+                            <dd class="mt-1 text-sm leading-6 text-gray-700 col-span-1 place-self-end font-semibold">
+                                Default
+                            </dd>
+                        </div>
+                    </dl>
+                </div>
             </div>
         </div>
 
-<!-- // Commute Setting ================================================================================== -->
-        <div class="flex flex-col mt-5 px-6 py-3 w-[50vw] bg-white shadow-md shadow-gray-200">
-            <div class="mt-4 text-indigo-900 font-semibold text-xl"> Time-in, Time-out Settings </div>
-            <div class="mt-4 border-t border-gray-100">
-                <dl class="divide-y divide-gray-100">
-                    <div class="px-0 py-3 grid grid-cols-3 gap-4 ">
-                        <dt class="text-sm font-medium leading-6 text-gray-900 col-span-2">
-                            Just Click
-                        </dt>
-                        <dd class="mt-1 text-sm leading-6 text-gray-700 col-span-1 place-self-end font-semibold">
-                            Default
-                        </dd>
-                    </div>
-                    <div class="px-0 py-3 grid grid-cols-3 gap-4 ">
-                        <dt class="text-sm font-medium leading-6 text-gray-900 col-span-2">
-                            Photo
-                        </dt>
-                        <dd class="mt-1 text-sm leading-6 text-gray-700 col-span-1 place-self-end font-semibold">
-                            <ElementsToggle
-                                :trueValue="'ACTIVE'"
-                                :falseValue="'DEACTIVATED'"
-                                :disabled="!$appUtil.checkPermission('COMPANY_SETTING_EDIT')"
-                                v-model="companySettingData.commutePhotoUsageStatus"
+        <div v-else>
+            <div class="flex flex-col mt-5 px-6 py-3 w-[50vw] bg-white shadow-md shadow-gray-200">
+                <div class="mt-4 text-indigo-900 font-semibold text-xl"> Menu Settings</div>
+                <div class="mt-4 border-t border-gray-100">
+                    <dl class="divide-y divide-gray-100">
+                        <div class="px-0 py-3 grid grid-cols-3 gap-4 ">
+                            <dt class="text-sm font-medium leading-6 text-gray-900 col-span-2">
+                                Attendance / Leave / FlexBen / Filing
+                            </dt>
+                            <dd class="mt-1 text-sm leading-6 text-gray-700 col-span-1 place-self-end font-semibold">
+                                Default
+                            </dd>
+                        </div>
+                        <div class="px-0 py-3 grid grid-cols-3 gap-4 ">
+                            <dt class="text-sm font-medium leading-6 text-gray-900 col-span-2">
+                                Payroll
+                            </dt>
+                            <dd class="mt-1 text-sm leading-6 text-gray-700 col-span-1 place-self-end font-semibold">
+                                <ElementsToggle
+                                    :trueValue="'ACTIVE'"
+                                    :falseValue="'DEACTIVATED'"
+                                    :disabled="!$appUtil.checkPermission('COMPANY_SETTING_EDIT')"
+                                    v-model="companySettingData.payrollUsageStatus"
+                                />
+                            </dd>
+                        </div>
+                        <div class="px-0 py-3 grid grid-cols-3 gap-4 ">
+                            <dt class="text-sm font-medium leading-6 text-gray-900 col-span-2">
+                                KPI
+                            </dt>
+                            <dd class="mt-1 text-sm leading-6 text-gray-700 col-span-1 place-self-end font-semibold">
+                                <ElementsToggle
+                                    :trueValue="'ACTIVE'"
+                                    :falseValue="'DEACTIVATED'"
+                                    :disabled="!$appUtil.checkPermission('COMPANY_SETTING_EDIT')"
+                                    v-model="companySettingData.kpiUsageStatus"
+                                />
+                            </dd>
+                        </div>
+                        <div class="px-0 pt-9 pb-3 grid grid-cols-3 gap-4 ">
+                            <ElementsButton
+                                class="col-span-3 place-self-end"
+                                :text="'Save'"
+                                :width60="true"
+                                v-if="$appUtil.checkPermission('COMPANY_SETTING_EDIT')"
+                                @click="$emit('submit-usage-settings', companySettingData)"
                             />
-                        </dd>
-                    </div>
-                    <div class="px-0 py-3 grid grid-cols-3 gap-4 ">
-                        <dt class="text-sm font-medium leading-6 text-gray-900 col-span-2">
-                            Location
-                        </dt>
-                        <dd class="mt-1 text-sm leading-6 text-gray-700 col-span-1 place-self-end font-semibold">
-                            <ElementsToggle
-                                :trueValue="'ACTIVE'"
-                                :falseValue="'DEACTIVATED'"
-                                :disabled="!$appUtil.checkPermission('COMPANY_SETTING_EDIT')"
-                                v-model="companySettingData.commuteLocationUsageStatus"
+                        </div>
+                    </dl>
+                </div>
+            </div>
+
+    <!-- // Commute Setting ================================================================================== -->
+            <div class="flex flex-col mt-5 px-6 py-3 w-[50vw] bg-white shadow-md shadow-gray-200">
+                <div class="mt-4 text-indigo-900 font-semibold text-xl"> Time-in, Time-out Settings </div>
+                <div class="mt-4 border-t border-gray-100">
+                    <dl class="divide-y divide-gray-100">
+                        <div class="px-0 py-3 grid grid-cols-3 gap-4 ">
+                            <dt class="text-sm font-medium leading-6 text-gray-900 col-span-2">
+                                Just Click
+                            </dt>
+                            <dd class="mt-1 text-sm leading-6 text-gray-700 col-span-1 place-self-end font-semibold">
+                                Default
+                            </dd>
+                        </div>
+                        <div class="px-0 py-3 grid grid-cols-3 gap-4 ">
+                            <dt class="text-sm font-medium leading-6 text-gray-900 col-span-2">
+                                Photo
+                            </dt>
+                            <dd class="mt-1 text-sm leading-6 text-gray-700 col-span-1 place-self-end font-semibold">
+                                <ElementsToggle
+                                    :trueValue="'ACTIVE'"
+                                    :falseValue="'DEACTIVATED'"
+                                    :disabled="!$appUtil.checkPermission('COMPANY_SETTING_EDIT')"
+                                    v-model="companySettingData.commutePhotoUsageStatus"
+                                />
+                            </dd>
+                        </div>
+                        <div class="px-0 py-3 grid grid-cols-3 gap-4 ">
+                            <dt class="text-sm font-medium leading-6 text-gray-900 col-span-2">
+                                Location
+                            </dt>
+                            <dd class="mt-1 text-sm leading-6 text-gray-700 col-span-1 place-self-end font-semibold">
+                                <ElementsToggle
+                                    :trueValue="'ACTIVE'"
+                                    :falseValue="'DEACTIVATED'"
+                                    :disabled="!$appUtil.checkPermission('COMPANY_SETTING_EDIT')"
+                                    v-model="companySettingData.commuteLocationUsageStatus"
+                                />
+                            </dd>
+                        </div>
+                        <div class="px-0 pt-9 pb-3 grid grid-cols-3 gap-4 ">
+                            <ElementsButton
+                                class="col-span-3 place-self-end"
+                                :text="'Save'"
+                                :width60="true"
+                                v-if="$appUtil.checkPermission('COMPANY_SETTING_EDIT')"
+                                @click="$emit('submit-commute-settings', companySettingData)"
                             />
-                        </dd>
-                    </div>
-                    <div class="px-0 pt-9 pb-3 grid grid-cols-3 gap-4 ">
-                        <ElementsButton
-                            class="col-span-3 place-self-end"
-                            :text="'Save'"
-                            :width60="true"
-                            v-if="$appUtil.checkPermission('COMPANY_SETTING_EDIT')"
-                            @click="$emit('submit-commute-settings', companySettingData)"
-                        />
-                    </div>
-                </dl>
+                        </div>
+                    </dl>
+                </div>
             </div>
         </div>
-
-<!-- // Suspended Setting ================================================================================== -->
+        <!-- // Suspended Setting ================================================================================== -->
         <div class="mt-5 px-6 py-3 w-[50vw] bg-white shadow-md shadow-gray-200"
-            v-if="$appUtil.checkPermissionArray(['COMPANY_SUSPENDED_VIEW', 'COMPANY_SUSPENDED_EDIT'])"
+             v-if="$appUtil.checkPermissionArray(['COMPANY_SUSPENDED_VIEW', 'COMPANY_SUSPENDED_EDIT'])"
         >
             <div class="text-indigo-900 font-semibold text-xl pt-3"> Suspend Service </div>
             <template v-if="registerData.companySubscribeStatus === 'SUSPENDED'">
@@ -134,7 +152,7 @@
             <template v-else-if="registerData.suspendedDate">
                 <div class="pt-4 flex flex-col gap-24 justify-end">
                     <div v-if="registerData.suspendedDate"
-                        class=" w-[347px] h-8 bg-zinc-100 rounded  border border-gray-300 flex justify-between px-2 items-center">
+                         class=" w-[347px] h-8 bg-zinc-100 rounded  border border-gray-300 flex justify-between px-2 items-center">
                         <div class="w-[213px] text-indigo-600 text-[12px] font-normal">Suspended Schedule : {{ dateFormatChange( registerData.suspendedDate) }}</div>
                     </div>
                     <ElementsButton
@@ -250,7 +268,6 @@
             </div>
         </Teleport>
     </div>
-
 </template>
 
 <script>
@@ -340,13 +357,14 @@ export default{
     },
     mounted(){
         const self = this;
-        let { payrollUsageStatus, kpiUsageStatus, commutePhotoUsageStatus, commuteLocationUsageStatus } = self.registerData;
+        let { payrollUsageStatus, kpiUsageStatus, commutePhotoUsageStatus, commuteLocationUsageStatus, flexbenOnlyUsageStatus } = self.registerData;
         // console.log({ kpiUsageStatus, payrollUsageStatus })
         payrollUsageStatus = payrollUsageStatus || 'DEACTIVATED';
         kpiUsageStatus = kpiUsageStatus || 'DEACTIVATED';
         commutePhotoUsageStatus = commutePhotoUsageStatus || 'DEACTIVATED';
         commuteLocationUsageStatus = commuteLocationUsageStatus || 'DEACTIVATED';
-        self.companySettingData = { payrollUsageStatus, kpiUsageStatus, commutePhotoUsageStatus, commuteLocationUsageStatus, companySubscribeStatus : null , suspendedDate : null };
+        flexbenOnlyUsageStatus = flexbenOnlyUsageStatus || 'DEACTIVATED';
+        self.companySettingData = { payrollUsageStatus, kpiUsageStatus, commutePhotoUsageStatus, commuteLocationUsageStatus, flexbenOnlyUsageStatus, companySubscribeStatus : null , suspendedDate : null };
     }
 }
 
