@@ -114,8 +114,7 @@ export default {
                     </button>
                 </div>
                 <div class="text-sm italic text-gray-600 mt-2" v-if="selectedGroup.roleGroupDefaultType === 'SUPER_ADMIN'">
-                    * Caution: As you selected Super-Admin-Group, you are not allowed to select the N/A option for each menu.
-                    <br/>Please choose either the 'View' or 'Edit' option to proceed
+                    Notice: for the Super Admin user group, you can only select 'View' or 'View & Edit' permission for each menu.
                 </div>
             </div>
             <div class="bg-[#FDFDFD] rounded-[10px]">

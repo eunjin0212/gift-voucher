@@ -3,12 +3,12 @@
         <form @submit.prevent="clickSubmitButton">
             <div class="flex flex-col gap-4">
                 <div class="flex justify-between">
-                    <div class="py-2 text-xl font-bold text-zinc-900">company Information</div>
+                    <div class="py-2 text-xl font-bold text-zinc-900">Company Information</div>
                     <ElementsButton :width32="true" :text="'Edit'" v-if="!isEdit && $appUtil.checkPermission('COMPANY_SETTING_EDIT')" @click="$emit('update:isEdit', true)" />
                 </div>
                 <ElementsInput :name="'Company Name'" :full="true" :maxlength="60" v-model="editCompanyData.companyName" :required="true" :disabled="!isEdit" />
                 <ElementsInput :name="'Representative Name'" :full="true" :maxlength="60" v-model="editCompanyData.representativeName" :required="true" :disabled="!isEdit" />
-                <ElementsInput :name="'Business registration number'" :full="true" :maxlength="60" v-model="editCompanyData.businessRegistrationNumber" :required="true" :disabled="!isEdit" />
+                <ElementsInput :name="'Business Registration Number'" :full="true" :maxlength="60" v-model="editCompanyData.businessRegistrationNumber" :required="true" :disabled="!isEdit" />
                 <div class="text-sm font-semibold text-slate-800">Company Number</div>
                 <div class="w-full flex gap-2">
                     <ElementsInput :modelValue="63" :disabled="true" :width14="true" :maxlength="200" />
@@ -52,7 +52,7 @@
                 <ElementsInput v-model="editCompanyData.subscriptionPicName" :name="'PIC Name'" :full="true" :maxlength="60" :required="true" :disabled="!isEdit" />
                 <ElementsInput v-model="editCompanyData.subscriptionPicDepartment" :name="'PIC Department'" :full="true" :maxlength="60" :required="true" :disabled="!isEdit" />
                 <ElementsInput v-model="editCompanyData.subscriptionPicEmail" :name="'PIC Email'" :full="true" :inputtype="'email'" :maxlength="100" :required="true" :disabled="!isEdit" />
-                <div class="text-sm font-semibold text-slate-800">PIC Contract</div>
+                <div class="text-sm font-semibold text-slate-800">PIC Contact Number</div>
                 <div class="w-full gap-2v flex gap-1">
                     <ElementsInput :modelValue="63" :disabled="true" :width14="true" :maxlength="200" />
                     <ElementsInput class="grow" v-model="editCompanyData.subscriptionPicPhoneNumber" :full="true" :maxlength="60" :required="true" :inputtype="'tel'" :disabled="!isEdit" />
