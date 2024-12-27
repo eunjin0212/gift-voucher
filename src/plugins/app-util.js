@@ -155,8 +155,8 @@ var ValidateUtil = {
         if( !word ) return word;
 
         const [ first, middle, last ] = word.split(' '); 
-        if( !last ) return ValidateUtil.over15Charaters([first, middle].join(", "));
-        return ValidateUtil.over15Charaters( [first, last].join(", ") );
+        if( !last ) return ValidateUtil.over15Charaters([first, middle].join(", ")).replace(/, $/, "");
+        return ValidateUtil.over15Charaters( [first, last].join(", ") ).replace(/, $/, "");
     },
     employeeNameSave(first, middle, last){
         [ first , middle, last ] = [ first , middle, last ].map(this.trimData);  

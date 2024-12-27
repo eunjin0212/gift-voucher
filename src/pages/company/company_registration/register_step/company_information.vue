@@ -2,7 +2,7 @@
     <div class="p-3 rounded-lg w-full max-w-7xl bg-white shadow-md shadow-gray-200 flex flex-col">
         <form @submit.prevent="clickSubmit">
             <div class="my-2 flex flex-col gap-4 mx-4" >
-                <div class="text-2xl font-bold"> company Information </div>
+                <div class="text-2xl font-bold"> Company Information </div>
                 <ElementsInput
                     :name="'Company Name'"
                     :full="true"
@@ -18,7 +18,7 @@
                     :required="true"
                 />
                 <ElementsInput
-                    :name="'Business registration number'"
+                    :name="'Business Registration Number'"
                     :full="true"
                     :maxlength="60"
                     v-model="registerData.businessRegistrationNumber"
@@ -121,7 +121,7 @@
                     :maxlength="100"
                     :required="true"
                 />
-                <div class="text-sm font-semibold text-slate-800"> PIC Contract(Tel) </div>
+                <div class="text-sm font-semibold text-slate-800"> PIC Contact Number </div>
                 <div class="w-full gap-2v flex gap-1">
                     <ElementsInput
                         :modelValue="63"

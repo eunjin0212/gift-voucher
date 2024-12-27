@@ -11,6 +11,7 @@
                             :text="'Delete'"
                             :width28="true" :fitHeight="true"
                             @click="deleteInquiry"
+                            :disabled="deleteInquiryArray.length === 0"
                             v-if="$appUtil.checkPermission('ACTIVATE_PROCESS_EDIT')"
                         />
                         <div class="flex gap-2 items-baseline justify-self-end">
@@ -45,7 +46,7 @@
                                         />
                                     </div>
                                 </th>
-                                <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">Reg Date</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">Registered Date</th>
                                 <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">Company Name </th>
                                 <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">Number of Employees</th>
                                 <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-900">PIC Name</th>
@@ -166,7 +167,7 @@ export default {
             const self = this;
 
             const deleteInquiryList = self.deleteInquiryArray.map( inquiry => inquiry.inquiryCompanyName ).join(", ");
-            const isConfirmed = window.confirm( `are you sure to delet inquiry of [ ${ deleteInquiryList } ]` );
+            const isConfirmed = window.confirm( `Are you sure to delete?` );
 
             if( ! isConfirmed ){
                 return;

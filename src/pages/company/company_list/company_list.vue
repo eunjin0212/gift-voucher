@@ -192,7 +192,7 @@ export default {
                         class="h-12 w-fit px-5 py-3 border rounded border-indigo-600 bg-indigo-600 text-sm font-semibold text-white hover:bg-indigo-800 transition-all duration-500 text-center"
                         v-if="$appUtil.checkPermission('ACTIVATE_PROCESS_EDIT')"
                         @click="companyRegistrationPop">
-                        + Registration Company
+                        + Register Company
                     </button>
                 </div>
                 <div class="flex items-start gap-3 flex-wrap">
@@ -205,8 +205,8 @@ export default {
                     <table class="relative min-w-full divide-y divide-gray-300">
                         <thead class="sticky bg-gray-50 top-0 left-0 right-0 border-b border-gray-50" style="z-index: 1">
                             <tr>
-                                <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900 sm:pl-6">Reg <br />Date</th>
-                                <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900">Company <br />Name</th>
+                                <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900 sm:pl-6"> Registered <br />Date</th>
+                                <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900"> Date <br />Name</th>
                                 <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900">
                                     PIC <br />
                                     Name
@@ -225,11 +225,11 @@ export default {
                                     Date
                                 </th>
                                 <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900">
-                                    FleBen <br />
+                                    FlexBen <br />
                                     Type
                                 </th>
                                 <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900">
-                                    Usage <br />
+                                    No. of<br />
                                     Employees
                                 </th>
                                 <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-900">Status</th>
