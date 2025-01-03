@@ -19,7 +19,7 @@
                         <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-600">Reg<br/> Date</th>
                         <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-600"> Status </th>
                         <th scope="col" class="px-3 py-3.5 text-center text-sm text-gray-600"> Title </th>
-                        <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-600 w-6/12"> Application <br/> Period </th>
+                        <th scope="col" class="px-3 py-3.5 text-left text-sm text-gray-600 w-6/12"> Application <br/> Date </th>
                     </tr>
                 </thead>
                 <tbody class="w-full" v-if="versionList == 0">
@@ -48,8 +48,8 @@
                             </span>
                         </td>
                         <td class="whitespace-nowrap px-3 py-4 text-sm text-left text-gray-700">
-                            <span> {{ dateFormatter(version.applicationPeriodStart) }}</span>
-                            <span v-if="version.applicationPeriodEnd"> ~ {{ dateFormatter(version.applicationPeriodEnd) }}</span>
+                            <span> {{ dateFormatter(version.applicationPeriodStart, "M/D/YYYY") }}</span>
+                            <span v-if="version.applicationPeriodEnd"> ~ {{ dateFormatter(version.applicationPeriodEnd, "M/D/YYYY") }}</span>
                         </td>
                     </tr>
                 </tbody>
