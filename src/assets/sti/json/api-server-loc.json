@@ -21,7 +21,7 @@
         "put-commute-usage-setting" : "/api/company/commute-usage-setting",
         "put-company-account-setting" : "/api/company/account-setting",
         "post-company-name-duplicate-check" : "/api/company/duplicationCheck",
-
+        "put-company-service-type" : "/api/company/service-type",
 
         "get-flexben-campaign-List" : "/api/flexben/campaign",
         "get-flexben-report-List" : "/api/flexben/report",
@@ -42,6 +42,7 @@
         "get-invite-admin" : "/api/invite/admin",
         "post-invite-admin" : "/api/invite/admin",
         "put-invite-admin" : "/api/invite/admin",
+        "delete-invite-admin" : "/api/invite/admin",
 
         "post-file-direct-upload" : "/api/util/file-direct/upload",
         "post-flexben-file" : "/api/flexben/history/file",

@@ -20,17 +20,49 @@
             <div class="font-semibold">Sending List</div>
         </div>
         <template v-for="(admin, idx) in inviteInfo.invitedList" :key="idx">
-            <div class="col-span-2">{{ admin.inviteEmail }}</div>
-            <div class="col-span-1 border border-cyan-600 text-center rounded-md py-2 cursor-pointer" @click="resendInviteEmail(admin)">resend</div>
+            <div class="col-span-6 flex justify-start items-center gap-4">
+                <div>{{ admin.inviteEmail }}</div>
+                <div class="cursor-pointer" @click="openConfirmDeletePopup(admin.employeeInviteSeq)">
+                    <img src="@/assets/img/trashbox.svg" alt="trashbox" />
+                </div>
+                <div class="p-2 border border-cyan-600 text-center rounded-md cursor-pointer" @click="resendInviteEmail(admin)">resend</div>
+            </div>
         </template>
     </div>
+    <Teleport to="body">
+        <ConfirmPopup
+            v-model="showConfirmDeletePopup"
+            confirmDescription="Do you want to delete this E-mail account?"
+            buttonText="Delete"
+            :hasAfterConfirm="true"
+            @after-confirm="deleteInviteEmployee" />
+    </Teleport>
 </template>
 
 <script>
 import moment from 'moment';
+import ConfirmPopup from '@/components/ConfirmPopup.vue';
 
 export default {
+    components: {
+        ConfirmPopup,
+    },
     emits: ['closePopup'],
+    props: {
+        modelValue: Object,
+    },
+    computed: {
+        inviteInfo() {
+            const self = this;
+            return self.modelValue;
+        },
+    },
+    data() {
+        return {
+            targetEmployeeInviteSeq: null,
+            showConfirmDeletePopup: false,
+        };
+    },
     methods: {
         sendingInviteEmail() {
             const self = this;
@@ -98,14 +130,31 @@ export default {
                     alert(message);
                 });
         },
-    },
-    props: {
-        modelValue: Object,
-    },
-    computed: {
-        inviteInfo() {
+        openConfirmDeletePopup(employeeInviteSeq) {
+            this.targetEmployeeInviteSeq = employeeInviteSeq;
+            this.showConfirmDeletePopup = true;
+        },
+        deleteInviteEmployee() {
             const self = this;
-            return self.modelValue;
+            const url = self.$api('uri', 'delete-invite-admin');
+
+            let params = {
+                employeeInviteSeq: self.targetEmployeeInviteSeq,
+            };
+
+            self.$axios
+                .delete(url, { data: params })
+                .then((res) => {
+                    this.targetEmployeeInviteSeq = null;
+                    this.showConfirmDeletePopup = false;
+                    alert(' deleted ');
+                    self.$emit('closePopup');
+                })
+                .catch((err) => {
+                    let { code, message } = err.response.data;
+                    alert(code);
+                    alert(message);
+                });
         },
     },
 };
