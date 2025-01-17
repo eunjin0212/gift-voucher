@@ -20,6 +20,7 @@
                                 <th scope="col" class="w-96 px-3 py-3.5 text-center text-sm text-gray-900">Token Value</th>
                                 <th scope="col" class="w-28 px-3 py-3.5 text-center text-sm text-gray-900">Start Date</th>
                                 <th scope="col" class="w-28 px-3 py-3.5 text-center text-sm text-gray-900">End Date</th>
+                                <th scope="col" class="w-8 px-3 py-3.5 text-center text-sm text-gray-900"></th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200 bg-white">
@@ -29,6 +30,11 @@
                                 <td class="break-words px-3 py-4 text-sm text-center text-gray-900">{{ view.tokenValue }}</td>
                                 <td class="break-words px-3 py-4 text-sm text-center text-gray-900">{{ fitDateFormat(view.startDatetime) }}</td>
                                 <td class="break-words px-3 py-4 text-sm text-center text-gray-900">{{ fitDateFormat(view.endDatetime) }}</td>
+                                <td class="break-words px-3 py-4 text-sm text-center text-gray-900">
+                                    <div class="cursor-pointer" @click="openConfirmDeletePopup(view.cloudFlareImageTokenSeq)">
+                                        <img src="@/assets/img/trashbox.svg" alt="trashbox" />
+                                    </div>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -43,6 +49,12 @@
         </AppMain>
         <Teleport to="body">
             <AddImageTokenPopup v-model="isAddImageTokenPopupVisible" @insert-success="getImageTokenListData" @close-popup="isAddImageTokenPopupVisible = false" />
+            <ConfirmPopup
+                v-model="showConfirmDeletePopup"
+                confirmDescription="Do you want to delete this E-mail account?"
+                buttonText="Delete"
+                :hasAfterConfirm="true"
+                @after-confirm="deleteImageToken" />
         </Teleport>
     </div>
 </template>
@@ -53,7 +65,7 @@ import AppMain from '@/components/main/AppMain.vue';
 import ElementsPagination from '@/components/elements/ElementsPagination.vue';
 import AddImageTokenPopup from '@/pages/image-token/popup/add-image-token-popup.vue';
 import { DateFormatUtil } from '@/plugins/app-util.js';
-import moment from 'moment';
+import ConfirmPopup from '@/components/ConfirmPopup.vue';
 
 export default {
     components: {
@@ -61,6 +73,7 @@ export default {
         AppMain,
         ElementsPagination,
         AddImageTokenPopup,
+        ConfirmPopup
     },
     data() {
         return {
@@ -72,6 +85,8 @@ export default {
                 currentPage: 1,
             },
             isAddImageTokenPopupVisible: false,
+            targetSeq: null,
+            showConfirmDeletePopup: false,
         };
     }, //data
     mounted() {
@@ -99,8 +114,31 @@ export default {
             const self = this;
             self.isAddImageTokenPopupVisible = true;
         },
+        openConfirmDeletePopup(seq) {
+            this.targetSeq = seq;
+            this.showConfirmDeletePopup = true;
+        },
+        deleteImageToken() {
+            const url = this.$api('uri', 'delete-image-token');
+            const deleteForm = {
+                cloudFlareImageTokenSeq: this.targetSeq,
+            };
+
+            this.$axios
+                .delete(url, { data: deleteForm })
+                .then((res) => {
+                    this.targetSeq = null;
+                    this.showConfirmDeletePopup = false;
+                    this.getImageTokenListData();
+                })
+                .catch((err) => {
+                    let { code, message } = err.response.data;
+                    alert(code);
+                    alert(message);
+                });
+        },
         fitDateFormat: DateFormatUtil.fitDateFormat,
-        fitDateTimeFormat: DateFormatUtil.fitDateTimeFormat
+        fitDateTimeFormat: DateFormatUtil.fitDateTimeFormat,
     },
 }; // export default
 </script>

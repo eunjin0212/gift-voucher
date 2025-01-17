@@ -111,6 +111,7 @@
 
         "get-image-token-list" : "/api/image-token",
         "post-image-token" : "/api/image-token",
+        "delete-image-token" : "/api/image-token",
 
         "post-update-product-status" : "/api/flexben/product-update",
         "ENDSTRING" : "END"
