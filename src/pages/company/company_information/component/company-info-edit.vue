@@ -6,6 +6,19 @@
                     <div class="py-2 text-xl font-bold text-zinc-900">Company Information</div>
                     <ElementsButton :width32="true" :text="'Edit'" v-if="!isEdit && $appUtil.checkPermission('COMPANY_SETTING_EDIT')" @click="$emit('update:isEdit', true)" />
                 </div>
+                <div class="w-full">
+                    <h1 class="text-sm font-semibold text-slate-800">Company ID Number</h1>
+                    <input
+                        v-model="editCompanyData.companyIdNumber"
+                        class="w-full shadow shadow-gray-100 border-gray-200 rounded-md text-sm font-semibold focus:ring-indigo-500 focus:border-indigo-500"
+                        :class="{
+                            'bg-gray-100': !isEdit,
+                        }"
+                        type="text"
+                        @input="onlyInputNumber"
+                        :required="true"
+                        :disabled="!isEdit" />
+                </div>
                 <ElementsInput :name="'Company Name'" :full="true" :maxlength="60" v-model="editCompanyData.companyName" :required="true" :disabled="!isEdit" />
                 <ElementsInput :name="'Representative Name'" :full="true" :maxlength="60" v-model="editCompanyData.representativeName" :required="true" :disabled="!isEdit" />
                 <ElementsInput :name="'Business Registration Number'" :full="true" :maxlength="60" v-model="editCompanyData.businessRegistrationNumber" :required="true" :disabled="!isEdit" />
@@ -82,6 +95,7 @@ export default {
     data() {
         return {
             editCompanyData: {
+                companyIdNumber: null,
                 companyName: null,
                 representativeName: '',
                 businessRegistrationNumber: '',
@@ -109,6 +123,7 @@ export default {
     mounted() {
         const self = this;
         const {
+            companyIdNumber,
             companyName,
             representativeName,
             businessRegistrationNumber,
@@ -123,6 +138,7 @@ export default {
         } = self.registerData;
 
         self.editCompanyData = {
+            companyIdNumber,
             companyName,
             representativeName,
             businessRegistrationNumber,
@@ -139,6 +155,9 @@ export default {
         self.$emit('update:isEdit', false);
     },
     methods: {
+        onlyInputNumber(event) {
+            event.target.value = event.target.value.replace(/\D/g, '');
+        },
         afterFileSelect(e) {
             const self = this;
             const { files } = e.target;

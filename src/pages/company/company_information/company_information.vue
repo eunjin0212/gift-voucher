@@ -187,7 +187,6 @@ export default {
 
             editAccountData.subscriptionCompanySeq = self.registerData.subscriptionCompanySeq;
             editAccountData.companySeq = self.registerData.companySeq;
-            console.log({ editAccountData });
 
             const url = self.$api('uri', 'put-company-account-setting');
             self.$axios
