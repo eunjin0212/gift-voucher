@@ -5,7 +5,9 @@
     >
         <form @submit.prevent="clickSubmitButton"
             id="hrNoticeForm"
-            class="border rounded-lg shadow shadow-gray-100 bg-white min-w-[70vh]"
+            class="border rounded-lg shadow shadow-gray-100 bg-white 
+                   min-w-[40vw] min-h-[50vh] max-w-[90vw] max-h-[90vh] 
+                   overflow-auto"
         >
             <div class="px-7 py-6 flex justify-between items-center ">
                 <h2 class="text-xl font-bold">
