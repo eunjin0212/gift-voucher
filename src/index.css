@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@font-face {
+    font-family: 'Source Sans Pro Bold';
+    src: url('/public/fonts/SourceSansPro-Bold.otf') format('otf');
+    font-weight: bold;
+    font-style: normal;
+  }
