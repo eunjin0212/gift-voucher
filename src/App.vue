@@ -1,14 +1,17 @@
 <script>
 export default {
-  mounted() {
-    // if(window.logOnProfile){
-    //   location.href = '/company_settings/company_information'
-    // }else location.href = '/login'
-    location.href = '/login'
-  },
+    mounted() {
+        // if(window.logOnProfile){
+        //   location.href = '/company_settings/company_information'
+        // }else location.href = '/login'
+        // location.href = '/'
+    },
 };
 </script>
 
 <template>
-  <div id="app" class="min-w-[1024px] min-h-[100vh] flex"></div>
+    <div
+      id="app"
+      class="min-w-[1024px] min-h-[100vh] flex font-roboto text-normal"
+    ></div>
 </template>
