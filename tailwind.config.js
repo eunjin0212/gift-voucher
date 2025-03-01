@@ -9,11 +9,12 @@ module.exports = {
         extend: {
             colors: {
                 main: {
-                    DEFAULT: '#29ABE2', 
+                    DEFAULT: '#29ABE2',
                     light: '#24BCED'
                 },
                 blue: {
-                    50: '#F1FAFE'
+                    50: '#F1FAFE',
+                    100: '#0066FF'
                 },
                 gray: {
                     50: '#F9FAFC',
@@ -25,7 +26,13 @@ module.exports = {
                     600: '#E8EBEE',
                     700: '#E2E8F0',
                     800: '#DBDCDD',
-                    900: '#2F3440'
+                    900: '#C9C9C9',
+                    950: '#94A3B8',
+                },
+                black: {
+                    100: '#4B4F58',
+                    200: '#38414F',
+                    300: '#2F3440',
                 },
                 red: {
                     50: '#FFF1F1',
@@ -41,12 +48,12 @@ module.exports = {
                 'roboto': ["Roboto", "sans-serif"],
             },
             screens: {
-                'xs': '390px',
+                'xs': '360px',
                 'sm': '768px', // mobile
                 'md': '1024px', // tablet
             },
             minWidth: {
-                'xs': '280px', // min mobile
+                'xs': '360px', // min mobile
                 'md': '1024px', // tablet
                 'half-vw': '50vw',
             }
