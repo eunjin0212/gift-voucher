@@ -39,6 +39,7 @@
                 margin: 0;
                 line-height: inherit;
                 color: #38414F;
+                background-color: white;
             }
 
             * {
@@ -247,7 +248,7 @@
                 border: 0;
             }
 
-            .redeem-container>a {
+            .redeem-container>button {
                 font-family: Source Sans Pro;
                 text-decoration: none;
                 font-weight: 600;
@@ -395,7 +396,7 @@
                 </div>
             </section>
             <section class="voucher redeem-container">
-                <a href="/voucher">Redeem</a>
+                <button onclick="handleUseBtn()">Redeem</button>
                 <p>* Untuk menukarkan e-voucher, klik tombol ‘Tukarkan’.</p>
             </section>
         </main>
@@ -439,6 +440,7 @@
         </footer>
     </body>
     <script lang="javascript">
+        // TODO: 추후 이메일 데이터 추가 필요 
         const user = {
             email: 'hayden@sharetreats.com',
             name: 'Hayden'
@@ -460,6 +462,10 @@
 
         const pinCodeEl = document.getElementById('pinCode')
         pinCodeEl.innerText = voucher.pinCode
+
+        function handleUseBtn() {
+            console.log('button')
+        }
     </script>
 
 </html>
