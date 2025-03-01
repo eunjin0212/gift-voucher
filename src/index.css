@@ -12,7 +12,47 @@
 }
 
 @layer components {
+    .field {
+        @apply w-full p-0 border-0 ring-0 focus:outline-none focus:ring-offset-0 focus:ring-0 placeholder:text-sm
+    }
+
     .header {
-        @apply py-2 px-5 justify-between flex
+        @apply flex flex-col sticky top-0
+    }
+    
+    .header .header-bar {
+        @apply py-2 px-5 justify-between flex bg-white
+    }
+
+    .header .search-wrapper {
+        @apply py-3 px-5 bg-white
+    }
+
+    .search-input {
+        @apply rounded-lg p-3 flex items-center w-full border justify-between border-main bg-white
+        /* info placeholder:text-gray-950 */
+    }
+
+    .search-input input {
+        @apply placeholder:text-gray-900 text-black-200
+    }
+
+    .help-wrapper {
+        @apply bg-gray-50 px-5 py-3
+    }
+
+    .help-wrapper h6 {
+        @apply inline-flex gap-1 text-sm font-bold text-black-200 mb-2
+    }
+
+    .help-wrapper ul {
+        @apply list-disc text-[13px] leading-4 tracking-tighter ml-5 text-[#4B4F58]
+    }
+
+    .item {
+        /* @apply  */
+    }
+    .item>li {
+        @apply flex flex-col
     }
 }
