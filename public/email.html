@@ -462,9 +462,16 @@
 
         const pinCodeEl = document.getElementById('pinCode')
         pinCodeEl.innerText = voucher.pinCode
+        const isExpired = true
 
         function handleUseBtn() {
-            console.log('button')
+            const info = { ...user, ...voucher }
+            let href = ''
+            Object.entries(info).forEach(([key, value]) => {
+                const val = value.replaceAll(' ', '_')
+                href += `${key}=${val}&`
+            })
+            location.href = `/voucher?${href}expired=${isExpired}`
         }
     </script>
 
