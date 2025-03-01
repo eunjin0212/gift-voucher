@@ -1,0 +1,462 @@
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0"
+        >
+        <title>Share Treats!</title>
+        <link
+          rel="preconnect"
+          href="https://fonts.googleapis.com"
+        >
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin
+        >
+        <link
+          href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+          rel="stylesheet"
+        >
+        <!-- Outlook specific styles using conditional comments -->
+        <!--[if mso]>
+            <style>
+            </style>
+        <![endif]-->
+
+        <style>
+            html {
+                font-size: 12px;
+                font-family: 'Roboto', system-ui, sans-serif;
+                font-feature-settings: normal;
+                font-variation-settings: normal;
+                -webkit-tap-highlight-color: transparent;
+            }
+
+            body {
+                margin: 0;
+                line-height: inherit;
+                color: #38414F;
+            }
+
+            * {
+                box-sizing: border-box;
+            }
+
+            img {
+                max-width: 100%;
+                height: auto;
+                vertical-align: middle;
+            }
+
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6,
+            p {
+                margin: 0;
+            }
+
+            button {
+                cursor: pointer;
+                margin: 0;
+                padding: 0;
+                outline: 0;
+                border-width: 0;
+            }
+
+            ol,
+            ul {
+                padding: 0;
+                margin: 0;
+            }
+
+            .underline {
+                text-decoration: underline;
+            }
+
+            /***************** style ****************/
+
+            .email__main {
+                background: url(/img/email_bg.svg);
+                min-height: 902px;
+            }
+
+            .email__footer,
+            .about,
+            .email__main>section {
+                width: 320px;
+                margin: 0 auto;
+            }
+
+            .email__header {
+                padding: 8px 0;
+                display: flex;
+                top: 0;
+                left: 0;
+                width: 320px;
+                margin: 0 auto;
+            }
+
+            .email__greeting {
+                padding: 20px 0 20px 0;
+                font-size: 14px;
+                margin-bottom: 20px;
+            }
+
+            .email__greeting>p {
+                line-height: 16px;
+                font-size: 12px;
+            }
+
+            .email__greeting>p:first-of-type {
+                margin-bottom: 12px;
+                font-size: 14px;
+                line-height: 20px;
+                color: #384860;
+            }
+
+            .email__greeting>p:first-of-type>span {
+                font-size: 12px;
+            }
+
+            .email {
+                color: #0066FF
+            }
+
+            .voucher {
+                background-color: white;
+                border: 1px solid #E2E8F0;
+                border-radius: 4px;
+                display: flex;
+                flex-direction: column;
+                margin: 0 auto 9px auto !important;
+            }
+
+            .voucher>ul {
+                list-style: none;
+            }
+
+            .voucher>ul>li {
+                padding: 12px;
+                border-bottom: 1px solid #E2E8F0;
+            }
+
+            .voucher>ul>li:last-of-type {
+                border-bottom: 0;
+            }
+
+            .email__voucher--content>li:has(img) {
+                margin: 24px 26px;
+                border-bottom: 0;
+                padding: 0;
+            }
+
+            .email__voucher--content>li:nth-of-type(2) {
+                font-weight: 500;
+                font-size: 14px;
+                line-height: 18px;
+            }
+
+            .email__voucher--content>li:last-of-type {
+                padding: 12px;
+                color: #94A3B8;
+                line-height: 18px;
+            }
+
+            .email__voucher-info>ul>li {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .email__voucher-info>ul>li>span:first-of-type {
+                font-size: 14px;
+                line-height: 18px;
+            }
+
+            .email__voucher-info>ul>li>span:last-of-type {
+                font-weight: 500;
+                font-size: 14px;
+                line-height: 18px;
+                color: #29ABE2;
+            }
+
+            .email__voucher-info>ul>li:last-of-type {
+                font-size: 10px;
+                line-height: 16px;
+                color: #F63B3B;
+                flex-direction: column;
+                align-items: start;
+                gap: 2px;
+            }
+
+            .pin-code-container {
+                background-color: #D6EBFF;
+                padding: 12px;
+                gap: 8px;
+            }
+
+            .pin-code-container>h6 {
+                margin: 0;
+                font-size: 14px;
+                line-height: 21px;
+            }
+
+            .pin-code-container>div {
+                background-color: white;
+                height: 44px;
+                position: relative;
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+
+            .pin-code-container>div>span {
+                font-weight: 600;
+                font-size: 16px;
+                line-height: 20px;
+                color: #29ABE2;
+            }
+
+            .pin-code-container>div>button {
+                width: 50px;
+                height: 24px;
+                min-width: 50px;
+                padding: 4px 10px;
+                border-radius: 4px;
+                border: 1px solid #29ABE2;
+                background-color: white;
+                color: #29ABE2;
+                position: absolute;
+                right: 27px;
+            }
+
+            .pin-code-container>div>p {
+                color: #F63B3B;
+            }
+
+            .redeem-container {
+                background-color: transparent;
+                border: 0;
+            }
+
+            .redeem-container>button {
+                font-family: Source Sans Pro;
+                font-weight: 600;
+                font-size: 16px;
+                line-height: 20px;
+                text-align: center;
+                height: 48px;
+                border-radius: 6px;
+                padding: 10px;
+                background-color: #29ABE2;
+                color: white;
+            }
+
+            .redeem-container>p {
+                color: #F63B3B;
+                margin-top: 8px;
+                font-size: 10px;
+                line-height: 16px;
+            }
+
+            .about {
+                padding: 24px 0 24px 12px;
+            }
+
+            .about:first-of-type {
+                border-bottom: 1px solid #E2E8F0;
+                padding-top: 40px;
+            }
+
+            .about>h4 {
+                margin-left: -12px;
+                margin-bottom: 12px;
+                font-weight: 700;
+                line-height: 16px;
+            }
+
+            .about>ol {
+                font-size: 12px;
+                line-height: 20px;
+                letter-spacing: -0.2px;
+                color: #858585;
+            }
+
+            .email__footer {
+                font-size: 12px;
+                line-height: 16px;
+                padding-bottom: 80px;
+            }
+
+            .email__footer>p {
+                color: #F63B3B;
+                margin-bottom: 2px;
+            }
+
+            .email__footer>a {
+                color: #4C76E2;
+            }
+
+            .email__footer>div {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #B0B0B0;
+                margin: 24px auto 0;
+                gap: 8px;
+                font-size: 10px;
+                font-weight: 500;
+                line-height: 12px;
+            }
+
+            .email__footer>div>img {
+                width: 56px;
+                height: 28px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <main class="flex flex-col items-center w-full px-4 mx-auto email__main">
+            <header class="email__header">
+                <a href="https://www.sharetreats.id/welcome">
+                    <img
+                      src="/img/logo.svg"
+                      alt="sharetreats_logo"
+                    />
+                </a>
+            </header>
+            <section class="email__greeting">
+                <p>
+                    Halo
+                    <span
+                      class="underline email"
+                      id="userEmail"
+                    ></span>
+                </p>
+                <p>
+                    Terima kasih telah menggunakan Share Treats!
+                </p>
+                <p>Klik tombol ini untuk melihat traktiran yang kamu dapat & cara</p>
+                <p>
+                    menggunakannnya.
+                </p>
+            </section>
+            <section class="voucher email__voucher">
+                <ul class="email__voucher--content">
+                    <li>
+                        <img
+                          src="/img/voucher.png"
+                          alt="voucher"
+                        />
+                    </li>
+                    <li>
+                        Dear,<span id="userName"></span>
+                    </li>
+                    <li>Thank you for using ShareTreats!</li>
+                </ul>
+            </section>
+            <section class="voucher email__voucher-info">
+                <ul>
+                    <li>
+                        <span>Brand</span>
+                        <span id="brand"></span>
+                    </li>
+                    <li>
+                        <span>Produk</span>
+                        <span id="produk"></span>
+                    </li>
+                    <li>
+                        <p>
+                            *Kode berlaku hingga 29 Sep 2023
+                        </p>
+                        <p>
+                            *Harap diingat nomor KODE karena akan digunakan pada langkah terakhir.
+                        </p>
+                    </li>
+                </ul>
+            </section>
+            <section class="voucher pin-code-container">
+                <h6>PIN Code</h6>
+                <div>
+                    <span id="pinCode"></span>
+                    <button>copy</button>
+                </div>
+            </section>
+            <section class="voucher redeem-container">
+                <button>Redeem</button>
+                <p>* Untuk menukarkan e-voucher, klik tombol ‘Tukarkan’.</p>
+            </section>
+        </main>
+        <aside class="about">
+            <h4>Cara Penukaran Voucher</h4>
+            <ol>
+                <li>Klik Url Link untuk di redeem.</li>
+                <li>Klik redeem, lalu akan muncul code voucher..</li>
+                <li>Copy code voucher, lalu buka aplikasi Gojek untuk proses penukaran..</li>
+                <li>Masuk ke dalam halaman ‘Profil saya di pojok kanan atas homescreen Gojek..</li>
+                <li>Pilih menu “Masukkan Kode Voucher” lalu paste kode voucher yang sudah anda copy dari link dalam
+                    email, tekan “Verifikasi Kode mu”..</li>
+                <li>Voucher anda sudah dapat digunakan. Untuk kembali mengecek apakah voucher sudah ter-redeem, anda
+                    bisa cek kembali di menu “voucher saya” di dalam menu Profil saya.</li>
+            </ol>
+        </aside>
+        <aside class="about">
+            <h4>Syarat & Ketentuan</h4>
+            <ol>
+                <li>Klik Url Link untuk di redeem.</li>
+                <li>Klik redeem, lalu akan muncul code voucher..</li>
+                <li>Copy code voucher, lalu buka aplikasi Gojek untuk proses penukaran..</li>
+                <li>Masuk ke dalam halaman ‘Profil saya di pojok kanan atas homescreen Gojek..</li>
+                <li>Pilih menu “Masukkan Kode Voucher” lalu paste kode voucher yang sudah anda copy dari link dalam
+                    email, tekan “Verifikasi Kode mu”..</li>
+                <li>Voucher anda sudah dapat digunakan. Untuk kembali mengecek apakah voucher sudah ter-redeem, anda
+                    bisa cek kembali di menu “voucher saya” di dalam menu Profil saya.</li>
+            </ol>
+        </aside>
+        <footer class="email__footer">
+            <p>E-mail ini dibuat otomatis, mohon tidak membalas. Jika butuh bantuan, silakan hubungi Share Treats via
+                email ke</p>
+            <a href="mailto:support@sharetreats.id">support@sharetreats.id</a>
+            <div>
+                <span>Powered by</span>
+                <img
+                  src="/img/logo.svg"
+                  alt="sharetreats_logo"
+                />
+            </div>
+        </footer>
+    </body>
+    <script lang="javascript">
+        const user = {
+            email: 'hayden@sharetreats.com',
+            name: 'Hayden'
+        }
+        const userEmailEl = document.getElementById('userEmail')
+        userEmailEl.innerText = user.email
+        const userNameEl = document.getElementById('userName')
+        userNameEl.innerText = user.name
+
+        const voucher = {
+            brand: 'Alfamart',
+            produk: 'Rp 100.000 e-Voucher',
+            pinCode: '555 555 555',
+        }
+        const brandEl = document.getElementById('brand')
+        brandEl.innerText = voucher.brand
+        const produkEl = document.getElementById('produk')
+        produkEl.innerText = voucher.produk
+
+        const pinCodeEl = document.getElementById('pinCode')
+        pinCodeEl.innerText = voucher.pinCode
+    </script>
+
+</html>
