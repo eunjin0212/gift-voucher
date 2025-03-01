@@ -12,6 +12,9 @@
 }
 
 @layer components {
+    .min-width {
+        @apply max-w-[1200px] mx-auto
+    }
     .field {
         @apply w-full p-0 border-0 ring-0 focus:outline-none focus:ring-offset-0 focus:ring-0 placeholder:text-sm
     }
@@ -34,7 +37,7 @@
     }
 
     .search-input input {
-        @apply placeholder:text-gray-900 text-black-200
+        @apply placeholder:text-gray-850 text-black-200
     }
 
     .help-wrapper {
@@ -46,13 +49,50 @@
     }
 
     .help-wrapper ul {
-        @apply list-disc text-[13px] leading-4 tracking-tighter ml-5 text-[#4B4F58]
+        @apply list-disc text-[13px] leading-4 tracking-tighter ml-5 text-black-100
     }
 
     .item {
-        /* @apply  */
+        @apply border border-gray-500
     }
+
     .item>li {
-        @apply flex flex-col
+        @apply flex flex-col 
+    }
+
+    .item>li:not(:first-of-type) {
+        @apply px-3 
+    }
+
+    .item>li:first-of-type {
+        @apply h-[140px] flex items-center justify-center border border-b-gray-500
+    }
+
+    .item>li:first-of-type>img {
+        @apply w-[136px] h-[130px]
+    }
+
+    .item>.item-info {
+        @apply leading-[18px] pt-3 mb-6 text-sm -tracking-wider text-black-200
+    }
+
+    .item>.item-info>strong {
+        @apply mb-px
+    }
+
+    .item>.item-price {
+        @apply mb-1
+    }
+
+    .item>.item-price>strong {
+        @apply text-sm leading-[18px] text-main
+    }
+
+    .item>.item-price>span {
+        @apply line-through text-gray-900 text-[10px] leading-4
+    }
+
+    .item>li>.item-payment {
+        @apply flex items-center justify-center gap-2 py-[6px] px-3 rounded-sm disabled:cursor-not-allowed bg-white text-main border border-main hover:bg-main hover:text-white
     }
 }

@@ -5,11 +5,14 @@ import boxIcon from '@/assets/img/box.svg'
 import searchIcon from '@/assets/img/search.svg'
 import helpIcon from '@/assets/img/help.svg'
 import titleIcon from '@/assets/img/title.svg'
-import cardIcon from '@/assets/img/card.svg'
+import Card from '@/assets/img/Card.vue'
 import testImg1 from '@/assets/img/test-img1.png'
 import testImg2 from '@/assets/img/test-img2.png'
 
 export default {
+    components: {
+        Card,
+    },
     data() {
         const items = [
             {
@@ -18,6 +21,7 @@ export default {
                 detail: 'Double All-In Overload',
                 price: 10000,
                 salePrice: 525738,
+                soldOut: false
             },
             {
                 name: 'greenwich',
@@ -25,6 +29,7 @@ export default {
                 detail: 'Double All-In Overload',
                 price: 10000,
                 salePrice: 525738,
+                soldOut: false
             },
             {
                 name: 'greenwich',
@@ -32,6 +37,7 @@ export default {
                 detail: 'Double All-In Overload',
                 price: 10000,
                 salePrice: 525738,
+                soldOut: true
             },
             {
                 name: 'greenwich',
@@ -39,6 +45,7 @@ export default {
                 detail: 'Double All-In Overload',
                 price: 10000,
                 salePrice: 525738,
+                soldOut: false
             },
             {
                 name: 'greenwich',
@@ -46,6 +53,7 @@ export default {
                 detail: 'Double All-In Overload',
                 price: 10000,
                 salePrice: 525738,
+                soldOut: false
             },
             {
                 name: 'greenwich',
@@ -53,6 +61,7 @@ export default {
                 detail: 'Double All-In Overload',
                 price: 10000,
                 salePrice: 525738,
+                soldOut: false
             },
             {
                 name: 'greenwich',
@@ -60,6 +69,7 @@ export default {
                 detail: 'Double All-In Overload',
                 price: 10000,
                 salePrice: 525738,
+                soldOut: false
             },
             {
                 name: 'greenwich',
@@ -67,13 +77,7 @@ export default {
                 detail: 'Double All-In Overload',
                 price: 10000,
                 salePrice: 525738,
-            },
-            {
-                name: 'greenwich',
-                img: testImg1,
-                detail: 'Double All-In Overload',
-                price: 10000,
-                salePrice: 525738,
+                soldOut: false
             },
         ];
         return {
@@ -83,7 +87,7 @@ export default {
             searchIcon,
             helpIcon,
             titleIcon,
-            cardIcon,
+            Card,
             userEmail: 'hayden@sharetreats.com',
             items,
             search: {
@@ -95,7 +99,7 @@ export default {
 }
 </script>
 <template>
-    <header class="header">
+    <header class="header min-width">
         <div class="header-bar">
             <a href="/voucher">
                 <img
@@ -140,7 +144,7 @@ export default {
             </ul>
         </aside>
     </header>
-    <main>
+    <main class="min-width">
         <section>
             <h1 class="flex items-center justify-center gap-2 my-3 text-lg font-bold leading-5 text-black-300">
                 <img
@@ -153,7 +157,7 @@ export default {
                   alt="title"
                 />
             </h1>
-            <div class="max-w-[1200px] mx-auto grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 items-wrapper">
+            <div class="grid grid-cols-2 gap-2 mx-auto sm:grid-cols-3 lg:grid-cols-4 items-wrapper">
                 <template
                   v-for="(item, idx) in items"
                   :key="`${item.name}-${idx}`"
@@ -170,15 +174,17 @@ export default {
                             <span>{{ item.detail }}</span>
                         </li>
                         <li class="item-price">
-                            <strong>Rp{{ item.salePrice.toLocaleString() }}</strong>
-                            <span>Rp{{ item.price.toLocaleString() }}</span>
+                            <strong>Rp {{ item.salePrice.toLocaleString() }}</strong>
+                            <span>Rp {{ item.price.toLocaleString() }}</span>
                         </li>
                         <li>
-                            <button>
-                                <img
-                                  :src="cardIcon"
-                                  alt="payment"
-                                />
+                            <button
+                              class="item-payment"
+                              :disabled="item.soldOut"
+                              :class="item.soldOut ? '!bg-black-50 !text-white !border-black-50' : ''"
+                            >
+                                <Card />
+                                {{ item.soldOut ? 'Habis' : 'SHOUT' }}
                             </button>
                         </li>
                     </ul>
