@@ -11,6 +11,7 @@
     font-style: normal;
 }
 
+/* products */
 @layer components {
     .min-width {
         @apply max-w-[1200px] mx-auto
@@ -107,7 +108,10 @@
     .item>li:last-of-type {
         @apply pb-3
     }
+}
 
+/* footer */
+@layer components {
     .footer>div {
         @apply flex py-3 
     }
@@ -118,5 +122,35 @@
 
     .footer>.footer__logo-wrapper {
         @apply py-[18px] flex justify-center items-center
+    }
+}
+
+/* modal */
+@layer components {
+    .modal-wrapper {
+        @apply bg-[#00000080] w-full h-full fixed top-0 left-0 overflow-hidden flex items-center justify-center
+    }
+    .modal-wrapper .modal-content-wrapper {
+        @apply bg-white rounded-lg min-w-80 w-full max-w-[40%] py-5 px-3 gap-5 flex flex-col
+    }
+    .modal-wrapper .modal-content-wrapper .modal-title {
+        @apply flex flex-col items-center justify-center gap-[14px] text-red-600 text-lg leading-6 font-semibold
+    }
+    .modal-wrapper .modal-content-wrapper .modal-content {
+        @apply text-black-0 text-sm text-center
+    }
+    .modal-wrapper .modal-content-wrapper .modal-btn {
+        @apply py-[14px] rounded-md inline-flex items-center justify-center text-base leading-5 font-semibold
+    }
+    .modal-wrapper .modal-content-wrapper .modal-negative-btn {
+        @apply bg-red-600 text-white
+    }
+
+    .modal-wrapper .modal-content-wrapper .modal-positive-btn {
+        @apply bg-main text-white
+    }
+
+    .modal-wrapper .modal-content-wrapper .modal-primary-btn {
+        @apply bg-gray-800 text-black-0
     }
 }

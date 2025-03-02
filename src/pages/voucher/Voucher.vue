@@ -6,6 +6,7 @@ import searchIcon from '@/assets/img/search.svg'
 import helpIcon from '@/assets/img/help.svg'
 import titleIcon from '@/assets/img/title.svg'
 import backIcon from '@/assets/img/back.svg'
+import xIcon from '@/assets/img/x_icon.svg'
 import Card from '@/assets/img/Card.vue'
 import testImg1 from '@/assets/img/test-img1.png'
 import testImg2 from '@/assets/img/test-img2.png'
@@ -13,9 +14,10 @@ import speaker from '@/assets/img/speaker.png'
 import textLogo from '@/assets/img/text_logo.svg'
 import Toggle from '@/assets/img/Toggle.vue'
 
+const testSoldOut = 'will be sold out'
 const test = [
     {
-        name: 'pizza',
+        name: 'pizza will be sold out',
         img: testImg1,
         detail: 'Double All-In Overload',
         price: 525738,
@@ -62,6 +64,7 @@ export default {
             logo,
             leftArrowIcon,
             boxIcon,
+            xIcon,
             searchIcon,
             helpIcon,
             titleIcon,
@@ -73,6 +76,9 @@ export default {
             originalProducts: JSON.parse(JSON.stringify([...totalProduct])),
             search: '',
             sort: null, // desc, asc
+            isWrongModal: false,
+            isExpiredModal: false,
+            expiredDate: '',
         }
     },
     methods: {
@@ -92,6 +98,15 @@ export default {
             } else {
                 this.totalProduct.sort((a, b) => b.salePrice - a.salePrice);
             }
+        },
+        handlePayment(item) {
+            if (item.name.includes(testSoldOut)) {
+                this.isWrongModal = true
+                item.soldOut = true
+            }
+        },
+        handleModal(key) {
+            this[key] = false
         }
     },
     computed: {
@@ -110,6 +125,14 @@ export default {
             this.totalProduct = this.originalProducts.filter((prod) =>
                 prod.name.includes(searchQuery)
             );
+        }
+
+        const emailQuery = params.get("expired");
+
+        const today = new Date()
+        if (today - new Date(emailQuery) > 0) {
+            this.isExpiredModal = true
+            this.expiredDate = emailQuery
         }
     }
 }
@@ -158,6 +181,7 @@ export default {
                 </button>
             </label>
         </form>
+        <!-- NOTE: help박스 자리 (빼도 검색 필터는 상위 고정)-->
         <aside
           class="help-wrapper"
           v-if="!isSearch"
@@ -257,6 +281,7 @@ export default {
                               class="item-payment"
                               :disabled="item.soldOut"
                               :class="item.soldOut ? '!bg-black-50 !text-white !border-black-50' : ''"
+                              @click="() => handlePayment(item)"
                             >
                                 <Card />
                                 {{ item.soldOut ? 'Habis' : 'SHOUT' }}
@@ -312,4 +337,50 @@ export default {
             </div>
         </footer>
     </main>
+    <Teleport
+      to="body"
+      v-if="isWrongModal"
+    >
+        <aside class="modal-wrapper">
+            <div class="modal-content-wrapper">
+                <p class="modal-title">
+                    <img
+                      :src="xIcon"
+                      alt="x_icon"
+                    />
+                    <strong>Something Wrong</strong>
+                </p>
+                <div class="modal-content">
+                    <p class="mb-2">Please retry to access it again. If the issue persists, contact us.</p>
+                    <ul class="text-center">
+                        <li>Email : support@sharetreats.id</li>
+                        <li>Jam kerja Senin - Jumat / Pukul 10.00 - Pukul 17.00</li>
+                    </ul>
+                </div>
+                <button
+                  @click="() => handleModal('isWrongModal')"
+                  class="w-full modal-btn modal-negative-btn"
+                >OK</button>
+            </div>
+        </aside>
+    </Teleport>
+    <Teleport
+      to="body"
+      v-if="isExpiredModal"
+    >
+        <aside class="modal-wrapper">
+            <div class="modal-content-wrapper">
+                <p class="modal-title">
+                    <strong>It’s expired</strong>
+                </p>
+                <div class="modal-content">
+                    <p>The expired date : {{ expiredDate }}</p>
+                </div>
+                <button
+                  @click="() => handleModal('isExpiredModal')"
+                  class="w-full modal-btn modal-negative-btn"
+                >OK</button>
+            </div>
+        </aside>
+    </Teleport>
 </template>
