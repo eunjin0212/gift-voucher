@@ -28,7 +28,7 @@
     }
 
     .header .search-wrapper {
-        @apply py-3 px-5 bg-white
+        @apply py-3 px-5 bg-white flex gap-[10px]
     }
 
     .search-input {
@@ -37,7 +37,7 @@
     }
 
     .search-input input {
-        @apply placeholder:text-gray-850 text-black-200
+        @apply placeholder:text-gray-850 text-black-300 font-semibold
     }
 
     .help-wrapper {
@@ -45,11 +45,19 @@
     }
 
     .help-wrapper h6 {
-        @apply inline-flex gap-1 text-sm font-bold text-black-200 mb-2
+        @apply inline-flex gap-1 text-sm font-bold text-black-300 mb-2
     }
 
     .help-wrapper ul {
-        @apply list-disc text-[13px] leading-4 tracking-tighter ml-5 text-black-100
+        @apply list-disc text-[13px] leading-4 tracking-tighter ml-5 text-black-200
+    }
+
+    .products-wrapper {
+        @apply grid grid-cols-2 gap-2 mx-auto sm:grid-cols-3 lg:grid-cols-4 px-5
+    }
+
+    .products-wrapper:last-of-type {
+        @apply pb-20
     }
 
     .item {
@@ -73,7 +81,7 @@
     }
 
     .item>.item-info {
-        @apply leading-[18px] pt-3 mb-6 text-sm -tracking-wider text-black-200
+        @apply leading-[18px] pt-3 mb-6 text-sm -tracking-wider text-black-300
     }
 
     .item>.item-info>strong {
@@ -93,6 +101,22 @@
     }
 
     .item>li>.item-payment {
-        @apply flex items-center justify-center gap-2 py-[6px] px-3 rounded-sm disabled:cursor-not-allowed bg-white text-main border border-main hover:bg-main hover:text-white
+        @apply flex items-center justify-center gap-2 py-[6px] px-3 rounded-sm disabled:cursor-not-allowed bg-white text-main border border-main active:bg-main active:text-white hover:bg-main hover:text-white
+    }
+
+    .item>li:last-of-type {
+        @apply pb-3
+    }
+
+    .footer>div {
+        @apply flex py-3 
+    }
+
+    .footer>div>button {
+        @apply bg-white py-5 w-1/2 text-[15px] leading-5 border border-gray-500 active:border-black-100 active:shadow-[0px_6px_3px_-1px_#00000029] active:text-black-100 active:font-bold hover:border-black-100 hover:shadow-[0px_6px_3px_-1px_#00000029] hover:text-black-100 hover:font-bold 
+    }
+
+    .footer>.footer__logo-wrapper {
+        @apply py-[18px] flex justify-center items-center
     }
 }
