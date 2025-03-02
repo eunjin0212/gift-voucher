@@ -13,7 +13,7 @@ export default {
             faqs: [
                 {
                     title: 'What is SHARE TREATS?',
-                    active: false,
+                    active: true,
                     content: [
                         'SHARE TREATS is a gifting service that allows sending casual treats through mobile payments.',
                         `<ul class="${contentClass}">
