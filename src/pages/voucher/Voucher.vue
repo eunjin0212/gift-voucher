@@ -288,8 +288,8 @@ export default {
           v-if="!isSearch"
         >
             <div class="text-black-0">
-                <button>FAQs</button>
-                <button>Terms</button>
+                <a href="/faqs">FAQs</a>
+                <a href="/terms">Terms</a>
             </div>
             <div class="footer__logo-wrapper">
                 <img

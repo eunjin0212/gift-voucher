@@ -112,8 +112,8 @@
         @apply flex py-3 
     }
 
-    .footer>div>button {
-        @apply bg-white py-5 w-1/2 text-[15px] leading-5 border border-gray-500 active:border-black-100 active:shadow-[0px_6px_3px_-1px_#00000029] active:text-black-100 active:font-bold hover:border-black-100 hover:shadow-[0px_6px_3px_-1px_#00000029] hover:text-black-100 hover:font-bold 
+    .footer>div>a {
+        @apply bg-white text-center py-5 w-1/2 text-[15px] leading-5 border border-gray-500 active:border-black-100 active:shadow-[0px_6px_3px_-1px_#00000029] active:text-black-100 active:font-bold hover:border-black-100 hover:shadow-[0px_6px_3px_-1px_#00000029] hover:text-black-100 hover:font-bold 
     }
 
     .footer>.footer__logo-wrapper {
