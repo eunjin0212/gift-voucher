@@ -134,8 +134,12 @@
         @apply bg-white rounded-lg min-w-80 w-full max-w-[40%] py-5 px-3 gap-5 flex flex-col
     }
     .modal-wrapper .modal-content-wrapper .modal-title {
-        @apply flex flex-col items-center justify-center gap-[14px] text-red-600 text-lg leading-6 font-semibold
+        @apply flex flex-col items-center justify-center gap-[14px] text-lg leading-6 font-semibold
     }
+    .modal-wrapper .modal-title.error {
+        @apply text-red-600
+    }
+
     .modal-wrapper .modal-content-wrapper .modal-content {
         @apply text-black-0 text-sm text-center
     }
@@ -152,5 +156,43 @@
 
     .modal-wrapper .modal-content-wrapper .modal-primary-btn {
         @apply bg-gray-800 text-black-0
+    }
+}
+
+/* checkbox */
+@layer components {
+    div.checkbox {
+        @apply flex items-center w-full cursor-pointer
+    }
+
+    div.checkbox>input {
+        @apply hidden
+    }
+
+    div.checkbox>span {
+        @apply mr-[2px] border rounded-sm block w-6 h-6
+    }
+
+    div.checkbox>label {
+        @apply text-[13px] leading-5 text-[#898989]
+    }
+}
+
+/* recaptcha */
+@layer components {
+    div.recaptcha {
+        @apply h-14 w-full rounded-lg border border-[#E0E0E0] flex justify-between items-center px-[30px]
+    }
+
+    div.recaptcha>div>span {
+        @apply mr-2 border rounded-sm block !w-4 !h-4
+    }
+
+    div.recaptcha>div>label {
+        @apply !text-xs !leading-4 text-gray-950
+    }
+
+    div.recaptcha img {
+        @apply h-8
     }
 }

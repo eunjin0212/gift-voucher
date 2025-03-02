@@ -12,7 +12,9 @@ import testImg1 from '@/assets/img/test-img1.png'
 import testImg2 from '@/assets/img/test-img2.png'
 import speaker from '@/assets/img/speaker.png'
 import textLogo from '@/assets/img/text_logo.svg'
+import reCAPTCHA from '@/assets/img/reCAPTCHA_logo.svg'
 import Toggle from '@/assets/img/Toggle.vue'
+import CheckSvg from '@/assets/img/CheckSvg.vue'
 
 const testSoldOut = 'will be sold out'
 const test = [
@@ -53,6 +55,7 @@ export default {
     components: {
         Card,
         Toggle,
+        CheckSvg,
     },
     data() {
         const totalProduct = Array.from({ length: 16 }, (_, index) => ({
@@ -60,7 +63,12 @@ export default {
             name: `${test[index % test.length].name}${index + 1}`,
             salePrice: test[index % test.length].salePrice + index * 100,
         }));
+        const pinSearchMessage = {
+            noUse: 'you haven’t used your PIN yet',
+            none: 'The pin code doesn’t exist. <br/> Please check it again'
+        }
         return {
+            reCAPTCHA,
             logo,
             leftArrowIcon,
             boxIcon,
@@ -79,6 +87,11 @@ export default {
             isWrongModal: false,
             isExpiredModal: false,
             expiredDate: '',
+            isFindPin: false,
+            reCaptcha: false,
+            pinSearchMessage,
+            pinSearch: '',
+            isValidatedPin: null
         }
     },
     methods: {
@@ -107,6 +120,17 @@ export default {
         },
         handleModal(key) {
             this[key] = false
+        },
+        handleSearchPin() {
+            this.isFindPin = true
+        },
+        handlePinCode() {
+            if (this.reCaptcha) {
+                this.isValidatedPin = !this.pinSearchMessage[this.pinSearch];
+                if (this.isValidatedPin) {
+                    this.handleModal('isFindPin')
+                }
+            }
         }
     },
     computed: {
@@ -129,10 +153,12 @@ export default {
 
         const emailQuery = params.get("expired");
 
-        const today = new Date()
-        if (today - new Date(emailQuery) > 0) {
-            this.isExpiredModal = true
-            this.expiredDate = emailQuery
+        if (emailQuery) {
+            const today = new Date()
+            if (today - new Date(emailQuery) > 0) {
+                this.isExpiredModal = true
+                this.expiredDate = emailQuery
+            }
         }
     }
 }
@@ -147,7 +173,7 @@ export default {
                 />
             </a>
             <div></div>
-            <button>
+            <button @click="handleSearchPin">
                 <img
                   :src="boxIcon"
                   alt="box"
@@ -339,11 +365,94 @@ export default {
     </main>
     <Teleport
       to="body"
-      v-if="isWrongModal"
+      v-if="isFindPin"
     >
         <aside class="modal-wrapper">
             <div class="modal-content-wrapper">
                 <p class="modal-title">
+                    <strong>Cari kode PIN Anda</strong>
+                </p>
+                <div class="modal-content">
+                    <form
+                      class="search-wrapper"
+                      @submit.prevent="handlePinCode"
+                    >
+                        <label class="border-2 search-input">
+                            <input
+                              type="text"
+                              class="field"
+                              v-model="pinSearch"
+                              placeholder="Search for your treat"
+                              name="search"
+                              @update:model-value="(val) => {
+                                pinSearch = val
+                                isValidatedPin = null
+                            }"
+                            />
+                            <button type="submit">
+                                <img
+                                  :src="searchIcon"
+                                  alt="search"
+                                />
+                            </button>
+                        </label>
+                    </form>
+                </div>
+                <div
+                  v-if="isValidatedPin === null"
+                  class="recaptcha h-[46px] mt-[6px] mb-[10px]"
+                >
+                    <div
+                      class="checkbox"
+                      @click.prevent="() => {
+                        reCaptcha = !reCaptcha;
+                    }"
+                    >
+                        <input
+                          id="reCaptcha"
+                          type="checkbox"
+                          :value="reCaptcha"
+                          name="reCaptcha"
+                          hidden
+                        />
+                        <span :class="reCaptcha ? 'border-blue-100 bg-blue-100' : 'border-black-100 bg-white'">
+                            <CheckSvg :class="reCaptcha ? 'text-white' : 'hidden'" />
+                        </span>
+                        <label for="reCaptcha">
+                            I'm not a robot
+                        </label>
+                    </div>
+                    <img
+                      :src="reCAPTCHA"
+                      alt="reCAPTCHA"
+                    />
+                </div>
+                <div
+                  v-else
+                  class="-mt-2 text-center mb-[10px] text-red-600 text-sm leading-[18px]"
+                  v-html="pinSearchMessage[pinSearch]"
+                >
+                </div>
+                <div class="flex gap-2">
+                    <button
+                      @click="handlePinCode"
+                      class="w-1/2 modal-btn modal-positive-btn"
+                    >Done</button>
+                    <button
+                      @click="() => handleModal('isFindPin')"
+                      class="w-1/2 modal-btn modal-primary-btn"
+                    >Close</button>
+                </div>
+            </div>
+        </aside>
+    </Teleport>
+    <Teleport
+      to="body"
+      v-if="isWrongModal"
+    >
+        <aside class="modal-wrapper">
+            <div class="modal-content-wrapper">
+                <p class="modal-title error">
                     <img
                       :src="xIcon"
                       alt="x_icon"
@@ -370,7 +479,7 @@ export default {
     >
         <aside class="modal-wrapper">
             <div class="modal-content-wrapper">
-                <p class="modal-title">
+                <p class="modal-title error">
                     <strong>It’s expired</strong>
                 </p>
                 <div class="modal-content">
