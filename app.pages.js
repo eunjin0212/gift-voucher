@@ -9,6 +9,10 @@ const pages = {
         template: 'public/default.html',
         title: 'HR Project',
     },
+    voucherDetail: {
+        template: 'public/default.html',
+        title: 'HR Project',
+    },
     faqs: {
         template: 'public/default.html',
         title: 'HR Project',

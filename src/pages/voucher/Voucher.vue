@@ -8,49 +8,15 @@ import titleIcon from '@/assets/img/title.svg'
 import backIcon from '@/assets/img/back.svg'
 import xIcon from '@/assets/img/x_icon.svg'
 import Card from '@/assets/img/Card.vue'
-import testImg1 from '@/assets/img/test-img1.png'
-import testImg2 from '@/assets/img/test-img2.png'
+
 import speaker from '@/assets/img/speaker.png'
 import textLogo from '@/assets/img/text_logo.svg'
 import reCAPTCHA from '@/assets/img/reCAPTCHA_logo.svg'
 import Toggle from '@/assets/img/Toggle.vue'
 import CheckSvg from '@/assets/img/CheckSvg.vue'
+import { testSoldOut, totalProduct } from '@/mock/voucher'
 
-const testSoldOut = 'will be sold out'
-const test = [
-    {
-        name: 'pizza will be sold out',
-        img: testImg1,
-        detail: 'Double All-In Overload',
-        price: 525738,
-        salePrice: 1000,
-        soldOut: false
-    },
-    {
-        name: 'greenwich',
-        img: testImg2,
-        detail: 'Double All-In Overload',
-        price: 525738,
-        salePrice: 10000,
-        soldOut: false
-    },
-    {
-        name: 'pizza',
-        img: testImg1,
-        detail: 'Double All-In Overload',
-        price: 525738,
-        salePrice: 21000,
-        soldOut: true
-    },
-    {
-        name: 'greenwich',
-        img: testImg2,
-        detail: 'Double All-In Overload',
-        price: 525738,
-        salePrice: 20000,
-        soldOut: false
-    },
-]
+
 export default {
     components: {
         Card,
@@ -58,12 +24,6 @@ export default {
         CheckSvg,
     },
     data() {
-        const totalProduct = Array.from({ length: 16 }, (_, index) => ({
-            ...test[index % test.length],
-            id: index,
-            name: `${test[index % test.length].name}${index + 1}`,
-            salePrice: test[index % test.length].salePrice + index * 100,
-        }));
         const pinSearchMessage = {
             noUse: 'you haven’t used your PIN yet',
             none: 'The pin code doesn’t exist. <br/> Please check it again'
@@ -117,7 +77,9 @@ export default {
             if (item.name.includes(testSoldOut)) {
                 this.isWrongModal = true
                 item.soldOut = true
+                return
             }
+            location.href = `/voucherDetail?id=${item.id}&type=${item.type}`
         },
         handleModal(key) {
             this[key] = false
@@ -198,7 +160,7 @@ export default {
                   type="text"
                   class="field"
                   v-model="search"
-                  placeholder="Search for your treat"
+                  placeholder="Brand name"
                   name="search"
                 />
                 <button type="submit">
