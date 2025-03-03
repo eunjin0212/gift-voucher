@@ -120,6 +120,7 @@ export default {
         },
         handleModal(key) {
             this[key] = false
+            window.location.href = '/voucher'
         },
         handleSearchPin() {
             this.isFindPin = true
