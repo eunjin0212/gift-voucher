@@ -264,7 +264,7 @@ export default {
                         </li>
                         <li class="item-price">
                             <strong>Rp {{ item.salePrice.toLocaleString() }}</strong>
-                            <span>Rp {{ item.price.toLocaleString() }}</span>
+                            <s>Rp {{ item.price.toLocaleString() }}</s>
                         </li>
                         <li>
                             <button

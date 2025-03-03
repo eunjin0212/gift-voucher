@@ -1,5 +1,4 @@
 <script>
-import accordionIcon from '@/assets/img/accordion.svg'
 import textLogo from '@/assets/img/text_logo.svg'
 import backIcon from '@/assets/img/back.svg'
 
@@ -7,7 +6,6 @@ export default {
     data() {
         return {
             textLogo,
-            accordionIcon,
             backIcon,
             tab: 'terms' // terms, policy
         }

@@ -21,15 +21,15 @@
     }
 
     .header {
-        @apply flex flex-col sticky top-0
+        @apply flex flex-col sticky top-0 bg-white z-10
     }
     
     .header .header-bar {
-        @apply py-2 px-5 justify-between flex bg-white
+        @apply py-2 px-5 justify-between flex
     }
 
     .header .search-wrapper {
-        @apply py-3 px-5 bg-white flex gap-[10px]
+        @apply py-3 px-5 flex gap-[10px]
     }
 
     .search-input {
@@ -98,7 +98,7 @@
     }
 
     .item>.item-price>span {
-        @apply line-through text-gray-900 text-[10px] leading-4
+        @apply text-gray-900 text-[10px] leading-4
     }
 
     .item>li>.item-payment {
