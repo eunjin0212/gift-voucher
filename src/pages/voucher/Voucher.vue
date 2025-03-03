@@ -60,6 +60,7 @@ export default {
     data() {
         const totalProduct = Array.from({ length: 16 }, (_, index) => ({
             ...test[index % test.length],
+            id: index,
             name: `${test[index % test.length].name}${index + 1}`,
             salePrice: test[index % test.length].salePrice + index * 100,
         }));
