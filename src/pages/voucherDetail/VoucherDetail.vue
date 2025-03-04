@@ -373,7 +373,7 @@
                     <p class="mt-[6px] mb-5 text-[14px]">Halaman ini akan kedaluwarsa dalam 3 menit,<br>
                         dan Anda tidak akan bisa mendapatkan item ini</p>
                     <ol
-                      class="pl-3 mb-5 text-left list-decimal list-inside w-fit text-[#056F9B] font-semibold text-[14px] leading-[22px]"
+                      class="mx-auto pl-3 mb-5 text-left list-decimal list-inside w-fit text-[#056F9B] font-semibold text-[14px] leading-[22px]"
                     >
                         <li>Buka akun bank Anda</li>
                         <li>Klik tombol fitur QRIS</li>
