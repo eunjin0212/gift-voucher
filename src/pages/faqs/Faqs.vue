@@ -1,22 +1,17 @@
-<script>
+<script setup>
 import accordionIcon from '@/assets/img/accordion.svg'
 import textLogo from '@/assets/img/text_logo.svg'
 import backIcon from '@/assets/img/back.svg'
+import { ref } from 'vue'
 
-export default {
-    data() {
-        const contentClass = 'mt-5'
-        return {
-            textLogo,
-            accordionIcon,
-            backIcon,
-            faqs: [
-                {
-                    title: 'What is SHARE TREATS?',
-                    active: true,
-                    content: [
-                        'SHARE TREATS is a gifting service that allows sending casual treats through mobile payments.',
-                        `<ul class="${contentClass}">
+const contentClass = 'mt-5'
+const faqs = ref([
+    {
+        title: 'What is SHARE TREATS?',
+        active: true,
+        content: [
+            'SHARE TREATS is a gifting service that allows sending casual treats through mobile payments.',
+            `<ul class="${contentClass}">
                             <li>Payment Options Available:</li>
                             <li>-Load/postpaid credits</li>
                             <li>-GCash</li>
@@ -25,78 +20,64 @@ export default {
                             <li>-BPI</li>
                             <li>-Credit/Debit</li>
                         </ul>`
-                    ]
-                },
-                {
-                    title: 'How do I use SHARE TREATS?',
-                    active: false,
-                    content: [
-                        'SHARE TREATS is a gifting service that allows sending casual treats through mobile payments.',
-                        `<ul class="${contentClass}">
-                            <li>Payment Options Available:</li>
-                            <li>-Load/postpaid credits</li>
-                            <li>-GCash</li>
-                            <li>-GrabPay</li>
-                            <li>-PayMaya</li>
-                            <li>-BPI</li>
-                            <li>-Credit/Debit</li>
-                        </ul>`
-                    ]
-                },
-                {
-                    title: 'Who can avail SHARE TREATS?',
-                    active: false,
-                    content: [
-                        'SHARE TREATS is a gifting service that allows sending casual treats through mobile payments.',
-                        `<ul class="${contentClass}">
-                            <li>Payment Options Available:</li>
-                            <li>-Load/postpaid credits</li>
-                            <li>-GCash</li>
-                            <li>-GrabPay</li>
-                            <li>-PayMaya</li>
-                            <li>-BPI</li>
-                            <li>-Credit/Debit</li>
-                        </ul>`
-                    ]
-                },
-                {
-                    title: 'How can I anail SHARE TREATS for myself?',
-                    active: false,
-                    content: [
-                        'SHARE TREATS is a gifting service that allows sending casual treats through mobile payments.',
-                        `<ul class="${contentClass}">
-                            <li>Payment Options Available:</li>
-                            <li>-Load/postpaid credits</li>
-                            <li>-GCash</li>
-                            <li>-GrabPay</li>
-                            <li>-PayMaya</li>
-                            <li>-BPI</li>
-                            <li>-Credit/Debit</li>
-                        </ul>`
-                    ]
-                },
-            ],
-        }
+        ]
     },
-    methods: {
-        handleBack() {
-            window.history.back();
-        },
-        handleToggle(content) {
-            const activeItemIndex = this.faqs.findIndex((data) => data.title === content.title)
-            // 단일 아코디언
-            this.faqs.forEach((faq, idx) => {
-                if (idx !== activeItemIndex) {
-                    faq.active = false
-                }
-            })
+    {
+        title: 'How do I use SHARE TREATS?',
+        active: false,
+        content: [
+            'SHARE TREATS is a gifting service that allows sending casual treats through mobile payments.',
+            `<ul class="${contentClass}">
+                            <li>Payment Options Available:</li>
+                            <li>-Load/postpaid credits</li>
+                            <li>-GCash</li>
+                            <li>-GrabPay</li>
+                            <li>-PayMaya</li>
+                            <li>-BPI</li>
+                            <li>-Credit/Debit</li>
+                        </ul>`
+        ]
+    },
+    {
+        title: 'Who can avail SHARE TREATS?',
+        active: false,
+        content: [
+            'SHARE TREATS is a gifting service that allows sending casual treats through mobile payments.',
+            `<ul class="${contentClass}">
+                            <li>Payment Options Available:</li>
+                            <li>-Load/postpaid credits</li>
+                            <li>-GCash</li>
+                            <li>-GrabPay</li>
+                            <li>-PayMaya</li>
+                            <li>-BPI</li>
+                            <li>-Credit/Debit</li>
+                        </ul>`
+        ]
+    },
+    {
+        title: 'How can I anail SHARE TREATS for myself?',
+        active: false,
+        content: [
+            'SHARE TREATS is a gifting service that allows sending casual treats through mobile payments.',
+            `<ul class="${contentClass}">
+                            <li>Payment Options Available:</li>
+                            <li>-Load/postpaid credits</li>
+                            <li>-GCash</li>
+                            <li>-GrabPay</li>
+                            <li>-PayMaya</li>
+                            <li>-BPI</li>
+                            <li>-Credit/Debit</li>
+                        </ul>`
+        ]
+    },
+])
 
-            this.faqs[activeItemIndex].active = !this.faqs[activeItemIndex].active
-
-            // 다중 아코디언
-            // this.faqs[activeItemIndex].active = !this.faqs[activeItemIndex].active
-        },
-    }
+function handleBack() {
+    window.history.back();
+}
+function handleToggle(content) {
+    const activeItemIndex = faqs.value.findIndex((data) => data.title === content.title)
+    faqs.value[activeItemIndex].active = !faqs.value[activeItemIndex].active
 }
 </script>
 <template>
@@ -115,7 +96,7 @@ export default {
             <div></div>
         </div>
     </header>
-    <main class="min-width h-[calc(100vh-56px-106px)]">
+    <main class="min-width h-auto min-h-[calc(100vh-56px-106px)]">
         <h2 class="font-semibold leading-6 text-main py-[10px] mx-5 border-b border-b-gray-700">About SHARE TREATS</h2>
         <div
           v-for="faq in faqs"
@@ -140,7 +121,7 @@ export default {
             </div>
         </div>
     </main>
-    <footer class="bg-white h-[105px] footer sticky bottom-0">
+    <footer class="bg-white h-[105px] footer">
         <div class="footer__logo-wrapper">
             <img
               :src="textLogo"
