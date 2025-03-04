@@ -11,6 +11,10 @@
     font-style: normal;
 }
 
+html {
+    font-family: 'roboto';
+}
+
 /* products */
 @layer components {
     .min-width {
@@ -180,19 +184,29 @@
 
 /* recaptcha */
 @layer components {
-    div.recaptcha {
+    .recaptcha {
         @apply h-14 w-full rounded-lg border border-[#E0E0E0] flex justify-between items-center px-[30px]
     }
 
-    div.recaptcha>div>span {
+    .recaptcha>div>span {
         @apply mr-2 border rounded-sm block !w-4 !h-4
     }
 
-    div.recaptcha>div>label {
+    .recaptcha>div>label {
         @apply !text-xs !leading-4 text-gray-950
     }
 
-    div.recaptcha img {
+    .recaptcha img {
         @apply h-8
+    }
+}
+
+/* detail input */
+@layer components {
+    .detail-input {
+        @apply border border-gray-700 rounded-md px-3 py-[14px] inline-flex w-full
+    }
+    .detail-input > input {
+        @apply placeholder:text-[#BDBDBD] h-[18px] text-black-300 text-[15px] leading-[18px] -tracking-wide
     }
 }

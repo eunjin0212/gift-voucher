@@ -62,7 +62,7 @@ module.exports = {
                 'xs': '360px', // min mobile
                 'md': '1024px', // tablet
                 'half-vw': '50vw',
-            }
+            },
         },
     },
     plugins: [
