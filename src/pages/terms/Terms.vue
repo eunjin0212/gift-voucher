@@ -1,20 +1,11 @@
-<script>
+<script setup>
+import { ref } from 'vue';
 import textLogo from '@/assets/img/text_logo.svg'
 import backIcon from '@/assets/img/back.svg'
 
-export default {
-    data() {
-        return {
-            textLogo,
-            backIcon,
-            tab: 'terms' // terms, policy
-        }
-    },
-    methods: {
-        handleBack() {
-            window.history.back();
-        },
-    }
+const tab = ref('terms') // terms, policy
+function handleBack() {
+    window.history.back();
 }
 </script>
 <template>
