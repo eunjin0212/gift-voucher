@@ -1,57 +1,3 @@
-<script>
-import backIcon from '@/assets/img/back.svg'
-import eVoucher from '@/assets/img/e_voucher.png'
-import { totalProduct } from '@/mock/voucher';
-import accordionIcon from '@/assets/img/accordion.svg'
-
-export default {
-    data() {
-        return {
-            backIcon,
-            accordionIcon,
-            eVoucher,
-            detailData: {
-                name: '',
-                img: '',
-                type: 'wallet',
-                detail: '',
-                price: 0,
-                salePrice: 0,
-                soldOut: false,
-            },
-            accordion: {
-                'description': false,
-                'participating': false,
-            },
-        }
-    },
-    methods: {
-        handleBack() {
-            window.history.back();
-        },
-        handleToggle(content) {
-            // 단일 아코디언
-            Object.keys(this.accordion).forEach((key) => {
-                if (content !== key) {
-                    this.accordion[key] = false
-                }
-            })
-
-            this.accordion[content] = !this.accordion[content]
-
-            // 다중 아코디언
-            // this.accordion[content] = !this.accordion[content]
-        },
-    },
-    beforeMount() {
-        const params = new URLSearchParams(window.location.search);
-        const id = params.get("id");
-        if (id) {
-            this.detailData = totalProduct.find((prod) => prod.id === +id)
-        }
-    }
-}
-</script>
 <template>
     <header class="border-b header min-width border-b-gray-700">
         <div class="!py-4 !px-[10px] header-bar">
@@ -69,17 +15,18 @@ export default {
         </div>
     </header>
     <main class="min-width">
-        <div class="max-w-[360px] mx-auto px-5 border rounded-[4px] border-gray-700 mb-2">
+        <div class="max-w-[360px] mt-4 mx-5 border rounded-[4px] border-gray-700 mb-2">
             <div class="py-[10px] px-[37px]">
                 <img
                   :src="detailData.img"
                   :alt="detailData.name"
-                  class="w-[246px] h-[244px]"
+                  class="w-[246px] h-[244px] object-contain"
                 />
             </div>
-            <div class="flex flex-col pt-3 pb-6 border-t border-t-gray-700">
-                <strong class="mb-[2px] text-black-300 text-base leading-5 -tracking-wider">{{ detailData.name
-                }}</strong>
+            <div class="flex flex-col px-5 pt-3 pb-6 border-t border-t-gray-700">
+                <strong class="mb-[2px] text-black-300 text-base leading-5 -tracking-wider">
+                    {{ detailData.name }}
+                </strong>
                 <p class="mb-4 text-black-300 text-sm leading-[18px] -tracking-wider">{{ detailData.detail }}</p>
                 <strong class="text-lg leading-6 text-main">Rp {{ detailData.salePrice.toLocaleString() }}</strong>
                 <s class="text-sm text-gray-900">Rp {{ detailData.price.toLocaleString() }}</s>
@@ -218,3 +165,50 @@ export default {
         </ul>
     </main>
 </template>
+
+<script setup>
+import { onBeforeMount, ref } from 'vue';
+import backIcon from '@/assets/img/back.svg'
+import eVoucher from '@/assets/img/e_voucher.png'
+import { totalProduct } from '@/mock/voucher';
+import accordionIcon from '@/assets/img/accordion.svg'
+
+const detailData = ref({
+    name: '',
+    img: '',
+    type: 'wallet',
+    detail: '',
+    price: 0,
+    salePrice: 0,
+    soldOut: false,
+});
+const accordion = ref({
+    'description': false,
+    'participating': false,
+})
+
+function handleBack() {
+    window.history.back();
+}
+function handleToggle(content) {
+    // 단일 아코디언
+    // Object.keys(this.accordion).forEach((key) => {
+    //     if (content !== key) {
+    //         this.accordion[key] = false
+    //     }
+    // })
+
+    // this.accordion[content] = !this.accordion[content]
+
+    // 다중 아코디언
+    this.accordion[content] = !this.accordion[content]
+}
+
+onBeforeMount(() => {
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+    if (id) {
+        detailData.value = totalProduct.find((prod) => prod.id === +id)
+    }
+})
+</script>
