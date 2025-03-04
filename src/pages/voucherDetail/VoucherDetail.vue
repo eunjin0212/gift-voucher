@@ -534,7 +534,7 @@ const showAlert = () => {
         downloaded.value = false;
     }, 900);
 };
-const successModal = ref(true)
+const successModal = ref(false)
 
 function handleDownload() {
     const imagePath = '/img/qr_code.png';
