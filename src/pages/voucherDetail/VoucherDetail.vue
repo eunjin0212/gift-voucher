@@ -169,7 +169,6 @@
 <script setup>
 import { onBeforeMount, ref } from 'vue';
 import backIcon from '@/assets/img/back.svg'
-import eVoucher from '@/assets/img/e_voucher.png'
 import { totalProduct } from '@/mock/voucher';
 import accordionIcon from '@/assets/img/accordion.svg'
 
