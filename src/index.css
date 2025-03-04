@@ -21,7 +21,7 @@
     }
 
     .header {
-        @apply flex flex-col sticky top-0 bg-white z-10
+        @apply flex flex-col sticky top-0 bg-white z-[1]
     }
     
     .header .header-bar {
@@ -97,7 +97,7 @@
         @apply text-sm leading-[18px] text-main
     }
 
-    .item>.item-price>span {
+    .item>.item-price>s {
         @apply text-gray-900 text-[10px] leading-4
     }
 
@@ -128,7 +128,7 @@
 /* modal */
 @layer components {
     .modal-wrapper {
-        @apply bg-[#00000080] w-full h-full fixed top-0 left-0 overflow-hidden flex items-center justify-center
+        @apply bg-[#00000080] w-full h-full fixed top-0 left-0 overflow-hidden flex items-center justify-center z-10
     }
     .modal-wrapper .modal-content-wrapper {
         @apply bg-white rounded-lg min-w-80 w-full max-w-[40%] py-5 px-3 gap-5 flex flex-col

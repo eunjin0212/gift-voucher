@@ -1,6 +1,6 @@
-<script>
+<script setup>
+import { computed, onMounted, ref } from 'vue'
 import logo from '@/assets/img/logo.svg'
-import leftArrowIcon from '@/assets/img/header_left_arrow.svg'
 import boxIcon from '@/assets/img/box.svg'
 import searchIcon from '@/assets/img/search.svg'
 import helpIcon from '@/assets/img/help.svg'
@@ -16,116 +16,100 @@ import Toggle from '@/assets/img/Toggle.vue'
 import CheckSvg from '@/assets/img/CheckSvg.vue'
 import { testSoldOut, totalProduct } from '@/mock/voucher'
 
+const pinSearchMessage = {
+    noUse: 'you haven’t used your PIN yet',
+    none: 'The pin code doesn’t exist. <br/> Please check it again'
+}
 
-export default {
-    components: {
-        Card,
-        Toggle,
-        CheckSvg,
-    },
-    data() {
-        const pinSearchMessage = {
-            noUse: 'you haven’t used your PIN yet',
-            none: 'The pin code doesn’t exist. <br/> Please check it again'
-        }
-        return {
-            reCAPTCHA,
-            logo,
-            leftArrowIcon,
-            boxIcon,
-            xIcon,
-            searchIcon,
-            helpIcon,
-            titleIcon,
-            backIcon,
-            textLogo,
-            speaker,
-            userEmail: 'hayden@sharetreats.com',
-            totalProduct,
-            originalProducts: JSON.parse(JSON.stringify([...totalProduct])),
-            search: '',
-            sort: null, // desc, asc
-            isWrongModal: false,
-            isExpiredModal: false,
-            expiredDate: '',
-            isFindPin: false,
-            reCaptcha: false,
-            pinSearchMessage,
-            pinSearch: '',
-            isValidatedPin: null
-        }
-    },
-    methods: {
-        handleBack() {
-            window.history.back();
-            window.location.search = ''
-        },
-        handleSort() {
-            this.sort = this.sort === null ? 'asc' : this.sort === 'asc' ? 'desc' : null
-            if (this.sort === null) {
-                this.totalProduct = [...this.totalProduct].sort((a, b) =>
-                    a.name.toLowerCase().localeCompare(b.name.toLowerCase())
-                );
-                console.log(this.totalProduct)
-            } else if (this.sort === 'asc') {
-                this.totalProduct.sort((a, b) => a.salePrice - b.salePrice);
-            } else {
-                this.totalProduct.sort((a, b) => b.salePrice - a.salePrice);
-            }
-        },
-        handlePayment(item) {
-            if (item.name.includes(testSoldOut)) {
-                this.isWrongModal = true
-                item.soldOut = true
-                return
-            }
-            location.href = `/voucherDetail?id=${item.id}&type=${item.type}`
-        },
-        handleModal(key) {
-            this[key] = false
-            window.location.href = '/voucher'
-        },
-        handleSearchPin() {
-            this.isFindPin = true
-        },
-        handlePinCode() {
-            if (this.reCaptcha) {
-                this.isValidatedPin = !this.pinSearchMessage[this.pinSearch];
-                if (this.isValidatedPin) {
-                    this.handleModal('isFindPin')
-                }
-            }
-        }
-    },
-    computed: {
-        isSearch() {
-            const params = new URLSearchParams(window.location.search);
-            const searchQuery = params.get("search");
-            return !!searchQuery
-        }
-    },
-    mounted() {
-        const params = new URLSearchParams(window.location.search);
-        const searchQuery = params.get("search");
+const products = ref(totalProduct)
+const originalProducts = JSON.parse(JSON.stringify([...totalProduct]))
+function handleBack() {
+    window.history.back();
+    window.location.search = ''
+}
 
-        if (searchQuery) {
-            this.search = searchQuery;
-            this.totalProduct = this.originalProducts.filter((prod) =>
-                prod.name.includes(searchQuery)
-            );
-        }
+const sort = ref(null) // desc, as
+function handleSort() {
+    sort.value = sort.value === null ? 'asc' : sort.value === 'asc' ? 'desc' : null
+    if (sort.value === null) {
+        products.value = [...products.value].sort((a, b) =>
+            a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+        );
+        console.log(products.value)
+    } else if (sort.value === 'asc') {
+        products.value.sort((a, b) => a.salePrice - b.salePrice);
+    } else {
+        products.value.sort((a, b) => b.salePrice - a.salePrice);
+    }
+}
 
-        const emailQuery = params.get("expired");
+const isWrongModal = ref(false)
+function handlePayment(item) {
+    if (item.name.includes(testSoldOut)) {
+        isWrongModal.value = true
+        item.soldOut = true
+        return
+    }
+    location.href = `/voucherDetail?id=${item.id}&type=${item.type}`
+}
 
-        if (emailQuery) {
-            const today = new Date()
-            if (today - new Date(emailQuery) > 0) {
-                this.isExpiredModal = true
-                this.expiredDate = emailQuery
-            }
+function handleModal(key) {
+    [key].value = false
+    window.location.href = '/voucher'
+}
+
+const isFindPin = ref(false)
+function handleSearchPin() {
+    isFindPin.value = true
+}
+
+const pinSearch = ref({
+    text: '',
+    reCaptcha: false,
+    validate: null
+})
+function handlePinCode() {
+    if (pinSearch.value.reCaptcha) {
+        pinSearch.value.validate.value = !pinSearchMessage[pinSearch.value.text];
+        if (pinSearch.value.validate) {
+            this.handleModal('isFindPin')
         }
     }
 }
+
+const isSearch = computed(() => {
+    const params = new URLSearchParams(window.location.search);
+    const searchQuery = params.get("search");
+    return !!searchQuery
+})
+
+const isExpiredModal = ref(false)
+const expiredDate = ref('')
+const search = ref('')
+const result = ref('')
+onMounted(() => {
+    const params = new URLSearchParams(window.location.search);
+    const searchQuery = params.get("search");
+
+    if (searchQuery) {
+        search.value = searchQuery;
+        result.value = searchQuery
+        products.value = originalProducts.filter((prod) =>
+            prod.name.includes(searchQuery)
+        );
+    }
+
+    const emailQuery = params.get("expired");
+
+    if (emailQuery) {
+        const today = new Date()
+        if (today - new Date(emailQuery) > 0) {
+            isExpiredModal.value = true
+            expiredDate.value = emailQuery
+        }
+    }
+
+})
 </script>
 <template>
     <header class="header min-width">
@@ -204,7 +188,7 @@ export default {
                   v-if="isSearch"
                   class="text-lg font-bold leading-5 text-black-400"
                 >
-                    Search result<b class="ml-2 text-main">“{{ search }}”</b>
+                    Search result<b class="ml-2 text-main">“{{ result }}”</b>
                 </span>
                 <span
                   v-else
@@ -219,7 +203,7 @@ export default {
             </h1>
             <div
               class="py-3 pr-5 text-right"
-              v-if="isSearch && totalProduct.length"
+              v-if="isSearch && products.length"
             >
                 <button
                   @click="handleSort"
@@ -240,7 +224,7 @@ export default {
                 </button>
             </div>
             <strong
-              v-if="!totalProduct.length"
+              v-if="!products.length"
               class="h-[calc(100vh-184px-105px)] flex pt-28 justify-center text-black-500 -tracking-wide text-sm leading-[18px]"
             >No matching search results</strong>
             <div
@@ -248,7 +232,7 @@ export default {
               class="products-wrapper"
             >
                 <template
-                  v-for="(item, idx) in totalProduct"
+                  v-for="(item, idx) in products"
                   :key="`${item.name}-${idx}`"
                 >
                     <ul class="item">
@@ -345,12 +329,12 @@ export default {
                             <input
                               type="text"
                               class="field"
-                              v-model="pinSearch"
+                              v-model="pinSearch.text"
                               placeholder="Search for your treat"
                               name="search"
                               @update:model-value="(val) => {
-                                pinSearch = val
-                                isValidatedPin = null
+                                pinSearch.text = val
+                                pinSearch.validate = null
                             }"
                             />
                             <button type="submit">
@@ -363,24 +347,25 @@ export default {
                     </form>
                 </div>
                 <div
-                  v-if="isValidatedPin === null"
+                  v-if="pinSearch.validate === null"
                   class="recaptcha h-[46px] mt-[6px] mb-[10px]"
                 >
                     <div
                       class="checkbox"
                       @click.prevent="() => {
-                        reCaptcha = !reCaptcha;
+                        pinSearch.reCaptcha = !pinSearch.reCaptcha;
                     }"
                     >
                         <input
                           id="reCaptcha"
                           type="checkbox"
-                          :value="reCaptcha"
+                          :value="pinSearch.reCaptcha"
                           name="reCaptcha"
                           hidden
                         />
-                        <span :class="reCaptcha ? 'border-blue-100 bg-blue-100' : 'border-black-100 bg-white'">
-                            <CheckSvg :class="reCaptcha ? 'text-white' : 'hidden'" />
+                        <span
+                          :class="pinSearch.reCaptcha ? 'border-blue-100 bg-blue-100' : 'border-black-100 bg-white'">
+                            <CheckSvg :class="pinSearch.reCaptcha ? 'text-white' : 'hidden'" />
                         </span>
                         <label for="reCaptcha">
                             I'm not a robot
@@ -394,7 +379,7 @@ export default {
                 <div
                   v-else
                   class="-mt-2 text-center mb-[10px] text-red-600 text-sm leading-[18px]"
-                  v-html="pinSearchMessage[pinSearch]"
+                  v-html="pinSearchMessage[pinSearch.text]"
                 >
                 </div>
                 <div class="flex gap-2">
