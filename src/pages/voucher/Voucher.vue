@@ -1,116 +1,3 @@
-<script setup>
-import { computed, onMounted, ref } from 'vue'
-import logo from '@/assets/img/logo.svg'
-import boxIcon from '@/assets/img/box.svg'
-import searchIcon from '@/assets/img/search.svg'
-import helpIcon from '@/assets/img/help.svg'
-import titleIcon from '@/assets/img/title.svg'
-import backIcon from '@/assets/img/back.svg'
-import xIcon from '@/assets/img/x_icon.svg'
-import Card from '@/assets/img/Card.vue'
-
-import speaker from '@/assets/img/speaker.png'
-import textLogo from '@/assets/img/text_logo.svg'
-import reCAPTCHA from '@/assets/img/reCAPTCHA_logo.svg'
-import Toggle from '@/assets/img/Toggle.vue'
-import CheckSvg from '@/assets/img/CheckSvg.vue'
-import { testSoldOut, totalProduct } from '@/mock/voucher'
-
-const pinSearchMessage = {
-    noUse: 'you haven’t used your PIN yet',
-    none: 'The pin code doesn’t exist. <br/> Please check it again'
-}
-
-const products = ref(totalProduct)
-const originalProducts = JSON.parse(JSON.stringify([...totalProduct]))
-function handleBack() {
-    window.history.back();
-    window.location.search = ''
-}
-
-const sort = ref(null) // desc, as
-function handleSort() {
-    sort.value = sort.value === null ? 'asc' : sort.value === 'asc' ? 'desc' : null
-    if (sort.value === null) {
-        products.value = [...products.value].sort((a, b) =>
-            a.name.toLowerCase().localeCompare(b.name.toLowerCase())
-        );
-        console.log(products.value)
-    } else if (sort.value === 'asc') {
-        products.value.sort((a, b) => a.salePrice - b.salePrice);
-    } else {
-        products.value.sort((a, b) => b.salePrice - a.salePrice);
-    }
-}
-
-const isWrongModal = ref(false)
-function handlePayment(item) {
-    if (item.name.includes(testSoldOut)) {
-        isWrongModal.value = true
-        item.soldOut = true
-        return
-    }
-    location.href = `/voucherDetail?id=${item.id}&type=${item.type}`
-}
-
-function handleModal(key) {
-    [key].value = false
-    window.location.href = '/voucher'
-}
-
-const isFindPin = ref(false)
-function handleSearchPin() {
-    isFindPin.value = true
-}
-
-const pinSearch = ref({
-    text: '',
-    reCaptcha: false,
-    validate: null
-})
-function handlePinCode() {
-    if (pinSearch.value.reCaptcha) {
-        pinSearch.value.validate.value = !pinSearchMessage[pinSearch.value.text];
-        if (pinSearch.value.validate) {
-            this.handleModal('isFindPin')
-        }
-    }
-}
-
-const isSearch = computed(() => {
-    const params = new URLSearchParams(window.location.search);
-    const searchQuery = params.get("search");
-    return !!searchQuery
-})
-
-const isExpiredModal = ref(false)
-const expiredDate = ref('')
-const search = ref('')
-const result = ref('')
-onMounted(() => {
-    const params = new URLSearchParams(window.location.search);
-    const searchQuery = params.get("search");
-
-    if (searchQuery) {
-        search.value = searchQuery;
-        result.value = searchQuery
-        products.value = originalProducts.filter((prod) =>
-            prod.name.includes(searchQuery)
-        );
-    }
-
-    const emailQuery = params.get("expired");
-
-    if (emailQuery) {
-        const today = new Date()
-        if (today - new Date(emailQuery) > 0) {
-            isExpiredModal.value = true
-            expiredDate.value = emailQuery
-        }
-    }
-
-})
-</script>
 <template>
     <header class="header min-width">
         <div class="header-bar">
@@ -442,3 +329,117 @@ onMounted(() => {
         </aside>
     </Teleport>
 </template>
+
+<script setup>
+import { computed, onMounted, ref } from 'vue'
+import logo from '@/assets/img/logo.svg'
+import boxIcon from '@/assets/img/box.svg'
+import searchIcon from '@/assets/img/search.svg'
+import helpIcon from '@/assets/img/help.svg'
+import titleIcon from '@/assets/img/title.svg'
+import backIcon from '@/assets/img/back.svg'
+import xIcon from '@/assets/img/x_icon.svg'
+import Card from '@/assets/img/Card.vue'
+
+import speaker from '@/assets/img/speaker.png'
+import textLogo from '@/assets/img/text_logo.svg'
+import reCAPTCHA from '@/assets/img/reCAPTCHA_logo.svg'
+import Toggle from '@/assets/img/Toggle.vue'
+import CheckSvg from '@/assets/img/CheckSvg.vue'
+import { testSoldOut, totalProduct } from '@/mock/voucher'
+
+const pinSearchMessage = {
+    noUse: 'you haven’t used your PIN yet',
+    none: 'The pin code doesn’t exist. <br/> Please check it again'
+}
+
+const products = ref(totalProduct)
+const originalProducts = JSON.parse(JSON.stringify([...totalProduct]))
+function handleBack() {
+    window.history.back();
+    window.location.search = ''
+}
+
+const sort = ref(null) // desc, as
+function handleSort() {
+    sort.value = sort.value === null ? 'asc' : sort.value === 'asc' ? 'desc' : null
+    if (sort.value === null) {
+        products.value = [...products.value].sort((a, b) =>
+            a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+        );
+        console.log(products.value)
+    } else if (sort.value === 'asc') {
+        products.value.sort((a, b) => a.salePrice - b.salePrice);
+    } else {
+        products.value.sort((a, b) => b.salePrice - a.salePrice);
+    }
+}
+
+const isWrongModal = ref(false)
+function handlePayment(item) {
+    if (item.name.includes(testSoldOut)) {
+        isWrongModal.value = true
+        item.soldOut = true
+        return
+    }
+    location.href = `/voucherDetail?id=${item.id}&type=${item.type}`
+}
+
+function handleModal(key) {
+    [key].value = false
+    window.location.href = '/voucher'
+}
+
+const isFindPin = ref(false)
+function handleSearchPin() {
+    isFindPin.value = true
+}
+
+const pinSearch = ref({
+    text: '',
+    reCaptcha: false,
+    validate: null
+})
+function handlePinCode() {
+    if (pinSearch.value.reCaptcha) {
+        pinSearch.value.validate.value = !pinSearchMessage[pinSearch.value.text];
+        if (pinSearch.value.validate) {
+            this.handleModal('isFindPin')
+        }
+    }
+}
+
+const isSearch = computed(() => {
+    const params = new URLSearchParams(window.location.search);
+    const searchQuery = params.get("search");
+    return !!searchQuery
+})
+
+const isExpiredModal = ref(false)
+const expiredDate = ref('')
+const search = ref('')
+const result = ref('')
+onMounted(() => {
+    const params = new URLSearchParams(window.location.search);
+    const searchQuery = params.get("search");
+
+    if (searchQuery) {
+        search.value = searchQuery;
+        result.value = searchQuery
+        products.value = originalProducts.filter((prod) =>
+            prod.name.includes(searchQuery)
+        );
+    }
+
+    const emailQuery = params.get("expired");
+
+    if (emailQuery) {
+        const today = new Date()
+        if (today - new Date(emailQuery) > 0) {
+            isExpiredModal.value = true
+            expiredDate.value = emailQuery
+        }
+    }
+
+})
+</script>
