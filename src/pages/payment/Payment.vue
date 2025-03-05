@@ -172,10 +172,10 @@
     </main>
     <footer class="p-5 shadow-[0px_-2px_20px_0px_#0000001F] sticky bottom-0 bg-white">
         <button
-          @click="handleSubmit"
+          @click="() => handleSubmit(buttonStatus)"
           class="w-full p-5 text-lg font-semibold leading-5 text-center text-white rounded-md bg-main active:shadow-[2px_7px_8px_2px_#29ABE240]"
         >
-            {{ buttonLabel }}
+            {{ buttonLabel[buttonStatus] }}
         </button>
     </footer>
 </template>
@@ -262,15 +262,12 @@ onBeforeMount(() => {
     getDetailData(id)
 })
 
-function handleSubmit() {
-    if (step.value === 3) {
-        step.value = 1
-    } else if (step.value < 3) {
-        step.value += 1
-    }
+const buttonLabel = {
+    'main': 'Ke Halaman Utama',
+    'back': 'Kembail ke halaman sebelumnya',
+    'next': 'Treat',
 }
-
-const buttonLabel = computed(() => {
+const buttonStatus = computed(() => {
     // 추가 결제 없는 wallet 실패 label: Kembail ke halaman sebelumnya 이전 페이지
     // 추가 결제 없는 voucher 실패 label: Kembail ke halaman sebelumnya 이전 페이지
     // voucher 성공 label: Ke Halaman Utama 메인 이동
@@ -278,18 +275,32 @@ const buttonLabel = computed(() => {
     // wallet 성공 step === 3 label: Ke Halaman Utama 메인 이동
 
     if (failedPayment) {
-        return "Kembail ke halaman sebelumnya";
+        return 'back';
     }
     // 성공한 경우
     if (detailData.value.type === "voucher") {
-        return "Ke Halaman Utama"; // voucher 성공 시 메인 이동
+        return 'main'; // voucher 성공 시 메인 이동
     } else {
         if (step.value < 3) {
-            return "Treat"; // wallet 성공, step < 3이면 다음 스텝
+            return 'next'; // wallet 성공, step < 3이면 다음 스텝
         }
     }
-    return "Ke Halaman Utama"; // wallet 성공, step === 3이면 메인 이동
+    return 'main'; // wallet 성공, step === 3이면 메인 이동
 })
+
+function handleSubmit(status) {
+    if (status === 'next') {
+        if (step.value === 3) {
+            step.value = 1
+        } else if (step.value < 3) {
+            step.value += 1
+        }
+    } else if (status === 'main') {
+        window.location.href = '/voucher'
+    } else {
+        window.location.href = '/voucherDetail'
+    }
+}
 </script>
 
 <style lang="scss" scoped></style>
