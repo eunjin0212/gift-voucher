@@ -31,9 +31,9 @@ const test = [
         soldOut: true
     },
     {
-        name: 'greenwich voucher',
+        name: 'greenwich wallet',
         img: testImg2,
-        type: 'voucher',
+        type: 'wallet',
         detail: 'Double All-In Overload',
         price: 525738,
         salePrice: 20000,
@@ -47,3 +47,13 @@ export const totalProduct = Array.from({ length: 16 }, (_, index) => ({
     name: `${test[index % test.length].name}${index + 1}`,
     salePrice: test[index % test.length].salePrice + index * 100,
 }));
+
+export const initDetailData = {
+    name: '',
+    img: '',
+    type: 'wallet',
+    detail: '',
+    price: 0,
+    salePrice: 0,
+    soldOut: false,
+}

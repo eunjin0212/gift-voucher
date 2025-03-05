@@ -164,10 +164,10 @@
                 <label class="detail-input">
                     <input
                       class="field"
-                      :placeholder="type === 'wallet' ? 'Phone No.' : 'Email'"
-                      :autocomplete="type === 'wallet' ? 'mobile' : 'email'"
-                      :type="type === 'wallet' ? 'number' : 'email'"
-                      :inputmode="type === 'wallet' ? 'numeric' : 'text'"
+                      :placeholder="detailData.type === 'wallet' ? 'Phone No.' : 'Email'"
+                      :autocomplete="detailData.type === 'wallet' ? 'mobile' : 'email'"
+                      :type="detailData.type === 'wallet' ? 'number' : 'email'"
+                      :inputmode="detailData.type === 'wallet' ? 'numeric' : 'text'"
                       v-model="info.contact"
                       @update:model-value="() => handleInitValidate('contact')"
                     />
@@ -390,7 +390,7 @@
 <script setup>
 import { computed, onBeforeMount, ref } from 'vue'
 import backIcon from '@/assets/img/back.svg'
-import { totalProduct } from '@/mock/voucher'
+import { initDetailData, totalProduct } from '@/mock/voucher'
 import accordionIcon from '@/assets/img/accordion.svg'
 import reCAPTCHA from '@/assets/img/reCAPTCHA_logo.svg'
 import dangerCircleIcon from '@/assets/img/danger_circle.svg'
@@ -400,15 +400,7 @@ import CheckSvg from '@/assets/img/CheckSvg.vue'
 import qris from '@/assets/img/qris.png'
 import xIcon from '@/assets/img/x_icon.svg'
 
-const detailData = ref({
-    name: '',
-    img: '',
-    type: 'wallet',
-    detail: '',
-    price: 0,
-    salePrice: 0,
-    soldOut: false,
-});
+const detailData = ref({ ...initDetailData });
 const accordion = ref({
     'description': false,
     'participating': false,
@@ -437,10 +429,6 @@ const infoValidate = ref({
 })
 const validateMsgKey = ref('')
 const isDisable = computed(() => Object.values(infoValidate.value).every(val => val === false && validateMsgKey.value === 'done'))
-const type = computed(() => {
-    const params = new URLSearchParams(window.location.search);
-    return params.get("type");
-})
 
 function handleInitValidate(key) {
     infoValidate.value[key] = null
@@ -496,12 +484,20 @@ function handleValidate() {
     }
 }
 
+async function getDetailData(id) {
+    try {
+        if (id) {
+            detailData.value = await totalProduct.find((prod) => prod.id === +id)
+        }
+    } catch (error) {
+        console.error(error)
+    }
+}
+
 onBeforeMount(() => {
     const params = new URLSearchParams(window.location.search);
     const id = params.get("id");
-    if (id) {
-        detailData.value = totalProduct.find((prod) => prod.id === +id)
-    }
+    getDetailData(id)
 })
 
 const timeLeft = ref(null); // 타이머 시간 (초)
@@ -566,7 +562,7 @@ function handleFailModal() {
 
 function handleSuccessModal() {
     successModal.value = false
-    window.location.href = '/payment'
+    window.location.href = `/payment?id=${detailData.value.id}`
 }
 </script>
 <style>
