@@ -52,6 +52,7 @@ module.exports = {
             fontFamily: {
                 'sans-bold': ["Source Sans Pro Bold", "sans-serif"],
                 'roboto': ["Roboto", "sans-serif"],
+                'manrope': ["Manrope", "sans-serif"],
             },
             screens: {
                 'xs': '360px',
