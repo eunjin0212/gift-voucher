@@ -382,7 +382,7 @@ function handlePayment(item) {
         item.soldOut = true
         return
     }
-    location.href = `/voucherDetail?id=${item.id}&type=${item.type}`
+    location.href = `/voucherDetail?id=${item.id}`
 }
 
 function handleModal(key) {
