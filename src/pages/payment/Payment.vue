@@ -10,7 +10,7 @@
             <div></div>
         </div>
     </header>
-    <main class="px-5 min-width">
+    <main class="px-5 min-width max-w-[768px]">
         <!-- Voucher-->
         <template v-if="detailData.type === 'voucher'">
             <!-- 성공 -->
@@ -84,7 +84,7 @@
                         <div
                           v-for="(value, key, idx) in stepActive"
                           :key="key"
-                          class="text-xs -tracking-[0.033em]"
+                          class="text-xs sm:text-base -tracking-[0.033em]"
                           :class="+key === step ? 'text-main font-bold' : 'text-gray-950'"
                         >
                             {{ value.name }}
@@ -101,10 +101,12 @@
                     diproses,
                     namun mohon tunggu
                 </h1>
-                <h3 class="pb-4 border-b border-b-gray-700 text-center text-main text-[13px] leading-5 font-medium">Cek
+                <h3
+                  class="pb-4 border-b border-b-gray-700 text-center text-main text-[13px] sm:text-base leading-5 font-medium"
+                >Cek
                     status
                     pengiriman produk Anda. Klik
-                    <span class="mx-1 text-xs text-gray-950">></span>
+                    <span class="mx-1 text-xs sm:text-base text-gray-950">></span>
                     Di sini
                 </h3>
             </template>
@@ -144,8 +146,8 @@
                 Rp {{ detailData.salePrice.toLocaleString() }}
             </strong>
         </div>
-        <p class="w-screen h-2 -mx-5 bg-gray-400"></p>
-        <div class="px-4 py-5 mx-auto mt-5 mb-20 bg-gray-100 border border-gray-700 rounded-md">
+        <p class="absolute left-0 w-full h-2 mb-2 bg-gray-400"></p>
+        <div class="px-4 py-5 mx-auto mt-10 mb-20 bg-gray-100 border border-gray-700 rounded-md sm:mt-14">
             <strong class="text-[#384860] font-bold text-sm -tracking-wide">Pemerima</strong>
             <ul class="flex flex-col gap-[14px] mt-[18px]">
                 <li
