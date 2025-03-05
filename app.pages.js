@@ -21,6 +21,10 @@ const pages = {
         template: 'public/default.html',
         title: 'HR Project',
     },
+    payment: {
+        template: 'public/default.html',
+        title: 'HR Project',
+    },
     // 'test_tools/message_q': {
     //     template: 'public/default.html',
     //     title: '[TEST] Message queue sender',
