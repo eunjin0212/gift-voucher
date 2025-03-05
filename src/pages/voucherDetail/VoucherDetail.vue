@@ -178,28 +178,28 @@
                 <div class="flex flex-nowrap gap-[6px]">
                     <label
                       class="flex-1 detail-input"
-                      :class="{ 'bg-gray-700': infoValidate.code === false }"
+                      :class="{ 'bg-gray-700': validateMsgKey === 'done' }"
                     >
                         <input
                           class="field read-only:bg-gray-700 read-only:text-gray-950"
                           placeholder="Pin Code"
                           v-model="info.code"
                           @update:model-value="() => handleInitValidate('code')"
-                          :readonly="infoValidate.code === false"
+                          :readonly="validateMsgKey === 'done'"
                         />
                     </label>
                     <button
                       @click="handleValidate"
-                      :class="infoValidate.code === false ? 'text-white bg-main' : 'text-main'"
+                      :class="validateMsgKey === 'done' ? 'text-white bg-main' : 'text-main'"
                       class="border border-main leading-5 font-semibold py-[14px] px-[23px] rounded-md"
                     >Apply</button>
                 </div>
                 <i
                   class="text-red-600 text-[13px] leading-[18px]"
-                  :class="infoValidate.code === 'wrong' ? '-tracking-[0.089em]' : '-tracking-wider'"
-                  v-if="validatePinCodeMsg[infoValidate.code]"
+                  :class="validateMsgKey === 'wrong' ? '-tracking-[0.089em]' : '-tracking-wider'"
+                  v-if="validatePinCodeMsg[validateMsgKey]"
                 >
-                    {{ validatePinCodeMsg[infoValidate.code] }}
+                    {{ validatePinCodeMsg[validateMsgKey] }}
                 </i>
                 <i
                   class="text-red-600 text-[13px] leading-[18px] -tracking-wider"
@@ -209,7 +209,7 @@
                 </i>
                 <i
                   class="text-main text-[13px] leading-[18px] -tracking-wider"
-                  v-else-if="infoValidate.code === false"
+                  v-else-if="validateMsgKey === 'done'"
                 >The pin code is applied successfully
                 </i>
             </li>
@@ -217,10 +217,7 @@
                 <div class="recaptcha h-[60px] mt-[30px] bg-[#F9F9F9]">
                     <div
                       class="checkbox"
-                      @click.prevent="() => {
-                        info.reCaptcha = !info.reCaptcha;
-                        handleInitValidate('reCaptcha')
-                    }"
+                      @click.prevent="handleReCaptcha"
                     >
                         <input
                           id="reCaptcha"
@@ -299,7 +296,7 @@
     </main>
     <footer
       class="p-5 shadow-[0px_-2px_20px_0px_#0000001F]"
-      :class="{ 'mb-5': downloaded }"
+      :class="{ 'mb-5': downloaded, 'sticky bottom-0 bg-white': !additionalFee }"
     >
         <button
           v-if="!additionalFee"
@@ -382,7 +379,7 @@
                     </ol>
                 </div>
                 <button
-                  @click="handleFailModal"
+                  @click="handleSuccessModal"
                   class="w-full modal-btn modal-positive-btn"
                 >OK</button>
             </div>
@@ -435,11 +432,11 @@ const info = ref({
 const infoValidate = ref({
     name: null,
     contact: null,
-    code: null, // null, false (pass), 'wrong', 'noExist', 'alreadyUse'
+    code: null,
     reCaptcha: null,
 })
-
-const isDisable = computed(() => Object.values(infoValidate.value).every(val => !val))
+const validateMsgKey = ref('')
+const isDisable = computed(() => Object.values(infoValidate.value).every(val => val === false && validateMsgKey.value === 'done'))
 const type = computed(() => {
     const params = new URLSearchParams(window.location.search);
     return params.get("type");
@@ -447,8 +444,15 @@ const type = computed(() => {
 
 function handleInitValidate(key) {
     infoValidate.value[key] = null
+    if (key === 'code') {
+        validateMsgKey.value = ''
+    }
 }
 
+function handleReCaptcha() {
+    info.value.reCaptcha = !info.value.reCaptcha
+    infoValidate.value.reCaptcha = !info.value.reCaptcha
+}
 const validatePinCodeMsg = {
     wrong: 'The Pin code is not abailable. Contact our Customer support',
     alreadyUse: 'The Pin code is already used',
@@ -459,30 +463,34 @@ const validatePinCodeMsg = {
 function handleValidate() {
     const keys = Object.keys(info.value)
     if (keys.some((key) => !info.value[key])) {
-        const findKey = keys.find((key) => !info.value[key])
-        if (!findKey) return
+        const findFailKey = keys.find((key) => !info.value[key])
+        if (!findFailKey) return
 
-        infoValidate.value[findKey] = true
+        infoValidate.value[findFailKey] = true
         return
+    } else {
+        keys.forEach((key) => {
+            infoValidate.value[key] = false
+        })
     }
 
-    if (Object.values(infoValidate.value).every((val) => val === null || val)) {
+    if (Object.values(infoValidate.value).every((val) => val === false)) {
         // TODO: check Pin code
         const testPinCode = '12345'
         const testAlreadyUsePinCode = '11111'
         const testNoExistPinCode = '22222'
         switch (info.value.code) {
             case testPinCode:
-                infoValidate.value.code = false
+                validateMsgKey.value = 'done'
                 break;
             case testAlreadyUsePinCode:
-                infoValidate.value.code = 'alreadyUse'
+                validateMsgKey.value = 'alreadyUse'
                 break;
             case testNoExistPinCode:
-                infoValidate.value.code = 'noExist'
+                validateMsgKey.value = 'noExist'
                 break;
             default:
-                infoValidate.value.code = 'wrong'
+                validateMsgKey.value = 'wrong'
                 break;
         }
     }
@@ -554,6 +562,11 @@ const failModal = ref(false)
 function handleFailModal() {
     failModal.value = false
     startTimer()
+}
+
+function handleSuccessModal() {
+    successModal.value = false
+    window.location.href = '/payment'
 }
 </script>
 <style>
