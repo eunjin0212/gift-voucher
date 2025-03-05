@@ -20,6 +20,7 @@ html {
     .min-width {
         @apply max-w-[1200px] mx-auto
     }
+
     .field {
         @apply w-full p-0 border-0 ring-0 focus:outline-none focus:ring-offset-0 focus:ring-0 placeholder:text-sm
     }
@@ -27,7 +28,7 @@ html {
     .header {
         @apply flex flex-col sticky top-0 bg-white z-[1]
     }
-    
+
     .header .header-bar {
         @apply py-2 px-5 justify-between flex
     }
@@ -70,11 +71,11 @@ html {
     }
 
     .item>li {
-        @apply flex flex-col 
+        @apply flex flex-col
     }
 
     .item>li:not(:first-of-type) {
-        @apply px-3 
+        @apply px-3
     }
 
     .item>li:first-of-type {
@@ -117,11 +118,11 @@ html {
 /* footer */
 @layer components {
     .footer>div {
-        @apply flex py-3 
+        @apply flex py-3
     }
 
     .footer>div>a {
-        @apply bg-white text-center py-5 w-1/2 text-[15px] leading-5 border border-gray-500 active:border-black-100 active:shadow-[0px_6px_3px_-1px_#00000029] active:text-black-100 active:font-bold hover:border-black-100 hover:shadow-[0px_6px_3px_-1px_#00000029] hover:text-black-100 hover:font-bold 
+        @apply bg-white text-center py-5 w-1/2 text-[15px] leading-5 border border-gray-500 active:border-black-100 active:shadow-[0px_6px_3px_-1px_#00000029] active:text-black-100 active:font-bold hover:border-black-100 hover:shadow-[0px_6px_3px_-1px_#00000029] hover:text-black-100 hover:font-bold
     }
 
     .footer>.footer__logo-wrapper {
@@ -134,12 +135,15 @@ html {
     .modal-wrapper {
         @apply bg-[#00000080] w-full h-full fixed top-0 left-0 overflow-hidden flex items-center justify-center z-10
     }
+
     .modal-wrapper .modal-content-wrapper {
         @apply bg-white rounded-lg min-w-80 w-full max-w-[40%] py-5 px-3 gap-5 flex flex-col
     }
+
     .modal-wrapper .modal-content-wrapper .modal-title {
         @apply flex flex-col items-center justify-center gap-[14px] text-lg leading-6 font-semibold
     }
+
     .modal-wrapper .modal-title.error {
         @apply text-red-600
     }
@@ -147,9 +151,11 @@ html {
     .modal-wrapper .modal-content-wrapper .modal-content {
         @apply text-black-0 text-sm text-center
     }
+
     .modal-wrapper .modal-content-wrapper .modal-btn {
         @apply py-[14px] rounded-md inline-flex items-center justify-center text-base leading-5 font-semibold
     }
+
     .modal-wrapper .modal-content-wrapper .modal-negative-btn {
         @apply bg-red-600 text-white
     }
@@ -206,7 +212,8 @@ html {
     .detail-input {
         @apply border border-gray-700 rounded-md px-3 py-[14px] inline-flex w-full
     }
-    .detail-input > input {
+
+    .detail-input>input {
         @apply placeholder:text-[#BDBDBD] h-[18px] text-black-300 text-[15px] leading-[18px] -tracking-wide
     }
 }
