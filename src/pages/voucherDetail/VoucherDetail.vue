@@ -141,6 +141,7 @@
                 </ol>
             </div>
         </div>
+
         <ul class="pt-[30px] px-5">
             <li class="inline-flex items-center mb-2">
                 <h6 class="font-medium text-sm leading-[18px] -tracking-wide text-black-0">Recipient’s Info</h6>
@@ -525,7 +526,8 @@ function startTimer() {
 const additionalFee = ref('')
 function handleSubmit() {
     if (isDisable.value) {
-        additionalFee.value = '50.00'
+        // TODO: 
+        additionalFee.value = detailData.value.salePrice < 10000
         startTimer()
     }
 }
