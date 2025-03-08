@@ -317,7 +317,7 @@
                     <p>The expired date : {{ expiredDate }}</p>
                 </div>
                 <button
-                  @click="() => handleModal('isExpired')"
+                  @click="handleExpired"
                   class="w-full modal-btn modal-negative-btn"
                 >OK</button>
             </div>
@@ -427,6 +427,15 @@ const isSearch = computed(() => {
 const expiredDate = ref('')
 const search = ref('')
 const result = ref('')
+
+function handleExpired() {
+    console.log('isExpired')
+    handleModal('isExpired')
+    let urlObj = new URL(window.location.href);
+    urlObj.searchParams.delete("expired");
+    window.history.replaceState({}, "", urlObj.toString());
+}
+
 onMounted(() => {
     const params = new URLSearchParams(window.location.search);
     const searchQuery = params.get("search");
