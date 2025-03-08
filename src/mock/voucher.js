@@ -18,7 +18,7 @@ const test = [
         type: 'voucher',
         detail: 'Double All-In Overload',
         price: 525738,
-        salePrice: 10000,
+        salePrice: 8000,
         soldOut: false
     },
     {
@@ -27,7 +27,7 @@ const test = [
         type: 'wallet',
         detail: 'Double All-In Overload',
         price: 525738,
-        salePrice: 21000,
+        salePrice: 1000,
         soldOut: true
     },
     {
