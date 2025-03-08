@@ -97,15 +97,14 @@
                         </div>
                     </li>
                 </ul>
-                <h1 class="mb-4 text-[#085F83] text-2xl font-bold leading-7 text-center font-manrope">Pesanan sedang
-                    diproses,
-                    namun mohon tunggu
+                <h1 class="mb-4 text-[#085F83] text-2xl font-bold leading-7 text-center font-manrope">
+                    {{ stepActive[step].title }}
                 </h1>
                 <h3
                   class="pb-4 border-b border-b-gray-700 text-center text-main text-[13px] sm:text-base leading-5 font-medium"
-                >Cek
-                    status
-                    pengiriman produk Anda. Klik
+                  v-if="stepActive[step].description"
+                >
+                    {{ stepActive[step].description }}
                     <span class="mx-1 text-xs sm:text-base text-gray-950">></span>
                     Di sini
                 </h3>
@@ -198,16 +197,22 @@ const stepActive = {
     1: {
         active: activeClockAndHomeIcon,
         inactive: inactiveClockAndHomeIcon,
+        title: 'Pesanan sedang diproses, namun mohon tunggu',
+        description: 'Cek status pengiriman produk Anda. Klik',
         name: 'Pembayaran Selesai'
     },
     2: {
         active: activeDeliveryIcon,
         inactive: inactiveDeliveryIcon,
+        title: 'Sedang dikirim',
+        description: 'Anda dapat memeriksa status produk Anda',
         name: 'Sedang dikirim'
     },
     3: {
         active: activeMailArrivedAndHandIcon,
         inactive: inactiveMailArrivedAndHandIcon,
+        title: 'Periksa Ewallet Anda!',
+        description: '',
         name: 'Pengiriman Selesai'
     },
 }
