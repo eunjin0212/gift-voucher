@@ -200,7 +200,7 @@
     </main>
     <Teleport
       to="body"
-      v-if="isFindPin"
+      v-if="modals.findPin"
     >
         <aside class="modal-wrapper">
             <div class="modal-content-wrapper">
@@ -231,7 +231,7 @@
                 </div>
                 <div
                   v-if="!pinSearchMessage[pinSearch.text] && pinSearchValidate.text"
-                  class="recaptcha h-[46px] mt-[6px] mb-[10px]"
+                  class="recaptcha h-[46px]"
                 >
                     <div
                       class="checkbox"
@@ -270,7 +270,7 @@
                       :disabled="pinCodeDisabled"
                     >Done</button>
                     <button
-                      @click="() => handleModal('isFindPin')"
+                      @click="() => handleModal('findPin')"
                       class="w-1/2 modal-btn modal-primary-btn"
                     >Close</button>
                 </div>
@@ -279,7 +279,7 @@
     </Teleport>
     <Teleport
       to="body"
-      v-if="isWrongModal"
+      v-if="modals.isWrong"
     >
         <aside class="modal-wrapper">
             <div class="modal-content-wrapper">
@@ -298,7 +298,7 @@
                     </ul>
                 </div>
                 <button
-                  @click="() => handleModal('isWrongModal')"
+                  @click="() => handleModal('isWrong')"
                   class="w-full modal-btn modal-negative-btn"
                 >OK</button>
             </div>
@@ -306,7 +306,7 @@
     </Teleport>
     <Teleport
       to="body"
-      v-if="isExpiredModal"
+      v-if="modals.isExpired"
     >
         <aside class="modal-wrapper">
             <div class="modal-content-wrapper">
@@ -317,7 +317,7 @@
                     <p>The expired date : {{ expiredDate }}</p>
                 </div>
                 <button
-                  @click="() => handleModal('isExpiredModal')"
+                  @click="() => handleModal('isExpired')"
                   class="w-full modal-btn modal-negative-btn"
                 >OK</button>
             </div>
@@ -369,10 +369,15 @@ function handleSort() {
     }
 }
 
-const isWrongModal = ref(false)
+const modals = ref({
+    findPin: false,
+    isExpired: false,
+    isWrong: false,
+})
+
 function handlePayment(item) {
     if (item.name.includes(testSoldOut)) {
-        isWrongModal.value = true
+        modals.value.isWrong = true
         item.soldOut = true
         return
     }
@@ -380,12 +385,11 @@ function handlePayment(item) {
 }
 
 function handleModal(key) {
-    [key].value = false
+    modals.value[key] = false
 }
 
-const isFindPin = ref(false)
 function handleSearchPin() {
-    isFindPin.value = true
+    modals.value.findPin = true
 }
 
 const pinSearch = ref({
@@ -401,6 +405,7 @@ const pinSearchValidate = ref({
 const pinCodeDisabled = computed(() => !Object.values(pinSearchValidate.value).every((val) => val))
 
 function checkPinCode() {
+    if (!pinSearch.value.text) return
     pinSearchValidate.value.text = !pinSearchMessage[pinSearch.value.text]
 }
 
@@ -419,7 +424,6 @@ const isSearch = computed(() => {
     return !!searchQuery
 })
 
-const isExpiredModal = ref(false)
 const expiredDate = ref('')
 const search = ref('')
 const result = ref('')
@@ -440,7 +444,7 @@ onMounted(() => {
     if (emailQuery) {
         const today = new Date()
         if (today - new Date(emailQuery) > 0) {
-            isExpiredModal.value = true
+            modals.value.isExpired = true
             expiredDate.value = emailQuery
         }
     }
