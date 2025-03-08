@@ -210,7 +210,7 @@
                 <div class="modal-content">
                     <form
                       class="search-wrapper"
-                      @submit.prevent="handlePinCode"
+                      @submit.prevent="() => checkPinCode(pinSearch.text)"
                     >
                         <label class="border-2 search-input">
                             <input
@@ -219,10 +219,6 @@
                               v-model="pinSearch.text"
                               placeholder="Search for your treat"
                               name="search"
-                              @update:model-value="(val) => {
-                                pinSearch.text = val
-                                pinSearch.validate = null
-                            }"
                             />
                             <button type="submit">
                                 <img
@@ -234,14 +230,12 @@
                     </form>
                 </div>
                 <div
-                  v-if="pinSearch.validate === null"
+                  v-if="!pinSearchMessage[pinSearch.text] && pinSearchValidate.text"
                   class="recaptcha h-[46px] mt-[6px] mb-[10px]"
                 >
                     <div
                       class="checkbox"
-                      @click.prevent="() => {
-                        pinSearch.reCaptcha = !pinSearch.reCaptcha;
-                    }"
+                      @click.prevent="checkPinRecaptcha"
                     >
                         <input
                           id="reCaptcha"
@@ -264,7 +258,7 @@
                     />
                 </div>
                 <div
-                  v-else
+                  v-else-if="pinSearchMessage[pinSearch.text]"
                   class="-mt-2 text-center mb-[10px] text-red-600 text-sm leading-[18px]"
                   v-html="pinSearchMessage[pinSearch.text]"
                 >
@@ -272,7 +266,8 @@
                 <div class="flex gap-2">
                     <button
                       @click="handlePinCode"
-                      class="w-1/2 modal-btn modal-positive-btn"
+                      class="w-1/2 modal-btn modal-positive-btn disabled:cursor-not-allowed disabled:!bg-black-100"
+                      :disabled="pinCodeDisabled"
                     >Done</button>
                     <button
                       @click="() => handleModal('isFindPin')"
@@ -367,7 +362,6 @@ function handleSort() {
         products.value = [...products.value].sort((a, b) =>
             a.name.toLowerCase().localeCompare(b.name.toLowerCase())
         );
-        console.log(products.value)
     } else if (sort.value === 'asc') {
         products.value.sort((a, b) => a.salePrice - b.salePrice);
     } else {
@@ -387,7 +381,6 @@ function handlePayment(item) {
 
 function handleModal(key) {
     [key].value = false
-    window.location.href = '/voucher'
 }
 
 const isFindPin = ref(false)
@@ -398,15 +391,26 @@ function handleSearchPin() {
 const pinSearch = ref({
     text: '',
     reCaptcha: false,
-    validate: null
 })
+
+const pinSearchValidate = ref({
+    text: null,
+    reCaptcha: null,
+})
+
+const pinCodeDisabled = computed(() => !Object.values(pinSearchValidate.value).every((val) => val))
+
+function checkPinCode() {
+    pinSearchValidate.value.text = !pinSearchMessage[pinSearch.value.text]
+}
+
+function checkPinRecaptcha() {
+    pinSearch.value.reCaptcha = !pinSearch.value.reCaptcha;
+    pinSearchValidate.value.reCaptcha = pinSearch.value.reCaptcha
+}
+
 function handlePinCode() {
-    if (pinSearch.value.reCaptcha) {
-        pinSearch.value.validate.value = !pinSearchMessage[pinSearch.value.text];
-        if (pinSearch.value.validate) {
-            this.handleModal('isFindPin')
-        }
-    }
+    window.location.href = `/payment?id=${3}`
 }
 
 const isSearch = computed(() => {
