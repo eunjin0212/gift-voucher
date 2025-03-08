@@ -265,7 +265,7 @@ onBeforeMount(() => {
 const buttonLabel = {
     'main': 'Ke Halaman Utama',
     'back': 'Kembail ke halaman sebelumnya',
-    'next': 'Treat',
+    'next': 'Discover More on Home',
 }
 const buttonStatus = computed(() => {
     // 추가 결제 없는 wallet 실패 label: Kembail ke halaman sebelumnya 이전 페이지
@@ -298,7 +298,7 @@ function handleSubmit(status) {
     } else if (status === 'main') {
         window.location.href = '/voucher'
     } else {
-        window.location.href = '/voucherDetail'
+        window.history.back()
     }
 }
 </script>
