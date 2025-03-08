@@ -160,6 +160,7 @@
                       autocomplete="name"
                       v-model="info.name"
                       @update:model-value="() => handleInitValidate('name')"
+                      @blur="handleNameValidate"
                     />
                 </label>
                 <label class="detail-input">
@@ -167,10 +168,16 @@
                       class="field"
                       :placeholder="detailData.type === 'wallet' ? 'Phone No.' : 'Email'"
                       :autocomplete="detailData.type === 'wallet' ? 'mobile' : 'email'"
-                      :type="detailData.type === 'wallet' ? 'number' : 'email'"
+                      :type="detailData.type === 'wallet' ? 'tel' : 'email'"
                       :inputmode="detailData.type === 'wallet' ? 'numeric' : 'text'"
                       v-model="info.contact"
-                      @update:model-value="() => handleInitValidate('contact')"
+                      @update:model-value="() => {
+                        if (detailData.type === 'wallet') {
+                            info.contact = info.contact.replace(/[^0-9+-]/g, '') // 숫자, +, -만 허용
+                        }
+                        handleInitValidate('contact')
+                    }"
+                      @blur="handleContactValidate"
                     />
                 </label>
             </li>
@@ -442,6 +449,7 @@ function handleReCaptcha() {
     info.value.reCaptcha = !info.value.reCaptcha
     infoValidate.value.reCaptcha = !info.value.reCaptcha
 }
+
 const validatePinCodeMsg = {
     wrong: 'The Pin code is not abailable. Contact our Customer support',
     alreadyUse: 'The Pin code is already used',
@@ -449,40 +457,93 @@ const validatePinCodeMsg = {
     expired: "The Pin code's valid date is over",
 }
 
+function handlePinCodeValidate() {
+    if (!Object.values(infoValidate.value).every((val) => val === false)) return
+
+    // TODO: check Pin code
+    const testPinCode = '12345'
+    const testAlreadyUsePinCode = '11111'
+    const testNoExistPinCode = '22222'
+    switch (info.value.code) {
+        case testPinCode:
+            validateMsgKey.value = 'done'
+            break;
+        case testAlreadyUsePinCode:
+            validateMsgKey.value = 'alreadyUse'
+            break;
+        case testNoExistPinCode:
+            validateMsgKey.value = 'noExist'
+            break;
+        default:
+            validateMsgKey.value = 'wrong'
+            break;
+    }
+}
+
+// 인도네시아 전화번호 유효성 검사 및 자동 변환
+function formatPhoneNumber(phone) {
+    // 숫자, +, -만 허용하고 나머지는 제거
+    phone = phone.replace(/[^0-9+-]/g, "").replace(/-/g, "");
+
+    // 10~14자리만 허용
+    const numericPhone = phone.replace(/\+/g, "");
+    if (numericPhone.length < 10 || numericPhone.length > 14) {
+        return { valid: false, formatted: phone };
+    }
+
+    // 올바른 접두사 확인: 08 또는 628
+    if (/^(08|628)/.test(numericPhone)) {
+        if (numericPhone.startsWith("08")) {
+            phone = "+62" + numericPhone.slice(1); // 국내 형식을 국제 형식으로 변환
+        } else if (numericPhone.startsWith("628")) {
+            phone = "+" + numericPhone; // 628로 시작하면 + 추가
+        }
+        return { valid: true, formatted: phone };
+    }
+
+    return { valid: false, formatted: phone };
+}
+
+function isValidEmail(email) {
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailPattern.test(email);
+}
+
+function handleContactValidate() {
+    if (detailData.value.type === "wallet") {
+        // 전화번호 유효성 검사
+        const result = formatPhoneNumber(info.value.contact);
+        infoValidate.value.contact = !result.valid;
+        if (result.valid) {
+            info.value.contact = result.formatted; // 자동 변환된 값 적용
+        }
+        return;
+    }
+
+    // 이메일 유효성 검사
+    infoValidate.value.contact = !isValidEmail(info.value.contact);
+}
+
+function handleNameValidate() {
+    infoValidate.value.name = !info.value.name
+}
+
 function handleValidate() {
     const keys = Object.keys(info.value)
     if (keys.some((key) => !info.value[key])) {
         const findFailKey = keys.find((key) => !info.value[key])
         if (!findFailKey) return
+        // TODO: 유효성 검사
 
         infoValidate.value[findFailKey] = true
         return
-    } else {
-        keys.forEach((key) => {
-            infoValidate.value[key] = false
-        })
     }
 
-    if (Object.values(infoValidate.value).every((val) => val === false)) {
-        // TODO: check Pin code
-        const testPinCode = '12345'
-        const testAlreadyUsePinCode = '11111'
-        const testNoExistPinCode = '22222'
-        switch (info.value.code) {
-            case testPinCode:
-                validateMsgKey.value = 'done'
-                break;
-            case testAlreadyUsePinCode:
-                validateMsgKey.value = 'alreadyUse'
-                break;
-            case testNoExistPinCode:
-                validateMsgKey.value = 'noExist'
-                break;
-            default:
-                validateMsgKey.value = 'wrong'
-                break;
-        }
-    }
+    keys.forEach((key) => {
+        infoValidate.value[key] = false
+    })
+
+    handlePinCodeValidate()
 }
 
 async function getDetailData(id) {
