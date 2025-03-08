@@ -252,7 +252,7 @@
         </ul>
         <div
           class="px-5"
-          v-if="additionalFee"
+          v-if="showAdditionalPayment"
         >
             <h6 class="font-medium text-sm leading-[18px] -tracking-wide text-black-0">Additional Payment Option</h6>
             <label class="detail-input py-[11px] mt-2">
@@ -297,11 +297,11 @@
     </main>
     <footer
       class="p-5 shadow-[0px_-2px_20px_0px_#0000001F]"
-      :class="{ 'mb-5': downloaded, 'sticky bottom-0 bg-white': !additionalFee }"
+      :class="{ 'mb-5': downloaded, 'sticky bottom-0 bg-white': !showAdditionalPayment }"
     >
         <button
-          v-if="!additionalFee"
-          @click="handleSubmit"
+          v-if="!showAdditionalPayment"
+          @click.stop="handleSubmit"
           :disabled="!isDisable"
           class="text-white bg-main text-lg leading-5 font-semibold py-[18px] w-full text-center rounded-md disabled:cursor-not-allowed disabled:bg-black-100"
         >Treat</button>
@@ -332,7 +332,7 @@
     </Teleport>
     <Teleport
       to="body"
-      v-if="failModal"
+      v-if="modals.fail"
     >
         <aside class="modal-wrapper">
             <div class="modal-content-wrapper">
@@ -355,7 +355,7 @@
     </Teleport>
     <Teleport
       to="body"
-      v-if="successModal"
+      v-if="modals.success"
     >
         <aside class="modal-wrapper">
             <div class="modal-content-wrapper">
@@ -518,18 +518,28 @@ function startTimer() {
     timer = setInterval(() => {
         if (timeLeft.value > 0) {
             timeLeft.value--;
-        } else {
-            clearInterval(timer); // 0이 되면 타이머 종료
+            return
         }
+
+        clearInterval(timer); // 0이 되면 타이머 종료
+        modals.value.fail = true
     }, 1000);
 }
-const additionalFee = ref('')
+
+const additionalFee = ref(0)
+const deposit = 10000
+
+// 상품 가격이 기존 디파짓보다 더 크면 추가 결제 QR
+const showAdditionalPayment = ref(false)
 function handleSubmit() {
-    if (isDisable.value) {
-        // TODO: 
-        additionalFee.value = detailData.value.salePrice < 10000
+    showAdditionalPayment.value = detailData.value.salePrice > deposit && isDisable.value
+    if (showAdditionalPayment.value) {
+        additionalFee.value = detailData.value.salePrice - deposit
         startTimer()
+        return
     }
+    window.location.href = `/payment?id=${detailData.value.id}`
+    // 이동
 }
 
 const downloaded = ref(false)
@@ -540,7 +550,10 @@ const showAlert = () => {
         downloaded.value = false;
     }, 900);
 };
-const successModal = ref(false)
+const modals = ref({
+    success: false,
+    fail: false,
+})
 
 function handleDownload() {
     const imagePath = '/img/qr_code.png';
@@ -554,16 +567,16 @@ function handleDownload() {
     document.body.removeChild(link);
 
     showAlert()
-    successModal.value = true
+    modals.value.success = true
 }
-const failModal = ref(false)
+
 function handleFailModal() {
-    failModal.value = false
+    modals.value.fail = false
     startTimer()
 }
 
 function handleSuccessModal() {
-    successModal.value = false
+    modals.value.success = false
     window.location.href = `/payment?id=${detailData.value.id}`
 }
 </script>
