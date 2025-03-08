@@ -376,7 +376,7 @@ const modals = ref({
 })
 
 function handlePayment(item) {
-    if (item.name.includes(testSoldOut)) {
+    if (item.name.toUpperCase().includes(testSoldOut.toUpperCase())) {
         modals.value.isWrong = true
         item.soldOut = true
         return
@@ -432,10 +432,10 @@ onMounted(() => {
     const searchQuery = params.get("search");
 
     if (searchQuery) {
-        search.value = searchQuery;
+        search.value = searchQuery.toUpperCase();
         result.value = searchQuery
         products.value = originalProducts.filter((prod) =>
-            prod.name.includes(searchQuery)
+            prod.name.toUpperCase().includes(searchQuery)
         );
     }
 
