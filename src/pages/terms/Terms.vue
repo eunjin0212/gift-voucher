@@ -24,7 +24,7 @@ function handleBack() {
             <div></div>
         </div>
     </header>
-    <main class="p-5 min-width">
+    <main class="p-5 min-width sm:h-[calc(100vh-106px-56px)]">
         <ul class="flex items-center gap-2 p-2 bg-gray-600 rounded-md">
             <li
               @click="() => tab = 'terms'"
@@ -96,7 +96,7 @@ function handleBack() {
             </ul>
         </div>
     </main>
-    <footer class="bg-white h-[105px] footer">
+    <footer class="bg-white h-[105px] footer sticky bottom-0 w-full">
         <div class="footer__logo-wrapper">
             <img
               :src="textLogo"

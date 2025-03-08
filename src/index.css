@@ -11,8 +11,13 @@
     font-style: normal;
 }
 
-html {
+html,
+body,
+#root {
     font-family: 'roboto';
+    min-width: none;
+    height: 100vh;
+    position: relative;
 }
 
 /* products */
