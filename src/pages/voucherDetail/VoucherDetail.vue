@@ -145,41 +145,51 @@
         <ul class="pt-[30px] px-5">
             <li class="inline-flex items-center mb-2">
                 <h6 class="font-medium text-sm leading-[18px] -tracking-wide text-black-0">Recipient’s Info</h6>
-                <i
-                  v-if="infoValidate.name || infoValidate.contact"
-                  class="pl-3 text-red-600 text-[13px] leading-[18px] -tracking-wider"
-                >
-                    Insert recipient’s information
-                </i>
             </li>
-            <li class="mb-5 md:flex md:items-center md:gap-[6px]">
-                <label class="mb-3 md:mb-0 detail-input">
-                    <input
-                      class="field"
-                      placeholder="Name"
-                      autocomplete="name"
-                      v-model="info.name"
-                      @update:model-value="() => handleInitValidate('name')"
-                      @blur="handleNameValidate"
-                    />
-                </label>
-                <label class="detail-input">
-                    <input
-                      class="field"
-                      :placeholder="detailData.type === 'wallet' ? 'Phone No.' : 'Email'"
-                      :autocomplete="detailData.type === 'wallet' ? 'mobile' : 'email'"
-                      :type="detailData.type === 'wallet' ? 'tel' : 'email'"
-                      :inputmode="detailData.type === 'wallet' ? 'numeric' : 'text'"
-                      v-model="info.contact"
-                      @update:model-value="() => {
-                        if (detailData.type === 'wallet') {
-                            info.contact = info.contact.replace(/[^0-9+-]/g, '') // 숫자, +, -만 허용
-                        }
-                        handleInitValidate('contact')
-                    }"
-                      @blur="handleContactValidate"
-                    />
-                </label>
+            <li class="mb-5 flex flex-col md:flex-row gap-3 md:gap-[6px] md:items-start">
+                <div class="flex flex-col md:w-1/2">
+                    <label class="detail-input">
+                        <input
+                          class="field"
+                          placeholder="Name"
+                          autocomplete="name"
+                          v-model="info.name"
+                          @update:model-value="() => handleInitValidate('name')"
+                          @blur="handleNameValidate"
+                        />
+                    </label>
+                    <i
+                      v-if="infoValidate.name"
+                      class="mt-2 text-red-600 text-[13px] leading-[18px] -tracking-wider"
+                    >
+                        Insert recipient’s name
+                    </i>
+                </div>
+                <div class="flex flex-col md:w-1/2">
+                    <label class="detail-input">
+                        <input
+                          class="field"
+                          :placeholder="detailData.type === 'wallet' ? 'Phone No.' : 'Email'"
+                          :autocomplete="detailData.type === 'wallet' ? 'mobile' : 'email'"
+                          :type="detailData.type === 'wallet' ? 'tel' : 'email'"
+                          :inputmode="detailData.type === 'wallet' ? 'numeric' : 'text'"
+                          v-model="info.contact"
+                          @update:model-value="() => {
+                            if (detailData.type === 'wallet') {
+                                info.contact = info.contact.replace(/[^0-9+-]/g, '') // 숫자, +, -만 허용
+                            }
+                            handleInitValidate('contact')
+                        }"
+                          @blur="handleContactValidate"
+                        />
+                    </label>
+                    <i
+                      v-if="infoValidate.contact"
+                      class="mt-2 text-red-600 text-[13px] leading-[18px] -tracking-wider"
+                    >
+                        Insert recipient’s {{ detailData.type === 'wallet' ? 'Phone No.' : 'Email' }}
+                    </i>
+                </div>
             </li>
             <li class="inline-flex flex-col w-full gap-2">
                 <h6 class="font-medium text-sm leading-[18px] -tracking-wide text-black-0">Insert the Pin code</h6>
